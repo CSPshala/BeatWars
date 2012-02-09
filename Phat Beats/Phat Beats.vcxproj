@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{34C7AC13-12D3-480F-9987-6410E882A928}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PhatBeats</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="source\CAnimation.cpp" />
+    <ClCompile Include="source\CBase.cpp" />
+    <ClCompile Include="source\CBeat.cpp" />
+    <ClCompile Include="source\CEmitter.cpp" />
+    <ClCompile Include="source\CFrame.cpp" />
+    <ClCompile Include="source\CFX.cpp" />
+    <ClCompile Include="source\CGame.cpp" />
+    <ClCompile Include="source\CParticle.cpp" />
+    <ClCompile Include="source\CSong.cpp" />
+    <ClCompile Include="source\Managers\CAnimationManager.cpp" />
+    <ClCompile Include="source\Managers\CBeatManager.cpp" />
+    <ClCompile Include="source\Managers\CFXManager.cpp" />
+    <ClCompile Include="source\Managers\CObjectManager.cpp" />
+    <ClCompile Include="source\Managers\CXml_Manager.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_DirectInput.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_TextureManager.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp" />
+    <ClCompile Include="source\SGD_Math.cpp" />
+    <ClCompile Include="source\States\CArcadeMode_State.cpp" />
+    <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
+    <ClCompile Include="source\States\CGameplay_State.cpp" />
+    <ClCompile Include="source\States\CLevelSelect_State.cpp" />
+    <ClCompile Include="source\States\CLoad_State.cpp" />
+    <ClCompile Include="source\States\CMenu_State.cpp" />
+    <ClCompile Include="source\States\CPause_State.cpp" />
+    <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\WinMain.cpp" />
+    <ClCompile Include="source\XML\tinystr.cpp" />
+    <ClCompile Include="source\XML\tinyxml.cpp" />
+    <ClCompile Include="source\XML\tinyxmlerror.cpp" />
+    <ClCompile Include="source\XML\tinyxmlparser.cpp" />
+    <ClCompile Include="source\XML\xmltest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\CAnimation.h" />
+    <ClInclude Include="source\CBase.h" />
+    <ClInclude Include="source\CBeat.h" />
+    <ClInclude Include="source\CEmitter.h" />
+    <ClInclude Include="source\CFrame.h" />
+    <ClInclude Include="source\CFX.h" />
+    <ClInclude Include="source\CGame.h" />
+    <ClInclude Include="source\CParticle.h" />
+    <ClInclude Include="source\CSong.h" />
+    <ClInclude Include="source\IBaseInterface.h" />
+    <ClInclude Include="source\Managers\CAnimationManager.h" />
+    <ClInclude Include="source\Managers\CBeatManager.h" />
+    <ClInclude Include="source\Managers\CFXManager.h" />
+    <ClInclude Include="source\Managers\CObjectFactory.h" />
+    <ClInclude Include="source\Managers\CObjectManager.h" />
+    <ClInclude Include="source\Managers\CXml_Manager.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_DirectInput.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_XAudio2.h" />
+    <ClInclude Include="source\SGD Wrappers\SGD_Util.h" />
+    <ClInclude Include="source\SGD_Math.h" />
+    <ClInclude Include="source\States\CArcadeMode_State.h" />
+    <ClInclude Include="source\States\CCharacterSelect_State.h" />
+    <ClInclude Include="source\States\CGameplay_State.h" />
+    <ClInclude Include="source\States\CLevelSelect_State.h" />
+    <ClInclude Include="source\States\CLoad_State.h" />
+    <ClInclude Include="source\States\CMenu_State.h" />
+    <ClInclude Include="source\States\CPause_State.h" />
+    <ClInclude Include="source\States\CSave_State.h" />
+    <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\XML\tinystr.h" />
+    <ClInclude Include="source\XML\tinyxml.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
