@@ -4,11 +4,22 @@
 // Purpose		:	To Contain all menu related code
 //////////////////////////////////////////////////////
 
+////////////////////////////////////////
+//				INCLUDES
+////////////////////////////////////////
 #include "CBeatManager.h"
+#include "CObjectFactory.h"
 
+////////////////////////////////////////
+//				MISC
+////////////////////////////////////////
+
+///////////////////////////////////////////////
+//  CONSTRUCTOR / DECONSTRUCT / OP OVERLOADS
+///////////////////////////////////////////////
 CBeatManager::CBeatManager()
 {
-
+	SetNumberNotesHit(0);
 }
 
 CBeatManager::~CBeatManager()
@@ -16,6 +27,9 @@ CBeatManager::~CBeatManager()
 
 }
 
+////////////////////////////////////////
+//		PUBLIC UTILITY FUNCTIONS
+////////////////////////////////////////
 bool CBeatManager::LoadSong(string szFileName)
 {
 	return true;
@@ -23,7 +37,14 @@ bool CBeatManager::LoadSong(string szFileName)
 
 bool CBeatManager::UnloadSongs()
 {
-	return true;
+	GetSongList().clear();
+	GetSongBackground().clear();
+	SetNumberNotesHit(0);
+
+	if(GetSongList().size() == 0 && GetSongBackground().size() == 0)
+		return true;
+	else
+		return false;
 }
 
 void CBeatManager::Play()
@@ -45,3 +66,18 @@ void CBeatManager::Reset()
 {
 
 }
+
+////////////////////////////////////////
+//		PRIVATE UTILITY FUNCTIONS
+////////////////////////////////////////
+
+////////////////////////////////////////
+//	    PUBLIC ACCESSORS / MUTATORS
+////////////////////////////////////////
+
+////////////////////////////////////////
+//	    PRIVATE ACCESSORS / MUTATORS
+////////////////////////////////////////
+
+
+
