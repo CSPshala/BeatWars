@@ -67,7 +67,7 @@ void CBeat::SetDirection(BeatDirection dir)
 	case LEFT:
 		SetPosX(0.0f);
 		SetPosY(200.0f);
-		SetVelX(10.0f);
+		SetVelX(1.0f);
 		SetVelY(0.0f);
 		break;
 
@@ -75,13 +75,13 @@ void CBeat::SetDirection(BeatDirection dir)
 		SetPosX(200.0f);
 		SetPosY(0.0f);
 		SetVelX(0.0f);
-		SetVelY(10.0f);
+		SetVelY(1.0f);
 		break;
 
 	case RIGHT:
 		SetPosX(400.0f);
 		SetPosY(200.0f);
-		SetVelX(-10.0f);
+		SetVelX(-1.0f);
 		SetVelY(0.0f);
 		break;
 
@@ -89,35 +89,35 @@ void CBeat::SetDirection(BeatDirection dir)
 		SetPosX(200.0f);
 		SetPosY(400.0f);
 		SetVelX(0.0f);
-		SetVelY(-10.0f);
+		SetVelY(-1.0f);
 		break;
 
 	case LEFTUP:
 		SetPosX(0.0f);
 		SetPosY(0.0f);
-		SetVelX(10.0f);
-		SetVelY(10.0f);
+		SetVelX(1.0f);
+		SetVelY(1.0f);
 		break;
 
 	case RIGHTUP:
 		SetPosX(400.0f);
 		SetPosY(0.0f);
-		SetVelX(-10.0f);
-		SetVelY(10.0f);
+		SetVelX(-1.0f);
+		SetVelY(1.0f);
 		break;
 
 	case RIGHTDOWN:
 		SetPosX(400.0f);
 		SetPosY(400.0f);
-		SetVelX(-10.0f);
-		SetVelY(-10.0f);
+		SetVelX(-1.0f);
+		SetVelY(-1.0f);
 		break;
 
 	case LEFTDOWN:
 		SetPosX(0.0f);
 		SetPosY(400.0f);
-		SetVelX(10.0f);
-		SetVelY(-10.0f);
+		SetVelX(1.0f);
+		SetVelY(-1.0f);
 		break;
 
 	default:

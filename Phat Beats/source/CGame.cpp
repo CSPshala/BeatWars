@@ -52,7 +52,8 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_nWindowWidth = nScreenWidth;
 	m_nWindowHeight = nScreenHeight;
 
-
+	// Initilizing timer
+	cTimer.Reset();
 
 	srand((unsigned int)time(0));
 	
@@ -101,6 +102,9 @@ bool CGame::Input()
 
 void CGame::Update()
 {
+	// Updating timer
+	cTimer.Update();
+
 	m_pCurState->Update();	// must be called or you will mess stuff up
 }
 
