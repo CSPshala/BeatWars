@@ -41,6 +41,8 @@ public:
 		void Pause();
 		void Stop();
 		void Reset();
+		void Update();
+		void Render();
 	/********** Public Accessors ************/
 		int				GetNumberNotesHit() {return m_nNumHit;}
 		vector<CSong>&	GetSongList() {return m_vSongs;}
@@ -54,9 +56,12 @@ private:
 		vector<CSong> m_vSongs;
 		vector<int> m_nvImageID;
 		int m_nNumHit;
+		bool m_bPause;
 	/********** Private Accessors ************/
+		bool GetPause() {return m_bPause;}
 
 	/********** Private Mutators ************/
+		void SetPause(bool bPause) {m_bPause = bPause;}
 
 	/********** Private Utility Functions ************/
 	

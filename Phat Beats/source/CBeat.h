@@ -33,6 +33,7 @@ public:
 		CBeat(const CBeat&);
 		CBeat& operator=(const CBeat&);
 	/********** Public Utility Functions ************/
+		void ResetBeat();
 
 	/********** Public Accessors ************/
 		float			GetTimeOfBeat() {return m_fTimeofBeat;}
@@ -52,10 +53,16 @@ private:
 		int		m_nDifficulty;
 		char	m_cKeyToPress;
 		BeatDirection m_eDirection;
+
+		// For saving original position for reset call
+		float m_fOriginalXPos;
+		float m_fOriginalYPos;
 	/********** Private Accessors ************/
-
+		float GetOriginalXPos() {return m_fOriginalXPos;}
+		float GetOriginalYPos() {return m_fOriginalYPos;}
 	/********** Private Mutators ************/
-
+		void SetOriginalXPos(float fOGX) {m_fOriginalXPos = fOGX;}
+		void SetOriginalYPos(float fOGY) {m_fOriginalYPos = fOGY;}
 	/********** Private Utility Functions ************/
 	
 

@@ -31,15 +31,24 @@ bool CGameplay_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 		return false;
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
+		BeatManager.Play();
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+		BeatManager.Pause();
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
+		BeatManager.Reset();
 		
 	return true;
 }
 
 void CGameplay_State::Update(void)
 {
+	// Updating audio
+	CSGD_XAudio2::GetInstance()->Update();
 	
-	
+	BeatManager.Update();
 	
 }
 
@@ -52,7 +61,7 @@ void CGameplay_State::Render(void)
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	
-	BeatManager.Play();
+	BeatManager.Render();
 	
 	
 	CSGD_Direct3D::GetInstance()->SpriteEnd();

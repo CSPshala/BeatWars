@@ -40,6 +40,7 @@ public:
 	/********** Public Utility Functions ************/
 		void RenderSong();
 		void UpdateSong();
+		void ResetSong();
 
 	/********** Public Accessors ************/
 		vector<CBeat>&	GetBeatList() {return m_vBeats;}

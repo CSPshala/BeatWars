@@ -8,6 +8,7 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include "CBeatManager.h"
+#include "../JCMacros.h"
 #include "../SGD Wrappers/CSGD_XAudio2.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 //#include "CObjectFactory.h"
@@ -24,6 +25,7 @@
 CBeatManager::CBeatManager()
 {
 	SetNumberNotesHit(0);
+	SetPause(true);
 }
 
 CBeatManager::~CBeatManager()
@@ -241,23 +243,52 @@ bool CBeatManager::UnloadSongs()
 
 void CBeatManager::Play()
 {
-	m_vSongs[0].UpdateSong();
-	m_vSongs[0].RenderSong();
+	SetPause(false);
+
+	// If song was already playing when play was hit, unpause
+	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
+		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),false);
 }
 
 void CBeatManager::Pause()
 {
+	SetPause(true);
 
+	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
+		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),true);		
 }
 
 void CBeatManager::Stop()
 {
+	SetPause(true);
 
+	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
+		XAUDIO->MusicStopSong(m_vSongs[0].GetSongID());
+
+	m_vSongs[0].ResetSong();
 }
 
 void CBeatManager::Reset()
 {
+	Stop();
+	Play();
+}
 
+void CBeatManager::Update()
+{
+	// Playing song
+	if(!GetPause())
+	{
+		if(!XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
+			XAUDIO->MusicPlaySong(m_vSongs[0].GetSongID());
+
+		m_vSongs[0].UpdateSong();
+	}	
+}
+
+void CBeatManager::Render()
+{
+	m_vSongs[0].RenderSong();
 }
 
 ////////////////////////////////////////

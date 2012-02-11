@@ -39,11 +39,14 @@ CBeat::CBeat(const CBeat& theBeat)
 CBeat& CBeat::operator=(const CBeat& theBeat)
 {
 	CBase::operator=(theBeat);
-
+	
 	m_fTimeofBeat = theBeat.m_fTimeofBeat;
 	m_nDifficulty = theBeat.m_nDifficulty;
 	m_cKeyToPress = theBeat.m_cKeyToPress;
 	m_eDirection = theBeat.m_eDirection;
+
+	m_fOriginalXPos = theBeat.m_fOriginalXPos;
+	m_fOriginalYPos = theBeat.m_fOriginalYPos;
 
 	return *this;
 }
@@ -51,6 +54,12 @@ CBeat& CBeat::operator=(const CBeat& theBeat)
 ////////////////////////////////////////
 //		PUBLIC UTILITY FUNCTIONS
 ////////////////////////////////////////
+void CBeat::ResetBeat()
+{
+	SetPosX(GetOriginalXPos());
+	SetPosY(GetOriginalYPos());
+	SetIsActive(false);
+}
 
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
@@ -125,6 +134,10 @@ void CBeat::SetDirection(BeatDirection dir)
 		break;
 
 	}
+
+	// Setting original position
+	SetOriginalXPos(GetPosX());
+	SetOriginalYPos(GetPosY());
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

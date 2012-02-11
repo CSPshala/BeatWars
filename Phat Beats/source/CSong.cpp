@@ -8,8 +8,10 @@
 ////////////////////////////////////////
 //				INCLUDES
 ////////////////////////////////////////
+#include "JCMacros.h"
 #include "CSong.h"
 #include "CGame.h"
+#include "SGD Wrappers\CSGD_XAudio2.h"
 
 ////////////////////////////////////////
 //				MISC
@@ -64,7 +66,7 @@ void CSong::UpdateSong()
 {
 	// Checking upcomming beat and adding it to active vector when it's within tolerance
 	if(!((unsigned int)GetCurrentBeatIndex() >= m_vBeats.size()))
-		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (CGame::GetInstance()->GetTimer().GetTime() - 1.0))
+		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1.0))
 		{
 			m_vActiveBeats.push_back(m_vBeats[GetCurrentBeatIndex()]);
 			m_vActiveBeats.back().SetIsActive(true);
@@ -74,7 +76,10 @@ void CSong::UpdateSong()
 	// Updating active beats
 	if(m_vActiveBeats.size() > 0)
 		for(unsigned int i = 0; i < m_vActiveBeats.size(); ++i)
-			m_vActiveBeats[i].Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+			m_vActiveBeats[i].Update(GAME->GetTimer().GetDeltaTime());
+
+	// Updating song time
+	SetCurrentSongTime(GetCurrentSongTime() + GAME->GetTimer().GetDeltaTime());
 }
 
 void CSong::RenderSong()
@@ -84,6 +89,22 @@ void CSong::RenderSong()
 		for(unsigned int i = 0; i < m_vActiveBeats.size(); ++i)
 			m_vActiveBeats[i].Render();
 
+}
+
+void CSong::ResetSong()
+{
+	
+	// Setting everything back to normal
+	SetCurrentSongTime(0.0f);
+	SetCurrentBeatIndex(0);
+	SetNextBeatIndex(1);
+
+	// Clearing active beats vector
+	m_vActiveBeats.clear();
+
+	// Resetting beats
+	for(unsigned int i = 0; i < m_vBeats.size(); ++i)
+		m_vBeats[i].ResetBeat();
 }
 
 ////////////////////////////////////////
