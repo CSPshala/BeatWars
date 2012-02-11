@@ -13,6 +13,7 @@
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
+#include "../Managers/CBeatManager.h"
 
 // Forward Declarations
 class Bitmap_Font;
@@ -46,6 +47,9 @@ private:
 	int m_nBackSoundID;
 	int m_nFontID;
 	int m_nTitleID;
+
+		// Managers
+	CBeatManager BeatManager;
 		
 };
 

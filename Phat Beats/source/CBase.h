@@ -7,7 +7,7 @@
 #pragma once
 #include "IBaseInterface.h"
 #include "SGD_Math.h"
-enum ObjType{OBJ_BASE,OBJ_PLAYER = 0,OBJ_NOTE,OBJ_MAX};
+enum ObjType{OBJ_BASE,OBJ_PLAYER = 0,OBJ_BEAT,OBJ_MAX};
 class CBase : public IBaseInterface
 {
 private:
@@ -49,7 +49,7 @@ public:
 	int GetImageID(void)	{return m_nImageID;}
 	bool GetIsActive(void)	{return m_bIsActive;}
 	int GetWidth(void)	{return m_nWidth;}
-	int GetHeight(void)	{return m_nHeight;}
+	int GetHeight(void)	{return m_nHeight;}	
 	///////////////////////////////////////////////////////////////////////
 	//	Function:	Modifiers
 	//

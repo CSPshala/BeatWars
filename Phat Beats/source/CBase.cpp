@@ -16,7 +16,7 @@ CBase::CBase(void)
 	SetVelY(0);
 	SetHeight(0);
 	SetWidth(0);
-	SetIsActive(true);
+	SetIsActive(false);
 	SetImageID(-1);
 }
 
@@ -41,6 +41,7 @@ CBase& CBase::operator=(const CBase& aBase)
 	m_nHeight = aBase.m_nHeight;
 	m_nImageID = aBase.m_nImageID;
 	m_bIsActive = aBase.m_bIsActive;	
+	m_nType = aBase.m_nType;
 
 	return *this;
 }

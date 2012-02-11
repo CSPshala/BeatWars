@@ -23,7 +23,7 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
-	
+	BeatManager.LoadSong("songtest1.xml");
 }
 
 bool CGameplay_State::Input(void)

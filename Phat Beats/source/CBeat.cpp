@@ -23,6 +23,7 @@ CBeat::CBeat() : CBase()
 	SetTimeOfBeat(0.0f);
 	SetDifficulty(0);
 	SetDirection(UP);
+	m_nType = OBJ_BEAT;
 }
 
 CBeat::~CBeat()
@@ -40,6 +41,8 @@ CBeat& CBeat::operator=(const CBeat& theBeat)
 
 	m_fTimeofBeat = theBeat.m_fTimeofBeat;
 	m_nDifficulty = theBeat.m_nDifficulty;
+	m_cKeyToPress = theBeat.m_cKeyToPress;
+	m_eDirection = theBeat.m_eDirection;
 
 	return *this;
 }

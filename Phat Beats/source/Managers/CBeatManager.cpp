@@ -42,7 +42,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	CSong theSong;
 
 	// Adding path to filename for beatlists
-	string szPath = "resource/beatlist";
+	string szPath = "resource/beatlist/";
 	szPath += szFileName;
 
 	if(doc.LoadFile(szPath.c_str()) == false)
@@ -67,7 +67,7 @@ bool CBeatManager::LoadSong(string szFileName)
 		char buffer[128] = {0};
 		strcpy_s(buffer,_countof(buffer),txtAttrb);
 
-		string szSongPath = "resource/Sound";
+		string szSongPath = "resource/Sound/";
 		szSongPath += buffer;
 
 		// Loading song and setting SongID.
@@ -215,8 +215,14 @@ bool CBeatManager::LoadSong(string szFileName)
 			theBeat.SetHeight(nHeight);
 
 			//******************MOVING ON TO NEXT NOTE***********//
-			pBeat->NextSiblingElement("Beat");
+				// Adding beat to song
+			theSong.GetBeatList().push_back(theBeat);
+
+			pBeat = pBeat->NextSiblingElement("Beat");
 		}
+
+		//***************ADDING SONG TO SONG LIST****************//
+		GetSongList().push_back(theSong);
 
 	return true;
 }
