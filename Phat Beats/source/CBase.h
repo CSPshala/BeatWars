@@ -34,6 +34,8 @@ protected:
 public:
 	CBase(void);
 	virtual ~CBase(void);
+	CBase(const CBase&);
+	CBase& operator=(const CBase&);
 
 	///////////////////////////////////////////////////////////////////////
 	//	Function:	Accessors

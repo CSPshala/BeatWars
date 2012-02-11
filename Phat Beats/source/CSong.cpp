@@ -32,6 +32,25 @@ CSong::~CSong()
 
 }
 
+CSong::CSong(const CSong& theSong)
+{
+	*this = theSong;
+}
+
+CSong& CSong::operator=(const CSong& theSong)
+{
+	m_listBeats = theSong.m_listBeats;
+	m_listActiveBeats = theSong.m_listActiveBeats;
+	m_szName = theSong.m_szName;
+	m_fCurrentSongTime = theSong.m_fCurrentSongTime;
+	m_fSongDuration = theSong.m_fSongDuration;
+
+	m_nSoundID = theSong.m_nSoundID;
+	m_nImageID = theSong.m_nImageID;
+
+	return *this;
+}
+
 ////////////////////////////////////////
 //		PUBLIC UTILITY FUNCTIONS
 ////////////////////////////////////////

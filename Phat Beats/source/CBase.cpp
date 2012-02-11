@@ -1,8 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //	File Name	:	"CBase.cpp"
 //	
-//	Author Name	:	Bryan Schotanes
-//	
 //	Purpose		:	To contain all related data and
 //					functionality for our game objects.
 ///////////////////////////////////////////////////////////////////////////
@@ -25,6 +23,26 @@ CBase::CBase(void)
 CBase::~CBase(void)
 {
 
+}
+
+CBase::CBase(const CBase& aBase)
+{
+	*this = aBase;
+}
+
+CBase& CBase::operator=(const CBase& aBase)
+{
+	m_uiRefCount = aBase.m_uiRefCount;
+	m_nPosX = aBase.m_nPosX;
+	m_nPosY = aBase.m_nPosY;
+	m_nVelX = aBase.m_nVelX;
+	m_nVelY = aBase.m_nVelY;
+	m_nWidth = aBase.m_nWidth;
+	m_nHeight = aBase.m_nHeight;
+	m_nImageID = aBase.m_nImageID;
+	m_bIsActive = aBase.m_bIsActive;	
+
+	return *this;
 }
 
 void CBase::Update(float fElapsedTime)
