@@ -11,7 +11,8 @@
 #include "CBitmapFont.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "Globals.h"
-#include "tinyxml\tinyxml.h"
+#include "xml\tinyxml.h"
+
 
 //CBitmapFont* CBitmapFont::sm_Instance = NULL;
 

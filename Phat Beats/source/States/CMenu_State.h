@@ -18,9 +18,9 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
-
+#include "CBitmapFont.h"
 // Forward Declarations
-class Bitmap_Font;
+class CBitmapFont;
 
 class CMenu_State : public IGameState
 {
@@ -46,7 +46,7 @@ private:
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
-	Bitmap_Font* m_bMenu_Font;
+	CBitmapFont* m_bMenu_Font;
 	int m_nMenuSelection;
 
 		// Asset IDs

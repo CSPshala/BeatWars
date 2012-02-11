@@ -5,10 +5,11 @@
 //////////////////////////////////////////////////////
 
 #include "CMenu_State.h"
+#include "CBitmapFont.h"
 
 CMenu_State::CMenu_State()
 {
-	Bitmap_Font* m_bMenu_Font = NULL;
+	m_bMenu_Font = NULL;
 	m_nMenuSelection = 0;
 
 	// Asset IDs
@@ -27,7 +28,9 @@ CMenu_State::~CMenu_State()
 
 void CMenu_State::Enter(void)
 {	
-	
+	m_nFontID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/StarWarsFont.bmp");
+
+	m_bMenu_Font->GetInstance()->SetImageID(m_nFontID);
 }
 
 bool CMenu_State::Input(void)
@@ -41,7 +44,7 @@ bool CMenu_State::Input(void)
 
 void CMenu_State::Update(void)
 {
-
+	
 }
 
 void CMenu_State::Render(void)
