@@ -197,4 +197,12 @@ public:
 	///////////////////////////////////////////////////////////////////
 	bool Draw(int nID, int nX, int nY, float fScaleX = 1.0f, float fScaleY = 1.0f,
 		RECT* pSection = NULL, float fRotCenterX = 0.0f, float fRotCenterY = 0.0f, float fRotation = 0.0f, DWORD dwColor = 0xFFFFFFFF);
+
+	//////////////////////////////////////////////////
+	// Added by JC Ricks
+	// 
+	// Draw Texture Function modified to use floats
+	//////////////////////////////////////////////////
+	bool DrawF(int nID, float nX, float nY, float fScaleX = 1.0f, float fScaleY = 1.0f,
+		RECT* pSection = NULL, float fRotCenterX = 0.0f, float fRotCenterY = 0.0f, float fRotation = 0.0f, DWORD dwColor = 0xFFFFFFFF);
 };

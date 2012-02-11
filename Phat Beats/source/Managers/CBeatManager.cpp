@@ -241,7 +241,8 @@ bool CBeatManager::UnloadSongs()
 
 void CBeatManager::Play()
 {
-
+	m_vSongs[0].UpdateSong();
+	m_vSongs[0].RenderSong();
 }
 
 void CBeatManager::Pause()

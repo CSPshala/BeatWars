@@ -12,9 +12,9 @@
 ////////////////////////////////////////
 //				INCLUDES
 ////////////////////////////////////////
-#include <list>
+#include <vector>
 #include <string>
-using std::list;
+using std::vector;
 using std::string;
 
 #include "CBeat.h"
@@ -26,6 +26,7 @@ using std::string;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
+#define MARGINOFERROR 0.1f
 
 class CSong
 {
@@ -37,14 +38,19 @@ public:
 		CSong& operator=(const CSong&);
 
 	/********** Public Utility Functions ************/
+		void RenderSong();
+		void UpdateSong();
 
 	/********** Public Accessors ************/
-		list<CBeat>&	GetBeatList() {return m_listBeats;}		
+		vector<CBeat>&	GetBeatList() {return m_vBeats;}
+		vector<CBeat>&	GetActiveBeatList() {return m_vActiveBeats;}
 		string			GetSongName() {return m_szName;}
 		float			GetCurrentSongTime() {return m_fCurrentSongTime;}
 		float			GetSongDuration() {return m_fSongDuration;}
 		int				GetSongID()	{return m_nSoundID;}
 		int				GetBackgroundID() {return m_nImageID;}
+		int				GetCurrentBeatIndex() {return m_nCurrentBeat;}
+		int				GetNextBeatIndex() {return m_nNextBeat;}
 
 	/********** Public Mutators  ************/	
 		void			SetSongName(string szName) {m_szName = szName;}
@@ -52,15 +58,19 @@ public:
 		void			SetSongDuration(float fDuration) {m_fSongDuration = fDuration;}
 		void			SetSongID(int ID) {m_nSoundID = ID;}
 		void			SetBackgroundID(int ID) {m_nImageID = ID;}
+		void			SetCurrentBeatIndex(int nBeat) {m_nCurrentBeat = nBeat;}
+		void			SetNextBeatIndex(int nBeat) {m_nNextBeat = nBeat;}
 
 private:
 
 	/********** Private Members ************/	
-		list<CBeat>	 m_listBeats;
-		list<CBeat>  m_listActiveBeats;
-		string		 m_szName;
-		float		 m_fCurrentSongTime;
-		float		 m_fSongDuration;
+		vector<CBeat>	m_vBeats;
+		vector<CBeat>	m_vActiveBeats;
+		string			m_szName;
+		float			m_fCurrentSongTime;
+		float			m_fSongDuration;
+		int				m_nCurrentBeat;
+		int				m_nNextBeat;
 
 		// Asset IDs
 		int			 m_nSoundID;

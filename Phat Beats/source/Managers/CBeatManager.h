@@ -12,8 +12,8 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include <string>
-#include <list>
-using std::list;
+#include <vector>
+using std::vector;
 using std::string;
 
 #include "../CSong.h"  
@@ -25,7 +25,7 @@ using std::string;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
-#define MARGINOFERROR 0.1f
+
 
 class CBeatManager
 {
@@ -43,16 +43,16 @@ public:
 		void Reset();
 	/********** Public Accessors ************/
 		int				GetNumberNotesHit() {return m_nNumHit;}
-		list<CSong>&	GetSongList() {return m_listSongs;}
-		list<int>&		GetSongBackground() {return m_nListImageID;}
+		vector<CSong>&	GetSongList() {return m_vSongs;}
+		vector<int>&		GetSongBackground() {return m_nvImageID;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 
 private:
 
 	/********** Private Members ************/
-		list<CSong> m_listSongs;
-		list<int> m_nListImageID;
+		vector<CSong> m_vSongs;
+		vector<int> m_nvImageID;
 		int m_nNumHit;
 	/********** Private Accessors ************/
 

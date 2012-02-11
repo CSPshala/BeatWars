@@ -52,6 +52,7 @@ void CGameplay_State::Render(void)
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	
+	BeatManager.Play();
 	
 	
 	CSGD_Direct3D::GetInstance()->SpriteEnd();

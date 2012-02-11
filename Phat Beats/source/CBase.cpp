@@ -56,7 +56,7 @@ void CBase::Update(float fElapsedTime)
 
 void CBase::Render(void)
 {
-	CSGD_TextureManager::GetInstance()->Draw(GetImageID(),(int)GetPosX(),(int)GetPosY());
+	CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
 }
 
 RECT CBase::GetCollisionRect()
