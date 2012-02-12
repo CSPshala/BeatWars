@@ -9,13 +9,12 @@
 
 CMenu_State::CMenu_State()
 {
-	m_bMenu_Font = NULL;
+	
 	m_nMenuSelection = 0;
 
 	// Asset IDs
 	m_nBackgroundID = -1;
 	m_nCursorImageID = -1;
-	m_nFontID = -1;
 	m_nTitleID = -1;
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
@@ -28,9 +27,8 @@ CMenu_State::~CMenu_State()
 
 void CMenu_State::Enter(void)
 {	
-	m_nFontID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/StarWarsFont.bmp");
-
-	m_bMenu_Font->GetInstance()->SetImageID(m_nFontID);
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
+	
 }
 
 bool CMenu_State::Input(void)
@@ -51,8 +49,10 @@ void CMenu_State::Render(void)
 {
 	CSGD_Direct3D::GetInstance()->Clear(0,0,0);
 	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();	
-
+	CSGD_Direct3D::GetInstance()->SpriteBegin();
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,1.6f,1.3f);
+	CBitmapFont::GetInstance()->SetScale(3);
+	CBitmapFont::GetInstance()->PrintText("BeatWars",244,25,D3DCOLOR_XRGB(255,255,255));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
 	CSGD_Direct3D::GetInstance()->SpriteEnd();

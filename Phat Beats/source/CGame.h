@@ -21,6 +21,7 @@
 
 #include <string>
 using std::string;
+class CBitmapFont;
 
 class CGame
 {
@@ -30,6 +31,7 @@ private:
 	CSGD_DirectInput*		m_pDI;
 	CSGD_TextureManager*	m_pTM;
 	CSGD_XAudio2*			m_pXA;
+	CBitmapFont*			m_pBF;
 
 	// Gamestate Pointer
 	IGameState* m_pCurState;

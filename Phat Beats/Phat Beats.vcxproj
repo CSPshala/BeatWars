@@ -77,7 +77,6 @@
     <ClCompile Include="source\CAnimation.cpp" />
     <ClCompile Include="source\CBase.cpp" />
     <ClCompile Include="source\CBeat.cpp" />
-    <ClCompile Include="source\CBitmapFont.cpp" />
     <ClCompile Include="source\CEmitter.cpp" />
     <ClCompile Include="source\CFrame.cpp" />
     <ClCompile Include="source\CFX.cpp" />
@@ -95,6 +94,7 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp" />
     <ClCompile Include="source\SGD_Math.cpp" />
     <ClCompile Include="source\States\CArcadeMode_State.cpp" />
+    <ClCompile Include="source\States\CBitmapFont.cpp" />
     <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
     <ClCompile Include="source\States\CGameplay_State.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
@@ -113,7 +113,6 @@
     <ClInclude Include="source\CAnimation.h" />
     <ClInclude Include="source\CBase.h" />
     <ClInclude Include="source\CBeat.h" />
-    <ClInclude Include="source\CBitmapFont.h" />
     <ClInclude Include="source\CEmitter.h" />
     <ClInclude Include="source\CFrame.h" />
     <ClInclude Include="source\CFX.h" />
@@ -134,6 +133,7 @@
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h" />
     <ClInclude Include="source\SGD_Math.h" />
     <ClInclude Include="source\States\CArcadeMode_State.h" />
+    <ClInclude Include="source\States\CBitmapFont.h" />
     <ClInclude Include="source\States\CCharacterSelect_State.h" />
     <ClInclude Include="source\States\CGameplay_State.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
