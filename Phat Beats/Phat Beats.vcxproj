@@ -102,6 +102,7 @@
     <ClCompile Include="source\States\CMenu_State.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\XML\tinystr.cpp" />
     <ClCompile Include="source\XML\tinyxml.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="source\CParticle.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
+    <ClInclude Include="source\JCMacros.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
     <ClInclude Include="source\Managers\CFXManager.h" />
@@ -141,6 +143,7 @@
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\XML\tinystr.h" />
     <ClInclude Include="source\XML\tinyxml.h" />
   </ItemGroup>
