@@ -68,11 +68,14 @@
     <Compile Include="BeatMaker.Designer.cs">
       <DependentUpon>BeatMaker.cs</DependentUpon>
     </Compile>
+    <Compile Include="fmod.cs" />
+    <Compile Include="fmod_dsp.cs" />
+    <Compile Include="fmod_errors.cs" />
+    <Compile Include="fmod_memoryinfo.cs" />
     <Compile Include="ManagedDirect3D.cs" />
     <Compile Include="ManagedTextureManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XAudio2.cs" />
     <EmbeddedResource Include="BeatMaker.resx">
       <DependentUpon>BeatMaker.cs</DependentUpon>
     </EmbeddedResource>
