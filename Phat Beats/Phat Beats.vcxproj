@@ -100,6 +100,7 @@
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
     <ClCompile Include="source\States\CMenu_State.cpp" />
+    <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />
     <ClInclude Include="source\States\CMenu_State.h" />
+    <ClInclude Include="source\States\COptionsState.h" />
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />

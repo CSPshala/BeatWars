@@ -7,6 +7,7 @@
 #include "CMenu_State.h"
 #include "CBitmapFont.h"
 #include "CGameplay_State.h"
+#include "COptionsState.h"
 #include "../Globals.h"
 
 CMenu_State::CMenu_State()
@@ -76,9 +77,9 @@ bool CMenu_State::Input(void)
 
 		case MAINMENU_OPTIONS:
 			{
+				CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
 			}
 			break;		
-
 		case MAINMENU_CREDITS:
 			{
 			}
