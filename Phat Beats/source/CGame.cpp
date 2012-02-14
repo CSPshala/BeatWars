@@ -45,7 +45,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pXA->InitXAudio2();
 
 	
-	ChangeState(CGameplay_State::GetInstance());
+	ChangeState(CMenu_State::GetInstance());
 
 	// Window parameters
 	m_bWindowed = bIsWindowed;
