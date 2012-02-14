@@ -7,6 +7,7 @@
 #include "CMenu_State.h"
 #include "CBitmapFont.h"
 #include "CGameplay_State.h"
+#include "../Globals.h"
 
 CMenu_State::CMenu_State()
 {
@@ -103,10 +104,14 @@ void CMenu_State::Update(void)
 
 void CMenu_State::Render(void)
 {
-	
+	RECT rBody = {225, 200, CGame::GetInstance()->GetScreenWidth(), 400};
+	RECT rTitle = {0,25,800,75};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,1.6f,1.3f);
-	CBitmapFont::GetInstance()->SetScale(3);
-	CBitmapFont::GetInstance()->PrintText("BeatWars",244,25,D3DCOLOR_XRGB(255,255,255));
+	CBitmapFont::GetInstance()->SetScale(4.5f);
+	CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
+	CBitmapFont::GetInstance()->SetScale(3.0f);
+	CBitmapFont::GetInstance()->PrintInRect("New Game\nLoad\n0ptions\nCredits\nExit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+/*
 
 	CBitmapFont::GetInstance()->SetScale(1.5f);
 	CBitmapFont::GetInstance()->PrintText("PLAY", 225, 175,D3DCOLOR_XRGB(255, 255, 255));
@@ -114,9 +119,10 @@ void CMenu_State::Render(void)
 	CBitmapFont::GetInstance()->PrintText("SKILLS TEST", 225, 255,D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText("CREDITS", 225, 295,D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText("EXIT", 225, 335,D3DCOLOR_XRGB(255, 255, 255));
+*/
 
 	int topSelection = 175;
-	int spacing = 40;
+	int spacing = 63;
 	switch(m_nMenuSelection)
 	{
 	case MAINMENU_NEWGAME:

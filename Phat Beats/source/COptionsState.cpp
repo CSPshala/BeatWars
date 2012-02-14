@@ -1,0 +1,324 @@
+#include "COptionsState.h"
+#include "CMainMenuState.h"
+#include "CGame.h"
+#include "SGD Wrappers\CSGD_TextureManager.h"
+#include "SGD Wrappers\CSGD_Direct3D.h"
+#include "SGD Wrappers\CSGD_DirectInput.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
+#include "CBitmapFont.h"
+#include "CGameProfiler.h"
+
+COptionsState::COptionsState( void )
+{
+
+}
+COptionsState::~COptionsState(void)
+{
+
+}
+COptionsState* COptionsState::GetInstance( void )
+{
+	//	Lazy instantiation
+	static COptionsState instance;
+	return &instance;
+}
+void COptionsState::Enter(void)
+{
+	m_nMenuSelection = 0;
+
+	CGameProfiler::GetInstance()->LoadUserSettings("user settings.txt");
+	
+	// assign values to the local variables
+	m_nFXVolume = CGame::GetInstance()->GetSFXVolume();
+	m_nMusicVolume = CGame::GetInstance()->GetMusicVolume();
+	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
+	m_nLives = CGame::GetInstance()->GetStartingLives();
+	
+	
+	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resources//graphics//SGD_MenuCursor.png" );	
+
+	//TODO:
+	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resources/sounds/StS_fox061.wav");
+	m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resources//music//StS_01_prologue_-_cirrus.OGG", FMOD_LOOP_NORMAL);
+
+	CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
+	CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
+
+	CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
+}
+bool COptionsState::Input(void)
+{
+	// If you're at the top and press up, cycle the cursor to the bottom selection
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) )
+	{
+		m_nMenuSelection -= 1;
+
+		if( m_nMenuSelection == -1 )
+		{
+			m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
+		}
+
+	}
+
+	// If you're at the bottom and press down, cycle the cursor back to the top selection
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) )
+	{
+		m_nMenuSelection += 1;
+
+		if( m_nMenuSelection == NUM_OPTIONSMENU_OPTIONS )
+		{
+			m_nMenuSelection = 0;
+		}
+
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) )
+	{
+		switch (m_nMenuSelection)
+		{
+		case OPTIONSMENU_SFXVOL:
+			m_nFXVolume -= 0.01f;
+			if( m_nFXVolume <= 0.0f )
+			{
+				m_nFXVolume = 0.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+			break;
+
+		case OPTIONSMENU_MUSICVOL:
+			
+			m_nMusicVolume -= 0.01f;
+			if( m_nMusicVolume <= 0.0f )
+			{
+				m_nMusicVolume = 0.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+			break;
+
+		case OPTIONSMENU_PAN:
+			m_nMusicPan -= 0.02f;
+			if( m_nMusicPan <= -1.0f )
+			{
+				m_nMusicPan = -1.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+			break;
+		}		
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) )
+	{
+		switch (m_nMenuSelection)
+		{
+		case OPTIONSMENU_LIVES:
+			m_nLives -= 1;
+			if( m_nLives <= 1 )
+			{
+				m_nLives = 1;
+			}
+			CGame::GetInstance()->SetStartingLives(m_nLives);
+			break;
+		case OPTIONSMENU_WINDOWED:
+			{
+				CGame::GetInstance()->ChangeWindowMode();
+			}
+			break;
+		}
+		
+	}
+
+	// Play the a sample sound when the user releases Left while changing the volume of the sound effects
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT) )
+	{
+		switch (m_nMenuSelection)
+		{
+		case OPTIONSMENU_SFXVOL:
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			break;	
+		}
+	}
+
+
+
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT) )
+	{
+		switch (m_nMenuSelection)
+		{
+		case OPTIONSMENU_SFXVOL:
+			m_nFXVolume += 0.01f;
+			if( m_nFXVolume >= 1.0f )
+			{
+				m_nFXVolume = 1.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+			break;
+
+		case OPTIONSMENU_MUSICVOL:
+			
+			m_nMusicVolume += 0.01f;
+			if( m_nMusicVolume >= 1.0f )
+			{
+				m_nMusicVolume = 1.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+			break;
+
+		case OPTIONSMENU_PAN:
+			m_nMusicPan += 0.02f;
+			if( m_nMusicPan >= 1.0f )
+			{
+				m_nMusicPan = 1.0f;
+			}
+			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+			break;
+		}
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT) )
+	{
+		switch (m_nMenuSelection)
+		{
+			case OPTIONSMENU_LIVES:
+			m_nLives += 1;
+			if( m_nLives >= CGame::GetInstance()->GetMaxStartingLives() )
+			{
+				m_nLives = CGame::GetInstance()->GetMaxStartingLives();
+			}
+			CGame::GetInstance()->SetStartingLives(m_nLives);
+			break;
+
+			case OPTIONSMENU_WINDOWED:
+			{
+				CGame::GetInstance()->ChangeWindowMode();
+			}
+			break;
+		}
+	}
+
+
+	// Play the a sample sound when the user releases Right while changing the volume of the sound effects
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT) )
+	{
+		switch (m_nMenuSelection)
+		{
+		case OPTIONSMENU_SFXVOL:
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			break;	
+		}
+	}
+
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) )
+	{
+		switch( m_nMenuSelection )
+		{
+		case NUM_OPTIONSMENU_OPTIONS - 1:
+			{
+				CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
+			}
+			break;
+		}
+	}
+
+	return true;
+}
+void COptionsState::Update(float fElapsedTime)
+{
+	//TODO:
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nBGM) )
+		CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
+}
+void COptionsState::Render(void)
+{
+	
+	char buffer[255];
+	//CBitmapFont BF;
+
+	CBitmapFont::GetInstance()->SetScale(1.0f);
+
+	RECT rTitle = {0, 40, CGame::GetInstance()->GetPlayW(), 80};
+	CBitmapFont::GetInstance()->PrintInRect("Options", &rTitle, ALIGN_CENTER, D3DCOLOR_XRGB(30, 200, 30));
+	//BF.PrintText("Options", 10, 10, 1, D3DCOLOR_XRGB(255, 255, 255), true);
+
+	CBitmapFont::GetInstance()->SetScale(0.60f);
+	RECT rMenuOptions = { 100, 140, CGame::GetInstance()->GetPlayW(), 340};
+	CBitmapFont::GetInstance()->PrintInRect("SFX Volume\nMusic Volume\nMusic Pan\nStarting Lives\nWindowed Mode\nBack", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));
+	//BF.PrintText("SFX Volume", 100, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 130, D3DCOLOR_XRGB(225, 225, 225));
+	//BF.PrintText(buffer, 400, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	
+	sprintf_s( buffer, "%d", int( m_nMusicVolume * 100));
+	//BF.PrintText("Music Volume", 100, 80, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 167, D3DCOLOR_XRGB(225, 225, 225));
+	//BF.PrintText(buffer, 400, 80, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	sprintf_s( buffer, "L%d - R%d", int( 50 + (m_nMusicPan * -50)), int( 50 + (m_nMusicPan * 50)));
+	//BF.PrintText("Music Pan", 100, 110, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 207, D3DCOLOR_XRGB(225, 225, 225));
+	//BF.PrintText(buffer, 400, 110, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	sprintf_s( buffer, "%i", m_nLives);
+	//BF.PrintText("Starting Lives", 100, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 241, D3DCOLOR_XRGB(225, 225, 225));
+	//BF.PrintText(buffer, 420, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	//BF.PrintText("Back", 100, 170, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	//draw the cursor at the current selection
+	switch(m_nMenuSelection)
+	{
+	case OPTIONSMENU_SFXVOL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_SFXVOL * 37) );
+		}
+		break;
+
+	case OPTIONSMENU_MUSICVOL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_MUSICVOL * 37) );
+		}
+		break;
+
+	case OPTIONSMENU_PAN:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_PAN * 37) );
+		}
+		break;
+
+	case OPTIONSMENU_LIVES:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_LIVES * 37) );
+		}
+		break;
+
+	case OPTIONSMENU_WINDOWED:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_WINDOWED * 37) );
+		}
+		break;
+	case OPTIONSMENU_EXIT:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_EXIT * 37) );
+		}
+		break;
+	}
+	
+}
+void COptionsState::Exit(void)
+{
+	//TODO:
+	CSGD_FModManager::GetInstance()->StopSound(m_nSFX);
+	CSGD_FModManager::GetInstance()->StopSound(m_nBGM);
+	
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nSFX);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nBGM);
+
+	CGame::GetInstance()->SetMusicVolume(m_nMusicVolume);
+	CGame::GetInstance()->SetPanVolume(m_nMusicPan);
+	CGame::GetInstance()->SetSFXVolume(m_nFXVolume);
+
+	CGameProfiler::GetInstance()->SaveUserSettings("user settings.txt");
+}

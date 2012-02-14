@@ -131,7 +131,7 @@ void CBitmapFont::PrintInRect(string textToPrint, RECT* paramRect, int alignment
 
 	// total height of all lines combined
 	int heightOfTextBlock = (int)(m_vFonts[m_nCurrentFont]->m_nLineHeight * m_fScale);
-	heightOfTextBlock += (int)(numLines *((float)m_vFonts[m_nCurrentFont]->m_nLineHeight * m_fScale));
+	heightOfTextBlock += (int)(numLines *((float)m_vFonts[m_nCurrentFont]->m_nLineHeight * m_fScale*1.1f));
 
 	// the top of the block of text
 	int nPosY = paramRect->top;
@@ -216,7 +216,7 @@ void CBitmapFont::PrintInRect(string textToPrint, RECT* paramRect, int alignment
 		}
 
 		// go down to next line
-		nPosY += (int)(m_vFonts[m_nCurrentFont]->m_nLineHeight * m_fScale);
+		nPosY += (int)(m_vFonts[m_nCurrentFont]->m_nLineHeight * m_fScale*1.1f);
 
 
 	}
