@@ -13,7 +13,6 @@ using std::string;
 
 #include "IGameState.h"
 #include "../CGame.h"
-#include "CGameplay_State.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
@@ -21,6 +20,7 @@ using std::string;
 
 // Forward Declarations
 
+enum {MAINMENU_NEWGAME, MAINMENU_LOAD, MAINMENU_OPTIONS,  MAINMENU_CREDITS, MAINMENU_EXIT, NUM_MAINMENU_OPTIONS};
 
 class CMenu_State : public IGameState
 {

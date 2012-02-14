@@ -120,7 +120,15 @@ void CGame::Update()
 
 void CGame::Render()
 {
+	m_pD3D->Clear(0, 0, 0);
+	m_pD3D->DeviceBegin();
+	m_pD3D->SpriteBegin();
+
 	m_pCurState->Render();
+
+	m_pD3D->SpriteEnd();
+	m_pD3D->DeviceEnd();
+	m_pD3D->Present();
 
 }
 
