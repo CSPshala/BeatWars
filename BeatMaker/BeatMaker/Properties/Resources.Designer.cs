@@ -67,6 +67,76 @@ namespace BeatMaker.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ArrowDown32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowDown32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowDownLeft32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowDownLeft32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowDownRight32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowDownRight32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowLeft32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowLeft32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowRight32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowRight32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowTopLeft32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowTopLeft32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowTopRight32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowTopRight32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ArrowUp32 {
+            get {
+                object obj = ResourceManager.GetObject("ArrowUp32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CurrentPointer32 {
+            get {
+                object obj = ResourceManager.GetObject("CurrentPointer32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap fastforward32 {
+            get {
+                object obj = ResourceManager.GetObject("fastforward32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap fire32 {
             get {
                 object obj = ResourceManager.GetObject("fire32", resourceCulture);
@@ -98,6 +168,34 @@ namespace BeatMaker.Properties {
         internal static System.Drawing.Bitmap lighting32 {
             get {
                 object obj = ResourceManager.GetObject("lighting32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap pause32 {
+            get {
+                object obj = ResourceManager.GetObject("pause32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap play32 {
+            get {
+                object obj = ResourceManager.GetObject("play32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rewind32 {
+            get {
+                object obj = ResourceManager.GetObject("rewind32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap stop32 {
+            get {
+                object obj = ResourceManager.GetObject("stop32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
