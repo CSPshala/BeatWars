@@ -12,7 +12,7 @@
 #ifndef CBITMAPFONT_H
 #define CBITMAPFONT_H
 
-#include <Windows.h>
+#include <Windows.h>	
 
 #include <string>
 using std::string;
