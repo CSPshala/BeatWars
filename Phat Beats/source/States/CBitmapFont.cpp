@@ -34,7 +34,16 @@ CBitmapFont* CBitmapFont::GetInstance()
 
 CBitmapFont::~CBitmapFont()
 {
-
+	for (auto i = 0u; i < m_vFonts.size(); ++i)
+	{
+		for (auto j = 0u; j < 256; ++j)
+		{
+			delete m_vFonts[i]->m_sciCharacters[j];
+		}
+		delete m_vFonts[i]->m_szFontName;
+		delete m_vFonts[i];
+	}
+	m_vFonts.clear();
 }
 
 RECT CBitmapFont::CellAlgorithm(int id)
@@ -353,7 +362,7 @@ bool CBitmapFont::LoadXMLFont(const char* fontName)
 
 	// add the font ont the array
 	m_vFonts.push_back(pNewFont);
-
+	
 	return true;
 }
 

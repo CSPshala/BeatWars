@@ -6,6 +6,7 @@
 #include "CBitmapFont.h"
 //#include "CGameProfiler.h"
 #include "../Globals.h"
+#include "../SGD Wrappers/CSGD_XAudio2.h"
 
 COptionsState::COptionsState( void )
 {
@@ -24,16 +25,17 @@ COptionsState* COptionsState::GetInstance( void )
 void COptionsState::Enter(void)
 {
 	m_nMenuSelection = 0;
+	m_nSFX = -1;
 
 	//CGameProfiler::GetInstance()->LoadUserSettings("user settings.txt");
 	
 	// assign values to the local variables
-	/*
-	m_nFXVolume = CGame::GetInstance()->GetSFXVolume();
-		m_nMusicVolume = CGame::GetInstance()->GetMusicVolume();
-		m_nMusicPan = CGame::GetInstance()->GetPanVolume();
-		m_nLives = CGame::GetInstance()->GetStartingLives();
-		*/
+	
+	m_nFXVolume = CSGD_XAudio2::GetInstance()->SFXGetMasterVolume();//CGame::GetInstance()->GetSFXVolume();
+	m_nMusicVolume = CSGD_XAudio2::GetInstance()->MusicGetMasterVolume();//CGame::GetInstance()->GetMusicVolume();
+	//m_nMusicPan = CGame::GetInstance()->GetPanVolume();
+	//m_nLives = CGame::GetInstance()->GetStartingLives();
+		
 	
 	
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png" );	
@@ -42,9 +44,13 @@ void COptionsState::Enter(void)
 	//m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resources/sounds/StS_fox061.wav");
 	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resources//music//StS_01_prologue_-_cirrus.OGG", FMOD_LOOP_NORMAL);
 
+	m_nSFX = CSGD_XAudio2::GetInstance()->SFXLoadSound("resource/gun_shots.wav");
+	
+
 	//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
 	//CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
-
+	//CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
+	//CSGD_XAudio2::GetInstance()->MusicSetMasterVolume(m_nMusicVolume);
 	//CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
 }
 bool COptionsState::Input(void)
@@ -78,17 +84,20 @@ bool COptionsState::Input(void)
 		switch (m_nMenuSelection)
 		{
 		case OPTIONSMENU_SFXVOL:
-			m_nFXVolume -= 0.0001f;
+			m_nFXVolume -= 0.001f;
 			if( m_nFXVolume <= 0.0f )
 			{
 				m_nFXVolume = 0.0f;
 			}
+			CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
+			if(!CSGD_XAudio2::GetInstance()->SFXIsSoundPlaying(m_nSFX))
+				CSGD_XAudio2::GetInstance()->SFXPlaySound(m_nSFX);
 			//CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
 			break;
 
 		case OPTIONSMENU_MUSICVOL:
 			
-			m_nMusicVolume -= 0.01f;
+			m_nMusicVolume -= 0.001f;
 			if( m_nMusicVolume <= 0.0f )
 			{
 				m_nMusicVolume = 0.0f;
@@ -97,7 +106,7 @@ bool COptionsState::Input(void)
 			break;
 
 		case OPTIONSMENU_PAN:
-			m_nMusicPan -= 0.02f;
+			m_nMusicPan -= 0.002f;
 			if( m_nMusicPan <= -1.0f )
 			{
 				m_nMusicPan = -1.0f;
@@ -147,32 +156,35 @@ bool COptionsState::Input(void)
 		switch (m_nMenuSelection)
 		{
 		case OPTIONSMENU_SFXVOL:
-			m_nFXVolume += 0.0001f;
+			{			
+			m_nFXVolume += 0.001f;
 			if( m_nFXVolume >= 1.0f )
 			{
 				m_nFXVolume = 1.0f;
 			}
-			//CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+			CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
+			if(!CSGD_XAudio2::GetInstance()->SFXIsSoundPlaying(m_nSFX))
+				CSGD_XAudio2::GetInstance()->SFXPlaySound(m_nSFX); // play the sound on the press
+			}
 			break;
 
 		case OPTIONSMENU_MUSICVOL:
 			
-			m_nMusicVolume += 0.01f;
+			m_nMusicVolume += 0.001f;
 			if( m_nMusicVolume >= 1.0f )
 			{
 				m_nMusicVolume = 1.0f;
 			}
-			//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+			CSGD_XAudio2::GetInstance()->SFXStopSound(m_nSFX);
 			break;
 
 		case OPTIONSMENU_PAN:
-			m_nMusicPan += 0.02f;
+			m_nMusicPan += 0.002f;
 			if( m_nMusicPan >= 1.0f )
 			{
 				m_nMusicPan = 1.0f;
 			}
-			//CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
-			//CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+			
 			break;
 		}
 	}
@@ -228,11 +240,10 @@ bool COptionsState::Input(void)
 }
 void COptionsState::Update(void)
 {
+	
 	//TODO:
-	/*
-		if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nBGM) )
-				CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
-				*/
+
+	CSGD_XAudio2::GetInstance()->Update();
 		
 }
 void COptionsState::Render(void)
@@ -318,7 +329,7 @@ void COptionsState::Exit(void)
 	//TODO:
 	//CSGD_FModManager::GetInstance()->StopSound(m_nSFX);
 	//CSGD_FModManager::GetInstance()->StopSound(m_nBGM);
-	
+	CSGD_XAudio2::GetInstance()->SFXUnloadSound(m_nSFX);
 	//CSGD_FModManager::GetInstance()->UnloadSound(m_nSFX);
 	//CSGD_FModManager::GetInstance()->UnloadSound(m_nBGM);
 /*
