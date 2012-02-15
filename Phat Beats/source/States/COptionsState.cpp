@@ -260,7 +260,7 @@ void COptionsState::Render(void)
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	RECT rMenuOptions = { 225, 167, CGame::GetInstance()->GetScreenWidth(), 340};
-	CBitmapFont::GetInstance()->PrintInRect("SFX Volume\n\nMusic Volume\n\nMusic Pan\n\nStarting Lives\n\nWindowed Mode\n\nBack", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->PrintInRect("SFx volume\n\nMusic volume\n\nMusic Pan\n\nStarting Lives\n\nWindowed Mode\n\nBack", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));
 	//BF.PrintText("SFX Volume", 100, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 130, D3DCOLOR_XRGB(225, 225, 225));
