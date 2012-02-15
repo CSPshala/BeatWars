@@ -774,7 +774,7 @@ namespace SGP
             bool thereturn;
             float oldwidth = line.Width;
 
-            line.Width = width;
+            line.Width = width;            
 
             thereturn = DrawLine(x1, y1, x2, y2, color);
             line.Width = oldwidth;

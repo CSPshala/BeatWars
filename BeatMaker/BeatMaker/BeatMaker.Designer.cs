@@ -11,14 +11,14 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing && (components != null))
+        //    {
+        //        components.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         #region Windows Form Designer generated code
 
@@ -28,22 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BeatMaker));
-            this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.BeatMakerMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beatListxmlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicTrackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackPanel = new System.Windows.Forms.Panel();
+            this.ModeBox = new System.Windows.Forms.GroupBox();
+            this.BothRadio = new System.Windows.Forms.RadioButton();
+            this.IconsRadio = new System.Windows.Forms.RadioButton();
+            this.ArrowsRadio = new System.Windows.Forms.RadioButton();
             this.IconGroup = new System.Windows.Forms.GroupBox();
+            this.ArrowLabel = new System.Windows.Forms.Label();
             this.UpLeftPictureBox = new System.Windows.Forms.PictureBox();
             this.DownLeftPictureBox = new System.Windows.Forms.PictureBox();
             this.DownRightPictureBox = new System.Windows.Forms.PictureBox();
@@ -74,22 +81,20 @@
             this.PauseButton = new System.Windows.Forms.Button();
             this.FastForwardButton = new System.Windows.Forms.Button();
             this.InfoGroup = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.BPMCurrentLabel = new System.Windows.Forms.Label();
+            this.BPMLabel = new System.Windows.Forms.Label();
+            this.BeatCountLabel = new System.Windows.Forms.Label();
+            this.PlacedBeatsLabel = new System.Windows.Forms.Label();
+            this.TimeLengthLabel = new System.Windows.Forms.Label();
+            this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ModeBox = new System.Windows.Forms.GroupBox();
-            this.ArrowsRadio = new System.Windows.Forms.RadioButton();
-            this.IconsRadio = new System.Windows.Forms.RadioButton();
-            this.BothRadio = new System.Windows.Forms.RadioButton();
-            this.ArrowLabel = new System.Windows.Forms.Label();
-            this.musicVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MainMenuStrip.SuspendLayout();
+            this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.ModeBox.SuspendLayout();
             this.IconGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpLeftPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DownLeftPictureBox)).BeginInit();
@@ -106,20 +111,19 @@
             this.toolStrip1.SuspendLayout();
             this.PlayControlPanel.SuspendLayout();
             this.InfoGroup.SuspendLayout();
-            this.ModeBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // MainMenuStrip
+            // BeatMakerMenuStrip
             // 
-            this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.BeatMakerMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.MainMenuStrip.Name = "MainMenuStrip";
-            this.MainMenuStrip.Size = new System.Drawing.Size(1027, 24);
-            this.MainMenuStrip.TabIndex = 0;
-            this.MainMenuStrip.Text = "MainMenuStrip";
+            this.BeatMakerMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.BeatMakerMenuStrip.Name = "BeatMakerMenuStrip";
+            this.BeatMakerMenuStrip.Size = new System.Drawing.Size(1027, 24);
+            this.BeatMakerMenuStrip.TabIndex = 0;
+            this.BeatMakerMenuStrip.Text = "BeatMakerMenuStrip";
             // 
             // fileToolStripMenuItem
             // 
@@ -135,26 +139,41 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.newToolStripMenuItem.Text = "&New";
             // 
             // openToolStripMenuItem
             // 
+            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.beatListxmlToolStripMenuItem,
+            this.musicTrackToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // beatListxmlToolStripMenuItem
+            // 
+            this.beatListxmlToolStripMenuItem.Name = "beatListxmlToolStripMenuItem";
+            this.beatListxmlToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.beatListxmlToolStripMenuItem.Text = "&Beatlist";
+            // 
+            // musicTrackToolStripMenuItem
+            // 
+            this.musicTrackToolStripMenuItem.Name = "musicTrackToolStripMenuItem";
+            this.musicTrackToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.musicTrackToolStripMenuItem.Text = "&Music Track";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             // 
             // optionsToolStripMenuItem
@@ -164,6 +183,12 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // musicVolumeToolStripMenuItem
+            // 
+            this.musicVolumeToolStripMenuItem.Name = "musicVolumeToolStripMenuItem";
+            this.musicVolumeToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.musicVolumeToolStripMenuItem.Text = "Music &Volume";
             // 
             // helpToolStripMenuItem
             // 
@@ -177,13 +202,13 @@
             // viewHelpToolStripMenuItem
             // 
             this.viewHelpToolStripMenuItem.Name = "viewHelpToolStripMenuItem";
-            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewHelpToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.viewHelpToolStripMenuItem.Text = "&View Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             // 
             // MainStatusStrip
@@ -222,8 +247,56 @@
             this.TrackPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackPanel.Location = new System.Drawing.Point(3, 3);
             this.TrackPanel.Name = "TrackPanel";
-            this.TrackPanel.Size = new System.Drawing.Size(1017, 296);
+            this.TrackPanel.Size = new System.Drawing.Size(1017, 269);
             this.TrackPanel.TabIndex = 0;
+            // 
+            // ModeBox
+            // 
+            this.ModeBox.Controls.Add(this.BothRadio);
+            this.ModeBox.Controls.Add(this.IconsRadio);
+            this.ModeBox.Controls.Add(this.ArrowsRadio);
+            this.ModeBox.Location = new System.Drawing.Point(10, 149);
+            this.ModeBox.Name = "ModeBox";
+            this.ModeBox.Size = new System.Drawing.Size(188, 105);
+            this.ModeBox.TabIndex = 7;
+            this.ModeBox.TabStop = false;
+            this.ModeBox.Text = "Beat Placement Modes";
+            // 
+            // BothRadio
+            // 
+            this.BothRadio.Appearance = System.Windows.Forms.Appearance.Button;
+            this.BothRadio.AutoSize = true;
+            this.BothRadio.Location = new System.Drawing.Point(6, 76);
+            this.BothRadio.Name = "BothRadio";
+            this.BothRadio.Size = new System.Drawing.Size(111, 23);
+            this.BothRadio.TabIndex = 2;
+            this.BothRadio.TabStop = true;
+            this.BothRadio.Text = "Both (Simultaneous)";
+            this.BothRadio.UseVisualStyleBackColor = true;
+            // 
+            // IconsRadio
+            // 
+            this.IconsRadio.Appearance = System.Windows.Forms.Appearance.Button;
+            this.IconsRadio.AutoSize = true;
+            this.IconsRadio.Location = new System.Drawing.Point(6, 48);
+            this.IconsRadio.Name = "IconsRadio";
+            this.IconsRadio.Size = new System.Drawing.Size(65, 23);
+            this.IconsRadio.TabIndex = 1;
+            this.IconsRadio.TabStop = true;
+            this.IconsRadio.Text = "Just Icons";
+            this.IconsRadio.UseVisualStyleBackColor = true;
+            // 
+            // ArrowsRadio
+            // 
+            this.ArrowsRadio.Appearance = System.Windows.Forms.Appearance.Button;
+            this.ArrowsRadio.AutoSize = true;
+            this.ArrowsRadio.Location = new System.Drawing.Point(6, 19);
+            this.ArrowsRadio.Name = "ArrowsRadio";
+            this.ArrowsRadio.Size = new System.Drawing.Size(71, 23);
+            this.ArrowsRadio.TabIndex = 0;
+            this.ArrowsRadio.TabStop = true;
+            this.ArrowsRadio.Text = "Just Arrows";
+            this.ArrowsRadio.UseVisualStyleBackColor = true;
             // 
             // IconGroup
             // 
@@ -251,6 +324,15 @@
             this.IconGroup.TabIndex = 1;
             this.IconGroup.TabStop = false;
             this.IconGroup.Text = "Icon Selection";
+            // 
+            // ArrowLabel
+            // 
+            this.ArrowLabel.AutoSize = true;
+            this.ArrowLabel.Location = new System.Drawing.Point(295, 108);
+            this.ArrowLabel.Name = "ArrowLabel";
+            this.ArrowLabel.Size = new System.Drawing.Size(60, 13);
+            this.ArrowLabel.TabIndex = 17;
+            this.ArrowLabel.Text = "Arrow Keys";
             // 
             // UpLeftPictureBox
             // 
@@ -488,7 +570,7 @@
             this.PlayControlPanel.Controls.Add(this.StopButton);
             this.PlayControlPanel.Controls.Add(this.PauseButton);
             this.PlayControlPanel.Controls.Add(this.FastForwardButton);
-            this.PlayControlPanel.Location = new System.Drawing.Point(351, 25);
+            this.PlayControlPanel.Location = new System.Drawing.Point(256, 29);
             this.PlayControlPanel.Name = "PlayControlPanel";
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
@@ -510,6 +592,8 @@
             this.RewindButton.Size = new System.Drawing.Size(33, 32);
             this.RewindButton.TabIndex = 5;
             this.RewindButton.UseVisualStyleBackColor = true;
+            this.RewindButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RewindButton_MouseDown);
+            this.RewindButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.RewindButton_MouseUp);
             // 
             // PlayButton
             // 
@@ -529,6 +613,7 @@
             this.StopButton.Size = new System.Drawing.Size(33, 32);
             this.StopButton.TabIndex = 4;
             this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
             // PauseButton
             // 
@@ -538,6 +623,7 @@
             this.PauseButton.Size = new System.Drawing.Size(33, 32);
             this.PauseButton.TabIndex = 2;
             this.PauseButton.UseVisualStyleBackColor = true;
+            this.PauseButton.Click += new System.EventHandler(this.PauseButton_Click);
             // 
             // FastForwardButton
             // 
@@ -547,121 +633,103 @@
             this.FastForwardButton.Size = new System.Drawing.Size(33, 32);
             this.FastForwardButton.TabIndex = 3;
             this.FastForwardButton.UseVisualStyleBackColor = true;
+            this.FastForwardButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FastForwardButton_MouseDown);
+            this.FastForwardButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FastForwardButton_MouseUp);
             // 
             // InfoGroup
             // 
-            this.InfoGroup.Controls.Add(this.label3);
-            this.InfoGroup.Controls.Add(this.label2);
+            this.InfoGroup.Controls.Add(this.BPMCurrentLabel);
+            this.InfoGroup.Controls.Add(this.BPMLabel);
+            this.InfoGroup.Controls.Add(this.BeatCountLabel);
+            this.InfoGroup.Controls.Add(this.PlacedBeatsLabel);
+            this.InfoGroup.Controls.Add(this.TimeLengthLabel);
+            this.InfoGroup.Controls.Add(this.TimeCurrentLabel);
             this.InfoGroup.Controls.Add(this.label1);
             this.InfoGroup.Controls.Add(this.LengthLabel);
             this.InfoGroup.Location = new System.Drawing.Point(6, 5);
             this.InfoGroup.Name = "InfoGroup";
-            this.InfoGroup.Size = new System.Drawing.Size(290, 138);
+            this.InfoGroup.Size = new System.Drawing.Size(192, 138);
             this.InfoGroup.TabIndex = 0;
             this.InfoGroup.TabStop = false;
             this.InfoGroup.Text = "Song Info";
             // 
-            // label3
+            // BPMCurrentLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(81, 64);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "2:00";
+            this.BPMCurrentLabel.AutoSize = true;
+            this.BPMCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BPMCurrentLabel.Location = new System.Drawing.Point(81, 111);
+            this.BPMCurrentLabel.Name = "BPMCurrentLabel";
+            this.BPMCurrentLabel.Size = new System.Drawing.Size(13, 13);
+            this.BPMCurrentLabel.TabIndex = 8;
+            this.BPMCurrentLabel.Text = "0";
             // 
-            // label2
+            // BPMLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(80, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 24);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "0:0";
+            this.BPMLabel.AutoSize = true;
+            this.BPMLabel.Location = new System.Drawing.Point(42, 111);
+            this.BPMLabel.Name = "BPMLabel";
+            this.BPMLabel.Size = new System.Drawing.Size(33, 13);
+            this.BPMLabel.TabIndex = 6;
+            this.BPMLabel.Text = "BPM:";
+            // 
+            // BeatCountLabel
+            // 
+            this.BeatCountLabel.AutoSize = true;
+            this.BeatCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BeatCountLabel.Location = new System.Drawing.Point(81, 94);
+            this.BeatCountLabel.Name = "BeatCountLabel";
+            this.BeatCountLabel.Size = new System.Drawing.Size(13, 13);
+            this.BeatCountLabel.TabIndex = 5;
+            this.BeatCountLabel.Text = "0";
+            // 
+            // PlacedBeatsLabel
+            // 
+            this.PlacedBeatsLabel.AutoSize = true;
+            this.PlacedBeatsLabel.Location = new System.Drawing.Point(4, 94);
+            this.PlacedBeatsLabel.Name = "PlacedBeatsLabel";
+            this.PlacedBeatsLabel.Size = new System.Drawing.Size(73, 13);
+            this.PlacedBeatsLabel.TabIndex = 4;
+            this.PlacedBeatsLabel.Text = "Placed Beats:";
+            // 
+            // TimeLengthLabel
+            // 
+            this.TimeLengthLabel.AutoSize = true;
+            this.TimeLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeLengthLabel.Location = new System.Drawing.Point(81, 64);
+            this.TimeLengthLabel.Name = "TimeLengthLabel";
+            this.TimeLengthLabel.Size = new System.Drawing.Size(24, 13);
+            this.TimeLengthLabel.TabIndex = 3;
+            this.TimeLengthLabel.Text = "0(s)";
+            // 
+            // TimeCurrentLabel
+            // 
+            this.TimeCurrentLabel.AutoSize = true;
+            this.TimeCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TimeCurrentLabel.ForeColor = System.Drawing.Color.Red;
+            this.TimeCurrentLabel.Location = new System.Drawing.Point(80, 20);
+            this.TimeCurrentLabel.Name = "TimeCurrentLabel";
+            this.TimeCurrentLabel.Size = new System.Drawing.Size(45, 24);
+            this.TimeCurrentLabel.TabIndex = 2;
+            this.TimeCurrentLabel.Text = "0(s)";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(5, 28);
+            this.label1.Location = new System.Drawing.Point(6, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Current Time:";
+            this.label1.Text = "Play Time:";
             // 
             // LengthLabel
             // 
             this.LengthLabel.AutoSize = true;
-            this.LengthLabel.Location = new System.Drawing.Point(4, 64);
+            this.LengthLabel.Location = new System.Drawing.Point(5, 63);
             this.LengthLabel.Name = "LengthLabel";
             this.LengthLabel.Size = new System.Drawing.Size(71, 13);
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
-            // 
-            // ModeBox
-            // 
-            this.ModeBox.Controls.Add(this.BothRadio);
-            this.ModeBox.Controls.Add(this.IconsRadio);
-            this.ModeBox.Controls.Add(this.ArrowsRadio);
-            this.ModeBox.Location = new System.Drawing.Point(10, 149);
-            this.ModeBox.Name = "ModeBox";
-            this.ModeBox.Size = new System.Drawing.Size(144, 105);
-            this.ModeBox.TabIndex = 7;
-            this.ModeBox.TabStop = false;
-            this.ModeBox.Text = "Beat Placement Modes";
-            // 
-            // ArrowsRadio
-            // 
-            this.ArrowsRadio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.ArrowsRadio.AutoSize = true;
-            this.ArrowsRadio.Location = new System.Drawing.Point(6, 19);
-            this.ArrowsRadio.Name = "ArrowsRadio";
-            this.ArrowsRadio.Size = new System.Drawing.Size(71, 23);
-            this.ArrowsRadio.TabIndex = 0;
-            this.ArrowsRadio.TabStop = true;
-            this.ArrowsRadio.Text = "Just Arrows";
-            this.ArrowsRadio.UseVisualStyleBackColor = true;
-            // 
-            // IconsRadio
-            // 
-            this.IconsRadio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.IconsRadio.AutoSize = true;
-            this.IconsRadio.Location = new System.Drawing.Point(6, 48);
-            this.IconsRadio.Name = "IconsRadio";
-            this.IconsRadio.Size = new System.Drawing.Size(65, 23);
-            this.IconsRadio.TabIndex = 1;
-            this.IconsRadio.TabStop = true;
-            this.IconsRadio.Text = "Just Icons";
-            this.IconsRadio.UseVisualStyleBackColor = true;
-            // 
-            // BothRadio
-            // 
-            this.BothRadio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.BothRadio.AutoSize = true;
-            this.BothRadio.Location = new System.Drawing.Point(6, 76);
-            this.BothRadio.Name = "BothRadio";
-            this.BothRadio.Size = new System.Drawing.Size(111, 23);
-            this.BothRadio.TabIndex = 2;
-            this.BothRadio.TabStop = true;
-            this.BothRadio.Text = "Both (Simultaneous)";
-            this.BothRadio.UseVisualStyleBackColor = true;
-            // 
-            // ArrowLabel
-            // 
-            this.ArrowLabel.AutoSize = true;
-            this.ArrowLabel.Location = new System.Drawing.Point(295, 108);
-            this.ArrowLabel.Name = "ArrowLabel";
-            this.ArrowLabel.Size = new System.Drawing.Size(60, 13);
-            this.ArrowLabel.TabIndex = 17;
-            this.ArrowLabel.Text = "Arrow Keys";
-            // 
-            // musicVolumeToolStripMenuItem
-            // 
-            this.musicVolumeToolStripMenuItem.Name = "musicVolumeToolStripMenuItem";
-            this.musicVolumeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.musicVolumeToolStripMenuItem.Text = "Music &Volume";
             // 
             // BeatMaker
             // 
@@ -670,16 +738,19 @@
             this.ClientSize = new System.Drawing.Size(1027, 591);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.MainStatusStrip);
-            this.Controls.Add(this.MainMenuStrip);
+            this.Controls.Add(this.BeatMakerMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BeatMaker";
             this.Text = "BeatMaker";
-            this.MainMenuStrip.ResumeLayout(false);
-            this.MainMenuStrip.PerformLayout();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BeatMaker_FormClosing);
+            this.BeatMakerMenuStrip.ResumeLayout(false);
+            this.BeatMakerMenuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.ModeBox.ResumeLayout(false);
+            this.ModeBox.PerformLayout();
             this.IconGroup.ResumeLayout(false);
             this.IconGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpLeftPictureBox)).EndInit();
@@ -700,8 +771,6 @@
             this.PlayControlPanel.PerformLayout();
             this.InfoGroup.ResumeLayout(false);
             this.InfoGroup.PerformLayout();
-            this.ModeBox.ResumeLayout(false);
-            this.ModeBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -709,7 +778,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip MainMenuStrip;
+        private System.Windows.Forms.MenuStrip BeatMakerMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -753,17 +822,22 @@
         private System.Windows.Forms.PictureBox DownRightPictureBox;
         private System.Windows.Forms.PictureBox DownPictureBox;
         private System.Windows.Forms.Label PlayLabel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label TimeLengthLabel;
+        private System.Windows.Forms.Label TimeCurrentLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LengthLabel;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem musicVolumeToolStripMenuItem;
         private System.Windows.Forms.GroupBox ModeBox;
         private System.Windows.Forms.RadioButton BothRadio;
         private System.Windows.Forms.RadioButton IconsRadio;
         private System.Windows.Forms.RadioButton ArrowsRadio;
         private System.Windows.Forms.Label ArrowLabel;
+        private System.Windows.Forms.Label BPMCurrentLabel;
+        private System.Windows.Forms.Label BPMLabel;
+        private System.Windows.Forms.Label BeatCountLabel;
+        private System.Windows.Forms.Label PlacedBeatsLabel;
+        private System.Windows.Forms.ToolStripMenuItem beatListxmlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem musicTrackToolStripMenuItem;
     }
 }
 

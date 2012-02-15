@@ -72,6 +72,7 @@
     <Compile Include="fmod_dsp.cs" />
     <Compile Include="fmod_errors.cs" />
     <Compile Include="fmod_memoryinfo.cs" />
+    <Compile Include="JCTimer.cs" />
     <Compile Include="ManagedDirect3D.cs" />
     <Compile Include="ManagedTextureManager.cs" />
     <Compile Include="Program.cs" />
