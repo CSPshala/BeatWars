@@ -50,7 +50,7 @@ namespace BeatMaker
         }      
 
         // Have to override dispose to properly kill FMOD since it's unmanaged
-       void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {              
