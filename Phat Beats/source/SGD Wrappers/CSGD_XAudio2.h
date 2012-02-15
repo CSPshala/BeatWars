@@ -713,11 +713,31 @@ public:
 	void MusicStopSong(int nID);
 
 	///////////////////////////////////////////////////////////////////
+	//	Function:	"MusicPauseSong"
+	//
+	//	Last Modified:		2/11/2012
+	//
+	//	Input:		nID	-	The id of the music to pause.
+	//				bPause - Pause = true , Unpause = false
+	//
+	//	Return:		void
+	//
+	//	Purpose:	To pause / unpause a playing song.
+	//
+	//	NOTE:		Pauses / Unpauses ALL instances of the currently playing song.
+	//				Use carefully because I dunno if there's any side effects to how I do this
+	//				DONT USE PLAYSONG to try and start playing again, just call this with TRUE
+	//				for param 2
+	///////////////////////////////////////////////////////////////////
+	void MusicPauseSong(int nID,bool bPause);
+
+	///////////////////////////////////////////////////////////////////
 	//	Function:	"MusicIsSongPlaying"
 	//
 	//	Last Modified:		12/29/2011
 	//
 	//	Input:		nID	-	The id of the music to check.
+	//				bPause - Pauses the track defaults to false
 	//
 	//	Return:		true, if it found an instance of the song playing.
 	//
