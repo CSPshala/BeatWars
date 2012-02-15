@@ -50,16 +50,16 @@ namespace BeatMaker
         }      
 
         // Have to override dispose to properly kill FMOD since it's unmanaged
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {              
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {              
 
-                if (theSong != null)
-                    theSong.release();              
+        //        if (theSong != null)
+        //            theSong.release();              
                 
-            }
-        }
+        //    }
+        //}
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
