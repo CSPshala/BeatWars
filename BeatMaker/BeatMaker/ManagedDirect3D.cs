@@ -736,8 +736,38 @@ namespace SGP
             verts[1].X = x2;
             verts[1].Y = y2;
 
-            line.Draw(verts, color); 
+            line.Draw(verts, color);          
             
+
+            return true;
+        }
+
+        /// <summary>
+        /// Draws like other DrawLines but with floats
+        /// </summary>
+        /// <param name="x1">Starting X position.</param>
+        /// <param name="y1">Starting Y position.</param>
+        /// <param name="x2">Ending X position.</param>
+        /// <param name="y2">Ending Y position.</param>
+        /// <param name="color">The color of the rect we are going to draw.</param>
+        /// <returns>true if successful, false otherwise.</returns>
+        public bool DrawLineF(float x1, float y1, float x2, float y2, System.Drawing.Color color)
+        {
+            if (line == null)
+                return false;
+
+            Vector2[] verts = new Vector2[2];
+
+            //Top
+            verts[0].X = x1;
+            verts[0].Y = y1;
+
+            verts[1].X = x2;
+            verts[1].Y = y2;
+
+            line.Draw(verts, color);
+
+
             return true;
         }
 
@@ -816,7 +846,7 @@ namespace SGP
             font.DrawText(sprite, text, new System.Drawing.Point(x, y), color);
 
             return true;
-        }
+        }       
 
         /// <summary>
         /// Draws colored text to the screen.

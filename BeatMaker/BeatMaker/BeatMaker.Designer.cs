@@ -121,7 +121,7 @@
             this.helpToolStripMenuItem});
             this.BeatMakerMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.BeatMakerMenuStrip.Name = "BeatMakerMenuStrip";
-            this.BeatMakerMenuStrip.Size = new System.Drawing.Size(1027, 24);
+            this.BeatMakerMenuStrip.Size = new System.Drawing.Size(1042, 24);
             this.BeatMakerMenuStrip.TabIndex = 0;
             this.BeatMakerMenuStrip.Text = "BeatMakerMenuStrip";
             // 
@@ -215,7 +215,7 @@
             // 
             this.MainStatusStrip.Location = new System.Drawing.Point(0, 569);
             this.MainStatusStrip.Name = "MainStatusStrip";
-            this.MainStatusStrip.Size = new System.Drawing.Size(1027, 22);
+            this.MainStatusStrip.Size = new System.Drawing.Size(1042, 22);
             this.MainStatusStrip.TabIndex = 1;
             this.MainStatusStrip.Text = "MainStatusStrip";
             // 
@@ -237,7 +237,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.IconGroup);
             this.splitContainer1.Panel2.Controls.Add(this.PlayControlPanel);
             this.splitContainer1.Panel2.Controls.Add(this.InfoGroup);
-            this.splitContainer1.Size = new System.Drawing.Size(1027, 545);
+            this.splitContainer1.Size = new System.Drawing.Size(1042, 545);
             this.splitContainer1.SplitterDistance = 279;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -247,7 +247,7 @@
             this.TrackPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackPanel.Location = new System.Drawing.Point(3, 3);
             this.TrackPanel.Name = "TrackPanel";
-            this.TrackPanel.Size = new System.Drawing.Size(1017, 269);
+            this.TrackPanel.Size = new System.Drawing.Size(1033, 269);
             this.TrackPanel.TabIndex = 0;
             // 
             // ModeBox
@@ -735,7 +735,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1027, 591);
+            this.ClientSize = new System.Drawing.Size(1042, 591);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.MainStatusStrip);
             this.Controls.Add(this.BeatMakerMenuStrip);
