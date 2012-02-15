@@ -1181,7 +1181,25 @@ void CSGD_XAudio2::MusicStopSong(int nID)
 		if( m_vVoices[i].m_bIsMusic && m_vVoices[i].currentSoundID == nID )
 		{
 			m_vVoices[i].m_bIsLooping = false;
-			RecycleVoiceNow(i);
+			RecycleVoiceNow(i);			
+		}
+	}
+}
+
+void CSGD_XAudio2::MusicPauseSong(int nID,bool bPause)
+{
+	assert( nID > -1 && nID < (int)m_vMusicLibrary.size() && "Song ID out of range" );
+	assert( m_vMusicLibrary[nID].m_bInUse && "Song ID not loaded" );
+
+	for(unsigned int i=0; i < m_vVoices.size(); i++)
+	{
+		// Pause ALL INSTANCES of this sound
+		if( m_vVoices[i].m_bIsMusic && m_vVoices[i].currentSoundID == nID )
+		{
+			if(bPause)
+				m_vVoices[i].m_pVoice->Stop(0);
+			else
+				m_vVoices[i].m_pVoice->Start(0);
 		}
 	}
 }
