@@ -129,6 +129,12 @@
     <ClCompile Include="source\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\CBitmapFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\COptionsState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -235,6 +241,15 @@
     </ClInclude>
     <ClInclude Include="source\JCMacros.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\CBitmapFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\COptionsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CEventManager.h">
+      <Filter>Managers / Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

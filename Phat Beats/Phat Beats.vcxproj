@@ -126,6 +126,7 @@
     <ClInclude Include="source\JCMacros.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
+    <ClInclude Include="source\Managers\CEventManager.h" />
     <ClInclude Include="source\Managers\CFXManager.h" />
     <ClInclude Include="source\Managers\CObjectFactory.h" />
     <ClInclude Include="source\Managers\CObjectManager.h" />
