@@ -135,6 +135,15 @@
     <ClCompile Include="source\States\COptionsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Managers\CEventSystem.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CMessages.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CMessageSystem.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -248,7 +257,19 @@
     <ClInclude Include="source\States\COptionsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Managers\CEventManager.h">
+    <ClInclude Include="source\Managers\CEvent.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CEventSystem.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CMessages.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CMessageSystem.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\IListener.h">
       <Filter>Managers / Factories</Filter>
     </ClInclude>
   </ItemGroup>

@@ -86,7 +86,10 @@
     <ClCompile Include="source\CSong.cpp" />
     <ClCompile Include="source\Managers\CAnimationManager.cpp" />
     <ClCompile Include="source\Managers\CBeatManager.cpp" />
+    <ClCompile Include="source\Managers\CEventSystem.cpp" />
     <ClCompile Include="source\Managers\CFXManager.cpp" />
+    <ClCompile Include="source\Managers\CMessages.cpp" />
+    <ClCompile Include="source\Managers\CMessageSystem.cpp" />
     <ClCompile Include="source\Managers\CObjectManager.cpp" />
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
@@ -126,11 +129,15 @@
     <ClInclude Include="source\JCMacros.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
-    <ClInclude Include="source\Managers\CEventManager.h" />
+    <ClInclude Include="source\Managers\CEvent.h" />
+    <ClInclude Include="source\Managers\CEventSystem.h" />
     <ClInclude Include="source\Managers\CFXManager.h" />
+    <ClInclude Include="source\Managers\CMessages.h" />
+    <ClInclude Include="source\Managers\CMessageSystem.h" />
     <ClInclude Include="source\Managers\CObjectFactory.h" />
     <ClInclude Include="source\Managers\CObjectManager.h" />
     <ClInclude Include="source\Managers\CXml_Manager.h" />
+    <ClInclude Include="source\Managers\IListener.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_DirectInput.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h" />

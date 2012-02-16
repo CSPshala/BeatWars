@@ -10,7 +10,7 @@ using std::list;
 #include "CEvent.h"
 #include "IListener.h"
 
-class CSGD_EventSystem
+class CEventSystem
 {
 	private:
 		//	Our Database, this will contain clients that can "listen" for events.
@@ -26,17 +26,17 @@ class CSGD_EventSystem
 		void DispatchEvent(CEvent* pEvent);
 		bool AlreadyRegistered(EVENTID eventID, IListener* pClient);
 
-		CSGD_EventSystem() {}
-		CSGD_EventSystem(const CSGD_EventSystem&);
-		CSGD_EventSystem& operator=(const CSGD_EventSystem&);
+		CEventSystem() {}
+		CEventSystem(const CEventSystem&);
+		CEventSystem& operator=(const CEventSystem&);
 
-		~CSGD_EventSystem() {}
+		~CEventSystem() {}
 
 	public:
 
-		static CSGD_EventSystem* GetInstance(void)
+		static CEventSystem* GetInstance(void)
 		{
-			static CSGD_EventSystem instance;
+			static CEventSystem instance;
 			return &instance;
 		}
 

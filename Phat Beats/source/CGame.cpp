@@ -19,6 +19,8 @@ CGame::CGame()
 	m_pTM	= NULL;
 	m_pXA	= NULL;	
 	m_pBF	= NULL;
+	m_pES	= NULL;
+	m_pMS	= NULL;
 }
 
 CGame::~CGame()
@@ -42,6 +44,8 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pTM	= CSGD_TextureManager::GetInstance();
 	m_pXA	= CSGD_XAudio2::GetInstance();
 	m_pBF	= CBitmapFont::GetInstance();
+	m_pES	= CEventSystem::GetInstance();
+	m_pMS	= CMessageSystem::GetInstance();
 
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
@@ -122,6 +126,9 @@ void CGame::Update()
 	cTimer.Update();
 
 	m_pCurState->Update();	// must be called or you will mess stuff up
+	m_pES->ProcessEvents();
+	m_pMS->ProcessMessages();
+
 }
 
 void CGame::Render()
@@ -140,7 +147,12 @@ void CGame::Render()
 
 void CGame::Shutdown()
 {
-	
+	if(m_pMS)
+	{
+		m_pMS->ShutdownMessageSystem();
+		m_pMS = NULL;
+	}
+	m_pES->ShutdownEventSystem();
 	// Shutdown in the opposite order
 	if(m_pXA)
 	{

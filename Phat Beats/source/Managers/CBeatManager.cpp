@@ -11,10 +11,11 @@
 #include "../JCMacros.h"
 #include "../SGD Wrappers/CSGD_XAudio2.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
+#include "../SGD Wrappers/CSGD_Direct3D.h"
 //#include "CObjectFactory.h"
 #include "../XML/tinystr.h"
 #include "../XML/tinyxml.h"
-
+#include "CEventSystem.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -26,11 +27,13 @@ CBeatManager::CBeatManager()
 {
 	SetNumberNotesHit(0);
 	SetPause(true);
+	CEventSystem::GetInstance()->RegisterClient("test.event",this);
+	fuckyou = false;
 }
 
 CBeatManager::~CBeatManager()
 {
-
+	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
 }
 
 ////////////////////////////////////////
@@ -43,7 +46,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	// Song for new song creation
 	CSong theSong;
 
-	// Adding path to filename for beatlists
+	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
 	szPath += szFileName;
 
@@ -289,6 +292,17 @@ void CBeatManager::Update()
 void CBeatManager::Render()
 {
 	m_vSongs[0].RenderSong();
+
+	if (fuckyou == true)
+	{
+		CSGD_Direct3D::GetInstance()->DrawTextA("Note is past XY 200 pix",500,500,255,0,0);
+	}
+}
+
+void CBeatManager::HandleEvent( CEvent* pEvent )
+{
+	if(pEvent->GetEventID() == "test.event")
+		fuckyou = true;
 }
 
 ////////////////////////////////////////

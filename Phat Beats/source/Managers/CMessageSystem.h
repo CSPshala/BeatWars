@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Messages.h"
+#include "CMessages.h"
 #include <queue>
 using std::queue;
 
@@ -14,21 +14,21 @@ typedef void (*MESSAGEPROC)(CBaseMessage*);
 
 
 
-class CSGD_MessageSystem
+class CMessageSystem
 {
 private:
 	queue<CBaseMessage*>			m_MsgQueue;				//	Stores my messages.
 	MESSAGEPROC						m_pfnMsgProc;			//	Points to user defined function.
 
-	CSGD_MessageSystem() { m_pfnMsgProc = NULL;	}
-	CSGD_MessageSystem(const CSGD_MessageSystem&);
-	CSGD_MessageSystem& operator=(const CSGD_MessageSystem&);
+	CMessageSystem() { m_pfnMsgProc = NULL;	}
+	CMessageSystem(const CMessageSystem&);
+	CMessageSystem& operator=(const CMessageSystem&);
 
-	~CSGD_MessageSystem() {}
+	~CMessageSystem() {}
 
 public:
 	
-	static CSGD_MessageSystem* GetInstance(void);
+	static CMessageSystem* GetInstance(void);
 
 	//	How many messages waiting to be processed.
 	inline int GetNumMessages(void) { return (int)m_MsgQueue.size(); }

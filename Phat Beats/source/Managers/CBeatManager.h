@@ -17,7 +17,7 @@ using std::vector;
 using std::string;
 
 #include "../CSong.h"  
-
+#include "IListener.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -27,7 +27,7 @@ using std::string;
 ////////////////////////////////////////
 
 
-class CBeatManager
+class CBeatManager: public IListener
 {
 public:
 
@@ -49,7 +49,7 @@ public:
 		vector<int>&		GetSongBackground() {return m_nvImageID;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
-
+		void HandleEvent(CEvent* pEvent);
 private:
 
 	/********** Private Members ************/
@@ -57,7 +57,8 @@ private:
 		vector<int> m_nvImageID;
 		int m_nNumHit;
 		bool m_bPause;
-	/********** Private Accessors ************/
+		bool fuckyou;
+		/********** Private Accessors ************/
 		bool GetPause() {return m_bPause;}
 
 	/********** Private Mutators ************/

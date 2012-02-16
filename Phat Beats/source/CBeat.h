@@ -12,7 +12,9 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include "CBase.h"
-
+#include "Managers/IListener.h"
+#include "Managers/CEventSystem.h"
+#include "Managers/CMessageSystem.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -24,7 +26,7 @@
 enum BeatDirection {LEFT,UP,RIGHT,DOWN,LEFTUP,RIGHTUP,RIGHTDOWN,LEFTDOWN};
 enum BeatDifficulty {EASY,NORMAL,HARD};
 
-class CBeat : public CBase
+class CBeat : public CBase, IListener
 {
 public:
 	/********** Construct / Deconstruct / OP Overloads ************/
@@ -34,6 +36,7 @@ public:
 		CBeat& operator=(const CBeat&);
 	/********** Public Utility Functions ************/
 		void ResetBeat();
+		void Update(float fElapsedTime);
 
 	/********** Public Accessors ************/
 		float			GetTimeOfBeat() {return m_fTimeofBeat;}
@@ -45,7 +48,7 @@ public:
 		void	SetDifficulty(int	nDifficulty) {m_nDifficulty = nDifficulty;}
 		void	SetKeyToPress(char	cKey) {m_cKeyToPress = cKey;}
 		void	SetDirection(BeatDirection);
-
+		void	HandleEvent(CEvent* pEvent);
 private:	
 
 	/********** Private Members ************/

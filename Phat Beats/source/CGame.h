@@ -18,6 +18,9 @@
 #include "States\CMenu_State.h"
 #include "CBase.h"
 #include "Timer.h"
+// Messages and Event system by Dave Brown
+#include "Managers/CEventSystem.h"
+#include "Managers/CMessageSystem.h"
 
 #include <string>
 using std::string;
@@ -32,8 +35,10 @@ private:
 	CSGD_TextureManager*	m_pTM;
 	CSGD_XAudio2*			m_pXA;
 	CBitmapFont*			m_pBF;
+	CEventSystem*			m_pES;
+	CMessageSystem*			m_pMS;
 
-	// Gamestate Pointer
+	// Game state Pointer
 	IGameState* m_pCurState;
 
 	// Asset IDs:

@@ -25,10 +25,12 @@ CBeat::CBeat() : CBase()
 	SetDifficulty(0);
 	SetDirection(UP);
 	m_nType = OBJ_BEAT;
+	CEventSystem::GetInstance()->RegisterClient("test.event",this);
 }
 
 CBeat::~CBeat()
 {
+	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
 }
 
 CBeat::CBeat(const CBeat& theBeat)
@@ -59,6 +61,20 @@ void CBeat::ResetBeat()
 	SetPosX(GetOriginalXPos());
 	SetPosY(GetOriginalYPos());
 	SetIsActive(false);
+}
+
+void CBeat::Update(float fElapsedTime)
+{
+	CBase::Update(fElapsedTime);
+
+	if((GetPosX() > 200 && GetPosY() > 200))
+		CEventSystem::GetInstance()->SendEvent("test.event",this);
+
+	if (GetPosX() < 0 && GetPosY() < 0)
+	{
+		CMessageSystem::GetInstance()->SendMsg(new CCreateTestMsg());
+	}
+
 }
 
 ////////////////////////////////////////
@@ -138,7 +154,15 @@ void CBeat::SetDirection(BeatDirection dir)
 	// Setting original position
 	SetOriginalXPos(GetPosX());
 	SetOriginalYPos(GetPosY());
+
+
 }
+
+void CBeat::HandleEvent( CEvent* pEvent )
+{
+
+}
+
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS
 ////////////////////////////////////////

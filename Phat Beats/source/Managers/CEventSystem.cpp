@@ -1,7 +1,7 @@
-#include "CSGD_EventSystem.h"
+#include "CEventSystem.h"
 
 //	Register Client.
-void CSGD_EventSystem::RegisterClient(EVENTID eventID, IListener* pClient)
+void CEventSystem::RegisterClient(EVENTID eventID, IListener* pClient)
 {
 	//	Error check to make sure the client exists and hasn't been registered for this event already.
 	if (!pClient || AlreadyRegistered(eventID, pClient))	return;
@@ -11,7 +11,7 @@ void CSGD_EventSystem::RegisterClient(EVENTID eventID, IListener* pClient)
 }
 
 //	Unregister Client
-void CSGD_EventSystem::UnregisterClient(EVENTID eventID, IListener *pClient)
+void CEventSystem::UnregisterClient(EVENTID eventID, IListener *pClient)
 {
 	//	Make an iterator that will iterate all of our clients that
 	//	should be receiveing this event
@@ -36,7 +36,7 @@ void CSGD_EventSystem::UnregisterClient(EVENTID eventID, IListener *pClient)
 }
 
 //	Unregister Client All
-void CSGD_EventSystem::UnregisterClientAll(IListener *pClient)
+void CEventSystem::UnregisterClientAll(IListener *pClient)
 {
 	multimap<string, IListener*>::iterator mmIter = m_ClientDatabase.begin();
 
@@ -52,7 +52,7 @@ void CSGD_EventSystem::UnregisterClientAll(IListener *pClient)
 }
 
 //	Dispatch Event.
-void CSGD_EventSystem::DispatchEvent(CEvent *pEvent)
+void CEventSystem::DispatchEvent(CEvent *pEvent)
 {
 	//	Make an iterator that will iterate all of our clients that
 	//	should be receiveing this event
@@ -71,7 +71,7 @@ void CSGD_EventSystem::DispatchEvent(CEvent *pEvent)
 	}
 }
 
-bool CSGD_EventSystem::AlreadyRegistered(EVENTID eventID, IListener* pClient)
+bool CEventSystem::AlreadyRegistered(EVENTID eventID, IListener* pClient)
 {
 	bool bIsAlreadyRegistered = false;
 
@@ -99,7 +99,7 @@ bool CSGD_EventSystem::AlreadyRegistered(EVENTID eventID, IListener* pClient)
 }
 
 
-void CSGD_EventSystem::SendEvent(EVENTID eventID, void* pData)
+void CEventSystem::SendEvent(EVENTID eventID, void* pData)
 {
 	//	Push my event into the list.
 	CEvent newEvent(eventID, pData);
@@ -107,7 +107,7 @@ void CSGD_EventSystem::SendEvent(EVENTID eventID, void* pData)
 	m_CurrentEvents.push_back(newEvent);
 }
 
-void CSGD_EventSystem::ProcessEvents(void)
+void CEventSystem::ProcessEvents(void)
 {
 	//	Go through my list of events that are waiting to be processed.
 	while(m_CurrentEvents.size())
@@ -117,12 +117,12 @@ void CSGD_EventSystem::ProcessEvents(void)
 	}
 }
 
-void CSGD_EventSystem::ClearEvents(void)
+void CEventSystem::ClearEvents(void)
 {
 	m_CurrentEvents.clear();
 }
 
-void CSGD_EventSystem::ShutdownEventSystem(void)
+void CEventSystem::ShutdownEventSystem(void)
 {
 	m_ClientDatabase.clear();
 }

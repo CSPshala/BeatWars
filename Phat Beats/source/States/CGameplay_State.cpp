@@ -5,7 +5,9 @@
 //////////////////////////////////////////////////////
 
 #include "CGameplay_State.h"
+#include "../SGD Wrappers/CSGD_Direct3D.h"
 
+bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
 	m_bMenu_Font = NULL;
@@ -24,6 +26,7 @@ CGameplay_State::~CGameplay_State()
 void CGameplay_State::Enter(void)
 {
 	BeatManager.LoadSong("songtest1.xml");
+	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 }
 
 bool CGameplay_State::Input(void)
@@ -54,19 +57,17 @@ void CGameplay_State::Update(void)
 
 void CGameplay_State::Render(void)
 {
-	CSGD_Direct3D::GetInstance()->Clear(0,0,0);
-	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();
+	
 		
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	
 	BeatManager.Render();
+	if (dickhead == true)
+	{
+		CSGD_Direct3D::GetInstance()->DrawTextA("this is a message test",320,340,255,0,0);
+	}
 	
-	
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->DeviceEnd();
-	CSGD_Direct3D::GetInstance()->Present();
 }
 
 void CGameplay_State::Exit(void)
@@ -79,4 +80,19 @@ CGameplay_State* CGameplay_State::GetInstance()
 	// Lazy instantiation
 	static CGameplay_State instance; // Static allows passing back of address
 	return &instance;	
+}
+
+void CGameplay_State::HandleEvent( CEvent* pEvent )
+{
+
+}
+
+void CGameplay_State::MessageProc( CBaseMessage* pMsg )
+{
+	switch (pMsg->GetMsgID())
+	{
+	case MSG_TEST:
+		dickhead = true;
+		break;
+	}
 }

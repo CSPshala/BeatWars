@@ -1,14 +1,14 @@
 //	CSGD_MessageSystem.cpp
 
-#include "CSGD_MessageSystem.h"
+#include "CMessageSystem.h"
 
-CSGD_MessageSystem* CSGD_MessageSystem::GetInstance(void)
+CMessageSystem* CMessageSystem::GetInstance(void)
 {
-	static CSGD_MessageSystem instance;
+	static CMessageSystem instance;
 	return &instance;
 }
 
-void CSGD_MessageSystem::InitMessageSystem(MESSAGEPROC pfnMsgProc)
+void CMessageSystem::InitMessageSystem(MESSAGEPROC pfnMsgProc)
 {
 	//	Error check to make sure the message proc is valid.
 	if (!pfnMsgProc)	return;
@@ -17,7 +17,7 @@ void CSGD_MessageSystem::InitMessageSystem(MESSAGEPROC pfnMsgProc)
 	m_pfnMsgProc = pfnMsgProc;
 }
 
-void CSGD_MessageSystem::SendMsg(CBaseMessage* pMsg)
+void CMessageSystem::SendMsg(CBaseMessage* pMsg)
 {
 	//	Make sure the message exists.
 	if (!pMsg)	return;
@@ -26,7 +26,7 @@ void CSGD_MessageSystem::SendMsg(CBaseMessage* pMsg)
 	m_MsgQueue.push(pMsg);
 }
 
-void CSGD_MessageSystem::ProcessMessages(void)
+void CMessageSystem::ProcessMessages(void)
 {
 	//	Error check to make sure we get a message proc.
 	if(!m_pfnMsgProc)	return;
@@ -40,7 +40,7 @@ void CSGD_MessageSystem::ProcessMessages(void)
 	}
 }
 
-void CSGD_MessageSystem::ClearMessages(void)
+void CMessageSystem::ClearMessages(void)
 {
 	//	Clear out any messages waititng.
 	while(!m_MsgQueue.empty())
@@ -50,7 +50,7 @@ void CSGD_MessageSystem::ClearMessages(void)
 	}
 }
 
-void CSGD_MessageSystem::ShutdownMessageSystem(void)
+void CMessageSystem::ShutdownMessageSystem(void)
 {
 	//	Clear out any messages waiting.
 	ClearMessages();
