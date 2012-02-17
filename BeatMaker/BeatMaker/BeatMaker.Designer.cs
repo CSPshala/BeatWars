@@ -39,6 +39,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setSongTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,6 +142,7 @@
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -150,36 +152,40 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "&Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // beatListxmlToolStripMenuItem
             // 
             this.beatListxmlToolStripMenuItem.Name = "beatListxmlToolStripMenuItem";
             this.beatListxmlToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.beatListxmlToolStripMenuItem.Text = "&Beatlist";
+            this.beatListxmlToolStripMenuItem.Click += new System.EventHandler(this.beatListxmlToolStripMenuItem_Click);
             // 
             // musicTrackToolStripMenuItem
             // 
             this.musicTrackToolStripMenuItem.Name = "musicTrackToolStripMenuItem";
             this.musicTrackToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.musicTrackToolStripMenuItem.Text = "&Music Track";
+            this.musicTrackToolStripMenuItem.Click += new System.EventHandler(this.musicTrackToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.musicVolumeToolStripMenuItem});
+            this.musicVolumeToolStripMenuItem,
+            this.setSongTitleToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -189,6 +195,13 @@
             this.musicVolumeToolStripMenuItem.Name = "musicVolumeToolStripMenuItem";
             this.musicVolumeToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.musicVolumeToolStripMenuItem.Text = "Music &Volume";
+            // 
+            // setSongTitleToolStripMenuItem
+            // 
+            this.setSongTitleToolStripMenuItem.Name = "setSongTitleToolStripMenuItem";
+            this.setSongTitleToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setSongTitleToolStripMenuItem.Text = "&Set Song Title";
+            this.setSongTitleToolStripMenuItem.Click += new System.EventHandler(this.setSongTitleToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -223,6 +236,7 @@
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -543,24 +557,28 @@
             this.loadWImageToolStripMenuItem.Name = "loadWImageToolStripMenuItem";
             this.loadWImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.loadWImageToolStripMenuItem.Text = "Load \'W\' Image";
+            this.loadWImageToolStripMenuItem.Click += new System.EventHandler(this.loadWImageToolStripMenuItem_Click);
             // 
             // loadAImageToolStripMenuItem
             // 
             this.loadAImageToolStripMenuItem.Name = "loadAImageToolStripMenuItem";
             this.loadAImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.loadAImageToolStripMenuItem.Text = "Load \'A\' Image";
+            this.loadAImageToolStripMenuItem.Click += new System.EventHandler(this.loadAImageToolStripMenuItem_Click);
             // 
             // loadSImageToolStripMenuItem
             // 
             this.loadSImageToolStripMenuItem.Name = "loadSImageToolStripMenuItem";
             this.loadSImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.loadSImageToolStripMenuItem.Text = "Load \'S\' Image";
+            this.loadSImageToolStripMenuItem.Click += new System.EventHandler(this.loadSImageToolStripMenuItem_Click);
             // 
             // loadDImageToolStripMenuItem
             // 
             this.loadDImageToolStripMenuItem.Name = "loadDImageToolStripMenuItem";
             this.loadDImageToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.loadDImageToolStripMenuItem.Text = "Load \'D\' Image";
+            this.loadDImageToolStripMenuItem.Click += new System.EventHandler(this.loadDImageToolStripMenuItem_Click);
             // 
             // PlayControlPanel
             // 
@@ -570,7 +588,7 @@
             this.PlayControlPanel.Controls.Add(this.StopButton);
             this.PlayControlPanel.Controls.Add(this.PauseButton);
             this.PlayControlPanel.Controls.Add(this.FastForwardButton);
-            this.PlayControlPanel.Location = new System.Drawing.Point(256, 29);
+            this.PlayControlPanel.Location = new System.Drawing.Point(290, 29);
             this.PlayControlPanel.Name = "PlayControlPanel";
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
@@ -740,9 +758,12 @@
             this.Controls.Add(this.MainStatusStrip);
             this.Controls.Add(this.BeatMakerMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "BeatMaker";
             this.Text = "BeatMaker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BeatMaker_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.BeatMaker_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.BeatMaker_KeyUp);
             this.BeatMakerMenuStrip.ResumeLayout(false);
             this.BeatMakerMenuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -838,6 +859,7 @@
         private System.Windows.Forms.Label PlacedBeatsLabel;
         private System.Windows.Forms.ToolStripMenuItem beatListxmlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem musicTrackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setSongTitleToolStripMenuItem;
     }
 }
 
