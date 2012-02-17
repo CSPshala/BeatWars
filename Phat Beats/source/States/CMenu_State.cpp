@@ -21,6 +21,7 @@ CMenu_State::CMenu_State()
 	m_nTitleID = -1;
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
+	m_nTile = -1;
 }
 
 CMenu_State::~CMenu_State()
@@ -33,6 +34,7 @@ void CMenu_State::Enter(void)
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor.png");
+	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
 }
 
 bool CMenu_State::Input(void)
@@ -109,7 +111,8 @@ void CMenu_State::Render(void)
 	RECT rTitle = {0,25,800,75};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,1.6f,1.3f);
 	CBitmapFont::GetInstance()->SetScale(4.5f);
-	CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
+	//CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
+	CSGD_TextureManager::GetInstance()->Draw(m_nTile,145,25,2.0f,1.0f);
 	CBitmapFont::GetInstance()->SetScale(3.0f);
 	CBitmapFont::GetInstance()->PrintInRect("New Game\nLoad\n0ptions\nCredits\nExit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 /*
