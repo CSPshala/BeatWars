@@ -13,11 +13,16 @@
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
+#include "../Managers/CBeatManager.h"
+#include "../Managers/CAnimationManager.h"
+#include "../Managers/IListener.h"
+#include "../Managers/CEventSystem.h"
+#include "../Managers/CMessageSystem.h"
 
 // Forward Declarations
 class Bitmap_Font;
 
-class CGameplay_State : public IGameState
+class CGameplay_State : public IGameState, IListener
 {
 public:
 	void Enter(void); // Enters the Game State
@@ -25,9 +30,9 @@ public:
 	void Update(); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State	
-
+	void HandleEvent(CEvent* pEvent);
 	static CGameplay_State* GetInstance();			
-
+	static void MessageProc(CBaseMessage* pMsg);// access to messageproc
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -46,7 +51,14 @@ private:
 	int m_nBackSoundID;
 	int m_nFontID;
 	int m_nTitleID;
+
+	bool m_bPlayAnimation;
+
+		// Managers
+	CBeatManager BeatManager;
+CAnimationManager AnimationManager;
 		
+static bool dickhead;
 };
 
 #endif

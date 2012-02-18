@@ -8,24 +8,40 @@
 #define C_ANIMATIONMANAGER_H
 
 #include <string>
-#include <list>
+#include <vector>
 using std::string;
-using std::list;
+using std::vector;
 
 //Forward Declarations
 class CAnimation;
 
 class CAnimationManager
 {
-public:
-	CAnimationManager();
-	~CAnimationManager();
+	public:
+	
+		bool LoadAnimation(string szFileName);
+		bool UnloadAnimations();
+		vector<CAnimation*> m_vecAnimations;
+		
+		vector<CAnimation*> GetAnimations()
+		{
+			return m_vecAnimations;
+		}
+	
+		void Update(float fElapsedTime);
+		void Render();
+		void Play();
+		void Stop();
+		void Reset();
+	
+		CAnimationManager();
+		~CAnimationManager(){}
+	 
+	private:
+	
+		//CAnimationManager(const CAnimationManager&) { }
+		//CAnimationManager& operator=(const CAnimationManager&) { }
 
-	bool LoadAnimation(string szFileName);
-	bool UnloadAnimations();
-
-private:
-	list<CAnimation*> m_listAnimations;
 
 };
 

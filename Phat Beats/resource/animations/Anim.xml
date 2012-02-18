@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+   <Animation Name="Fall Back" File="nxc_bat_heihachi.PNG" IsLooping="1">
+      <Frames Height="93" Width="80" AnchorX ="61" AnchorY="81" FrameX="11" FrameY ="177" Duration ="0.2"/>
+      <Frames Height="76" Width="81" AnchorX="68" AnchorY="64" FrameX="14" FrameY="277" Duration ="0.15" />
+      <Frames Height="83" Width="93" AnchorX="61" AnchorY="77" FrameX="103" FrameY="272" Duration ="0.15"/>
+      <Frames Height="75" Width="107" AnchorX="26" AnchorY="57" FrameX="194" FrameY="275" Duration ="0.1" />
+      <Frames Height="49" Width="115" AnchorX="22" AnchorY="31" FrameX="311" FrameY="298" Duration ="0.2" />
+   </Animation>
+</Animations>
+
+
+
+
+

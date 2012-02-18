@@ -5,18 +5,104 @@
 //////////////////////////////////////////////////////
 
 #include "CAnimation.h"
+#include "SGD Wrappers\CSGD_TextureManager.h"
 #include "CFrame.h"
 
 CAnimation::CAnimation()
 {
-	m_bIsLooping = false;
+	m_bIsLooping = true;
 	
 	//Asset IDs
 	m_nFrameID = -1;
 	m_nImageID = -1;
-}
 
+	
+	m_bIsPlaying = false;
+	m_nCurrFrame = 0;
+	m_fTimeWaited = 0.0;
+	m_nMaxFrame = 0;
+}
 CAnimation::~CAnimation()
 {
 
+}
+void CAnimation::SetIsLooping(bool bLoop)
+{
+	m_bIsLooping = bLoop;
+}
+void CAnimation::SetName(string szName)
+{
+	m_szName = szName;
+}
+void CAnimation::SetImageID(int nImageID)
+{
+	m_nImageID = nImageID; 
+}
+void CAnimation::Play()						
+{
+	m_bIsPlaying = true;
+}
+void CAnimation::Stop()						
+{
+	m_bIsPlaying = false;
+}
+void CAnimation::Reset()						
+{
+	m_bIsPlaying = true;
+	m_fTimeWaited = 0.0;
+	m_nCurrFrame = 0;
+
+}
+
+
+void CAnimation::Update(float fElapsedTime)	
+{
+	if( m_nMaxFrame == 0 )
+		m_nMaxFrame = m_vecFrames.size();
+
+	if( !m_bIsPlaying )
+		return;
+
+	m_fTimeWaited += fElapsedTime;
+
+	if (m_fTimeWaited > m_vecFrames[m_nCurrFrame]->GetDuration())
+		{
+			m_fTimeWaited -= m_vecFrames[m_nCurrFrame]->GetDuration();
+			m_nCurrFrame++;
+
+			if( (unsigned)m_nCurrFrame >= m_vecFrames.size())
+			{
+				if( m_bIsLooping )
+					Reset();
+				else
+				{
+					Stop();
+					m_nCurrFrame = m_vecFrames.size() - 1;
+				}
+			} 	
+		}	
+
+
+}
+
+
+
+void CAnimation::Render()
+{
+	if( !m_bIsPlaying )
+		return;
+
+	RECT DrawRect;
+
+	DrawRect.left = m_vecFrames[m_nCurrFrame]->GetDrawX();
+	DrawRect.top = m_vecFrames[m_nCurrFrame]->GetDrawY();
+	DrawRect.right = m_vecFrames[m_nCurrFrame]->GetDrawX() + m_vecFrames[m_nCurrFrame]->GetWidth();
+	DrawRect.bottom = m_vecFrames[m_nCurrFrame]->GetDrawY() + m_vecFrames[m_nCurrFrame]->GetHeight();
+
+	CSGD_TextureManager::GetInstance()->Draw(GetImageID(), 200 -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), 200 - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), 1.0,1.0, &DrawRect );
+}
+
+int CAnimation::GetImageID()
+{
+	return m_nImageID;
 }

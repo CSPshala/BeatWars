@@ -389,4 +389,61 @@ bool CSGD_TextureManager::Draw(int nID, int nX, int nY, float fScaleX, float fSc
 	return true;
 }
 
+//////////////////////////////////////////////////
+// Added by JC Ricks
+// 
+// Draw Texture Function modified to use floats
+//////////////////////////////////////////////////
+bool CSGD_TextureManager::DrawF(int nID, float nX, float nY, float fScaleX, float fScaleY,
+	RECT* pSection, float fRotCenterX, float fRotCenterY, float fRotation, DWORD dwColor)
+{
+	// Make sure the nID is in range.
+	assert(nID > -1 && nID < (int)m_Textures.size() && "nID is out of range");
+
+	// Make sure that the texture is valid
+	assert(m_Textures[nID].texture != NULL && "Attempting to draw released texture id");
+
+	// Make sure the sprite was created and we have a valid texture.
+	if (!m_lpSprite)
+		return false;
+
+	D3DXMATRIX scale;
+	D3DXMATRIX rotation;
+	D3DXMATRIX translate;
+	D3DXMATRIX combined;
+
+	// Initialize the Combined matrix.
+	D3DXMatrixIdentity(&combined);
+
+	// Scale the sprite.
+	D3DXMatrixScaling(&scale, fScaleX, fScaleY, 1.0f);
+	combined *= scale;
+
+	// Rotate the sprite.
+	D3DXMatrixTranslation(&translate, -fRotCenterX * fScaleX, -fRotCenterY * fScaleY, 0.0f);
+	combined *= translate;
+	D3DXMatrixRotationZ(&rotation, fRotation);
+	combined *= rotation;
+	D3DXMatrixTranslation(&translate, fRotCenterX * fScaleX, fRotCenterY * fScaleY, 0.0f);
+	combined *= translate;
+
+	// Translate the sprite
+	D3DXMatrixTranslation(&translate, (float)nX, (float)nY, 0.0f);
+	combined *= translate;
+
+	// Apply the transform.
+	m_lpSprite->SetTransform(&combined);
+
+	// Draw the sprite.
+	if (FAILED(m_lpSprite->Draw(m_Textures[nID].texture, pSection, NULL, NULL, dwColor)))
+		DXERROR("Failed to draw the texture.");
+
+	// Move the world back to identity.
+	D3DXMatrixIdentity(&combined);
+	m_lpSprite->SetTransform(&combined);
+
+	// success.
+	return true;
+}
+
 #pragma warning (default : 4996)

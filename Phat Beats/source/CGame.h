@@ -17,10 +17,14 @@
 #include "States\IGameState.h"
 #include "States\CMenu_State.h"
 #include "CBase.h"
-
+#include "Timer.h"
+// Messages and Event system by Dave Brown
+#include "Managers/CEventSystem.h"
+#include "Managers/CMessageSystem.h"
 
 #include <string>
 using std::string;
+class CBitmapFont;
 
 class CGame
 {
@@ -30,8 +34,11 @@ private:
 	CSGD_DirectInput*		m_pDI;
 	CSGD_TextureManager*	m_pTM;
 	CSGD_XAudio2*			m_pXA;
+	CBitmapFont*			m_pBF;
+	CEventSystem*			m_pES;
+	CMessageSystem*			m_pMS;
 
-	// Gamestate Pointer
+	// Game state Pointer
 	IGameState* m_pCurState;
 
 	// Asset IDs:
@@ -61,10 +68,7 @@ private:
 	int m_nWindowWidth;
 
 	// For Game timing:
-	DWORD					m_dwTimeStamp;
-	float					m_fElapsedTime;		// delta time. Time (in seconds) between frames
-	float					m_fGameTime;		// how long the game has been playing
-	DWORD					m_dwPreviousTimeStamp;	// Time samp from the previous frame
+	Timer cTimer;
 
 
 public:
@@ -84,16 +88,10 @@ public:
 	int GetScreenWidth(void) {return m_nWindowWidth;}
 
 	// Acessors
-	DWORD GetTimeStamp() {return m_dwTimeStamp;}
-	float GetElapsedTime() {return m_fElapsedTime;}
-	float GetGameTime() {return m_fGameTime;}
-	DWORD GetPreviousTime() {return m_dwPreviousTimeStamp;}
+	Timer& GetTimer() {return cTimer;}
 
 	// Mutators
-	void SetTimeStamp(DWORD dwTimeStamp) {m_dwTimeStamp = dwTimeStamp;}
-	void SetElapsedTime(float fElapsedTime) {m_fElapsedTime = fElapsedTime;}
-	void SetGameTime(float fGameTime) {m_fGameTime = fGameTime;}
-	void SetPreviousTimeStamp(DWORD dwPreviousTimeStamp) {m_dwPreviousTimeStamp = dwPreviousTimeStamp;}
+	
 
 };
 

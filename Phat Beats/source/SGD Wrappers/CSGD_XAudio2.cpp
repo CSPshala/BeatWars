@@ -191,28 +191,28 @@ void VoiceCallback::OnVoiceError(void * pBufferContext, HRESULT Error) { }
 
 HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 {
-    HRESULT hr = S_OK;
-    if( INVALID_SET_FILE_POINTER == SetFilePointer( hFile, 0, NULL, FILE_BEGIN ) )
-        return HRESULT_FROM_WIN32( GetLastError() );
+	HRESULT hr = S_OK;
+	if( INVALID_SET_FILE_POINTER == SetFilePointer( hFile, 0, NULL, FILE_BEGIN ) )
+		return HRESULT_FROM_WIN32( GetLastError() );
 
-    DWORD dwChunkType;
-    DWORD dwChunkDataSize;
-    DWORD dwRIFFDataSize = 0;
-    DWORD dwFileType;
-    DWORD bytesRead = 0;
-    DWORD dwOffset = 0;
+	DWORD dwChunkType;
+	DWORD dwChunkDataSize;
+	DWORD dwRIFFDataSize = 0;
+	DWORD dwFileType;
+	DWORD bytesRead = 0;
+	DWORD dwOffset = 0;
 
-    while (hr == S_OK)
-    {
-        DWORD dwRead;
-        if( 0 == ReadFile( hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL ) )
-            hr = HRESULT_FROM_WIN32( GetLastError() );
+	while (hr == S_OK)
+	{
+		DWORD dwRead;
+		if( 0 == ReadFile( hFile, &dwChunkType, sizeof(DWORD), &dwRead, NULL ) )
+			hr = HRESULT_FROM_WIN32( GetLastError() );
 
-        if( 0 == ReadFile( hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL ) )
-            hr = HRESULT_FROM_WIN32( GetLastError() );
+		if( 0 == ReadFile( hFile, &dwChunkDataSize, sizeof(DWORD), &dwRead, NULL ) )
+			hr = HRESULT_FROM_WIN32( GetLastError() );
 
-        switch (dwChunkType)
-        {
+		switch (dwChunkType)
+		{
 			case fourccRIFF:
 			{
 				dwRIFFDataSize = dwChunkDataSize;
@@ -220,43 +220,43 @@ HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunk
 				if( 0 == ReadFile( hFile, &dwFileType, sizeof(DWORD), &dwRead, NULL ) )
 					hr = HRESULT_FROM_WIN32( GetLastError() );
 			}
-            break;
+			break;
 
 			default:
 			{
 				if( INVALID_SET_FILE_POINTER == SetFilePointer( hFile, dwChunkDataSize, NULL, FILE_CURRENT ) )
 					return HRESULT_FROM_WIN32( GetLastError() );            
 			}
-        }
+		}
 
-        dwOffset += sizeof(DWORD) * 2;
-        
-        if (dwChunkType == fourcc)
-        {
-            dwChunkSize = dwChunkDataSize;
-            dwChunkDataPosition = dwOffset;
-            return S_OK;
-        }
+		dwOffset += sizeof(DWORD) * 2;
+		
+		if (dwChunkType == fourcc)
+		{
+			dwChunkSize = dwChunkDataSize;
+			dwChunkDataPosition = dwOffset;
+			return S_OK;
+		}
 
-        dwOffset += dwChunkDataSize;
-        if (bytesRead >= dwRIFFDataSize) 
+		dwOffset += dwChunkDataSize;
+		if (bytesRead >= dwRIFFDataSize) 
 			return S_FALSE;
-    }
+	}
 
-    return S_OK;   
+	return S_OK;   
 }
 
 HRESULT ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
 {
-    HRESULT hr = S_OK;
-    if( INVALID_SET_FILE_POINTER == SetFilePointer( hFile, bufferoffset, NULL, FILE_BEGIN ) )
-        return HRESULT_FROM_WIN32( GetLastError() );
+	HRESULT hr = S_OK;
+	if( INVALID_SET_FILE_POINTER == SetFilePointer( hFile, bufferoffset, NULL, FILE_BEGIN ) )
+		return HRESULT_FROM_WIN32( GetLastError() );
 
-    DWORD dwRead;
-    if( 0 == ReadFile( hFile, buffer, buffersize, &dwRead, NULL ) )
-        hr = HRESULT_FROM_WIN32( GetLastError() );
+	DWORD dwRead;
+	if( 0 == ReadFile( hFile, buffer, buffersize, &dwRead, NULL ) )
+		hr = HRESULT_FROM_WIN32( GetLastError() );
 
-    return hr;
+	return hr;
 }
 
 HRESULT SoundInfo::LoadSoundInfo( LPCTSTR strFileName )
@@ -386,37 +386,37 @@ bool CSGD_XAudio2::InitXAudio2()
 	hr = m_pXAudio2->CreateMasteringVoice( &m_pMasterVoice, XAUDIO2_DEFAULT_CHANNELS,
 									AUDIO_SAMPLE_RATE, 0, 0, NULL );
 	if ( FAILED(hr) )
-    {  
+	{  
 		ShutdownXAudio2();
-        return false;  
-    } 
+		return false;  
+	} 
 
 	// Determine speaker configuration  
-    XAUDIO2_DEVICE_DETAILS details;  
-    hr = m_pXAudio2->GetDeviceDetails( 0, &details );  
-    if( FAILED(hr) )  
-    {  
-        //wprintf( L"Failed creating getting speaker config: %#X\n", hr );  
+	XAUDIO2_DEVICE_DETAILS details;  
+	hr = m_pXAudio2->GetDeviceDetails( 0, &details );  
+	if( FAILED(hr) )  
+	{  
+		//wprintf( L"Failed creating getting speaker config: %#X\n", hr );  
 		ShutdownXAudio2();
-        return false;  
-    } 
+		return false;  
+	} 
 
 	m_dwChannelMask = details.OutputFormat.dwChannelMask;  
-    m_nMasterOutputChannels = details.OutputFormat.Format.nChannels; 
+	m_nMasterOutputChannels = details.OutputFormat.Format.nChannels; 
 
 	hr = m_pXAudio2->CreateSubmixVoice(&m_pSFXSubmixVoice, m_nMasterOutputChannels, AUDIO_SAMPLE_RATE, 0, 0, NULL, NULL);
 	if ( FAILED(hr) )
-    {  
+	{  
 		ShutdownXAudio2();
-        return false;  
-    } 
+		return false;  
+	} 
 
 	hr = m_pXAudio2->CreateSubmixVoice(&m_pMusicSubmixVoice, m_nMasterOutputChannels, AUDIO_SAMPLE_RATE, 0, 0, NULL, NULL);
 	if ( FAILED(hr) )
-    {  
+	{  
 		ShutdownXAudio2();
-        return false;  
-    } 
+		return false;  
+	} 
 
 	m_vVoices.reserve(32);
 
@@ -696,7 +696,7 @@ void CSGD_XAudio2::Play(int nID, SoundInfo soundTemplate, bool bIsLooping)
 void CSGD_XAudio2::CalcPanOutputMatrix(float pan, WORD inputChannels, float *pLevelMatrix)
 {
 	assert( pan >= -1.0f && pan <= 1.0f && "Pan out of range");
-    assert( pLevelMatrix != NULL );  
+	assert( pLevelMatrix != NULL );  
  
 	//The minimum size of the output matrix is 
 	//the number of channels in the source voice times 
@@ -705,19 +705,19 @@ void CSGD_XAudio2::CalcPanOutputMatrix(float pan, WORD inputChannels, float *pLe
 	//outputting to any output format up to 7.1 surround sound.
 	int nMinimum = inputChannels * m_nMasterOutputChannels;
 
-    assert( m_nMasterOutputChannels <= nMinimum ); 
-    // This assumes we use mono sources with up to 8 output channels  
-    // (pLevelMatrix is 8 max size)  
-    //assert( m_nMasterOutputChannels <= 8 ); 
+	assert( m_nMasterOutputChannels <= nMinimum ); 
+	// This assumes we use mono sources with up to 8 output channels  
+	// (pLevelMatrix is 8 max size)  
+	//assert( m_nMasterOutputChannels <= 8 ); 
 
-    // Default to full volume for all channels/destinations  
-    for( UINT i=0; i < 12; ++i)
-        pLevelMatrix[ i ] = 1.0f;//0.0f;//1.0f; 
+	// Default to full volume for all channels/destinations  
+	for( UINT i=0; i < 12; ++i)
+		pLevelMatrix[ i ] = 1.0f;//0.0f;//1.0f; 
 
 	// pan of -1.0 indicates all left speaker, 
 	// 1.0 is all right speaker, 0.0 is split between left and right
-    float left = ( pan >= 0 ) ? (1.f - pan) : 1.f;  
-    float right = ( pan <= 0 ) ? (-pan - 1.f) : 1.f;  
+	float left = ( pan >= 0 ) ? (1.f - pan) : 1.f;  
+	float right = ( pan <= 0 ) ? (-pan - 1.f) : 1.f;  
  
 	if (inputChannels == 1 && m_nMasterOutputChannels == 2)//nMinimum == 2)
 	{
@@ -1181,7 +1181,25 @@ void CSGD_XAudio2::MusicStopSong(int nID)
 		if( m_vVoices[i].m_bIsMusic && m_vVoices[i].currentSoundID == nID )
 		{
 			m_vVoices[i].m_bIsLooping = false;
-			RecycleVoiceNow(i);
+			RecycleVoiceNow(i);			
+		}
+	}
+}
+
+void CSGD_XAudio2::MusicPauseSong(int nID,bool bPause)
+{
+	assert( nID > -1 && nID < (int)m_vMusicLibrary.size() && "Song ID out of range" );
+	assert( m_vMusicLibrary[nID].m_bInUse && "Song ID not loaded" );
+
+	for(unsigned int i=0; i < m_vVoices.size(); i++)
+	{
+		// Pause ALL INSTANCES of this sound
+		if( m_vVoices[i].m_bIsMusic && m_vVoices[i].currentSoundID == nID )
+		{
+			if(bPause)
+				m_vVoices[i].m_pVoice->Stop(0);
+			else
+				m_vVoices[i].m_pVoice->Start(0);
 		}
 	}
 }

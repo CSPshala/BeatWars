@@ -50,6 +50,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions> /D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,7 +86,10 @@
     <ClCompile Include="source\CSong.cpp" />
     <ClCompile Include="source\Managers\CAnimationManager.cpp" />
     <ClCompile Include="source\Managers\CBeatManager.cpp" />
+    <ClCompile Include="source\Managers\CEventSystem.cpp" />
     <ClCompile Include="source\Managers\CFXManager.cpp" />
+    <ClCompile Include="source\Managers\CMessages.cpp" />
+    <ClCompile Include="source\Managers\CMessageSystem.cpp" />
     <ClCompile Include="source\Managers\CObjectManager.cpp" />
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
@@ -94,13 +98,16 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp" />
     <ClCompile Include="source\SGD_Math.cpp" />
     <ClCompile Include="source\States\CArcadeMode_State.cpp" />
+    <ClCompile Include="source\States\CBitmapFont.cpp" />
     <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
     <ClCompile Include="source\States\CGameplay_State.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
     <ClCompile Include="source\States\CMenu_State.cpp" />
+    <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\XML\tinystr.cpp" />
     <ClCompile Include="source\XML\tinyxml.cpp" />
@@ -119,12 +126,18 @@
     <ClInclude Include="source\CParticle.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
+    <ClInclude Include="source\JCMacros.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
+    <ClInclude Include="source\Managers\CEvent.h" />
+    <ClInclude Include="source\Managers\CEventSystem.h" />
     <ClInclude Include="source\Managers\CFXManager.h" />
+    <ClInclude Include="source\Managers\CMessages.h" />
+    <ClInclude Include="source\Managers\CMessageSystem.h" />
     <ClInclude Include="source\Managers\CObjectFactory.h" />
     <ClInclude Include="source\Managers\CObjectManager.h" />
     <ClInclude Include="source\Managers\CXml_Manager.h" />
+    <ClInclude Include="source\Managers\IListener.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_DirectInput.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h" />
@@ -132,14 +145,17 @@
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h" />
     <ClInclude Include="source\SGD_Math.h" />
     <ClInclude Include="source\States\CArcadeMode_State.h" />
+    <ClInclude Include="source\States\CBitmapFont.h" />
     <ClInclude Include="source\States\CCharacterSelect_State.h" />
     <ClInclude Include="source\States\CGameplay_State.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />
     <ClInclude Include="source\States\CMenu_State.h" />
+    <ClInclude Include="source\States\COptionsState.h" />
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\XML\tinystr.h" />
     <ClInclude Include="source\XML\tinyxml.h" />
   </ItemGroup>

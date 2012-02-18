@@ -1,8 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 //	File Name	:	"CBase.cpp"
 //	
-//	Author Name	:	Bryan Schotanes
-//	
 //	Purpose		:	To contain all related data and
 //					functionality for our game objects.
 ///////////////////////////////////////////////////////////////////////////
@@ -18,13 +16,34 @@ CBase::CBase(void)
 	SetVelY(0);
 	SetHeight(0);
 	SetWidth(0);
-	SetIsActive(true);
+	SetIsActive(false);
 	SetImageID(-1);
 }
 
 CBase::~CBase(void)
 {
 
+}
+
+CBase::CBase(const CBase& aBase)
+{
+	*this = aBase;
+}
+
+CBase& CBase::operator=(const CBase& aBase)
+{
+	m_uiRefCount = aBase.m_uiRefCount;
+	m_nPosX = aBase.m_nPosX;
+	m_nPosY = aBase.m_nPosY;
+	m_nVelX = aBase.m_nVelX;
+	m_nVelY = aBase.m_nVelY;
+	m_nWidth = aBase.m_nWidth;
+	m_nHeight = aBase.m_nHeight;
+	m_nImageID = aBase.m_nImageID;
+	m_bIsActive = aBase.m_bIsActive;	
+	m_nType = aBase.m_nType;
+
+	return *this;
 }
 
 void CBase::Update(float fElapsedTime)
@@ -37,7 +56,7 @@ void CBase::Update(float fElapsedTime)
 
 void CBase::Render(void)
 {
-	CSGD_TextureManager::GetInstance()->Draw(GetImageID(),(int)GetPosX(),(int)GetPosY());
+	CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
 }
 
 RECT CBase::GetCollisionRect()

@@ -126,6 +126,24 @@
     <ClCompile Include="source\Managers\CObjectManager.cpp">
       <Filter>Managers / Factories</Filter>
     </ClCompile>
+    <ClCompile Include="source\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\CBitmapFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\COptionsState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CEventSystem.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CMessages.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CMessageSystem.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -225,6 +243,33 @@
       <Filter>Managers / Factories</Filter>
     </ClInclude>
     <ClInclude Include="source\Managers\CObjectFactory.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\JCMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+   <ClInclude Include="source\States\CBitmapFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\COptionsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CEvent.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CEventSystem.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CMessages.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CMessageSystem.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\IListener.h">
       <Filter>Managers / Factories</Filter>
     </ClInclude>
   </ItemGroup>

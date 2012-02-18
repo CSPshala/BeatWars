@@ -13,14 +13,14 @@ using std::string;
 
 #include "IGameState.h"
 #include "../CGame.h"
-#include "CGameplay_State.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
 
 // Forward Declarations
-class Bitmap_Font;
+
+enum {MAINMENU_NEWGAME, MAINMENU_LOAD, MAINMENU_OPTIONS,  MAINMENU_CREDITS, MAINMENU_EXIT, NUM_MAINMENU_OPTIONS};
 
 class CMenu_State : public IGameState
 {
@@ -46,13 +46,12 @@ private:
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
-	Bitmap_Font* m_bMenu_Font;
+	
 	int m_nMenuSelection;
 
 		// Asset IDs
 	int m_nBackgroundID;
 	int m_nCursorImageID;
-	int m_nFontID;
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;

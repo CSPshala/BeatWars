@@ -8,6 +8,9 @@
 
 #include "CGame.h"
 #include <ctime>
+#include "States/CBitmapFont.h"
+#include <iostream>
+using std::cout;
 
 CGame::CGame()
 {
@@ -15,6 +18,9 @@ CGame::CGame()
 	m_pDI	= NULL;
 	m_pTM	= NULL;
 	m_pXA	= NULL;	
+	m_pBF	= NULL;
+	m_pES	= NULL;
+	m_pMS	= NULL;
 }
 
 CGame::~CGame()
@@ -37,6 +43,9 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pDI	= CSGD_DirectInput::GetInstance();
 	m_pTM	= CSGD_TextureManager::GetInstance();
 	m_pXA	= CSGD_XAudio2::GetInstance();
+	m_pBF	= CBitmapFont::GetInstance();
+	m_pES	= CEventSystem::GetInstance();
+	m_pMS	= CMessageSystem::GetInstance();
 
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
@@ -52,7 +61,21 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_nWindowWidth = nScreenWidth;
 	m_nWindowHeight = nScreenHeight;
 
+	// Initilizing timer
+	cTimer.Reset();
+
 	srand((unsigned int)time(0));
+
+	if (false == m_pBF->LoadXMLFont("starwarfont.fnt"))
+	{
+		cout << "Failure to load the starwar font in CGame's Initialize() \n";
+	}
+	else
+	{
+		// set the font to starwar
+		m_pBF->SetFont("starwarfont.fnt");	
+		m_pBF->SetScale(1.0f);
+	}
 	
 }
 
@@ -99,17 +122,37 @@ bool CGame::Input()
 
 void CGame::Update()
 {
+	// Updating timer
+	cTimer.Update();
+
 	m_pCurState->Update();	// must be called or you will mess stuff up
+	m_pES->ProcessEvents();
+	m_pMS->ProcessMessages();
+
 }
 
 void CGame::Render()
 {
+	m_pD3D->Clear(0, 0, 0);
+	m_pD3D->DeviceBegin();
+	m_pD3D->SpriteBegin();
+
 	m_pCurState->Render();
+
+	m_pD3D->SpriteEnd();
+	m_pD3D->DeviceEnd();
+	m_pD3D->Present();
+
 }
 
 void CGame::Shutdown()
 {
-	
+	if(m_pMS)
+	{
+		m_pMS->ShutdownMessageSystem();
+		m_pMS = NULL;
+	}
+	m_pES->ShutdownEventSystem();
 	// Shutdown in the opposite order
 	if(m_pXA)
 	{

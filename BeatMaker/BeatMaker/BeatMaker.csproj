@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{44AABF6C-AB54-441A-84C0-16CCD99F6C39}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeatMaker</RootNamespace>
+    <AssemblyName>BeatMaker</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\JAPG.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2910.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3DX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Beat.cs" />
+    <Compile Include="BeatMaker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BeatMaker.Designer.cs">
+      <DependentUpon>BeatMaker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fmod.cs" />
+    <Compile Include="fmod_dsp.cs" />
+    <Compile Include="fmod_errors.cs" />
+    <Compile Include="fmod_memoryinfo.cs" />
+    <Compile Include="JCTimer.cs" />
+    <Compile Include="ManagedDirect3D.cs" />
+    <Compile Include="ManagedTextureManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetTitle.Designer.cs">
+      <DependentUpon>SetTitle.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BeatMaker.resx">
+      <DependentUpon>BeatMaker.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SetTitle.resx">
+      <DependentUpon>SetTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\import_icon&amp;24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart_empty_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\paper_airplane_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lighting_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fire_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JAPG.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playback_play_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playback_ff_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playback_pause_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playback_rew_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playback_stop_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pin_sq_top_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2x2_grid_icon&amp;16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_bottom_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_bottom_left_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_bottom_rigth_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_top_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_top_left_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_top_right_icon&amp;32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downleftarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\downrightarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\uparrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\upleftarrowblue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\uprightarrowblue.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

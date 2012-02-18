@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////
 
 #include "CPause_State.h"
+#include "../CGame.h"
 
 CPause_State::CPause_State()
 {
@@ -46,15 +47,11 @@ void CPause_State::Update(void)
 
 void CPause_State::Render(void)
 {
-	CSGD_Direct3D::GetInstance()->Clear(0,0,0);
-	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();	
+		
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->DeviceEnd();
-	CSGD_Direct3D::GetInstance()->Present();
+	
 }
 
 void CPause_State::Exit(void)

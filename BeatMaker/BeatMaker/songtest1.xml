@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Song file ="levels.mp3" name="Avicii - Levels" duration="202.3">
+      <Beat timeofbeat ="2.0" direction="left" key="a" image="ImpNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="3.0" direction="up" key="d" image="RepNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="4.0" direction="right" key="w" image="SkullNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="5.0" direction="down" key="s" image="SunNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="6.0" direction="leftup" key="a" image="ImpNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="7.0" direction="rightup" key="d" image="RepNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="8.0" direction="rightdown" key="w" image="SkullNote.png" difficulty="easy" width="32" height="32"/>
+      <Beat timeofbeat ="9.0" direction="leftdown" key="s" image="SunNote.png" difficulty="easy" width="32" height="32"/>
+</Song>
+
+
+
