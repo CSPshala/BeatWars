@@ -103,6 +103,13 @@ namespace BeatMaker
             set { nTextureIndex = value; }
         }
 
+        string szEvent;
+
+        public string Event
+        {
+            get { return szEvent; }
+            set { szEvent = value; }
+        }
 
 
         // Constructor
@@ -118,6 +125,7 @@ namespace BeatMaker
             nHeight = 0;
             eCompletion = BEATIS.EMPTY;
             nTextureIndex = -1;
+            szEvent = "none";
         }
 
         public Beat(Beat aBeat)

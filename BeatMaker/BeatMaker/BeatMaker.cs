@@ -53,6 +53,7 @@ namespace BeatMaker
         Point pMouseSelectedCoords;
         Point pMouseClickedIndex;
         Beat MouseAddBeat = new Beat();
+        string szClickedEventEdit = "";
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
@@ -480,6 +481,8 @@ namespace BeatMaker
                 BeatKeyValueLabel.Text = listBeats[nMouseClickedIndex].KeyPress.ToString();
                 BeatDirectionValueLabel.Text = listBeats[nMouseClickedIndex].Direction;
                 BeatTimeValueUpDown.Value = listBeats[nMouseClickedIndex].TimeOfBeat;
+
+                BeatEventValueLabel.Text = listBeats[nMouseClickedIndex].Event;
             }
             else
             {
@@ -795,14 +798,7 @@ namespace BeatMaker
             if (MouseAddBeat.Completion != BEATIS.EMPTY)
             {
                 //*********************DRAWING MATH********************************//               
-                // Pixel offset for numbers / tics original position
-                // Effectively these are the seconds displayed
-                int xoffset = 34;
-
-                // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
-                //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
-                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
-
+               
                 // Cutting down on divide ops
                 int Halfsies = TrackPanel.Bottom / 2;
                 int XHalfsies = TrackPanel.Right / 2;
@@ -811,13 +807,7 @@ namespace BeatMaker
                 Point mosPos;
                 mosPos = TrackPanel.PointToClient(Cursor.Position);
 
-                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
-               // float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
-
-                Point pArrow = new Point();
-               // pArrow.X = XHalfsies + (int)(noteOffset - songoffset);
-               // pArrow.Y = Halfsies + 50;
-
+               
                 if (mosPos.X > XHalfsies)
                 {
                     // More coordinate magic to get the song position based off mouse X position
@@ -832,15 +822,12 @@ namespace BeatMaker
                         MouseAddBeat.TimeOfBeat = (uint)nTime;                        
                 }
 
-
-
-                //if (nCurrentPositionMS > 15000)
-                //    MouseAddBeat.TimeOfBeat = (nCurrentPositionMS - 15000) + (uint)(mosPos.X * 9);
-                //else
-                //    MouseAddBeat.TimeOfBeat = (uint)(mosPos.X * 9);
+              
 
                 // Adding to list
                 listBeats.Add(MouseAddBeat);
+
+                bListChanged = true;
 
                 Beat tBeat = MouseAddBeat;
                 MouseAddBeat = new Beat(tBeat);               
@@ -1020,11 +1007,71 @@ namespace BeatMaker
             }
         }
 
+        private void TrackPanel_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if(nMouseSelectedIndex != nMouseClickedIndex)
+            {
+                if(listBeats[nMouseSelectedIndex].Completion == BEATIS.ARROW || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
+                {
+                    listBeats[nMouseClickedIndex].Direction = listBeats[nMouseSelectedIndex].Direction;
+                    listBeats[nMouseClickedIndex].TimeOfBeat = listBeats[nMouseSelectedIndex].TimeOfBeat;
+                    listBeats[nMouseClickedIndex].Completion = BEATIS.COMPLETE;
+
+                    // Getting rid of old arrow since complete notes now hold all relevant info
+                    listBeats.RemoveAt(nMouseSelectedIndex);
+                }
+                else if(listBeats[nMouseSelectedIndex].Completion == BEATIS.KEY || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
+                {
+                    listBeats[nMouseClickedIndex].KeyPress = listBeats[nMouseSelectedIndex].KeyPress;
+                    listBeats[nMouseClickedIndex].TimeOfBeat = listBeats[nMouseSelectedIndex].TimeOfBeat;
+                    listBeats[nMouseClickedIndex].Completion = BEATIS.COMPLETE;
+
+                    // Getting rid of old note since complete notes now hold all relevant info
+                    listBeats.RemoveAt(nMouseSelectedIndex);
+                }
+
+            }
+        }
+
+        private void TrackPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (nMouseClickedIndex >= 0 && e.Button == MouseButtons.Left)
+            {
+                //*********************DRAWING MATH********************************//               
+                         
+                // Cutting down on divide ops
+                int Halfsies = TrackPanel.Bottom / 2;
+                int XHalfsies = TrackPanel.Right / 2;
+
+                // Mouse point
+                Point mosPos;
+                mosPos = TrackPanel.PointToClient(Cursor.Position);                
+               
+
+                if (mosPos.X > XHalfsies)
+                {
+                    // More coordinate magic to get the song position based off mouse X position
+                    listBeats[nMouseClickedIndex].TimeOfBeat = nCurrentPositionMS + (uint)((mosPos.X * 1000 / 34 - (15000 + 118 * (mosPos.X / 34 - 15))));
+                }
+                else
+                {
+                    // More coordinate magic to get the song position based off mouse X position
+                    int nTime = (int)(nCurrentPositionMS + (mosPos.X * 1000 / 34 - (15000 - 57 * (15 - mosPos.X / 34))));
+
+                    if (nTime > 0)
+                        listBeats[nMouseClickedIndex].TimeOfBeat = (uint)nTime;
+                }
+
+                
+
+            }
+        }
+
         private void BeatTimeValueUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (nMouseClickedIndex >= 0)
                 listBeats[nMouseClickedIndex].TimeOfBeat = (uint)BeatTimeValueUpDown.Value;
-        }  
+        }       
 
 
         //*****************PLAYBACK AND EDITOR BUTTONS*******//
@@ -1663,12 +1710,15 @@ namespace BeatMaker
 
         private void ClearSelectionButton_Click(object sender, EventArgs e)
         {
-            // Clearing any mouse selections if user clicks 
-            MouseAddBeat = new Beat();
-
             ResetButtonBackgrounds();
+            MouseAddBeat = new Beat();
         }
 
+        private void TrackPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            bListChanged = true;
+        }
+       
         
     }
 }
