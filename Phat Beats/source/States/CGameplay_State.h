@@ -14,6 +14,7 @@
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
 #include "../Managers/CBeatManager.h"
+#include "../Managers/CAnimationManager.h"
 
 // Forward Declarations
 class Bitmap_Font;
@@ -48,8 +49,11 @@ private:
 	int m_nFontID;
 	int m_nTitleID;
 
+	bool m_bPlayAnimation;
+
 		// Managers
 	CBeatManager BeatManager;
+	CAnimationManager AnimationManager;
 		
 };
 
