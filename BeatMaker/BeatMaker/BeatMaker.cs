@@ -41,6 +41,7 @@ namespace BeatMaker
    
         // MISC FORMS
         SetTitle setTitleWindow = null;
+        SetEvent setEventWindow = null;
 
         // GAME LOOP
         public bool bRunning = true;
@@ -117,8 +118,7 @@ namespace BeatMaker
                         
             // Init timer
             theTimer.InitTimer();
-
-           // fmodChannel.getSpectrum(
+           
         }
 
         // Have to override dispose to properly kill FMOD stuff
@@ -480,64 +480,67 @@ namespace BeatMaker
         {
             // Putting image into note picture box
 
-            if (nMouseClickedIndex >= 0)
+            if (listBeats.Count > 0)
             {
-                switch (listBeats[nMouseClickedIndex].KeyPress)
+                if (nMouseClickedIndex >= 0)
                 {
-                    case 'w':
-                        BeatPictureBox.BackgroundImage = WKeyPictureBox.BackgroundImage;
-                        break;
+                    switch (listBeats[nMouseClickedIndex].KeyPress)
+                    {
+                        case 'w':
+                            BeatPictureBox.BackgroundImage = WKeyPictureBox.BackgroundImage;
+                            break;
 
-                    case 'a':
-                        BeatPictureBox.BackgroundImage = AKeyPictureBox.BackgroundImage;
-                        break;
+                        case 'a':
+                            BeatPictureBox.BackgroundImage = AKeyPictureBox.BackgroundImage;
+                            break;
 
-                    case 's':
-                        BeatPictureBox.BackgroundImage = SKeyPictureBox.BackgroundImage;
-                        break;
+                        case 's':
+                            BeatPictureBox.BackgroundImage = SKeyPictureBox.BackgroundImage;
+                            break;
 
-                    case 'd':
-                        BeatPictureBox.BackgroundImage = DKeyPictureBox.BackgroundImage;
-                        break;
+                        case 'd':
+                            BeatPictureBox.BackgroundImage = DKeyPictureBox.BackgroundImage;
+                            break;
 
-                    case 'x':
-                        break;
+                        case 'x':
+                            break;
+                    }
+
+                    if (listBeats[nMouseClickedIndex].Completion == BEATIS.ARROW || listBeats[nMouseClickedIndex].Completion == BEATIS.COMPLETE)
+                    {
+                        if (listBeats[nMouseClickedIndex].Direction == "left")
+                            BeatPictureBox.BackgroundImage = LeftPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "right")
+                            BeatPictureBox.BackgroundImage = RightPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "up")
+                            BeatPictureBox.BackgroundImage = UpPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "down")
+                            BeatPictureBox.BackgroundImage = DownPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "leftdown")
+                            BeatPictureBox.BackgroundImage = DownLeftPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "rightdown")
+                            BeatPictureBox.BackgroundImage = DownRightPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "leftup")
+                            BeatPictureBox.BackgroundImage = UpLeftPictureBox.BackgroundImage;
+                        else if (listBeats[nMouseClickedIndex].Direction == "rightup")
+                            BeatPictureBox.BackgroundImage = UpRightPictureBox.BackgroundImage;
+                    }
+
+                    BeatDifficultyValueLabel.Text = listBeats[nMouseClickedIndex].Difficulty;
+                    BeatKeyValueLabel.Text = listBeats[nMouseClickedIndex].KeyPress.ToString();
+                    BeatDirectionValueLabel.Text = listBeats[nMouseClickedIndex].Direction;
+                    BeatTimeValueUpDown.Value = listBeats[nMouseClickedIndex].TimeOfBeat;
+
+                    BeatEventValueLabel.Text = listBeats[nMouseClickedIndex].Event;
                 }
-
-                if (listBeats[nMouseClickedIndex].Completion == BEATIS.ARROW || listBeats[nMouseClickedIndex].Completion == BEATIS.COMPLETE)
+                else
                 {
-                    if (listBeats[nMouseClickedIndex].Direction == "left")
-                        BeatPictureBox.BackgroundImage = LeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "right")
-                        BeatPictureBox.BackgroundImage = RightPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "up")
-                        BeatPictureBox.BackgroundImage = UpPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "down")
-                        BeatPictureBox.BackgroundImage = DownPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "leftdown")
-                        BeatPictureBox.BackgroundImage = DownLeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "rightdown")
-                        BeatPictureBox.BackgroundImage = DownRightPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "leftup")
-                        BeatPictureBox.BackgroundImage = UpLeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseClickedIndex].Direction == "rightup")
-                        BeatPictureBox.BackgroundImage = UpRightPictureBox.BackgroundImage;
+                    BeatPictureBox.BackgroundImage = null;
+                    BeatDifficultyValueLabel.Text = "none";
+                    BeatKeyValueLabel.Text = "none";
+                    BeatDirectionValueLabel.Text = "none";
+                    BeatTimeValueUpDown.Value = 0;
                 }
-
-                BeatDifficultyValueLabel.Text = listBeats[nMouseClickedIndex].Difficulty;
-                BeatKeyValueLabel.Text = listBeats[nMouseClickedIndex].KeyPress.ToString();
-                BeatDirectionValueLabel.Text = listBeats[nMouseClickedIndex].Direction;
-                BeatTimeValueUpDown.Value = listBeats[nMouseClickedIndex].TimeOfBeat;
-
-                BeatEventValueLabel.Text = listBeats[nMouseClickedIndex].Event;
-            }
-            else
-            {
-                BeatPictureBox.BackgroundImage = null;
-                BeatDifficultyValueLabel.Text = "none";
-                BeatKeyValueLabel.Text = "none";
-                BeatDirectionValueLabel.Text = "none";
-                BeatTimeValueUpDown.Value = 0;
             }
             
         }
@@ -982,6 +985,9 @@ namespace BeatMaker
 
             if (e.KeyCode == Keys.ShiftKey)
                 bMouseSelect = true;
+
+            if (e.KeyCode == Keys.Delete)
+                DeleteSelectionButton_Click(null, null);
         }
 
         private void BeatMaker_KeyUp(object sender, KeyEventArgs e)
@@ -1093,7 +1099,13 @@ namespace BeatMaker
         {
             szSongName = setTitleWindow.SongName;
             setTitleWindow = null;
-        }    
+        }
+
+        void setEventWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            listBeats[nMouseClickedIndex].Event = setEventWindow.EventName;
+            setEventWindow = null;
+        }
 
         private void BeatMaker_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -1984,6 +1996,31 @@ namespace BeatMaker
             SelectedBeats.Clear();
             MouseAddBeat = new Beat();
         }
+
+        private void DeleteSelectionButton_Click(object sender, EventArgs e)
+        {
+            // Only removing a single note
+            if (nMouseClickedIndex >= 0)
+                listBeats.RemoveAt(nMouseClickedIndex);
+
+            nMouseClickedIndex = -1;
+
+            SelectedBeats.Clear();
+
+            bListChanged = true;
+        }
+
+        private void EditEventButton_Click(object sender, EventArgs e)
+        {
+            if (setEventWindow == null)
+            {
+                setEventWindow = new SetEvent();
+                setEventWindow.FormClosed += new FormClosedEventHandler(setEventWindow_FormClosed);
+                setEventWindow.EventName = listBeats[nMouseClickedIndex].Event;
+                setEventWindow.ShowDialog();
+            }
+        }
+
         
     }
 }

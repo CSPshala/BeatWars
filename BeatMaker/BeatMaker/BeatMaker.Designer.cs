@@ -47,7 +47,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackPanel = new System.Windows.Forms.Panel();
             this.SelectedBeatBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.EditEventButton = new System.Windows.Forms.Button();
             this.BeatEventValueLabel = new System.Windows.Forms.Label();
             this.BeatEventLabel = new System.Windows.Forms.Label();
             this.BeatTimeValueUpDown = new System.Windows.Forms.NumericUpDown();
@@ -64,6 +64,7 @@
             this.NotesRadio = new System.Windows.Forms.RadioButton();
             this.ArrowsRadio = new System.Windows.Forms.RadioButton();
             this.IconGroup = new System.Windows.Forms.GroupBox();
+            this.DeleteSelectionButton = new System.Windows.Forms.Button();
             this.ClearSelectionButton = new System.Windows.Forms.Button();
             this.NotePasteButton = new System.Windows.Forms.Button();
             this.NoteCopyButton = new System.Windows.Forms.Button();
@@ -292,7 +293,7 @@
             // 
             // SelectedBeatBox
             // 
-            this.SelectedBeatBox.Controls.Add(this.button1);
+            this.SelectedBeatBox.Controls.Add(this.EditEventButton);
             this.SelectedBeatBox.Controls.Add(this.BeatEventValueLabel);
             this.SelectedBeatBox.Controls.Add(this.BeatEventLabel);
             this.SelectedBeatBox.Controls.Add(this.BeatTimeValueUpDown);
@@ -311,14 +312,15 @@
             this.SelectedBeatBox.TabStop = false;
             this.SelectedBeatBox.Text = "Single Beat Info";
             // 
-            // button1
+            // EditEventButton
             // 
-            this.button1.Location = new System.Drawing.Point(175, 72);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(58, 37);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Edit Event";
-            this.button1.UseVisualStyleBackColor = true;
+            this.EditEventButton.Location = new System.Drawing.Point(175, 72);
+            this.EditEventButton.Name = "EditEventButton";
+            this.EditEventButton.Size = new System.Drawing.Size(58, 37);
+            this.EditEventButton.TabIndex = 12;
+            this.EditEventButton.Text = "Edit Event";
+            this.EditEventButton.UseVisualStyleBackColor = true;
+            this.EditEventButton.Click += new System.EventHandler(this.EditEventButton_Click);
             // 
             // BeatEventValueLabel
             // 
@@ -474,6 +476,7 @@
             // 
             // IconGroup
             // 
+            this.IconGroup.Controls.Add(this.DeleteSelectionButton);
             this.IconGroup.Controls.Add(this.ClearSelectionButton);
             this.IconGroup.Controls.Add(this.NotePasteButton);
             this.IconGroup.Controls.Add(this.NoteCopyButton);
@@ -501,6 +504,16 @@
             this.IconGroup.TabIndex = 1;
             this.IconGroup.TabStop = false;
             this.IconGroup.Text = "Icon Selection";
+            // 
+            // DeleteSelectionButton
+            // 
+            this.DeleteSelectionButton.Location = new System.Drawing.Point(235, 227);
+            this.DeleteSelectionButton.Name = "DeleteSelectionButton";
+            this.DeleteSelectionButton.Size = new System.Drawing.Size(95, 23);
+            this.DeleteSelectionButton.TabIndex = 21;
+            this.DeleteSelectionButton.Text = "Delete Selection";
+            this.DeleteSelectionButton.UseVisualStyleBackColor = true;
+            this.DeleteSelectionButton.Click += new System.EventHandler(this.DeleteSelectionButton_Click);
             // 
             // ClearSelectionButton
             // 
@@ -1083,8 +1096,9 @@
         private System.Windows.Forms.Button ClearSelectionButton;
         private System.Windows.Forms.NumericUpDown BeatTimeValueUpDown;
         private System.Windows.Forms.Label BeatEventLabel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button EditEventButton;
         private System.Windows.Forms.Label BeatEventValueLabel;
+        private System.Windows.Forms.Button DeleteSelectionButton;
     }
 }
 
