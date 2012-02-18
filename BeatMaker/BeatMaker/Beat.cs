@@ -103,6 +103,23 @@ namespace BeatMaker
             set { nTextureIndex = value; }
         }
 
+        private int nArrowTextureIndex;
+
+        public int ArrowTextureIndex
+        {
+            get { return nArrowTextureIndex; }
+            set { nArrowTextureIndex = value; }
+        }
+
+        
+
+        string szEvent;
+
+        public string Event
+        {
+            get { return szEvent; }
+            set { szEvent = value; }
+        }
 
 
         // Constructor
@@ -118,6 +135,24 @@ namespace BeatMaker
             nHeight = 0;
             eCompletion = BEATIS.EMPTY;
             nTextureIndex = -1;
+            nArrowTextureIndex = -1;
+            szEvent = "none";
+        }
+
+        public Beat(Beat aBeat)
+        {
+            nTimeOfBeatS = aBeat.nTimeOfBeatS;
+            nTimeOfBeat = aBeat.nTimeOfBeat;
+            szDirection = aBeat.szDirection;
+            cKey = aBeat.cKey;
+            szImage = aBeat.szImage;
+            szDifficulty = aBeat.szDifficulty;
+            nWidth = aBeat.nWidth;
+            nHeight = aBeat.nHeight;
+            eCompletion = aBeat.eCompletion;
+            nTextureIndex = aBeat.nTextureIndex;
+            nArrowTextureIndex = aBeat.nArrowTextureIndex;
+            szEvent = aBeat.szEvent;
         }
 
         public int CompareTo(Beat aBeat)

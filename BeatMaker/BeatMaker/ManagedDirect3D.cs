@@ -627,7 +627,7 @@ namespace SGP
 
             Vector2[] verts = new Vector2[2];
 
-            LineBegin();
+           // LineBegin();
             //Top
             verts[0].X = rect.Left;
             verts[0].Y = rect.Top;
@@ -663,7 +663,7 @@ namespace SGP
             verts[1].Y = rect.Bottom;
 
             line.Draw(verts, color);
-            LineEnd();
+          //  LineEnd();
             return true;
         }
 
