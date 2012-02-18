@@ -52,9 +52,11 @@ namespace BeatMaker
         public int nMouseClickedIndex = -1;
         Point pMouseSelectedCoords;
         Point pMouseClickedIndex;
+        Beat MouseAddBeat = new Beat();
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
+        
 
         // BEAT IMAGE NAMES
         private string szAKeyImage = "fire_icon&32.png";
@@ -235,6 +237,9 @@ namespace BeatMaker
 
             // Drawing beats and arrows
             DrawBeats();
+
+            // Drawing mouse selected beat at mousepoint
+            DrawBeatMousePlacement();
             
             // Cutting down on divide ops
             int Halfsies = TrackPanel.Right / 2;
@@ -366,7 +371,15 @@ namespace BeatMaker
                                 pArrow.X = XHalfsies + (int)(noteOffset - songoffset);
                                 pArrow.Y = Halfsies + 50;
 
-                                TEXMAN.Draw(listBeats[i].TextureIndex,pArrow.X, pArrow.Y, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);                                
+                                // Drawing rect if mouse is hovering over it
+                                if (i == nMouseSelectedIndex)
+                                    D3D.DrawEmptyRect(new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.CornflowerBlue);
+                                // Drawing rect if note is clicked on
+                                else if(i == nMouseClickedIndex)
+                                    D3D.DrawEmptyRect(new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
+
+                                // Drawing Arrow Icon
+                                TEXMAN.Draw(listBeats[i].TextureIndex,pArrow.X, pArrow.Y, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);                                 
                             }
 
                             if (listBeats[i].Completion == BEATIS.KEY || listBeats[i].Completion == BEATIS.COMPLETE)
@@ -374,29 +387,54 @@ namespace BeatMaker
                                 pNote.X =  XHalfsies + (int)(noteOffset - songoffset);
                                 pNote.Y =  Halfsies - 60;
 
-                                TEXMAN.Draw(listBeats[i].TextureIndex,pNote.X,pNote.Y, scaleX, scaleY, Rectangle.Empty, 0, 0, 0,0);
+                                // Drawing rect if mouse is hovering over it
+                                if (i == nMouseSelectedIndex)
+                                    D3D.DrawEmptyRect(new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Crimson);
+                                // Drawing rect if note is clicked on
+                                else if (i == nMouseClickedIndex)
+                                    D3D.DrawEmptyRect(new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
+
+                                
+                                // Drawing Note Icon
+                                TEXMAN.Draw(listBeats[i].TextureIndex,pNote.X,pNote.Y, scaleX, scaleY, Rectangle.Empty, 0, 0, 0,0);                                
                             }
 
                             if (listBeats[i].Completion == BEATIS.COMPLETE)
                                 //Drawing Line from complete note to complete arrow
-                                D3D.DrawLine(pArrow.X, pArrow.Y, pNote.X, pNote.Y, Color.WhiteSmoke);
+                                D3D.DrawLine(pArrow.X, pArrow.Y, pNote.X, pNote.Y, Color.WhiteSmoke);                                                
                             
+
+
                         }
                     }
                     else
                         break;
+
                 }
             }
 
+        }
+
+        private void DrawBeatMousePlacement()
+        {
+            if (MouseAddBeat.Completion != BEATIS.EMPTY)
+            {
+                // Mouse point
+                Point mosPos;
+
+                mosPos = TrackPanel.PointToClient(Cursor.Position);
+
+                TEXMAN.Draw(MouseAddBeat.TextureIndex, mosPos.X, mosPos.Y, scaleX, scaleY, Rectangle.Empty, 0, 0, 0, Color.FromArgb(128, Color.White).ToArgb());
+            }
         }
 
         private void UpdateNoteInfo()
         {
             // Putting image into note picture box
 
-            if (nMouseSelectedIndex >= 0)
+            if (nMouseClickedIndex >= 0)
             {
-                switch (listBeats[nMouseSelectedIndex].KeyPress)
+                switch (listBeats[nMouseClickedIndex].KeyPress)
                 {
                     case 'w':
                         BeatPictureBox.BackgroundImage = WKeyPictureBox.BackgroundImage;
@@ -418,30 +456,30 @@ namespace BeatMaker
                         break;
                 }
 
-                if (listBeats[nMouseSelectedIndex].Completion == BEATIS.ARROW || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
+                if (listBeats[nMouseClickedIndex].Completion == BEATIS.ARROW || listBeats[nMouseClickedIndex].Completion == BEATIS.COMPLETE)
                 {
-                    if (listBeats[nMouseSelectedIndex].Direction == "left")
+                    if (listBeats[nMouseClickedIndex].Direction == "left")
                         BeatPictureBox.BackgroundImage = LeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "right")
+                    else if (listBeats[nMouseClickedIndex].Direction == "right")
                         BeatPictureBox.BackgroundImage = RightPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "up")
+                    else if (listBeats[nMouseClickedIndex].Direction == "up")
                         BeatPictureBox.BackgroundImage = UpPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "down")
+                    else if (listBeats[nMouseClickedIndex].Direction == "down")
                         BeatPictureBox.BackgroundImage = DownPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "leftdown")
+                    else if (listBeats[nMouseClickedIndex].Direction == "leftdown")
                         BeatPictureBox.BackgroundImage = DownLeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "rightdown")
+                    else if (listBeats[nMouseClickedIndex].Direction == "rightdown")
                         BeatPictureBox.BackgroundImage = DownRightPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "leftup")
+                    else if (listBeats[nMouseClickedIndex].Direction == "leftup")
                         BeatPictureBox.BackgroundImage = UpLeftPictureBox.BackgroundImage;
-                    else if (listBeats[nMouseSelectedIndex].Direction == "rightup")
+                    else if (listBeats[nMouseClickedIndex].Direction == "rightup")
                         BeatPictureBox.BackgroundImage = UpRightPictureBox.BackgroundImage;
                 }
 
-                BeatDifficultyValueLabel.Text = listBeats[nMouseSelectedIndex].Difficulty;
-                BeatKeyValueLabel.Text = listBeats[nMouseSelectedIndex].KeyPress.ToString();
-                BeatDirectionValueLabel.Text = listBeats[nMouseSelectedIndex].Direction;
-                BeatTimeNumberLabel.Text = listBeats[nMouseSelectedIndex].TimeOfBeat.ToString();
+                BeatDifficultyValueLabel.Text = listBeats[nMouseClickedIndex].Difficulty;
+                BeatKeyValueLabel.Text = listBeats[nMouseClickedIndex].KeyPress.ToString();
+                BeatDirectionValueLabel.Text = listBeats[nMouseClickedIndex].Direction;
+                BeatTimeValueUpDown.Value = listBeats[nMouseClickedIndex].TimeOfBeat;
             }
             else
             {
@@ -449,8 +487,9 @@ namespace BeatMaker
                 BeatDifficultyValueLabel.Text = "none";
                 BeatKeyValueLabel.Text = "none";
                 BeatDirectionValueLabel.Text = "none";
-                BeatTimeNumberLabel.Text = "0";
+                BeatTimeValueUpDown.Value = 0;
             }
+            
         }
 
         private void ResetEverything()
@@ -690,7 +729,7 @@ namespace BeatMaker
                             {
                                 // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
                                 float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
-                                Rectangle derp = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, listBeats[i].Width, listBeats[i].Height);
+                                Rectangle derp = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, listBeats[i].Width / 2, listBeats[i].Height / 2);
 
                                 if (derp.Contains(mosPos))
                                 {                                    
@@ -718,7 +757,7 @@ namespace BeatMaker
                                 // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
                                 float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
 
-                                Rectangle note = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, listBeats[i].Width, listBeats[i].Height);
+                                Rectangle note = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, listBeats[i].Width / 2, listBeats[i].Height / 2);
 
                                 if (note.Contains(mosPos))
                                 {                                    
@@ -732,6 +771,80 @@ namespace BeatMaker
             }
 
             return -1;
+        }
+
+        private void ResetButtonBackgrounds()
+        {
+            WKeyPictureBox.BackColor = SystemColors.Control;
+            AKeyPictureBox.BackColor = SystemColors.Control;
+            SKeyPictureBox.BackColor = SystemColors.Control;
+            DKeyPictureBox.BackColor = SystemColors.Control;
+
+            UpLeftPictureBox.BackColor = SystemColors.Control;
+            UpPictureBox.BackColor = SystemColors.Control;
+            UpRightPictureBox.BackColor = SystemColors.Control;
+            RightPictureBox.BackColor = SystemColors.Control;
+            DownRightPictureBox.BackColor = SystemColors.Control;
+            DownPictureBox.BackColor = SystemColors.Control;
+            DownLeftPictureBox.BackColor = SystemColors.Control;
+            LeftPictureBox.BackColor = SystemColors.Control;
+        }
+
+        private void PlaceBeatAtMousePosition()
+        {
+            if (MouseAddBeat.Completion != BEATIS.EMPTY)
+            {
+                //*********************DRAWING MATH********************************//               
+                // Pixel offset for numbers / tics original position
+                // Effectively these are the seconds displayed
+                int xoffset = 34;
+
+                // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
+                //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
+                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                // Cutting down on divide ops
+                int Halfsies = TrackPanel.Bottom / 2;
+                int XHalfsies = TrackPanel.Right / 2;
+
+                // Mouse point
+                Point mosPos;
+                mosPos = TrackPanel.PointToClient(Cursor.Position);
+
+                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
+               // float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                Point pArrow = new Point();
+               // pArrow.X = XHalfsies + (int)(noteOffset - songoffset);
+               // pArrow.Y = Halfsies + 50;
+
+                if (mosPos.X > XHalfsies)
+                {
+                    // More coordinate magic to get the song position based off mouse X position
+                    MouseAddBeat.TimeOfBeat = nCurrentPositionMS + (uint)((mosPos.X * 1000 / 34 - (15000 + 118 * (mosPos.X / 34 - 15))));
+                }
+                else
+                {
+                    // More coordinate magic to get the song position based off mouse X position
+                    int nTime = (int)(nCurrentPositionMS + (mosPos.X * 1000 / 34 - (15000 - 57 * (15 - mosPos.X / 34))));
+
+                    if (nTime > 0)
+                        MouseAddBeat.TimeOfBeat = (uint)nTime;                        
+                }
+
+
+
+                //if (nCurrentPositionMS > 15000)
+                //    MouseAddBeat.TimeOfBeat = (nCurrentPositionMS - 15000) + (uint)(mosPos.X * 9);
+                //else
+                //    MouseAddBeat.TimeOfBeat = (uint)(mosPos.X * 9);
+
+                // Adding to list
+                listBeats.Add(MouseAddBeat);
+
+                Beat tBeat = MouseAddBeat;
+                MouseAddBeat = new Beat(tBeat);               
+            }
         }
 
         //****************MISC EVENTS************************//
@@ -899,8 +1012,20 @@ namespace BeatMaker
 
         private void TrackPanel_MouseDown(object sender, MouseEventArgs e)
         {
+            nMouseClickedIndex = nMouseSelectedIndex;
 
+            if (nMouseClickedIndex == -1)
+            {
+                PlaceBeatAtMousePosition();
+            }
         }
+
+        private void BeatTimeValueUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (nMouseClickedIndex >= 0)
+                listBeats[nMouseClickedIndex].TimeOfBeat = (uint)BeatTimeValueUpDown.Value;
+        }  
+
 
         //*****************PLAYBACK AND EDITOR BUTTONS*******//
 
@@ -1348,14 +1473,202 @@ namespace BeatMaker
 
         }
 
-        
+        //*****************ICON SELECTION EVENTS***************//
+
+        private void WKeyPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                WKeyPictureBox.BackColor = Color.Crimson;
+                MouseAddBeat.KeyPress = 'w';
+                MouseAddBeat.Image = szWKeyImage;
+                MouseAddBeat.Completion = BEATIS.KEY;
+                MouseAddBeat.TextureIndex = KeyW;               
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+
+        }
+
+        private void AKeyPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                AKeyPictureBox.BackColor = Color.Crimson;
+                MouseAddBeat.KeyPress = 'a';
+                MouseAddBeat.Image = szAKeyImage;
+                MouseAddBeat.Completion = BEATIS.KEY;
+                MouseAddBeat.TextureIndex = KeyA;               
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+                
+            }
+        }
+
+        private void SKeyPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                SKeyPictureBox.BackColor = Color.Crimson;
+                MouseAddBeat.KeyPress = 's';
+                MouseAddBeat.Image = szSKeyImage;
+                MouseAddBeat.Completion = BEATIS.KEY;
+                MouseAddBeat.TextureIndex = KeyS;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void DKeyPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                DKeyPictureBox.BackColor = Color.Crimson;
+                MouseAddBeat.KeyPress = 'd';
+                MouseAddBeat.Image = szDKeyImage;
+                MouseAddBeat.Completion = BEATIS.KEY;
+                MouseAddBeat.TextureIndex = KeyD;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void UpLeftPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                UpLeftPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "leftup";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowUpLeft;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void LeftPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                LeftPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "left";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowLeft;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void DownLeftPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                DownLeftPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "leftdown";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowDownLeft;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void DownPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                DownPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "down";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowDown;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void UpPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                UpPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "up";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowUp;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void UpRightPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                UpRightPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "rightup";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowUpRight;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void RightPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                RightPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "right";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowRight;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void DownRightPictureBox_Click(object sender, EventArgs e)
+        {
+            if (fmodChannel != null)
+            {
+                ResetButtonBackgrounds();
+
+                DownRightPictureBox.BackColor = Color.CornflowerBlue;
+                MouseAddBeat.Direction = "rightdown";
+                MouseAddBeat.Completion = BEATIS.ARROW;
+                MouseAddBeat.TextureIndex = ArrowDownRight;
+                MouseAddBeat.Width = 32;
+                MouseAddBeat.Height = 32;
+            }
+        }
+
+        private void ClearSelectionButton_Click(object sender, EventArgs e)
+        {
+            // Clearing any mouse selections if user clicks 
+            MouseAddBeat = new Beat();
+
+            ResetButtonBackgrounds();
+        }
 
         
-
-        
-
-     
-      
-    
     }
 }

@@ -120,6 +120,20 @@ namespace BeatMaker
             nTextureIndex = -1;
         }
 
+        public Beat(Beat aBeat)
+        {
+            nTimeOfBeatS = aBeat.nTimeOfBeatS;
+            nTimeOfBeat = aBeat.nTimeOfBeat;
+            szDirection = aBeat.szDirection;
+            cKey = aBeat.cKey;
+            szImage = aBeat.szImage;
+            szDifficulty = aBeat.szDifficulty;
+            nWidth = aBeat.nWidth;
+            nHeight = aBeat.nHeight;
+            eCompletion = aBeat.eCompletion;
+            nTextureIndex = aBeat.nTextureIndex;
+        }
+
         public int CompareTo(Beat aBeat)
         {
             return nTimeOfBeat.CompareTo(aBeat.nTimeOfBeat);
