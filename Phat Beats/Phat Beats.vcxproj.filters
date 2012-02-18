@@ -251,7 +251,7 @@
     <ClInclude Include="source\JCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\States\CBitmapFont.h">
+   <ClInclude Include="source\States\CBitmapFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\States\COptionsState.h">
