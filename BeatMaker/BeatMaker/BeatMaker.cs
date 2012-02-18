@@ -48,6 +48,7 @@ namespace BeatMaker
       
         // MOUSE STUFF
         public bool bMouseInTrack = false;
+        public int nMouseSelectedIndex = -1;
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
@@ -408,7 +409,7 @@ namespace BeatMaker
 
         private void AddBeat(Keys dir)
         {
-            Beat tempBeat = new Beat();
+            Beat tempBeat = new Beat();           
 
             switch (dir)
             {
@@ -418,7 +419,7 @@ namespace BeatMaker
                         LeftPictureBox.BackColor = Color.CornflowerBlue;
                         tempBeat.Direction = "left";
                         tempBeat.Completion = BEATIS.ARROW;
-                        tempBeat.TextureIndex = ArrowLeft;
+                        tempBeat.TextureIndex = ArrowLeft;                        
                     }
                     break;
 
@@ -540,33 +541,108 @@ namespace BeatMaker
                     return;
             }
 
+           
 
             // Only setting beat time if it's not assigned yet
             fmodChannel.getPosition(ref tempBeat.nTimeOfBeat, FMOD.TIMEUNIT.MS);
             tempBeat.Width = 32;
             tempBeat.Height = 32;
 
-            listBeats.Add(tempBeat);
 
-            Console.WriteLine(tempBeat.TimeOfBeat.ToString());
-
-            Console.WriteLine(tempBeat.TimeOfBeatS.ToString());
+            listBeats.Add(tempBeat);            
 
             bListChanged = true;
         }
 
         private void CheckMousePos()
         {
+
+            // Mouse point
             Point mosPos;
 
             mosPos = TrackPanel.PointToClient(Cursor.Position);
 
-            // Checking if mouse is in the panel
-            if (TrackPanel.ClientRectangle.Contains(mosPos))
-            {
+            //*********************DRAWING MATH********************************//               
+            // Pixel offset for numbers / tics original position
+            // Effectively these are the seconds displayed
+            int xoffset = 34;
 
-                int derp = 1;
-            }        
+            // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
+            //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
+            float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+            // Cutting down on divide ops
+            int Halfsies = TrackPanel.Bottom / 2;
+            int XHalfsies = TrackPanel.Right / 2;
+
+            // Getting scope to display beats
+            float displayFrontArea = nCurrentPositionMS * 0.001f + 15;
+            float displayBackArea = displayFrontArea - 30;
+
+            int ArrowTop = Halfsies + 50;
+            int ArrowBottom = ArrowTop + 32;
+
+            int SymbolTop = Halfsies - 60;
+            int SymbolBottom = SymbolTop + TEXMAN.GetTextureHeight(KeyW);
+
+            // Counter
+            int i = 0;
+
+            // Checking if mouse is in the panel
+            if (mosPos.Y < ArrowBottom && mosPos.Y > ArrowTop)
+            {
+                for (i = 0; i < listBeats.Count; ++i)
+                {
+                     // Time of beat in MS float style
+                    float timeofbeat = listBeats[i].TimeOfBeat * 0.001f;
+
+                    // Trying to cull notes so we don't display everything off screen
+                    if (timeofbeat <= displayFrontArea)                   
+                        if (timeofbeat >= displayBackArea)                        
+                            if (listBeats[i].Completion == BEATIS.ARROW || listBeats[i].Completion == BEATIS.COMPLETE)
+                            {
+                                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
+                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                                Rectangle derp = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, listBeats[i].Width, listBeats[i].Height);
+
+                                if (derp.Contains(mosPos))
+                                {
+                                    nMouseSelectedIndex = i;
+                                    Console.WriteLine(nMouseSelectedIndex.ToString());
+                                    break;
+                                }
+                            }  
+                }               
+            }
+            else if (mosPos.Y < SymbolBottom && mosPos.Y > SymbolTop)
+            {
+                for (i = 0; i < listBeats.Count; ++i)
+                {
+                    // Time of beat in MS float style
+                    float timeofbeat = listBeats[i].TimeOfBeat * 0.001f;
+
+                    // Trying to cull notes so we don't display everything off screen
+                    if (timeofbeat <= displayFrontArea)
+                        if (timeofbeat >= displayBackArea)
+                            if (listBeats[i].Completion == BEATIS.KEY || listBeats[i].Completion == BEATIS.COMPLETE)
+                            {
+
+                                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
+                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                                Rectangle note = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, listBeats[i].Width, listBeats[i].Height);
+
+                                if (note.Contains(mosPos))
+                                {
+                                    nMouseSelectedIndex = i;
+                                    Console.WriteLine(nMouseSelectedIndex.ToString());
+                                    break;
+                                }
+                            }
+                }
+            }
+
             
         }
 

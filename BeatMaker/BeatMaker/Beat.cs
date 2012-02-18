@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace BeatMaker
 {
@@ -11,6 +12,15 @@ namespace BeatMaker
 
     public class Beat : IComparable<Beat>
     {
+        // Drawing rect
+        Rectangle rDraw;
+
+        public Rectangle DrawRect
+        {
+            get { return rDraw; }
+            set { rDraw = value; }
+        }
+
         private uint nTimeOfBeatS;
 
         public uint TimeOfBeatS
