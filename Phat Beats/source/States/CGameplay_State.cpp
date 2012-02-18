@@ -31,8 +31,8 @@ CGameplay_State::~CGameplay_State()
 void CGameplay_State::Enter(void)
 {
 	BeatManager.LoadSong("songtest1.xml");
-AnimationManager.LoadAnimation("Anim.xml");
-CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
+	AnimationManager.LoadAnimation("Anim.xml");
+	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 }
 
 bool CGameplay_State::Input(void)
@@ -46,7 +46,6 @@ bool CGameplay_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
 	{
 		BeatManager.Pause();
-		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		BeatManager.Reset();
@@ -59,7 +58,11 @@ bool CGameplay_State::Input(void)
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_D))
 		AnimationManager.Reset();
-		
+	
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_I))
+	{
+		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+	}
 	return true;
 }
 
@@ -75,9 +78,6 @@ void CGameplay_State::Update(void)
 
 void CGameplay_State::Render(void)
 {
-	
-		
-
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	
 	BeatManager.Render(); 

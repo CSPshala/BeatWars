@@ -185,7 +185,7 @@ bool CAnimationManager::UnloadAnimations()
 
 		delete m_vecAnimations[i];
 	}
-
+	m_vecAnimations.clear();
 	return true;
 }
 
