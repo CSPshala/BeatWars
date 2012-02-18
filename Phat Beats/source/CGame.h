@@ -21,7 +21,7 @@
 // Messages and Event system by Dave Brown
 #include "Managers/CEventSystem.h"
 #include "Managers/CMessageSystem.h"
-
+#include "Managers/CObjectManager.h"
 #include <string>
 using std::string;
 class CBitmapFont;
@@ -37,6 +37,7 @@ private:
 	CBitmapFont*			m_pBF;
 	CEventSystem*			m_pES;
 	CMessageSystem*			m_pMS;
+	CObjectManager*			m_pOM;
 
 	// Game state Pointer
 	IGameState* m_pCurState;

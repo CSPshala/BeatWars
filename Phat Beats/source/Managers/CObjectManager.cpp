@@ -14,7 +14,7 @@ CObjectManager* CObjectManager::sm_pInstance = NULL;
 
 CObjectManager::CObjectManager()
 {
-
+	
 }
 
 CObjectManager::~CObjectManager()
@@ -41,30 +41,57 @@ void CObjectManager::DeleteInstance()
 
 void CObjectManager::UpdateObjects(float fElapsedTime)
 {
-
+	vector<IBaseInterface*>::iterator iter = m_vObjectList.begin();
+	for (;iter != m_vObjectList.end(); ++iter)
+	{
+		(*iter)->Update(fElapsedTime);
+	}
 }
 
 void CObjectManager::RenderObjects()
 {
-
+	vector<IBaseInterface*>::iterator iter = m_vObjectList.begin();
+	for (;iter != m_vObjectList.end(); ++iter)
+	{
+		(*iter)->Render();
+	}
 }
 
-void CObjectManager::CheckCollisions()
+void CObjectManager::CheckCollisions(IBaseInterface* pBase)
 {
-
+	
+	for (vector<IBaseInterface*>::size_type i = 0; i < m_vObjectList.size(); ++i)
+	{
+		pBase->CheckCollision(m_vObjectList[i]);
+	}
 }
 
 void CObjectManager::RemoveAllObjects()
 {
-
+	vector<IBaseInterface*>::iterator iter = m_vObjectList.begin();
+	for (;iter != m_vObjectList.end(); ++iter)
+	{
+		(*iter)->Release();
+	}
+	m_vObjectList.clear();
 }
 
 void CObjectManager::AddObject(IBaseInterface* pObject)
 {
-
+	m_vObjectList.push_back(pObject);
+	pObject->AddRef();
 }
 
 void CObjectManager::RemoveObject(IBaseInterface* pObject)
 {
-
+	vector<IBaseInterface*>::iterator iter = m_vObjectList.begin();
+	for (;iter != m_vObjectList.end(); ++iter)
+	{
+		if ((*iter) == pObject)
+		{
+			(*iter)->Release();
+			m_vObjectList.erase(iter);
+			break;
+		}
+	}
 }

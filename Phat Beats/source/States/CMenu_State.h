@@ -55,7 +55,8 @@ private:
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
-	
+	int m_nTile;
+
 };
 
 #endif

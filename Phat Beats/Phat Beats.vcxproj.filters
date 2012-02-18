@@ -132,9 +132,6 @@
     <ClCompile Include="source\States\CBitmapFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\States\COptionsState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Managers\CEventSystem.cpp">
       <Filter>Managers / Factories</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="source\Managers\CMessageSystem.cpp">
       <Filter>Managers / Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="source\States\COptionsState.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     <ClInclude Include="source\Managers\CObjectManager.h">
       <Filter>Managers / Factories</Filter>
     </ClInclude>
-    <ClInclude Include="source\Managers\CObjectFactory.h">
-      <Filter>Managers / Factories</Filter>
-    </ClInclude>
     <ClInclude Include="source\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -252,9 +249,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
    <ClInclude Include="source\States\CBitmapFont.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\States\COptionsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Managers\CEvent.h">
@@ -271,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="source\Managers\IListener.h">
       <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\COptionsState.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

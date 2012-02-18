@@ -7,6 +7,9 @@
 #include "CGameplay_State.h"
 #include "../CGame.h"#include "../States/CMenu_State.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
+#include "CMenu_State.h"
+#include "../CGame.h"
+#include "CPause_State.h"
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
@@ -35,14 +38,16 @@ CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 bool CGameplay_State::Input(void)
 {
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
-		CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
 		BeatManager.Play();
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+	{
 		BeatManager.Pause();
-
+		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+	}
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		BeatManager.Reset();
 

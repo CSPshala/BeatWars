@@ -134,7 +134,6 @@
     <ClInclude Include="source\Managers\CFXManager.h" />
     <ClInclude Include="source\Managers\CMessages.h" />
     <ClInclude Include="source\Managers\CMessageSystem.h" />
-    <ClInclude Include="source\Managers\CObjectFactory.h" />
     <ClInclude Include="source\Managers\CObjectManager.h" />
     <ClInclude Include="source\Managers\CXml_Manager.h" />
     <ClInclude Include="source\Managers\IListener.h" />
