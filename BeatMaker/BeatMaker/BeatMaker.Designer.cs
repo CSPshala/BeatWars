@@ -48,7 +48,7 @@
             this.TrackPanel = new System.Windows.Forms.Panel();
             this.ModeBox = new System.Windows.Forms.GroupBox();
             this.BothRadio = new System.Windows.Forms.RadioButton();
-            this.IconsRadio = new System.Windows.Forms.RadioButton();
+            this.NotesRadio = new System.Windows.Forms.RadioButton();
             this.ArrowsRadio = new System.Windows.Forms.RadioButton();
             this.IconGroup = new System.Windows.Forms.GroupBox();
             this.ArrowLabel = new System.Windows.Forms.Label();
@@ -90,6 +90,16 @@
             this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
+            this.SelectedBeatBox = new System.Windows.Forms.GroupBox();
+            this.BeatTimeLabel = new System.Windows.Forms.Label();
+            this.BeatTimeNumberLabel = new System.Windows.Forms.Label();
+            this.BeatDifficultyLabel = new System.Windows.Forms.Label();
+            this.BeatDifficultyValueLabel = new System.Windows.Forms.Label();
+            this.BeatPictureBox = new System.Windows.Forms.PictureBox();
+            this.BeatKeyLabel = new System.Windows.Forms.Label();
+            this.BeatKeyValueLabel = new System.Windows.Forms.Label();
+            this.BeatDirectionLabel = new System.Windows.Forms.Label();
+            this.BeatDirectionValueLabel = new System.Windows.Forms.Label();
             this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -112,6 +122,8 @@
             this.toolStrip1.SuspendLayout();
             this.PlayControlPanel.SuspendLayout();
             this.InfoGroup.SuspendLayout();
+            this.SelectedBeatBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // BeatMakerMenuStrip
@@ -247,6 +259,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.SelectedBeatBox);
             this.splitContainer1.Panel2.Controls.Add(this.ModeBox);
             this.splitContainer1.Panel2.Controls.Add(this.IconGroup);
             this.splitContainer1.Panel2.Controls.Add(this.PlayControlPanel);
@@ -263,15 +276,16 @@
             this.TrackPanel.Name = "TrackPanel";
             this.TrackPanel.Size = new System.Drawing.Size(1033, 269);
             this.TrackPanel.TabIndex = 0;
+            this.TrackPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseDown);
             this.TrackPanel.MouseEnter += new System.EventHandler(this.TrackPanel_MouseEnter);
             this.TrackPanel.MouseLeave += new System.EventHandler(this.TrackPanel_MouseLeave);
             // 
             // ModeBox
             // 
             this.ModeBox.Controls.Add(this.BothRadio);
-            this.ModeBox.Controls.Add(this.IconsRadio);
+            this.ModeBox.Controls.Add(this.NotesRadio);
             this.ModeBox.Controls.Add(this.ArrowsRadio);
-            this.ModeBox.Location = new System.Drawing.Point(10, 149);
+            this.ModeBox.Location = new System.Drawing.Point(292, 145);
             this.ModeBox.Name = "ModeBox";
             this.ModeBox.Size = new System.Drawing.Size(188, 105);
             this.ModeBox.TabIndex = 7;
@@ -282,6 +296,7 @@
             // 
             this.BothRadio.Appearance = System.Windows.Forms.Appearance.Button;
             this.BothRadio.AutoSize = true;
+            this.BothRadio.Checked = true;
             this.BothRadio.Location = new System.Drawing.Point(6, 76);
             this.BothRadio.Name = "BothRadio";
             this.BothRadio.Size = new System.Drawing.Size(111, 23);
@@ -290,17 +305,16 @@
             this.BothRadio.Text = "Both (Simultaneous)";
             this.BothRadio.UseVisualStyleBackColor = true;
             // 
-            // IconsRadio
+            // NotesRadio
             // 
-            this.IconsRadio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.IconsRadio.AutoSize = true;
-            this.IconsRadio.Location = new System.Drawing.Point(6, 48);
-            this.IconsRadio.Name = "IconsRadio";
-            this.IconsRadio.Size = new System.Drawing.Size(65, 23);
-            this.IconsRadio.TabIndex = 1;
-            this.IconsRadio.TabStop = true;
-            this.IconsRadio.Text = "Just Icons";
-            this.IconsRadio.UseVisualStyleBackColor = true;
+            this.NotesRadio.Appearance = System.Windows.Forms.Appearance.Button;
+            this.NotesRadio.AutoSize = true;
+            this.NotesRadio.Location = new System.Drawing.Point(6, 48);
+            this.NotesRadio.Name = "NotesRadio";
+            this.NotesRadio.Size = new System.Drawing.Size(67, 23);
+            this.NotesRadio.TabIndex = 1;
+            this.NotesRadio.Text = "Just Notes";
+            this.NotesRadio.UseVisualStyleBackColor = true;
             // 
             // ArrowsRadio
             // 
@@ -310,7 +324,6 @@
             this.ArrowsRadio.Name = "ArrowsRadio";
             this.ArrowsRadio.Size = new System.Drawing.Size(71, 23);
             this.ArrowsRadio.TabIndex = 0;
-            this.ArrowsRadio.TabStop = true;
             this.ArrowsRadio.Text = "Just Arrows";
             this.ArrowsRadio.UseVisualStyleBackColor = true;
             // 
@@ -590,7 +603,7 @@
             this.PlayControlPanel.Controls.Add(this.StopButton);
             this.PlayControlPanel.Controls.Add(this.PauseButton);
             this.PlayControlPanel.Controls.Add(this.FastForwardButton);
-            this.PlayControlPanel.Location = new System.Drawing.Point(289, 56);
+            this.PlayControlPanel.Location = new System.Drawing.Point(289, 24);
             this.PlayControlPanel.Name = "PlayControlPanel";
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
@@ -751,6 +764,107 @@
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
             // 
+            // SelectedBeatBox
+            // 
+            this.SelectedBeatBox.Controls.Add(this.BeatDirectionValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatDirectionLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatKeyValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatKeyLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatPictureBox);
+            this.SelectedBeatBox.Controls.Add(this.BeatDifficultyValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatDifficultyLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatTimeNumberLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatTimeLabel);
+            this.SelectedBeatBox.Location = new System.Drawing.Point(6, 150);
+            this.SelectedBeatBox.Name = "SelectedBeatBox";
+            this.SelectedBeatBox.Size = new System.Drawing.Size(200, 100);
+            this.SelectedBeatBox.TabIndex = 8;
+            this.SelectedBeatBox.TabStop = false;
+            this.SelectedBeatBox.Text = "Single Beat Info";
+            // 
+            // BeatTimeLabel
+            // 
+            this.BeatTimeLabel.AutoSize = true;
+            this.BeatTimeLabel.Location = new System.Drawing.Point(9, 23);
+            this.BeatTimeLabel.Name = "BeatTimeLabel";
+            this.BeatTimeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.BeatTimeLabel.Size = new System.Drawing.Size(83, 13);
+            this.BeatTimeLabel.TabIndex = 0;
+            this.BeatTimeLabel.Text = "Beat Time (ms): ";
+            // 
+            // BeatTimeNumberLabel
+            // 
+            this.BeatTimeNumberLabel.AutoSize = true;
+            this.BeatTimeNumberLabel.Location = new System.Drawing.Point(112, 23);
+            this.BeatTimeNumberLabel.Name = "BeatTimeNumberLabel";
+            this.BeatTimeNumberLabel.Size = new System.Drawing.Size(13, 13);
+            this.BeatTimeNumberLabel.TabIndex = 1;
+            this.BeatTimeNumberLabel.Text = "0";
+            // 
+            // BeatDifficultyLabel
+            // 
+            this.BeatDifficultyLabel.AutoSize = true;
+            this.BeatDifficultyLabel.Location = new System.Drawing.Point(9, 43);
+            this.BeatDifficultyLabel.Name = "BeatDifficultyLabel";
+            this.BeatDifficultyLabel.Size = new System.Drawing.Size(53, 13);
+            this.BeatDifficultyLabel.TabIndex = 2;
+            this.BeatDifficultyLabel.Text = "Difficulty: ";
+            // 
+            // BeatDifficultyValueLabel
+            // 
+            this.BeatDifficultyValueLabel.AutoSize = true;
+            this.BeatDifficultyValueLabel.Location = new System.Drawing.Point(76, 43);
+            this.BeatDifficultyValueLabel.Name = "BeatDifficultyValueLabel";
+            this.BeatDifficultyValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatDifficultyValueLabel.TabIndex = 3;
+            this.BeatDifficultyValueLabel.Text = "none";
+            // 
+            // BeatPictureBox
+            // 
+            this.BeatPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BeatPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BeatPictureBox.Location = new System.Drawing.Point(152, 16);
+            this.BeatPictureBox.Name = "BeatPictureBox";
+            this.BeatPictureBox.Size = new System.Drawing.Size(40, 40);
+            this.BeatPictureBox.TabIndex = 4;
+            this.BeatPictureBox.TabStop = false;
+            // 
+            // BeatKeyLabel
+            // 
+            this.BeatKeyLabel.AutoSize = true;
+            this.BeatKeyLabel.Location = new System.Drawing.Point(8, 60);
+            this.BeatKeyLabel.Name = "BeatKeyLabel";
+            this.BeatKeyLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatKeyLabel.TabIndex = 5;
+            this.BeatKeyLabel.Text = "Key: ";
+            // 
+            // BeatKeyValueLabel
+            // 
+            this.BeatKeyValueLabel.AutoSize = true;
+            this.BeatKeyValueLabel.Location = new System.Drawing.Point(76, 60);
+            this.BeatKeyValueLabel.Name = "BeatKeyValueLabel";
+            this.BeatKeyValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatKeyValueLabel.TabIndex = 6;
+            this.BeatKeyValueLabel.Text = "none";
+            // 
+            // BeatDirectionLabel
+            // 
+            this.BeatDirectionLabel.AutoSize = true;
+            this.BeatDirectionLabel.Location = new System.Drawing.Point(9, 76);
+            this.BeatDirectionLabel.Name = "BeatDirectionLabel";
+            this.BeatDirectionLabel.Size = new System.Drawing.Size(52, 13);
+            this.BeatDirectionLabel.TabIndex = 7;
+            this.BeatDirectionLabel.Text = "Direction:";
+            // 
+            // BeatDirectionValueLabel
+            // 
+            this.BeatDirectionValueLabel.AutoSize = true;
+            this.BeatDirectionValueLabel.Location = new System.Drawing.Point(76, 76);
+            this.BeatDirectionValueLabel.Name = "BeatDirectionValueLabel";
+            this.BeatDirectionValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatDirectionValueLabel.TabIndex = 8;
+            this.BeatDirectionValueLabel.Text = "none";
+            // 
             // BeatMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -794,6 +908,9 @@
             this.PlayControlPanel.PerformLayout();
             this.InfoGroup.ResumeLayout(false);
             this.InfoGroup.PerformLayout();
+            this.SelectedBeatBox.ResumeLayout(false);
+            this.SelectedBeatBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -852,7 +969,7 @@
         private System.Windows.Forms.ToolStripMenuItem musicVolumeToolStripMenuItem;
         private System.Windows.Forms.GroupBox ModeBox;
         private System.Windows.Forms.RadioButton BothRadio;
-        private System.Windows.Forms.RadioButton IconsRadio;
+        private System.Windows.Forms.RadioButton NotesRadio;
         private System.Windows.Forms.RadioButton ArrowsRadio;
         private System.Windows.Forms.Label ArrowLabel;
         private System.Windows.Forms.Label BPMCurrentLabel;
@@ -862,6 +979,16 @@
         private System.Windows.Forms.ToolStripMenuItem beatListxmlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem musicTrackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setSongTitleToolStripMenuItem;
+        private System.Windows.Forms.GroupBox SelectedBeatBox;
+        private System.Windows.Forms.PictureBox BeatPictureBox;
+        private System.Windows.Forms.Label BeatDifficultyValueLabel;
+        private System.Windows.Forms.Label BeatDifficultyLabel;
+        private System.Windows.Forms.Label BeatTimeNumberLabel;
+        private System.Windows.Forms.Label BeatTimeLabel;
+        private System.Windows.Forms.Label BeatDirectionValueLabel;
+        private System.Windows.Forms.Label BeatDirectionLabel;
+        private System.Windows.Forms.Label BeatKeyValueLabel;
+        private System.Windows.Forms.Label BeatKeyLabel;
     }
 }
 

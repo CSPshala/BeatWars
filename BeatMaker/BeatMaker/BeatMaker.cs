@@ -49,6 +49,9 @@ namespace BeatMaker
         // MOUSE STUFF
         public bool bMouseInTrack = false;
         public int nMouseSelectedIndex = -1;
+        public int nMouseClickedIndex = -1;
+        Point pMouseSelectedCoords;
+        Point pMouseClickedIndex;
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
@@ -203,7 +206,10 @@ namespace BeatMaker
 
             // Checking mouse's position and if it's on a note / arrow
             if(bMouseInTrack)
-                CheckMousePos();
+                nMouseSelectedIndex = CheckMousePos();
+
+            // Updating note info box
+            UpdateNoteInfo();
            
             base.Update();
         }
@@ -348,25 +354,33 @@ namespace BeatMaker
                     {
                         if (timeofbeat >= displayBackArea)
                         {
-                            if (listBeats[i].Completion == BEATIS.ARROW || listBeats[i].Completion == BEATIS.COMPLETE)
+                            // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
+                            float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                            // Points for line drawing on complete notes
+                            Point pArrow = new Point();
+                            Point pNote = new Point();
+
+                            if (listBeats[i].Completion == BEATIS.ARROW || listBeats[i].Completion == BEATIS.COMPLETE) 
                             {
-                                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
-                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) *(1000.0f / (float)(xoffset / 1.258f));
+                                pArrow.X = XHalfsies + (int)(noteOffset - songoffset);
+                                pArrow.Y = Halfsies + 50;
 
-                                TEXMAN.Draw(listBeats[i].TextureIndex, XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);
-
-                                // Debug Text Draw for placement
-                                // D3D.DrawText("|", (XHalfsies + xoffset * i) - (int)songoffset, Halfsies + 50,Color.Red);
+                                TEXMAN.Draw(listBeats[i].TextureIndex,pArrow.X, pArrow.Y, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);                                
                             }
 
                             if (listBeats[i].Completion == BEATIS.KEY || listBeats[i].Completion == BEATIS.COMPLETE)
-                            {                                                            
+                            {
+                                pNote.X =  XHalfsies + (int)(noteOffset - songoffset);
+                                pNote.Y =  Halfsies - 60;
 
-                                // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
-                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
-
-                                TEXMAN.Draw(listBeats[i].TextureIndex, XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, scaleX, scaleY, Rectangle.Empty, 0, 0, 0,0);
+                                TEXMAN.Draw(listBeats[i].TextureIndex,pNote.X,pNote.Y, scaleX, scaleY, Rectangle.Empty, 0, 0, 0,0);
                             }
+
+                            if (listBeats[i].Completion == BEATIS.COMPLETE)
+                                //Drawing Line from complete note to complete arrow
+                                D3D.DrawLine(pArrow.X, pArrow.Y, pNote.X, pNote.Y, Color.WhiteSmoke);
+                            
                         }
                     }
                     else
@@ -374,6 +388,69 @@ namespace BeatMaker
                 }
             }
 
+        }
+
+        private void UpdateNoteInfo()
+        {
+            // Putting image into note picture box
+
+            if (nMouseSelectedIndex >= 0)
+            {
+                switch (listBeats[nMouseSelectedIndex].KeyPress)
+                {
+                    case 'w':
+                        BeatPictureBox.BackgroundImage = WKeyPictureBox.BackgroundImage;
+                        break;
+
+                    case 'a':
+                        BeatPictureBox.BackgroundImage = AKeyPictureBox.BackgroundImage;
+                        break;
+
+                    case 's':
+                        BeatPictureBox.BackgroundImage = SKeyPictureBox.BackgroundImage;
+                        break;
+
+                    case 'd':
+                        BeatPictureBox.BackgroundImage = DKeyPictureBox.BackgroundImage;
+                        break;
+
+                    case 'x':
+                        break;
+                }
+
+                if (listBeats[nMouseSelectedIndex].Completion == BEATIS.ARROW || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
+                {
+                    if (listBeats[nMouseSelectedIndex].Direction == "left")
+                        BeatPictureBox.BackgroundImage = LeftPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "right")
+                        BeatPictureBox.BackgroundImage = RightPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "up")
+                        BeatPictureBox.BackgroundImage = UpPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "down")
+                        BeatPictureBox.BackgroundImage = DownPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "leftdown")
+                        BeatPictureBox.BackgroundImage = DownLeftPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "rightdown")
+                        BeatPictureBox.BackgroundImage = DownRightPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "leftup")
+                        BeatPictureBox.BackgroundImage = UpLeftPictureBox.BackgroundImage;
+                    else if (listBeats[nMouseSelectedIndex].Direction == "rightup")
+                        BeatPictureBox.BackgroundImage = UpRightPictureBox.BackgroundImage;
+                }
+
+                BeatDifficultyValueLabel.Text = listBeats[nMouseSelectedIndex].Difficulty;
+                BeatKeyValueLabel.Text = listBeats[nMouseSelectedIndex].KeyPress.ToString();
+                BeatDirectionValueLabel.Text = listBeats[nMouseSelectedIndex].Direction;
+                BeatTimeNumberLabel.Text = listBeats[nMouseSelectedIndex].TimeOfBeat.ToString();
+            }
+            else
+            {
+                BeatPictureBox.BackgroundImage = null;
+                BeatDifficultyValueLabel.Text = "none";
+                BeatKeyValueLabel.Text = "none";
+                BeatDirectionValueLabel.Text = "none";
+                BeatTimeNumberLabel.Text = "0";
+            }
         }
 
         private void ResetEverything()
@@ -409,8 +486,10 @@ namespace BeatMaker
 
         private void AddBeat(Keys dir)
         {
-            Beat tempBeat = new Beat();           
+            Beat tempBeat = new Beat();  
+         
 
+            if(BothRadio.Checked || ArrowsRadio.Checked)
             switch (dir)
             {
                 // Left Arrow
@@ -492,7 +571,15 @@ namespace BeatMaker
                         tempBeat.TextureIndex = ArrowUpRight;
                     }
                     break;
+                
+                default:
+                    break;
+               
+            }
 
+            if(BothRadio.Checked || NotesRadio.Checked)
+            switch (dir)
+            {
                 // W Key
                 case Keys.W:
                     {
@@ -517,7 +604,7 @@ namespace BeatMaker
 
                 // S Key
                 case Keys.S:
-                    {    
+                    {
                         SKeyPictureBox.BackColor = Color.Crimson;
                         tempBeat.KeyPress = 's';
                         tempBeat.Image = szSKeyImage;
@@ -538,7 +625,7 @@ namespace BeatMaker
                     break;
 
                 default:
-                    return;
+                    break;
             }
 
            
@@ -554,7 +641,7 @@ namespace BeatMaker
             bListChanged = true;
         }
 
-        private void CheckMousePos()
+        private int CheckMousePos()
         {
 
             // Mouse point
@@ -603,14 +690,14 @@ namespace BeatMaker
                             {
                                 // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
                                 float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
-
                                 Rectangle derp = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, listBeats[i].Width, listBeats[i].Height);
 
                                 if (derp.Contains(mosPos))
-                                {
-                                    nMouseSelectedIndex = i;
+                                {                                    
                                     Console.WriteLine(nMouseSelectedIndex.ToString());
-                                    break;
+                                    pMouseSelectedCoords.X = derp.Left;
+                                    pMouseSelectedCoords.Y = derp.Top;
+                                    return i;
                                 }
                             }  
                 }               
@@ -634,16 +721,17 @@ namespace BeatMaker
                                 Rectangle note = new Rectangle(XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, listBeats[i].Width, listBeats[i].Height);
 
                                 if (note.Contains(mosPos))
-                                {
-                                    nMouseSelectedIndex = i;
+                                {                                    
                                     Console.WriteLine(nMouseSelectedIndex.ToString());
-                                    break;
+                                    pMouseSelectedCoords.X = note.Left;
+                                    pMouseSelectedCoords.Y = note.Top;
+                                    return i;
                                 }
                             }
                 }
             }
 
-            
+            return -1;
         }
 
         //****************MISC EVENTS************************//
@@ -807,6 +895,11 @@ namespace BeatMaker
         private void TrackPanel_MouseLeave(object sender, EventArgs e)
         {
             bMouseInTrack = false;
+        }
+
+        private void TrackPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+
         }
 
         //*****************PLAYBACK AND EDITOR BUTTONS*******//
@@ -1254,6 +1347,8 @@ namespace BeatMaker
         {
 
         }
+
+        
 
         
 
