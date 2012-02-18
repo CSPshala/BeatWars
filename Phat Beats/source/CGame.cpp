@@ -21,6 +21,7 @@ CGame::CGame()
 	m_pBF	= NULL;
 	m_pES	= NULL;
 	m_pMS	= NULL;
+	m_pOM	= NULL;
 }
 
 CGame::~CGame()
@@ -46,6 +47,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pBF	= CBitmapFont::GetInstance();
 	m_pES	= CEventSystem::GetInstance();
 	m_pMS	= CMessageSystem::GetInstance();
+	m_pOM	= CObjectManager::GetInstance();
 
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
@@ -89,7 +91,6 @@ bool CGame::Main()
 	Update();
 	// Render
 	Render();
-
 	return true;
 }
 
@@ -128,6 +129,7 @@ void CGame::Update()
 	m_pCurState->Update();	// must be called or you will mess stuff up
 	m_pES->ProcessEvents();
 	m_pMS->ProcessMessages();
+	m_pOM->UpdateObjects(cTimer.GetDeltaTime());
 
 }
 
@@ -138,7 +140,8 @@ void CGame::Render()
 	m_pD3D->SpriteBegin();
 
 	m_pCurState->Render();
-
+	CObjectManager::GetInstance()->RenderObjects();
+	
 	m_pD3D->SpriteEnd();
 	m_pD3D->DeviceEnd();
 	m_pD3D->Present();
@@ -147,6 +150,11 @@ void CGame::Render()
 
 void CGame::Shutdown()
 {
+	if (m_pOM)
+	{
+		m_pOM->RemoveAllObjects();
+		m_pOM->DeleteInstance();
+	}
 	if(m_pMS)
 	{
 		m_pMS->ShutdownMessageSystem();
