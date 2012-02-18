@@ -263,6 +263,8 @@
             this.TrackPanel.Name = "TrackPanel";
             this.TrackPanel.Size = new System.Drawing.Size(1033, 269);
             this.TrackPanel.TabIndex = 0;
+            this.TrackPanel.MouseEnter += new System.EventHandler(this.TrackPanel_MouseEnter);
+            this.TrackPanel.MouseLeave += new System.EventHandler(this.TrackPanel_MouseLeave);
             // 
             // ModeBox
             // 
@@ -588,7 +590,7 @@
             this.PlayControlPanel.Controls.Add(this.StopButton);
             this.PlayControlPanel.Controls.Add(this.PauseButton);
             this.PlayControlPanel.Controls.Add(this.FastForwardButton);
-            this.PlayControlPanel.Location = new System.Drawing.Point(290, 29);
+            this.PlayControlPanel.Location = new System.Drawing.Point(289, 56);
             this.PlayControlPanel.Name = "PlayControlPanel";
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;

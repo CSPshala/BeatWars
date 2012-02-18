@@ -21,7 +21,7 @@ namespace BeatMaker
 
         //************MEMBERS***************************
 
-        // D3D
+       
         public ManagedDirect3D D3D = ManagedDirect3D.Instance;
         public ManagedTextureManager TEXMAN = ManagedTextureManager.Instance;
 
@@ -44,7 +44,10 @@ namespace BeatMaker
 
         // GAME LOOP
         public bool bRunning = true;
-        public bool bListChanged = false;          
+        public bool bListChanged = false;    
+      
+        // MOUSE STUFF
+        public bool bMouseInTrack = false;
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
@@ -56,10 +59,10 @@ namespace BeatMaker
         private string szDKeyImage = "lighting_icon&32.png";
 
         // BEAT SCALING (FOR EASY DISPLAY)
-        private float scaleX = 0.0f;
-        private float scaleY = 0.0f;
+        private float scaleX = 1.0f;
+        private float scaleY = 1.0f;
             // Used for zooming in on beat track
-        private float fZoom = 1.0f;
+        private int nZoom = 1;
 
         // TEXTURE MANAGER INDICES
         int ArrowLeft, ArrowRight, ArrowUp, ArrowDown, ArrowUpLeft, ArrowUpRight, ArrowDownLeft, ArrowDownRight;
@@ -93,6 +96,12 @@ namespace BeatMaker
 
             scaleX = 0.5f;
             scaleY = 0.5f;
+
+            // Zoom mousewheel event
+            this.MouseWheel += new MouseEventHandler(BeatMaker_MouseWheel);
+
+            // Creating cursor
+           // this.Cursor = new Cursor(Cursor.Current.Handle);
 
             // Init timer
             theTimer.InitTimer();
@@ -187,6 +196,14 @@ namespace BeatMaker
             // Updating timer
             theTimer.Update();
 
+            // Setting Zoom back to 1 if user dropped it into the negatives
+            if (nZoom < 1)
+                nZoom = 1;
+
+            // Checking mouse's position and if it's on a note / arrow
+            if(bMouseInTrack)
+                CheckMousePos();
+           
             base.Update();
         }
 
@@ -203,8 +220,8 @@ namespace BeatMaker
             D3D.SpriteBegin();
             D3D.LineBegin();
 
-            // Drawing running time to test timer
-            D3D.DrawText(theTimer.RunningTime.Seconds.ToString(), 10, 10, Color.Red);
+            // Drawing zoom
+            D3D.DrawText("Zoom: " + nZoom.ToString() + "X", 10, 10, Color.Red);
 
             // Drawing song line and count in track window
             DrawSong();
@@ -238,7 +255,7 @@ namespace BeatMaker
 
                 // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
                                                                                                  //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
-                float songoffset = (nCurrentPositionMS * 0.001f) * (1000.0f / (float)(xoffset / 1.258f)); 
+                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f)); 
 
                 // Cutting down on divide ops
                 int Halfsies = TrackPanel.Bottom / 2;
@@ -278,12 +295,12 @@ namespace BeatMaker
                     // Frequency check
                     //if(!bFreq)
                         // Drawing Tics
-                        D3D.DrawLineF((x1 * i) - songoffset , y1, (x2 * i) - songoffset, y2, Color.LawnGreen);                 
+                        D3D.DrawLineF(((x1 * i * nZoom) - songoffset) , y1, ((x2 * i * nZoom) - songoffset) , y2, Color.LawnGreen);                 
                         
 
                     // Draws numbers from original half screen position till end of song
                     //   v--- this retardation is just tweaking to get shit lined up right
-                    D3D.DrawText(i.ToString(), (XHalfsies + (xoffset * i) + (i * 3)) - (int)songoffset, (int)y1 - 20, Color.LawnGreen);
+                    D3D.DrawText(i.ToString(), ((XHalfsies + (xoffset * i * nZoom) + (i * 3 * nZoom)) - (int)songoffset) , (int)y1 - 20, Color.LawnGreen);
                 }          
                 
 
@@ -307,7 +324,7 @@ namespace BeatMaker
 
                 // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
                 //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
-                float songoffset = (nCurrentPositionMS * 0.001f) * (1000.0f / (float)(xoffset / 1.258f));
+                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
 
                 // Cutting down on divide ops
                 int Halfsies = TrackPanel.Bottom / 2;
@@ -333,7 +350,7 @@ namespace BeatMaker
                             if (listBeats[i].Completion == BEATIS.ARROW || listBeats[i].Completion == BEATIS.COMPLETE)
                             {
                                 // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
-                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f) *(1000.0f / (float)(xoffset / 1.258f));
+                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) *(1000.0f / (float)(xoffset / 1.258f));
 
                                 TEXMAN.Draw(listBeats[i].TextureIndex, XHalfsies + (int)(noteOffset - songoffset), Halfsies + 50, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);
 
@@ -342,12 +359,10 @@ namespace BeatMaker
                             }
 
                             if (listBeats[i].Completion == BEATIS.KEY || listBeats[i].Completion == BEATIS.COMPLETE)
-                            {
-                                float scaleX = 1.0f;
-                                float scaleY = 1.0f;                                
+                            {                                                            
 
                                 // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
-                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f) * (1000.0f / (float)(xoffset / 1.258f));
+                                float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
 
                                 TEXMAN.Draw(listBeats[i].TextureIndex, XHalfsies + (int)(noteOffset - songoffset), Halfsies - 60, scaleX, scaleY, Rectangle.Empty, 0, 0, 0,0);
                             }
@@ -540,6 +555,21 @@ namespace BeatMaker
             bListChanged = true;
         }
 
+        private void CheckMousePos()
+        {
+            Point mosPos;
+
+            mosPos = TrackPanel.PointToClient(Cursor.Position);
+
+            // Checking if mouse is in the panel
+            if (TrackPanel.ClientRectangle.Contains(mosPos))
+            {
+
+                int derp = 1;
+            }        
+            
+        }
+
         //****************MISC EVENTS************************//
         private void BeatMaker_KeyDown(object sender, KeyEventArgs e)
         {
@@ -644,8 +674,64 @@ namespace BeatMaker
         {
             szSongName = setTitleWindow.SongName;
             setTitleWindow = null;
+        }    
+
+        private void BeatMaker_MouseWheel(object sender, MouseEventArgs e)
+        {
+            // Adding +/- 10 to zoom (can't go below 1)
+
+            if (e.Delta > 0)
+            {
+                switch (nZoom)
+                {
+                    case 1:
+                        nZoom = 2;
+                        break;
+
+                    case 2:
+                        nZoom = 7;
+                        break;
+
+                    case 7:
+                        nZoom = 14;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if (e.Delta < 0)
+            {
+
+                switch (nZoom)
+                {
+                    case 2:
+                        nZoom = 1;
+                        break;
+
+                    case 7:
+                        nZoom = 2;
+                        break;
+
+                    case 14:
+                        nZoom = 7;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
-       
+
+        private void TrackPanel_MouseEnter(object sender, EventArgs e)
+        {
+            bMouseInTrack = true;
+        }
+
+        private void TrackPanel_MouseLeave(object sender, EventArgs e)
+        {
+            bMouseInTrack = false;
+        }
 
         //*****************PLAYBACK AND EDITOR BUTTONS*******//
 
@@ -959,9 +1045,9 @@ namespace BeatMaker
                 Properties.Settings.Default.Save();
 
 
-                if (TEXMAN.GetTextureWidth(KeyW) >= 32) 
+                if (TEXMAN.GetTextureWidth(KeyW) >= 20) 
                 scaleX = 0.5f;
-                if (TEXMAN.GetTextureHeight(KeyW) >= 32) 
+                if (TEXMAN.GetTextureHeight(KeyW) >= 20) 
                 scaleY = 0.5f;
             }
         }
@@ -988,8 +1074,10 @@ namespace BeatMaker
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
 
-                scaleX = TEXMAN.GetTextureWidth(KeyA);
-                scaleY = TEXMAN.GetTextureHeight(KeyA);
+                if (TEXMAN.GetTextureWidth(KeyA) >= 20)
+                    scaleX = 0.5f;
+                if (TEXMAN.GetTextureHeight(KeyA) >= 20)
+                    scaleY = 0.5f;
             }
         }
 
@@ -1015,8 +1103,10 @@ namespace BeatMaker
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
 
-                scaleX = TEXMAN.GetTextureWidth(KeyS);
-                scaleY = TEXMAN.GetTextureHeight(KeyS);
+                if (TEXMAN.GetTextureWidth(KeyS) >= 20)
+                    scaleX = 0.5f;
+                if (TEXMAN.GetTextureHeight(KeyS) >= 20)
+                    scaleY = 0.5f;
             }
         }
 
@@ -1041,9 +1131,12 @@ namespace BeatMaker
                 // Saving file path
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
+                             
 
-                scaleX = TEXMAN.GetTextureWidth(KeyD);
-                scaleY = TEXMAN.GetTextureHeight(KeyD);
+                if (TEXMAN.GetTextureWidth(KeyD) >= 20)
+                    scaleX = 0.5f;
+                if (TEXMAN.GetTextureHeight(KeyD) >= 20)
+                    scaleY = 0.5f;
             }
         }
 
@@ -1085,6 +1178,10 @@ namespace BeatMaker
         {
 
         }
+
+        
+
+        
 
      
       
