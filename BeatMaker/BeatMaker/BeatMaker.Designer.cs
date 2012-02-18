@@ -107,6 +107,12 @@
             this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
+            this.DifficultyBox = new System.Windows.Forms.GroupBox();
+            this.HardButton = new System.Windows.Forms.Button();
+            this.NormalButton = new System.Windows.Forms.Button();
+            this.EasyButton = new System.Windows.Forms.Button();
+            this.DifficultyLabel = new System.Windows.Forms.Label();
+            this.DifficultyValueLabel = new System.Windows.Forms.Label();
             this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -132,6 +138,7 @@
             this.toolStrip1.SuspendLayout();
             this.PlayControlPanel.SuspendLayout();
             this.InfoGroup.SuspendLayout();
+            this.DifficultyBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // BeatMakerMenuStrip
@@ -267,6 +274,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.DifficultyBox);
             this.splitContainer1.Panel2.Controls.Add(this.SelectedBeatBox);
             this.splitContainer1.Panel2.Controls.Add(this.ModeBox);
             this.splitContainer1.Panel2.Controls.Add(this.IconGroup);
@@ -432,9 +440,9 @@
             this.ModeBox.Controls.Add(this.BothRadio);
             this.ModeBox.Controls.Add(this.NotesRadio);
             this.ModeBox.Controls.Add(this.ArrowsRadio);
-            this.ModeBox.Location = new System.Drawing.Point(292, 145);
+            this.ModeBox.Location = new System.Drawing.Point(269, 145);
             this.ModeBox.Name = "ModeBox";
-            this.ModeBox.Size = new System.Drawing.Size(188, 119);
+            this.ModeBox.Size = new System.Drawing.Size(133, 119);
             this.ModeBox.TabIndex = 7;
             this.ModeBox.TabStop = false;
             this.ModeBox.Text = "Beat Placement Modes";
@@ -874,6 +882,8 @@
             // 
             // InfoGroup
             // 
+            this.InfoGroup.Controls.Add(this.DifficultyValueLabel);
+            this.InfoGroup.Controls.Add(this.DifficultyLabel);
             this.InfoGroup.Controls.Add(this.BPMCurrentLabel);
             this.InfoGroup.Controls.Add(this.BPMLabel);
             this.InfoGroup.Controls.Add(this.BeatCountLabel);
@@ -893,7 +903,7 @@
             // 
             this.BPMCurrentLabel.AutoSize = true;
             this.BPMCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BPMCurrentLabel.Location = new System.Drawing.Point(81, 111);
+            this.BPMCurrentLabel.Location = new System.Drawing.Point(81, 114);
             this.BPMCurrentLabel.Name = "BPMCurrentLabel";
             this.BPMCurrentLabel.Size = new System.Drawing.Size(13, 13);
             this.BPMCurrentLabel.TabIndex = 8;
@@ -902,7 +912,7 @@
             // BPMLabel
             // 
             this.BPMLabel.AutoSize = true;
-            this.BPMLabel.Location = new System.Drawing.Point(42, 111);
+            this.BPMLabel.Location = new System.Drawing.Point(42, 114);
             this.BPMLabel.Name = "BPMLabel";
             this.BPMLabel.Size = new System.Drawing.Size(33, 13);
             this.BPMLabel.TabIndex = 6;
@@ -912,7 +922,7 @@
             // 
             this.BeatCountLabel.AutoSize = true;
             this.BeatCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BeatCountLabel.Location = new System.Drawing.Point(81, 94);
+            this.BeatCountLabel.Location = new System.Drawing.Point(81, 97);
             this.BeatCountLabel.Name = "BeatCountLabel";
             this.BeatCountLabel.Size = new System.Drawing.Size(13, 13);
             this.BeatCountLabel.TabIndex = 5;
@@ -921,7 +931,7 @@
             // PlacedBeatsLabel
             // 
             this.PlacedBeatsLabel.AutoSize = true;
-            this.PlacedBeatsLabel.Location = new System.Drawing.Point(4, 94);
+            this.PlacedBeatsLabel.Location = new System.Drawing.Point(4, 97);
             this.PlacedBeatsLabel.Name = "PlacedBeatsLabel";
             this.PlacedBeatsLabel.Size = new System.Drawing.Size(73, 13);
             this.PlacedBeatsLabel.TabIndex = 4;
@@ -931,7 +941,7 @@
             // 
             this.TimeLengthLabel.AutoSize = true;
             this.TimeLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeLengthLabel.Location = new System.Drawing.Point(81, 64);
+            this.TimeLengthLabel.Location = new System.Drawing.Point(81, 62);
             this.TimeLengthLabel.Name = "TimeLengthLabel";
             this.TimeLengthLabel.Size = new System.Drawing.Size(24, 13);
             this.TimeLengthLabel.TabIndex = 3;
@@ -961,11 +971,71 @@
             // LengthLabel
             // 
             this.LengthLabel.AutoSize = true;
-            this.LengthLabel.Location = new System.Drawing.Point(5, 63);
+            this.LengthLabel.Location = new System.Drawing.Point(4, 62);
             this.LengthLabel.Name = "LengthLabel";
             this.LengthLabel.Size = new System.Drawing.Size(71, 13);
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
+            // 
+            // DifficultyBox
+            // 
+            this.DifficultyBox.Controls.Add(this.EasyButton);
+            this.DifficultyBox.Controls.Add(this.NormalButton);
+            this.DifficultyBox.Controls.Add(this.HardButton);
+            this.DifficultyBox.Location = new System.Drawing.Point(432, 145);
+            this.DifficultyBox.Name = "DifficultyBox";
+            this.DifficultyBox.Size = new System.Drawing.Size(138, 119);
+            this.DifficultyBox.TabIndex = 9;
+            this.DifficultyBox.TabStop = false;
+            this.DifficultyBox.Text = "Difficulty";
+            // 
+            // HardButton
+            // 
+            this.HardButton.Location = new System.Drawing.Point(7, 18);
+            this.HardButton.Name = "HardButton";
+            this.HardButton.Size = new System.Drawing.Size(75, 23);
+            this.HardButton.TabIndex = 0;
+            this.HardButton.Text = "Hard";
+            this.HardButton.UseVisualStyleBackColor = true;
+            this.HardButton.Click += new System.EventHandler(this.HardButton_Click);
+            // 
+            // NormalButton
+            // 
+            this.NormalButton.Location = new System.Drawing.Point(7, 46);
+            this.NormalButton.Name = "NormalButton";
+            this.NormalButton.Size = new System.Drawing.Size(75, 23);
+            this.NormalButton.TabIndex = 1;
+            this.NormalButton.Text = "Normal";
+            this.NormalButton.UseVisualStyleBackColor = true;
+            this.NormalButton.Click += new System.EventHandler(this.NormalButton_Click);
+            // 
+            // EasyButton
+            // 
+            this.EasyButton.Location = new System.Drawing.Point(7, 75);
+            this.EasyButton.Name = "EasyButton";
+            this.EasyButton.Size = new System.Drawing.Size(75, 23);
+            this.EasyButton.TabIndex = 2;
+            this.EasyButton.Text = "Easy";
+            this.EasyButton.UseVisualStyleBackColor = true;
+            this.EasyButton.Click += new System.EventHandler(this.EasyButton_Click);
+            // 
+            // DifficultyLabel
+            // 
+            this.DifficultyLabel.AutoSize = true;
+            this.DifficultyLabel.Location = new System.Drawing.Point(4, 78);
+            this.DifficultyLabel.Name = "DifficultyLabel";
+            this.DifficultyLabel.Size = new System.Drawing.Size(53, 13);
+            this.DifficultyLabel.TabIndex = 9;
+            this.DifficultyLabel.Text = "Difficulty: ";
+            // 
+            // DifficultyValueLabel
+            // 
+            this.DifficultyValueLabel.AutoSize = true;
+            this.DifficultyValueLabel.Location = new System.Drawing.Point(81, 78);
+            this.DifficultyValueLabel.Name = "DifficultyValueLabel";
+            this.DifficultyValueLabel.Size = new System.Drawing.Size(29, 13);
+            this.DifficultyValueLabel.TabIndex = 10;
+            this.DifficultyValueLabel.Text = "easy";
             // 
             // BeatMaker
             // 
@@ -1014,6 +1084,7 @@
             this.PlayControlPanel.PerformLayout();
             this.InfoGroup.ResumeLayout(false);
             this.InfoGroup.PerformLayout();
+            this.DifficultyBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1099,6 +1170,12 @@
         private System.Windows.Forms.Button EditEventButton;
         private System.Windows.Forms.Label BeatEventValueLabel;
         private System.Windows.Forms.Button DeleteSelectionButton;
+        private System.Windows.Forms.GroupBox DifficultyBox;
+        private System.Windows.Forms.Button EasyButton;
+        private System.Windows.Forms.Button NormalButton;
+        private System.Windows.Forms.Button HardButton;
+        private System.Windows.Forms.Label DifficultyValueLabel;
+        private System.Windows.Forms.Label DifficultyLabel;
     }
 }
 

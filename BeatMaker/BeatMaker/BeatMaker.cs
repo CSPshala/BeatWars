@@ -42,6 +42,7 @@ namespace BeatMaker
         // MISC FORMS
         SetTitle setTitleWindow = null;
         SetEvent setEventWindow = null;
+        string szDifficulty = "easy";
 
         // GAME LOOP
         public bool bRunning = true;
@@ -115,6 +116,9 @@ namespace BeatMaker
 
             // Zoom mousewheel event
             this.MouseWheel += new MouseEventHandler(BeatMaker_MouseWheel);
+
+            // Difficulty label value
+            DifficultyValueLabel.Text = szDifficulty;
                         
             // Init timer
             theTimer.InitTimer();
@@ -765,6 +769,7 @@ namespace BeatMaker
             tempBeat.Width = 32;
             tempBeat.Height = 32;
 
+            tempBeat.Difficulty = szDifficulty;
 
             listBeats.Add(tempBeat);            
 
@@ -910,7 +915,7 @@ namespace BeatMaker
                         MouseAddBeat.TimeOfBeat = (uint)nTime;                        
                 }
 
-              
+                MouseAddBeat.Difficulty = szDifficulty;
 
                 // Adding to list
                 listBeats.Add(MouseAddBeat);
@@ -1439,6 +1444,23 @@ namespace BeatMaker
                 xRoot.Add(xSongName);
                 xRoot.Add(xDuration);
 
+                // Adding icon file names
+                XElement xIconFileNames = new XElement("icons");
+
+                XAttribute wKeyFile = new XAttribute("wkey",szWKeyImage);
+                xIconFileNames.Add(wKeyFile);
+
+                XAttribute aKeyFile = new XAttribute("akey", szAKeyImage);
+                xIconFileNames.Add(aKeyFile);
+
+                XAttribute sKeyFile = new XAttribute("skey", szSKeyImage);
+                xIconFileNames.Add(sKeyFile);
+
+                XAttribute dKeyFile = new XAttribute("dkey", szDKeyImage);
+                xIconFileNames.Add(dKeyFile);
+
+                xRoot.Add(xIconFileNames);
+
                 for (int i = 0; i < listBeats.Count; ++i)
                 {
                     XElement xBeat = new XElement("Beat");
@@ -1452,10 +1474,7 @@ namespace BeatMaker
 
                     XAttribute xKey = new XAttribute("key", listBeats[i].KeyPress);
                     xBeat.Add(xKey);
-
-                    XAttribute xImage = new XAttribute("image", listBeats[i].Image);
-                    xBeat.Add(xImage);
-
+                    
                     XAttribute xDifficulty = new XAttribute("difficulty", listBeats[i].Difficulty);
                     xBeat.Add(xDifficulty);
 
@@ -1468,8 +1487,8 @@ namespace BeatMaker
                     XAttribute xBeatIs = new XAttribute("beatis", (int)listBeats[i].Completion);
                     xBeat.Add(xBeatIs);
 
-                    XAttribute xIndex = new XAttribute("imageindex", listBeats[i].TextureIndex);
-                    xBeat.Add(xIndex);
+                    XAttribute xEvent = new XAttribute("event", listBeats[i].Event);
+                    xBeat.Add(xEvent);
 
                     // Adding beat to Song
                     xRoot.Add(xBeat);
@@ -1530,6 +1549,7 @@ namespace BeatMaker
                     szSongName = Convert.ToString(songName.Value);
 
                 
+                
 
 
                 //*****************LOADING MUSIC FILE***********************************//
@@ -1547,6 +1567,99 @@ namespace BeatMaker
 
                     szSongFileName = associatedFileName;
                 }              
+
+                // Loading Icon Images
+                XElement xIcons = root.Element("icons");
+
+                XAttribute wIcon = xIcons.Attribute("wkey");
+                szWKeyImage = wIcon.Value;
+
+                XAttribute aIcon = xIcons.Attribute("akey");
+                szAKeyImage = aIcon.Value;
+
+                XAttribute sIcon = xIcons.Attribute("skey");
+                szSKeyImage = sIcon.Value;
+
+                XAttribute dIcon = xIcons.Attribute("dkey");
+                szDKeyImage = dIcon.Value;
+
+                //*******************LOADING ICONS***************************************//
+
+                //**************W KEY****************************************//
+                if (!System.IO.File.Exists(Properties.Settings.Default.IconFilePath + szWKeyImage))
+                {
+                    // the file was not found so we must reaquire the associated file
+                    if (System.Windows.Forms.MessageBox.Show("\"" + szWKeyImage + "\" can not be found in \"" + Properties.Settings.Default.IconFilePath + "\". Please relocate " + szWKeyImage) == DialogResult.OK)
+                    {
+                        loadWImageToolStripMenuItem_Click(null, null);
+                    }
+                }
+                else
+                {
+                    KeyW = TEXMAN.LoadTexture(Properties.Settings.Default.IconFilePath + szWKeyImage, 0);
+
+                    WKeyPictureBox.BackgroundImage = new Bitmap(Properties.Settings.Default.IconFilePath + szWKeyImage);
+
+                    if (TEXMAN.GetTextureWidth(KeyW) >= 20)
+                        scaleX = 0.5f;
+                    if (TEXMAN.GetTextureHeight(KeyW) >= 20)
+                        scaleY = 0.5f;
+                }
+
+
+                //***************A KEY*****************************************//
+
+                if (!System.IO.File.Exists(Properties.Settings.Default.IconFilePath + szAKeyImage))
+                {
+                    // the file was not found so we must reaquire the associated file
+                    if (System.Windows.Forms.MessageBox.Show("\"" + szAKeyImage + "\" can not be found in \"" + Properties.Settings.Default.IconFilePath + "\". Please relocate " + szAKeyImage) == DialogResult.OK)
+                    {
+                        loadAImageToolStripMenuItem_Click(null, null);
+                    }
+                }
+                else
+                {
+                    KeyA = TEXMAN.LoadTexture(Properties.Settings.Default.IconFilePath + szAKeyImage, 0);
+
+                    AKeyPictureBox.BackgroundImage = new Bitmap(Properties.Settings.Default.IconFilePath + szAKeyImage);
+
+                }
+
+
+                //****************S KEY******************************************//
+                if (!System.IO.File.Exists(Properties.Settings.Default.IconFilePath + szSKeyImage))
+                {
+                    // the file was not found so we must reaquire the associated file
+                    if (System.Windows.Forms.MessageBox.Show("\"" + szSKeyImage + "\" can not be found in \"" + Properties.Settings.Default.IconFilePath + "\". Please relocate " + szSKeyImage) == DialogResult.OK)
+                    {
+                        loadSImageToolStripMenuItem_Click(null, null);
+                    }
+                }
+                else
+                {
+                    KeyS = TEXMAN.LoadTexture(Properties.Settings.Default.IconFilePath + szSKeyImage, 0);
+
+                    SKeyPictureBox.BackgroundImage = new Bitmap(Properties.Settings.Default.IconFilePath + szSKeyImage);
+
+                }
+
+                //*****************D KEY*******************************************//
+                if (!System.IO.File.Exists(Properties.Settings.Default.IconFilePath + szDKeyImage))
+                {
+                    // the file was not found so we must reaquire the associated file
+                    if (System.Windows.Forms.MessageBox.Show("\"" + szDKeyImage + "\" can not be found in \"" + Properties.Settings.Default.IconFilePath + "\". Please relocate " + szDKeyImage) == DialogResult.OK)
+                    {
+                        loadDImageToolStripMenuItem_Click(null, null);
+                    }
+                }
+                else
+                {
+                    KeyD = TEXMAN.LoadTexture(Properties.Settings.Default.IconFilePath + szDKeyImage, 0);
+
+                    DKeyPictureBox.BackgroundImage = new Bitmap(Properties.Settings.Default.IconFilePath + szDKeyImage);
+
+                }
+
 
 
                 //*****************LOAD BEATS******************************************//
@@ -1568,9 +1681,6 @@ namespace BeatMaker
                         XAttribute xKey = xBeat.Attribute("key");
                         aBeat.KeyPress = Convert.ToChar(xKey.Value);
 
-                        XAttribute xImage = xBeat.Attribute("image");
-                        aBeat.Image = xImage.Value;
-
                         XAttribute xDifficulty = xBeat.Attribute("difficulty");
                         aBeat.Difficulty = xDifficulty.Value;
 
@@ -1583,8 +1693,50 @@ namespace BeatMaker
                         XAttribute xBeatIs = xBeat.Attribute("beatis");
                         aBeat.Completion = (BEATIS)Convert.ToInt32(xBeatIs.Value);
 
-                        XAttribute xIndex = xBeat.Attribute("imageindex");
-                        aBeat.TextureIndex = Convert.ToInt32(xIndex.Value);
+                        XAttribute xEvent = xBeat.Attribute("event");
+                        aBeat.Event = xEvent.Value;
+
+                        if (BEATIS.ARROW == aBeat.Completion || BEATIS.COMPLETE == aBeat.Completion)
+                        {
+                            if (aBeat.Direction == "left")
+                                aBeat.ArrowTextureIndex = ArrowLeft;
+                            else if (aBeat.Direction == "right")
+                                aBeat.ArrowTextureIndex = ArrowRight;
+                            else if (aBeat.Direction == "up")
+                                aBeat.ArrowTextureIndex = ArrowUp;
+                            else if (aBeat.Direction == "down")
+                                aBeat.ArrowTextureIndex = ArrowDown;
+                            else if (aBeat.Direction == "leftdown")
+                                aBeat.ArrowTextureIndex = ArrowDownLeft;
+                            else if (aBeat.Direction == "rightdown")
+                                aBeat.ArrowTextureIndex = ArrowDownRight;
+                            else if (aBeat.Direction == "leftup")
+                                aBeat.ArrowTextureIndex = ArrowUpLeft;
+                            else if (aBeat.Direction == "rightup")
+                                aBeat.ArrowTextureIndex = ArrowUpRight;
+                        }
+
+                        if (BEATIS.KEY == aBeat.Completion || BEATIS.COMPLETE == aBeat.Completion)
+                        {
+                            switch (aBeat.KeyPress)
+                            {
+                                case 'w':
+                                    aBeat.TextureIndex = KeyW;
+                                    break;
+
+                                case 'a':
+                                    aBeat.TextureIndex = KeyA;
+                                    break;
+
+                                case 's':
+                                    aBeat.TextureIndex = KeyS;
+                                    break;
+
+                                case 'd':
+                                    aBeat.TextureIndex = KeyD;
+                                    break;
+                            }
+                        }
 
                         // Adding beat to beatList
                         listBeats.Add(aBeat);
@@ -1667,6 +1819,10 @@ namespace BeatMaker
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
 
+                for (int i = 0; i < listBeats.Count; ++i)
+                    if (listBeats[i].KeyPress == 'w')
+                        listBeats[i].TextureIndex = KeyW;
+
 
                 if (TEXMAN.GetTextureWidth(KeyW) >= 20) 
                 scaleX = 0.5f;
@@ -1697,6 +1853,10 @@ namespace BeatMaker
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
 
+                for (int i = 0; i < listBeats.Count; ++i)
+                    if (listBeats[i].KeyPress == 'a')
+                        listBeats[i].TextureIndex = KeyA;
+
                 if (TEXMAN.GetTextureWidth(KeyA) >= 20)
                     scaleX = 0.5f;
                 if (TEXMAN.GetTextureHeight(KeyA) >= 20)
@@ -1726,6 +1886,10 @@ namespace BeatMaker
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
 
+                for (int i = 0; i < listBeats.Count; ++i)
+                    if (listBeats[i].KeyPress == 's')
+                        listBeats[i].TextureIndex = KeyS;
+
                 if (TEXMAN.GetTextureWidth(KeyS) >= 20)
                     scaleX = 0.5f;
                 if (TEXMAN.GetTextureHeight(KeyS) >= 20)
@@ -1754,7 +1918,10 @@ namespace BeatMaker
                 // Saving file path
                 Properties.Settings.Default.IconFilePath = openDlg.FileName.Replace(openDlg.SafeFileName, "");
                 Properties.Settings.Default.Save();
-                             
+
+                for (int i = 0; i < listBeats.Count; ++i)
+                    if(listBeats[i].KeyPress == 'd')
+                        listBeats[i].TextureIndex = KeyD;
 
                 if (TEXMAN.GetTextureWidth(KeyD) >= 20)
                     scaleX = 0.5f;
@@ -2019,6 +2186,39 @@ namespace BeatMaker
                 setEventWindow.EventName = listBeats[nMouseClickedIndex].Event;
                 setEventWindow.ShowDialog();
             }
+        }
+
+        private void EasyButton_Click(object sender, EventArgs e)
+        {
+            szDifficulty = "easy";
+
+            // Difficulty label value
+            DifficultyValueLabel.Text = szDifficulty;
+
+            for (int i = 0; i < SelectedBeats.Count; ++i)
+                listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
+        }
+
+        private void NormalButton_Click(object sender, EventArgs e)
+        {
+            szDifficulty = "normal";
+
+            // Difficulty label value
+            DifficultyValueLabel.Text = szDifficulty;
+
+            for (int i = 0; i < SelectedBeats.Count; ++i)
+                listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
+        }
+
+        private void HardButton_Click(object sender, EventArgs e)
+        {
+            szDifficulty = "hard";
+
+            // Difficulty label value
+            DifficultyValueLabel.Text = szDifficulty;
+
+            for (int i = 0; i < SelectedBeats.Count; ++i)
+                listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
         }
 
         
