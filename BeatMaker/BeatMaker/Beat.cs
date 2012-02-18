@@ -103,6 +103,16 @@ namespace BeatMaker
             set { nTextureIndex = value; }
         }
 
+        private int nArrowTextureIndex;
+
+        public int ArrowTextureIndex
+        {
+            get { return nArrowTextureIndex; }
+            set { nArrowTextureIndex = value; }
+        }
+
+        
+
         string szEvent;
 
         public string Event
@@ -125,6 +135,7 @@ namespace BeatMaker
             nHeight = 0;
             eCompletion = BEATIS.EMPTY;
             nTextureIndex = -1;
+            nArrowTextureIndex = -1;
             szEvent = "none";
         }
 
