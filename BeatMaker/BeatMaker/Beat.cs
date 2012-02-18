@@ -151,6 +151,8 @@ namespace BeatMaker
             nHeight = aBeat.nHeight;
             eCompletion = aBeat.eCompletion;
             nTextureIndex = aBeat.nTextureIndex;
+            nArrowTextureIndex = aBeat.nArrowTextureIndex;
+            szEvent = aBeat.szEvent;
         }
 
         public int CompareTo(Beat aBeat)

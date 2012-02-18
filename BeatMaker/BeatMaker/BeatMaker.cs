@@ -48,6 +48,7 @@ namespace BeatMaker
       
         // MOUSE STUFF
         public bool bMouseInTrack = false;
+        bool bMouseSelect = false;
         public int nMouseSelectedIndex = -1;
         public int nMouseClickedIndex = -1;
         Point pMouseSelectedCoords;
@@ -55,6 +56,12 @@ namespace BeatMaker
         Beat MouseAddBeat = new Beat();
         string szClickedEventEdit = "";
         int nMouseScroll = 0;
+        Point MouseSelectStartPoint;
+        Rectangle MouseSelectRect;
+        List<int> SelectedBeats = new List<int>();
+
+        // COPY PASTE STUFF
+        List<int> CopiedBeats = new List<int>();
 
         // BEAT LIST
         List<Beat> listBeats = new List<Beat>();
@@ -107,10 +114,7 @@ namespace BeatMaker
 
             // Zoom mousewheel event
             this.MouseWheel += new MouseEventHandler(BeatMaker_MouseWheel);
-
-            // Creating cursor
-           // this.Cursor = new Cursor(Cursor.Current.Handle);
-
+                        
             // Init timer
             theTimer.InitTimer();
 
@@ -172,8 +176,7 @@ namespace BeatMaker
                     TimeCurrentLabel.Text = ((nCurrentPositionMS * 0.001).ToString("F1")) + "(s)";
 
                 // Checking for fastforward
-                if (fmodChannel != null)
-                {
+               
                     if (bIsFastforwarding)
                     {
                         // Moving forward by 100 MS when held down
@@ -189,7 +192,7 @@ namespace BeatMaker
                         fmodChannel.getPosition(ref CurPos, FMOD.TIMEUNIT.MS);
                         fmodChannel.setPosition(CurPos - 100, FMOD.TIMEUNIT.MS);
                     }
-                }
+               
             }
 
             // If the list has changed, we sort it
@@ -244,7 +247,10 @@ namespace BeatMaker
             DrawBeats();
 
             // Drawing mouse selected beat at mousepoint
-            DrawBeatMousePlacement();
+            DrawBeatMousePlacement();   
+         
+            // Drawing Selection rectangle
+            DrawSelectRect();
             
             // Cutting down on divide ops
             int Halfsies = TrackPanel.Right / 2;
@@ -380,8 +386,12 @@ namespace BeatMaker
                                 if (i == nMouseSelectedIndex)
                                     D3D.DrawEmptyRect(new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.CornflowerBlue);
                                 // Drawing rect if note is clicked on
-                                else if(i == nMouseClickedIndex)
-                                    D3D.DrawEmptyRect(new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
+                                for(int x = 0; x < SelectedBeats.Count; ++x)
+                                    if (i == SelectedBeats[x])
+                                    {
+                                        D3D.DrawEmptyRect(new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
+                                        break;
+                                    }
 
                                 // Drawing Arrow Icon
                                 TEXMAN.Draw(listBeats[i].ArrowTextureIndex,pArrow.X, pArrow.Y, 1.0f, 1.0f, Rectangle.Empty, 0, 0, 0, 0);                                 
@@ -396,8 +406,10 @@ namespace BeatMaker
                                 if (i == nMouseSelectedIndex)
                                     D3D.DrawEmptyRect(new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Crimson);
                                 // Drawing rect if note is clicked on
-                                else if (i == nMouseClickedIndex)
-                                    D3D.DrawEmptyRect(new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
+                                // Drawing rect if note is clicked on
+                                for (int x = 0; x < SelectedBeats.Count; ++x)
+                                    if (i == SelectedBeats[x])
+                                        D3D.DrawEmptyRect(new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10), Color.Goldenrod);
 
                                 
                                 // Drawing Note Icon
@@ -430,6 +442,37 @@ namespace BeatMaker
                 mosPos = TrackPanel.PointToClient(Cursor.Position);
 
                 TEXMAN.Draw(MouseAddBeat.TextureIndex, mosPos.X, mosPos.Y, scaleX, scaleY, Rectangle.Empty, 0, 0, 0, Color.FromArgb(128, Color.White).ToArgb());
+            }
+        }
+
+        private void DrawSelectRect()
+        {
+
+            if (bMouseSelect)
+            {
+                //*********************DRAWING MATH********************************//               
+                // Pixel offset for numbers / tics original position
+                // Effectively these are the seconds displayed
+                int xoffset = 34;
+
+                // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
+                //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
+                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                // Cutting down on divide ops
+                int Halfsies = TrackPanel.Bottom / 2;
+                int XHalfsies = TrackPanel.Right / 2;
+
+                // Getting scope to display beats
+                float displayFrontArea = nCurrentPositionMS * 0.001f + 15;
+                float displayBackArea = displayFrontArea - 30;
+
+                D3D.DrawEmptyRect(MouseSelectRect, Color.Goldenrod);
+
+                Console.WriteLine("Left: " + MouseSelectRect.Left.ToString());
+                Console.WriteLine("Top: " + MouseSelectRect.Top.ToString());
+                Console.WriteLine("Right: " + MouseSelectRect.Right.ToString());
+                Console.WriteLine("Bottom: " + MouseSelectRect.Bottom.ToString());
             }
         }
 
@@ -521,6 +564,19 @@ namespace BeatMaker
 
             listBeats = new List<Beat>();
 
+            MouseAddBeat = new Beat();
+            szClickedEventEdit = "";
+
+            nMouseScroll = 0;
+
+            MouseSelectStartPoint = new Point();
+
+            MouseSelectRect = Rectangle.Empty;
+
+            
+            SelectedBeats.Clear();
+            CopiedBeats.Clear();
+
             TimeCurrentLabel.Text = "0(s)";
             TimeLengthLabel.Text = "0(s)";
             BeatCountLabel.Text = "0";
@@ -532,8 +588,9 @@ namespace BeatMaker
 
         private void AddBeat(Keys dir)
         {
-            Beat tempBeat = new Beat();  
-         
+            Beat tempBeat = new Beat();
+
+            bool isBeat = false;
 
             if(BothRadio.Checked || ArrowsRadio.Checked)
             switch (dir)
@@ -544,7 +601,8 @@ namespace BeatMaker
                         LeftPictureBox.BackColor = Color.CornflowerBlue;
                         tempBeat.Direction = "left";
                         tempBeat.Completion = BEATIS.ARROW;
-                        tempBeat.ArrowTextureIndex = ArrowLeft;                        
+                        tempBeat.ArrowTextureIndex = ArrowLeft;
+                        isBeat = true;
                     }
                     break;
 
@@ -555,6 +613,8 @@ namespace BeatMaker
                         tempBeat.Direction = "right";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowRight;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -565,6 +625,8 @@ namespace BeatMaker
                         tempBeat.Direction = "up";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowUp;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -575,6 +637,8 @@ namespace BeatMaker
                         tempBeat.Direction = "down";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowDown;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -585,6 +649,8 @@ namespace BeatMaker
                         tempBeat.Direction = "leftdown";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowDownLeft;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -595,6 +661,8 @@ namespace BeatMaker
                         tempBeat.Direction = "rightdown";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowDownRight;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -605,6 +673,8 @@ namespace BeatMaker
                         tempBeat.Direction = "leftup";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowUpLeft;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -615,8 +685,10 @@ namespace BeatMaker
                         tempBeat.Direction = "rightup";
                         tempBeat.Completion = BEATIS.ARROW;
                         tempBeat.ArrowTextureIndex = ArrowUpRight;
+                        isBeat = true;
+
                     }
-                    break;
+                    break;                
                 
                 default:
                     break;
@@ -634,6 +706,8 @@ namespace BeatMaker
                         tempBeat.Image = szWKeyImage;
                         tempBeat.Completion = BEATIS.KEY;
                         tempBeat.TextureIndex = KeyW;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -645,6 +719,8 @@ namespace BeatMaker
                         tempBeat.Image = szAKeyImage;
                         tempBeat.Completion = BEATIS.KEY;
                         tempBeat.TextureIndex = KeyA;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -656,6 +732,8 @@ namespace BeatMaker
                         tempBeat.Image = szSKeyImage;
                         tempBeat.Completion = BEATIS.KEY;
                         tempBeat.TextureIndex = KeyS;
+                        isBeat = true;
+
                     }
                     break;
 
@@ -667,14 +745,17 @@ namespace BeatMaker
                         tempBeat.Image = szDKeyImage;
                         tempBeat.Completion = BEATIS.KEY;
                         tempBeat.TextureIndex = KeyD;
+                        isBeat = true;
+
                     }
-                    break;
+                    break;               
 
                 default:
                     break;
             }
 
-           
+            if (!isBeat || fmodChannel == null)
+                return;
 
             // Only setting beat time if it's not assigned yet
             fmodChannel.getPosition(ref tempBeat.nTimeOfBeat, FMOD.TIMEUNIT.MS);
@@ -840,51 +921,67 @@ namespace BeatMaker
 
         private void LinkBeatNodes()
         {
-            if (nMouseSelectedIndex != nMouseClickedIndex  && nMouseClickedIndex >= 0 && nMouseSelectedIndex >= 0)
+            bool success = false;
+
+            for (int i = 0; i < SelectedBeats.Count; ++i)
             {
-                if (listBeats[nMouseSelectedIndex].Completion == BEATIS.ARROW || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
+                if (nMouseSelectedIndex != SelectedBeats[i] && nMouseSelectedIndex >= 0)
                 {
-                    // Can't link with other arrows
-                    if (listBeats[nMouseClickedIndex].Completion != BEATIS.ARROW)
+                    if (listBeats[nMouseSelectedIndex].Completion == BEATIS.ARROW || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
                     {
-                        listBeats[nMouseClickedIndex].Direction = listBeats[nMouseSelectedIndex].Direction;
-                        listBeats[nMouseClickedIndex].TimeOfBeat = listBeats[nMouseSelectedIndex].TimeOfBeat;
-                        listBeats[nMouseClickedIndex].ArrowTextureIndex = listBeats[nMouseSelectedIndex].ArrowTextureIndex;
-                        listBeats[nMouseClickedIndex].Completion = BEATIS.COMPLETE;
+                        // Can't link with other arrows
+                        if (listBeats[SelectedBeats[i]].Completion != BEATIS.ARROW)
+                        {
+                            listBeats[SelectedBeats[i]].Direction = listBeats[nMouseSelectedIndex].Direction;                           
+                            listBeats[SelectedBeats[i]].ArrowTextureIndex = listBeats[nMouseSelectedIndex].ArrowTextureIndex;
+                            listBeats[SelectedBeats[i]].Completion = BEATIS.COMPLETE;
 
-                        // Getting rid of old arrow since complete notes now hold all relevant info
-                        listBeats.RemoveAt(nMouseSelectedIndex);
+                            success = true;
+                        }
                     }
-                }
-                else if (listBeats[nMouseSelectedIndex].Completion == BEATIS.KEY || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
-                {
-                    // Can't link with other keys
-                    if (listBeats[nMouseClickedIndex].Completion != BEATIS.KEY)
+                    else if (listBeats[nMouseSelectedIndex].Completion == BEATIS.KEY || listBeats[nMouseSelectedIndex].Completion == BEATIS.COMPLETE)
                     {
-                        listBeats[nMouseClickedIndex].KeyPress = listBeats[nMouseSelectedIndex].KeyPress;
-                        listBeats[nMouseClickedIndex].TimeOfBeat = listBeats[nMouseSelectedIndex].TimeOfBeat;
-                        listBeats[nMouseClickedIndex].TextureIndex = listBeats[nMouseSelectedIndex].TextureIndex;
-                        listBeats[nMouseClickedIndex].Completion = BEATIS.COMPLETE;
+                        // Can't link with other keys
+                        if (listBeats[SelectedBeats[i]].Completion != BEATIS.KEY)
+                        {
+                            listBeats[SelectedBeats[i]].KeyPress = listBeats[nMouseSelectedIndex].KeyPress;                         
+                            listBeats[SelectedBeats[i]].TextureIndex = listBeats[nMouseSelectedIndex].TextureIndex;
+                            listBeats[SelectedBeats[i]].Completion = BEATIS.COMPLETE;
+                            success = true;
+                        }
+                    }                
 
-
-                        // Getting rid of old note since complete notes now hold all relevant info
-                        listBeats.RemoveAt(nMouseSelectedIndex);
-                    }
                 }
+            }
+
+            if (success)
+            {
+
+                // Getting rid of old arrow since complete notes now hold all relevant info
+                // Only deletes if the original wasn't a complete note
+                if(listBeats[nMouseSelectedIndex].Completion != BEATIS.COMPLETE)
+                    listBeats.RemoveAt(nMouseSelectedIndex);
+
 
                 // Killing mouse selection indicies because they might be invalid now
                 nMouseClickedIndex = -1;
                 nMouseSelectedIndex = -1;
 
+
                 bListChanged = true;
 
+                if (fmodChannel != null)
+                    fmodChannel.setPaused(true);
             }
         }
 
         //****************MISC EVENTS************************//
         private void BeatMaker_KeyDown(object sender, KeyEventArgs e)
         {
-            AddBeat(e.KeyCode); 
+            AddBeat(e.KeyCode);
+
+            if (e.KeyCode == Keys.ShiftKey)
+                bMouseSelect = true;
         }
 
         private void BeatMaker_KeyUp(object sender, KeyEventArgs e)
@@ -978,10 +1075,15 @@ namespace BeatMaker
                 }
                 break;
 
-            case Keys.Enter:
+            case Keys.ControlKey:
                 {
                     LinkBeatNodes();
                 }
+                break;
+
+            case Keys.ShiftKey:
+                bMouseSelect = false;
+                MouseSelectRect = Rectangle.Empty;
                 break;
 
             }
@@ -1052,17 +1154,111 @@ namespace BeatMaker
 
         private void TrackPanel_MouseDown(object sender, MouseEventArgs e)
         {
+            SelectedBeats.Clear();
+
+            if(nMouseSelectedIndex >= 0)
+                SelectedBeats.Add(nMouseSelectedIndex);
+
             nMouseClickedIndex = nMouseSelectedIndex;
 
-            if (nMouseClickedIndex == -1)
+            if (nMouseClickedIndex == -1 && e.Button == MouseButtons.Left)
             {
                 PlaceBeatAtMousePosition();
-            }            
-        }        
+            }
+
+            if (bMouseSelect)
+            {
+                MouseSelectStartPoint = new Point();
+                MouseSelectStartPoint.X = e.X;
+                MouseSelectStartPoint.Y = e.Y;
+            }
+        }
+
+        private void TrackPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (bMouseSelect)
+            {               
+
+                //*********************DRAWING MATH********************************//               
+                // Pixel offset for numbers / tics original position
+                // Effectively these are the seconds displayed
+                int xoffset = 34;
+
+                // Pixel offset for scrolling speed based on current song time                                  (1.258f works really well so far)
+                //V-- tweak this for speed (divide = move faster, mult = slower, negative = move backwards) I'm so cool 
+                float songoffset = (nCurrentPositionMS * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                // Cutting down on divide ops
+                int Halfsies = TrackPanel.Bottom / 2;
+                int XHalfsies = TrackPanel.Right / 2;
+
+                // Getting scope to display beats
+                float displayFrontArea = nCurrentPositionMS * 0.001f + 15;
+                float displayBackArea = displayFrontArea - 30;             
+
+               
+
+                // Cycling through beat list
+                for (int i = 0; i < listBeats.Count; ++i)
+                {
+                    // Time of beat in MS float style
+                    float timeofbeat = listBeats[i].TimeOfBeat * 0.001f;
+
+                    // Trying to cull notes so we don't display everything off screen
+                    if (timeofbeat <= displayFrontArea)
+                    {
+                        if (timeofbeat >= displayBackArea)
+                        {
+                            // Current note's offset based on the time of the beat.  Don't ask me where I come up with this shit.
+                            float noteOffset = (listBeats[i].TimeOfBeat * 0.001f * nZoom) * (1000.0f / (float)(xoffset / 1.258f));
+
+                            if (listBeats[i].Completion == BEATIS.ARROW || listBeats[i].Completion == BEATIS.COMPLETE)
+                            {
+                               
+                                // Points for line drawing on complete notes
+                                Point pArrow = new Point();
+
+                                pArrow.X = XHalfsies + (int)(noteOffset - songoffset);
+                                pArrow.Y = Halfsies + 50;
+
+                                Rectangle noteRect = new Rectangle(pArrow.X - 5, pArrow.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10);
+
+                                if (MouseSelectRect.Contains(noteRect) && SelectedBeats.Count > 0 && (listBeats[SelectedBeats[0]].Completion != BEATIS.KEY || listBeats[SelectedBeats[0]].Completion == BEATIS.COMPLETE))
+                                    SelectedBeats.Add(i);
+                                else if (SelectedBeats.Count == 0 && MouseSelectRect.Contains(noteRect))
+                                    SelectedBeats.Add(i);
+                            }
+                            else if (listBeats[i].Completion == BEATIS.KEY || listBeats[i].Completion == BEATIS.COMPLETE)
+                            {
+                                Point pNote = new Point();
+
+                                pNote.X = XHalfsies + (int)(noteOffset - songoffset);
+                                pNote.Y = Halfsies - 60;
+
+                                Rectangle keyRect = new Rectangle(pNote.X - 5, pNote.Y - 5, (listBeats[i].Width / 2) + 10, (listBeats[i].Height / 2) + 10);
+
+                                if (MouseSelectRect.Contains(keyRect) && SelectedBeats.Count > 0 && (listBeats[SelectedBeats[0]].Completion != BEATIS.ARROW || listBeats[SelectedBeats[0]].Completion == BEATIS.COMPLETE))
+                                    SelectedBeats.Add(i);
+                                else if (SelectedBeats.Count == 0 && MouseSelectRect.Contains(keyRect))
+                                    SelectedBeats.Add(i);
+
+                            }
+                            
+                        }
+                    }
+                }
+                               
+            }
+        }
 
         private void TrackPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            if (nMouseClickedIndex >= 0 && e.Button == MouseButtons.Right)
+            if (bMouseSelect && e.Button == MouseButtons.Left)
+            {
+                Rectangle tRect = new Rectangle(MouseSelectStartPoint.X, MouseSelectStartPoint.Y, e.X - MouseSelectStartPoint.X, e.Y - MouseSelectStartPoint.Y);
+                MouseSelectRect = tRect;
+            }
+            else if (nMouseClickedIndex >= 0 && e.Button == MouseButtons.Right)
             {
                 //*********************DRAWING MATH********************************//               
                          
@@ -1088,8 +1284,8 @@ namespace BeatMaker
                     if (nTime > 0)
                         listBeats[nMouseClickedIndex].TimeOfBeat = (uint)nTime;
                 }
-            }
-            else if (e.Button == MouseButtons.Left)
+            }            
+            else if (e.Button == MouseButtons.Left && !bMouseSelect)
             {
                 if (fmodChannel != null)
                 {
@@ -1163,7 +1359,43 @@ namespace BeatMaker
         private void RewindButton_MouseUp(object sender, MouseEventArgs e)
         {
             bIsRewinding = false;
-        }       
+        }
+
+        private void NoteCopyButton_Click(object sender, EventArgs e)
+        {
+            // Copying whatever beats are selected
+            CopiedBeats = new List<int>(SelectedBeats);
+        }
+
+        private void NotePasteButton_Click(object sender, EventArgs e)
+        {
+            if (CopiedBeats.Count > 0)
+            {
+                // Previous beat to get time splice from
+                Beat lastBeat = new Beat(listBeats[CopiedBeats[0]]);
+
+
+
+                // Adding first beat to list
+                lastBeat.TimeOfBeat = nCurrentPositionMS;
+
+                listBeats.Add(lastBeat);
+
+                for (int i = 1; i < CopiedBeats.Count; ++i)
+                {
+                   // Getting spread of last beat from original list and this beat, and adding current time to it
+                   Beat nextBeat = new Beat(listBeats[CopiedBeats[i]]);
+
+                   nextBeat.TimeOfBeat = (listBeats[CopiedBeats[i]].TimeOfBeat - listBeats[CopiedBeats[0]].TimeOfBeat) + nCurrentPositionMS;
+
+                   // Adding new beat
+                   listBeats.Add(nextBeat);
+                }
+
+                // Setting it so it gets sorted
+                bListChanged = true;
+            }
+        }
 
         //*****************MAIN MENU ITEM STUFF***********************//
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1635,7 +1867,7 @@ namespace BeatMaker
                 UpLeftPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "leftup";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowUpLeft;
+                MouseAddBeat.ArrowTextureIndex = ArrowUpLeft;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1650,7 +1882,7 @@ namespace BeatMaker
                 LeftPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "left";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowLeft;
+                MouseAddBeat.ArrowTextureIndex = ArrowLeft;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1665,7 +1897,7 @@ namespace BeatMaker
                 DownLeftPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "leftdown";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowDownLeft;
+                MouseAddBeat.ArrowTextureIndex = ArrowDownLeft;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1680,7 +1912,7 @@ namespace BeatMaker
                 DownPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "down";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowDown;
+                MouseAddBeat.ArrowTextureIndex = ArrowDown;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1695,7 +1927,7 @@ namespace BeatMaker
                 UpPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "up";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowUp;
+                MouseAddBeat.ArrowTextureIndex = ArrowUp;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1710,7 +1942,7 @@ namespace BeatMaker
                 UpRightPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "rightup";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowUpRight;
+                MouseAddBeat.ArrowTextureIndex = ArrowUpRight;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1725,7 +1957,7 @@ namespace BeatMaker
                 RightPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "right";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowRight;
+                MouseAddBeat.ArrowTextureIndex = ArrowRight;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1740,7 +1972,7 @@ namespace BeatMaker
                 DownRightPictureBox.BackColor = Color.CornflowerBlue;
                 MouseAddBeat.Direction = "rightdown";
                 MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.TextureIndex = ArrowDownRight;
+                MouseAddBeat.ArrowTextureIndex = ArrowDownRight;
                 MouseAddBeat.Width = 32;
                 MouseAddBeat.Height = 32;
             }
@@ -1749,14 +1981,9 @@ namespace BeatMaker
         private void ClearSelectionButton_Click(object sender, EventArgs e)
         {
             ResetButtonBackgrounds();
+            SelectedBeats.Clear();
             MouseAddBeat = new Beat();
         }
-
-        private void TrackPanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            bListChanged = true;
-        }
-       
         
     }
 }

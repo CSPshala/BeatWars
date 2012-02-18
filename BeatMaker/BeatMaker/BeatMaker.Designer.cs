@@ -520,6 +520,7 @@
             this.NotePasteButton.TabIndex = 19;
             this.NotePasteButton.Text = "Paste Note(s)";
             this.NotePasteButton.UseVisualStyleBackColor = true;
+            this.NotePasteButton.Click += new System.EventHandler(this.NotePasteButton_Click);
             // 
             // NoteCopyButton
             // 
@@ -529,6 +530,7 @@
             this.NoteCopyButton.TabIndex = 18;
             this.NoteCopyButton.Text = "Copy Note(s)";
             this.NoteCopyButton.UseVisualStyleBackColor = true;
+            this.NoteCopyButton.Click += new System.EventHandler(this.NoteCopyButton_Click);
             // 
             // ArrowLabel
             // 
