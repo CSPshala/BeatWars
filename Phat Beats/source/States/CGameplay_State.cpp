@@ -30,7 +30,7 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
-	BeatManager.LoadSong("songtest1.xml");
+	BeatManager.LoadSong("1-Latest.xml");
 	AnimationManager.LoadAnimation("Anim.xml");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 }
@@ -68,8 +68,6 @@ bool CGameplay_State::Input(void)
 
 void CGameplay_State::Update(void)
 {
-	// Updating audio
-	CSGD_XAudio2::GetInstance()->Update();
 	
 	BeatManager.Update();
 	AnimationManager.Update(CGame::GetInstance()->GetTimer().GetDeltaTime());

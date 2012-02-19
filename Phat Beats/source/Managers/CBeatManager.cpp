@@ -9,7 +9,7 @@
 ////////////////////////////////////////
 #include "CBeatManager.h"
 #include "../JCMacros.h"
-#include "../SGD Wrappers/CSGD_XAudio2.h"
+
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 //#include "CObjectFactory.h"
@@ -78,7 +78,7 @@ bool CBeatManager::LoadSong(string szFileName)
 		szSongPath += buffer;
 
 		// Loading song and setting SongID.
-		theSong.SetSongID(CSGD_XAudio2::GetInstance()->MusicLoadSong(szSongPath.c_str()));
+		theSong.SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str()));
 		
 	//*************SETTING SONG NAME********************//
 		const char* txtName = NULL;
@@ -254,24 +254,21 @@ void CBeatManager::Play()
 	SetPause(false);
 
 	// If song was already playing when play was hit, unpause
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),false);
+	
 }
 
 void CBeatManager::Pause()
 {
 	SetPause(true);
 
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),true);		
+		
 }
 
 void CBeatManager::Stop()
 {
 	SetPause(true);
 
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicStopSong(m_vSongs[0].GetSongID());
+	
 
 	m_vSongs[0].ResetSong();
 }
@@ -289,8 +286,7 @@ void CBeatManager::Update()
 	// Playing song
 	if(!GetPause())
 	{
-		if(!XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-			XAUDIO->MusicPlaySong(m_vSongs[0].GetSongID());
+		
 
 		m_vSongs[0].UpdateSong();
 		CObjectManager::GetInstance()->UpdateObjects(elasptedtime);

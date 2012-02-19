@@ -94,8 +94,8 @@
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_DirectInput.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_TextureManager.cpp" />
-    <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp" />
     <ClCompile Include="source\SGD_Math.cpp" />
     <ClCompile Include="source\States\CArcadeMode_State.cpp" />
     <ClCompile Include="source\States\CBitmapFont.cpp" />
@@ -139,8 +139,8 @@
     <ClInclude Include="source\Managers\IListener.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_DirectInput.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h" />
-    <ClInclude Include="source\SGD Wrappers\CSGD_XAudio2.h" />
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h" />
     <ClInclude Include="source\SGD_Math.h" />
     <ClInclude Include="source\States\CArcadeMode_State.h" />

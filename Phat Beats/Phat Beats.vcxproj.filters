@@ -48,9 +48,6 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_TextureManager.cpp">
       <Filter>SGD Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp">
-      <Filter>SGD Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="source\XML\tinystr.cpp">
       <Filter>XML</Filter>
     </ClCompile>
@@ -144,6 +141,9 @@
     <ClCompile Include="source\States\COptionsState.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -165,9 +165,6 @@
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h">
-      <Filter>SGD Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="source\SGD Wrappers\CSGD_XAudio2.h">
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h">
@@ -248,7 +245,7 @@
     <ClInclude Include="source\JCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-   <ClInclude Include="source\States\CBitmapFont.h">
+    <ClInclude Include="source\States\CBitmapFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Managers\CEvent.h">
@@ -268,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="source\States\COptionsState.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h">
+      <Filter>Managers / Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

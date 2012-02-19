@@ -12,7 +12,7 @@
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
-#include "..\SGD Wrappers\CSGD_XAudio2.h"
+
 #include "../Managers/CBeatManager.h"
 #include "../Managers/CAnimationManager.h"
 #include "../Managers/IListener.h"
