@@ -5,7 +5,8 @@
 //////////////////////////////////////////////////////
 
 #include "CGameplay_State.h"
-#include "../CGame.h"#include "../States/CMenu_State.h"
+#include "../CGame.h"
+#include "../States/CMenu_State.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 #include "CMenu_State.h"
 #include "../CGame.h"
