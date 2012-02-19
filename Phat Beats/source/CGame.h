@@ -46,6 +46,12 @@ private:
 	//int						m_nImageID;
 	//int						m_nSoundID;
 
+
+	// Volume 
+	float m_nFXVolume;
+	float m_nMusicVolume;
+	float m_nMusicPan;
+
 	// Proper Singleton
 	// Trilogy of Evil:
 	//		Copy Constructor
@@ -88,12 +94,16 @@ public:
 	int GetScreenHeight(void) {return m_nWindowHeight;}
 	int GetScreenWidth(void) {return m_nWindowWidth;}
 
-	// Acessors
+	// Accessors
 	Timer& GetTimer() {return cTimer;}
-
-	// Mutators
+	float GetMusicVolume() const		{ return m_nMusicVolume; }
+	float GetSFXVolume() const			{ return m_nFXVolume; }
+	float GetPanVolume() const			{ return m_nMusicPan; }
 	
-
+	// Mutators
+	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
+	void SetSFXVolume(float val)		{ m_nFXVolume = val; }
+	void SetPanVolume(float val)		{ m_nMusicPan = val; }
 };
 
 

@@ -7,26 +7,25 @@ FMOD: SystemI::close                 : done.
 
 FMOD: OutputWASAPI::enumerate        : Enumerating...
 FMOD: OutputWASAPI::enumerate        : CoInitialize.
-FMOD: OutputWASAPI::enumerate        : Found Driver: "Speakers (High Definition Audio Device)".
-FMOD: OutputWASAPI::enumerate        : Found Driver: "Headphones (High Definition Audio Device)".
-FMOD: OutputWASAPI::enumerate        : Found Driver: "Microphone (High Definition Audio Device)".
-FMOD: OutputWASAPI::enumerate        : Found Driver: "Line In (High Definition Audio Device)".
-FMOD: OutputWASAPI::enumerate        : Found Driver: "Microphone (High Definition Audio Device)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Speakers / HP (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Digital Output Device (HDMI Out) (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Headphones (RTC) (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Line In (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Rec. Playback (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Microphone (IDT High Definition Audio CODEC)".
+FMOD: OutputWASAPI::enumerate        : Found Driver: "Integrated Microphone Array (IDT High Definition Audio CODEC)".
 FMOD: OutputWASAPI::enumerate        : Done.
 FMOD: OutputWASAPI::initEx           : Initialising...
 FMOD: OutputWASAPI::initEx           : Forcing output channels to match Windows mix format: 2 channel(s)
-FMOD: OutputWASAPI::initEx           : Device doesn't support requested format, trying again with Windows mix frequency
 FMOD: OutputWASAPI::initEx           : Done.
 FMOD: SystemI::init                  : Set up software engine
 FMOD: SystemI::init                  : Set up emulated output
 FMOD: SystemI::init                  : create the channel pool
-FMOD: OutputTimer::timerFunc         : Mixer thread set to 'Pro Audio' characteristic
 FMOD: SystemI::init                  : Set up streamer
-FMOD: OutputWASAPI::getPosition      : Starvation detected in WASAPI output buffer!
 FMOD: Thread::initThread             : Initializing FMOD stream thread.  priority 2
 FMOD: Thread::initThread             : - Stacksize 49152.  Stack pointer 00000000 : usesemaphore = 0 : sleeptime = 10
 FMOD: Thread::callback               : * FMOD stream thread started
+FMOD: OutputTimer::timerFunc         : Mixer thread set to 'Pro Audio' characteristic
 FMOD: Thread::initThread             : done.
 FMOD: SystemI::init                  : done
 
-FMOD: OutputWASAPI::getPosition      : Starvation detected in WASAPI output buffer!

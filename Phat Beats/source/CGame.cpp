@@ -63,7 +63,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_nWindowWidth = nScreenWidth;
 	m_nWindowHeight = nScreenHeight;
 
-	// Initilizing timer
+	// Initializing timer
 	cTimer.Reset();
 
 	srand((unsigned int)time(0));
@@ -74,10 +74,16 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	}
 	else
 	{
-		// set the font to starwar
+		// set the font to star war
 		m_pBF->SetFont("starwarfont.fnt");	
 		m_pBF->SetScale(1.0f);
 	}
+
+	//setting volume val
+	m_nFXVolume = 1.0f;
+	m_nMusicVolume = 0.50f;
+	m_nMusicPan = 0.0f;
+	
 	
 }
 
@@ -98,8 +104,8 @@ bool CGame::Input()
 {
 	m_pDI->ReadDevices(); // called ONCE a frame
 
-	// Fullscreen / Window Shift  (KeyDown used on alt to make it
-	// so you don't hafta hit both keys exactly at the same time
+	// Full screen / Window Shift  (KeyDown used on alt to make it
+	// so you don't haft a hit both keys exactly at the same time
 	if(m_pDI->KeyPressed(DIK_RETURN) && (m_pDI->KeyDown(DIK_RALT) || m_pDI->KeyDown(DIK_LALT)))
 	{
 		m_pDI->ReadDevices();
