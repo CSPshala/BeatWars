@@ -3,6 +3,8 @@
 #include "../SGD Wrappers\CSGD_TextureManager.h"
 #include "../SGD Wrappers\CSGD_Direct3D.h"
 #include "../SGD Wrappers\CSGD_DirectInput.h"
+#include "../SGD Wrappers/CSGD_FModManager.h"
+
 #include "CBitmapFont.h"
 //#include "CGameProfiler.h"
 #include "../Globals.h"
@@ -30,29 +32,29 @@ void COptionsState::Enter(void)
 	m_nSFX = -1;
 
 	//CGameProfiler::GetInstance()->LoadUserSettings("user settings.txt");
-	
+
 	// assign values to the local variables
-	
-	//CGame::GetInstance()->GetSFXVolume();
-	//CGame::GetInstance()->GetMusicVolume();
-	//m_nMusicPan = CGame::GetInstance()->GetPanVolume();
+
+	CGame::GetInstance()->GetSFXVolume();
+	CGame::GetInstance()->GetMusicVolume();
+	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 	//m_nLives = CGame::GetInstance()->GetStartingLives();
-		
-	
-	
+
+
+
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png" );	
 
 	//TODO:
-	//m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resources/sounds/StS_fox061.wav");
-	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resources//music//StS_01_prologue_-_cirrus.OGG", FMOD_LOOP_NORMAL);
+	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
+	m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/12 End of Line.mp3", FMOD_LOOP_NORMAL);
 
-	
-	
 
-	//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
-	//CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
-	
-	//CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
+
+
+	CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
+	CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
+
+	CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
 }
 bool COptionsState::Input(void)
 {
@@ -63,7 +65,7 @@ bool COptionsState::Input(void)
 
 		if( m_nMenuSelection == -1 )
 		{
-			m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS;
+			m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
 		}
 
 	}
@@ -90,8 +92,8 @@ bool COptionsState::Input(void)
 			{
 				m_nFXVolume = 0.0f;
 			}
-		
-			//CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+
+			CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
 			break;
 		case OPTIONSMENU_MUSICVOL:			
 			m_nMusicVolume -= 0.001f;
@@ -99,8 +101,8 @@ bool COptionsState::Input(void)
 			{
 				m_nMusicVolume = 0.0f;
 			}
-			//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
-		
+			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+
 			break;
 		case OPTIONSMENU_PAN:
 			m_nMusicPan -= 0.002f;
@@ -108,8 +110,8 @@ bool COptionsState::Input(void)
 			{
 				m_nMusicPan = -1.0f;
 			}
-			//CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
-			//CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
 			break;
 		}		
 	}
@@ -131,9 +133,9 @@ bool COptionsState::Input(void)
 				//CGame::GetInstance()->ChangeWindowMode();
 			}
 			break;
-		
+
 		}
-		
+
 	}
 
 
@@ -143,7 +145,7 @@ bool COptionsState::Input(void)
 		switch (m_nMenuSelection)
 		{
 		case OPTIONSMENU_SFXVOL:
-			//CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 			break;	
 		}
 	}
@@ -159,23 +161,23 @@ bool COptionsState::Input(void)
 		{
 		case OPTIONSMENU_SFXVOL:
 			{			
-			m_nFXVolume += 0.001f;
-			if( m_nFXVolume >= 1.0f )
-			{
-				m_nFXVolume = 1.0f;
-			}
-			
+				m_nFXVolume += 0.001f;
+				if( m_nFXVolume >= 1.0f )
+				{
+					m_nFXVolume = 1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);			
 			}
 			break;
 
 		case OPTIONSMENU_MUSICVOL:
-			
+
 			m_nMusicVolume += 0.001f;
 			if( m_nMusicVolume >= 1.0f )
 			{
 				m_nMusicVolume = 1.0f;
 			}
-			
+			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);			
 			break;
 
 		case OPTIONSMENU_PAN:
@@ -184,7 +186,8 @@ bool COptionsState::Input(void)
 			{
 				m_nMusicPan = 1.0f;
 			}
-			
+			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
 			break;
 		}
 	}
@@ -193,18 +196,18 @@ bool COptionsState::Input(void)
 	{
 		switch (m_nMenuSelection)
 		{
-			case OPTIONSMENU_LIVES:
+		case OPTIONSMENU_LIVES:
 			/*
 			m_nLives += 1;
-						if( m_nLives >= CGame::GetInstance()->GetMaxStartingLives() )
-						{
-							m_nLives = CGame::GetInstance()->GetMaxStartingLives();
-						}*/
-			
+			if( m_nLives >= CGame::GetInstance()->GetMaxStartingLives() )
+			{
+			m_nLives = CGame::GetInstance()->GetMaxStartingLives();
+			}*/
+
 			//CGame::GetInstance()->SetStartingLives(m_nLives);
 			break;
 
-			case OPTIONSMENU_WINDOWED:
+		case OPTIONSMENU_WINDOWED:
 			{
 				//CGame::GetInstance()->ChangeWindowMode();
 			}
@@ -219,7 +222,7 @@ bool COptionsState::Input(void)
 		switch (m_nMenuSelection)
 		{
 		case OPTIONSMENU_SFXVOL:
-			//CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 			break;	
 		}
 	}
@@ -238,7 +241,7 @@ bool COptionsState::Input(void)
 				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
 			}
 			break;
-		
+
 		}
 	}
 
@@ -246,15 +249,16 @@ bool COptionsState::Input(void)
 }
 void COptionsState::Update(void)
 {
-	
-	//TODO:
 
-	
-		
+	//TODO:
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nBGM) )
+		CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
+
+
 }
 void COptionsState::Render(void)
 {
-	
+
 	char buffer[255];
 	//CBitmapFont BF;
 
@@ -272,7 +276,7 @@ void COptionsState::Render(void)
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 147, D3DCOLOR_XRGB(225, 225, 225));
 	//BF.PrintText(buffer, 400, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 
-	
+
 	sprintf_s( buffer, "%d", int( m_nMusicVolume * 100));
 	//BF.PrintText("Music Volume", 100, 80, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 187, D3DCOLOR_XRGB(225, 225, 225));
@@ -322,7 +326,7 @@ void COptionsState::Render(void)
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_WINDOWED * 40) );
 		}
 		break;
-	
+
 	case OPTIONSMENU_EXIT:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_EXIT * 40) );
@@ -334,22 +338,22 @@ void COptionsState::Render(void)
 		}
 		break;
 	}
-	
 }
+
 void COptionsState::Exit(void)
 {
 	//TODO:
-	//CSGD_FModManager::GetInstance()->StopSound(m_nSFX);
-	//CSGD_FModManager::GetInstance()->StopSound(m_nBGM);
-	
-	//CSGD_FModManager::GetInstance()->UnloadSound(m_nSFX);
-	//CSGD_FModManager::GetInstance()->UnloadSound(m_nBGM);
-/*
-	
-		CGame::GetInstance()->SetMusicVolume(m_nMusicVolume);
-		CGame::GetInstance()->SetPanVolume(m_nMusicPan);
-		CGame::GetInstance()->SetSFXVolume(m_nFXVolume);*/
-	
+	CSGD_FModManager::GetInstance()->StopSound(m_nSFX);
+	CSGD_FModManager::GetInstance()->StopSound(m_nBGM);
+
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nSFX);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nBGM);
+
+
+	CGame::GetInstance()->SetMusicVolume(m_nMusicVolume);
+	CGame::GetInstance()->SetPanVolume(m_nMusicPan);
+	CGame::GetInstance()->SetSFXVolume(m_nFXVolume);
+
 
 	//CGameProfiler::GetInstance()->SaveUserSettings("user settings.txt");
 }
