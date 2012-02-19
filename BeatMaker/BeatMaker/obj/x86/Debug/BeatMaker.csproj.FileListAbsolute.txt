@@ -1,0 +1,13 @@
+C:\Users\Jeff\Fullsail\SGP\Game Repo\BeatMaker\BeatMaker\bin\Debug\BeatMaker.exe.config
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\bin\Debug\BeatMaker.exe.config
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.exe
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.pdb
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\bin\Debug\BeatMaker.exe
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\bin\Debug\BeatMaker.pdb
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.BeatMaker.resources
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.Properties.Resources.resources
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.SetEvent.resources
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\BeatMaker.SetTitle.resources
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Shala\Documents\School Courses\SGP\BeatWars\BeatMaker\BeatMaker\obj\x86\Debug\GenerateResource.write.1.tlog

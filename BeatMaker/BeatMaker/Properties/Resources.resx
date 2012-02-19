@@ -178,4 +178,28 @@
   <data name="stop32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\playback_stop_icon&amp;32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="downarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\downarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="downleftarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\downleftarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="downrightarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\downrightarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="leftarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leftarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rightarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rightarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uparrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\uparrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="upleftarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\upleftarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uprightarrowblue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\uprightarrowblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

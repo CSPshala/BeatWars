@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Song file="levels.mp3" name="heyo" duration="202266">
+  <Beat timeofbeat="2069" direction="up" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="2" />
+  <Beat timeofbeat="2922" direction="left" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="0" />
+  <Beat timeofbeat="4949" direction="right" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="1" />
+  <Beat timeofbeat="6079" direction="down" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="3" />
+  <Beat timeofbeat="7082" direction="left" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="0" />
+  <Beat timeofbeat="8085" direction="left" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="0" />
+  <Beat timeofbeat="9066" direction="right" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="1" />
+  <Beat timeofbeat="10090" direction="down" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="3" />
+  <Beat timeofbeat="11029" direction="up" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="2" />
+  <Beat timeofbeat="12010" direction="left" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="0" />
+  <Beat timeofbeat="13098" direction="down" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="3" />
+  <Beat timeofbeat="13973" direction="right" key="x" image="x" difficulty="easy" width="32" height="32" beatis="1" imageindex="1" />
+</Song>

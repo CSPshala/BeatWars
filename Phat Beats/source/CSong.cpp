@@ -11,7 +11,7 @@
 #include "JCMacros.h"
 #include "CSong.h"
 #include "CGame.h"
-#include "SGD Wrappers\CSGD_XAudio2.h"
+
 
 ////////////////////////////////////////
 //				MISC

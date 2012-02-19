@@ -16,12 +16,12 @@ CGame::CGame()
 {
 	m_pD3D  = NULL;
 	m_pDI	= NULL;
-	m_pTM	= NULL;
-	m_pXA	= NULL;	
+	m_pTM	= NULL;		
 	m_pBF	= NULL;
 	m_pES	= NULL;
 	m_pMS	= NULL;
 	m_pOM	= NULL;
+	m_pFM	= NULL;
 }
 
 CGame::~CGame()
@@ -43,17 +43,17 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pD3D  = CSGD_Direct3D::GetInstance();
 	m_pDI	= CSGD_DirectInput::GetInstance();
 	m_pTM	= CSGD_TextureManager::GetInstance();
-	m_pXA	= CSGD_XAudio2::GetInstance();
 	m_pBF	= CBitmapFont::GetInstance();
 	m_pES	= CEventSystem::GetInstance();
 	m_pMS	= CMessageSystem::GetInstance();
 	m_pOM	= CObjectManager::GetInstance();
+	m_pFM	= CSGD_FModManager::GetInstance();
 
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
 	m_pTM->InitTextureManager(m_pD3D->GetDirect3DDevice(),m_pD3D->GetSprite());
 	m_pDI->InitDirectInput(hWnd,hInstance, DI_KEYBOARD| DI_MOUSE);
-	m_pXA->InitXAudio2();
+	m_pFM->InitFModManager(hWnd);
 
 	
 	ChangeState(CMenu_State::GetInstance());
@@ -131,6 +131,8 @@ void CGame::Update()
 	m_pMS->ProcessMessages();
 	m_pOM->UpdateObjects(cTimer.GetDeltaTime());
 
+	// Updating FMOD
+	m_pFM->Update();
 }
 
 void CGame::Render()
@@ -162,10 +164,10 @@ void CGame::Shutdown()
 	}
 	m_pES->ShutdownEventSystem();
 	// Shutdown in the opposite order
-	if(m_pXA)
+	if(m_pFM)
 	{
-		m_pXA->ShutdownXAudio2();
-		m_pXA = NULL;
+		m_pFM->ShutdownFModManager();
+		m_pFM = NULL;
 	}
 
 	if(m_pDI)

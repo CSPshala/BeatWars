@@ -79,7 +79,7 @@ bool CPause_State::Input(void)
 			break;
 		case PAUSEMENU_LOAD:
 			{
-				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+				CGame::GetInstance()->ChangeState( CLoad_State::GetInstance() );
 			}
 			break;
 		case PAUSEMENU_SAVE:

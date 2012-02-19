@@ -10,7 +10,7 @@
 
 #define D3D CSGD_Direct3D::GetInstance()
 #define TEXTUREMAN CSGD_TextureManager::GetInstance()
-#define XAUDIO CSGD_XAudio2::GetInstance()
+#define FMODMAN CSGD_FModManager::GetInstance()
 #define DI CSGD_DirectInput::GetInstance()
 //#define OM CSGD_ObjectManager::GetInstance()
 //#define MS CSGD_MessageSystem::GetInstance()

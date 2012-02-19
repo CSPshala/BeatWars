@@ -6,7 +6,7 @@
 #include "CBitmapFont.h"
 //#include "CGameProfiler.h"
 #include "../Globals.h"
-#include "../SGD Wrappers/CSGD_XAudio2.h"
+
 #include "CGameplay_State.h"
 #include "CPause_State.h"
 
@@ -33,8 +33,8 @@ void COptionsState::Enter(void)
 	
 	// assign values to the local variables
 	
-	m_nFXVolume = CSGD_XAudio2::GetInstance()->SFXGetMasterVolume();//CGame::GetInstance()->GetSFXVolume();
-	m_nMusicVolume = CSGD_XAudio2::GetInstance()->MusicGetMasterVolume();//CGame::GetInstance()->GetMusicVolume();
+	//CGame::GetInstance()->GetSFXVolume();
+	//CGame::GetInstance()->GetMusicVolume();
 	//m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 	//m_nLives = CGame::GetInstance()->GetStartingLives();
 		
@@ -46,13 +46,12 @@ void COptionsState::Enter(void)
 	//m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resources/sounds/StS_fox061.wav");
 	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resources//music//StS_01_prologue_-_cirrus.OGG", FMOD_LOOP_NORMAL);
 
-	m_nSFX = CSGD_XAudio2::GetInstance()->SFXLoadSound("resource/gun_shots.wav");
+	
 	
 
 	//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
 	//CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
-	//CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
-	//CSGD_XAudio2::GetInstance()->MusicSetMasterVolume(m_nMusicVolume);
+	
 	//CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
 }
 bool COptionsState::Input(void)
@@ -91,9 +90,7 @@ bool COptionsState::Input(void)
 			{
 				m_nFXVolume = 0.0f;
 			}
-			CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
-			if(!CSGD_XAudio2::GetInstance()->SFXIsSoundPlaying(m_nSFX))
-				CSGD_XAudio2::GetInstance()->SFXPlaySound(m_nSFX);
+		
 			//CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
 			break;
 		case OPTIONSMENU_MUSICVOL:			
@@ -103,7 +100,7 @@ bool COptionsState::Input(void)
 				m_nMusicVolume = 0.0f;
 			}
 			//CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
-			CSGD_XAudio2::GetInstance()->SFXStopSound(m_nSFX);
+		
 			break;
 		case OPTIONSMENU_PAN:
 			m_nMusicPan -= 0.002f;
@@ -167,9 +164,7 @@ bool COptionsState::Input(void)
 			{
 				m_nFXVolume = 1.0f;
 			}
-			CSGD_XAudio2::GetInstance()->SFXSetMasterVolume(m_nFXVolume);
-			if(!CSGD_XAudio2::GetInstance()->SFXIsSoundPlaying(m_nSFX))
-				CSGD_XAudio2::GetInstance()->SFXPlaySound(m_nSFX); // play the sound on the press
+			
 			}
 			break;
 
@@ -180,7 +175,7 @@ bool COptionsState::Input(void)
 			{
 				m_nMusicVolume = 1.0f;
 			}
-			CSGD_XAudio2::GetInstance()->SFXStopSound(m_nSFX);
+			
 			break;
 
 		case OPTIONSMENU_PAN:
@@ -254,7 +249,7 @@ void COptionsState::Update(void)
 	
 	//TODO:
 
-	CSGD_XAudio2::GetInstance()->Update();
+	
 		
 }
 void COptionsState::Render(void)
@@ -346,7 +341,7 @@ void COptionsState::Exit(void)
 	//TODO:
 	//CSGD_FModManager::GetInstance()->StopSound(m_nSFX);
 	//CSGD_FModManager::GetInstance()->StopSound(m_nBGM);
-	CSGD_XAudio2::GetInstance()->SFXUnloadSound(m_nSFX);
+	
 	//CSGD_FModManager::GetInstance()->UnloadSound(m_nSFX);
 	//CSGD_FModManager::GetInstance()->UnloadSound(m_nBGM);
 /*

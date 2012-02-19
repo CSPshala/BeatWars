@@ -12,7 +12,7 @@
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
-#include "SGD Wrappers\CSGD_XAudio2.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
 // Gamestates
 #include "States\IGameState.h"
 #include "States\CMenu_State.h"
@@ -32,12 +32,12 @@ private:
 	// Singleton pointers:
 	CSGD_Direct3D*			m_pD3D;
 	CSGD_DirectInput*		m_pDI;
-	CSGD_TextureManager*	m_pTM;
-	CSGD_XAudio2*			m_pXA;
+	CSGD_TextureManager*	m_pTM;	
 	CBitmapFont*			m_pBF;
 	CEventSystem*			m_pES;
 	CMessageSystem*			m_pMS;
 	CObjectManager*			m_pOM;
+	CSGD_FModManager*		m_pFM;
 
 	// Game state Pointer
 	IGameState* m_pCurState;
