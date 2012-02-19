@@ -127,6 +127,7 @@
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
     <ClInclude Include="source\JCMacros.h" />
+    <ClInclude Include="source\Managers\CAiManager.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
     <ClInclude Include="source\Managers\CEvent.h" />

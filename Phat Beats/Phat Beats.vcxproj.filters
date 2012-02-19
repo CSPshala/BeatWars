@@ -269,5 +269,8 @@
     <ClInclude Include="source\States\COptionsState.h">
       <Filter>States</Filter>
     </ClInclude>
+    <ClInclude Include="source\Managers\CAiManager.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
