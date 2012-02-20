@@ -437,3 +437,16 @@ bool CSGD_FModManager::ShutdownFModManager( void )
 	return true;
 }
 
+tSoundInfo& CSGD_FModManager::GetSound(int nID)
+{	
+	return m_SoundList[nID];
+}
+
+FMOD::Channel* CSGD_FModManager::GetLatestChannel(int nID)
+{
+	tSoundInfo& derp = GetSound(nID);
+	FMOD::Channel* chan = *(--derp.m_SoundChannels.end());
+
+	return chan;
+}
+

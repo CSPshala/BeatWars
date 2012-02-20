@@ -142,7 +142,7 @@
       <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp">
-      <Filter>Managers / Factories</Filter>
+      <Filter>SGD Wrappers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +267,7 @@
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h">
-      <Filter>Managers / Factories</Filter>
+      <Filter>SGD Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

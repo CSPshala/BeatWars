@@ -128,8 +128,7 @@ void CGame::Update()
 
 	m_pCurState->Update();	// must be called or you will mess stuff up
 	m_pES->ProcessEvents();
-	m_pMS->ProcessMessages();
-	m_pOM->UpdateObjects(cTimer.GetDeltaTime());
+	m_pMS->ProcessMessages();	
 
 	// Updating FMOD
 	m_pFM->Update();
@@ -142,7 +141,7 @@ void CGame::Render()
 	m_pD3D->SpriteBegin();
 
 	m_pCurState->Render();
-	CObjectManager::GetInstance()->RenderObjects();
+	//CObjectManager::GetInstance()->RenderObjects();
 	
 	m_pD3D->SpriteEnd();
 	m_pD3D->DeviceEnd();

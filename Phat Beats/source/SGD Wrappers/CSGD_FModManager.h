@@ -38,11 +38,7 @@ using std::list;
 //	Macro to adjust how often Garbage(Handles) are collected
 #define TIMER_COUNT 5.0f
 
-class CSGD_FModManager
-{
-	FMOD::System *m_pSystem;			//	Private instance of the FMod 'System' API
-
-	//	Struct contains data on the loaded sound files
+//	Struct contains data on the loaded sound files
 	struct tSoundInfo 
 	{
 		char filename[_MAX_PATH];		//	The filename of this wave.
@@ -61,6 +57,13 @@ class CSGD_FModManager
 			fmSound = NULL; 
 		}
 	};
+
+
+class CSGD_FModManager
+{
+	FMOD::System *m_pSystem;			//	Private instance of the FMod 'System' API
+
+	
 
 	vector<tSoundInfo> m_SoundList;					//	List of loaded sound files.
 
@@ -275,6 +278,31 @@ public:
 	////////////////////////////////////////////////////////////////////////
 	bool ShutdownFModManager(void);
 
+	////////////////////////////////////////////////////////////////////////
+	// Function:  GetSound()
+	// Last Modified : [2/18/2012 8:03:07 PM]
+	// 
+	// Purpose: Return a specific sound from the sound list vector b/c fuck you I want that shit
+	// 
+	// Function parameters : 
+	//   [] -
+	// 
+	// Return - [tSoundInfo&]: 
+	////////////////////////////////////////////////////////////////////////
+	tSoundInfo& GetSound(int nID);
+
+	////////////////////////////////////////////////////////////////////////
+	// Function:  GetFirstChannel()
+	// Last Modified : [2/18/2012 8:03:07 PM]
+	// 
+	// Purpose: Return the latest channel of a specific sound
+	// 
+	// Function parameters : 
+	//   [] -
+	// 
+	// Return - [FMOD::Channel*]: pointer to the channel
+	////////////////////////////////////////////////////////////////////////
+	FMOD::Channel* GetLatestChannel(int nID);
 protected:
 	////////////////////////////////////////////////////////////////////////
 	// Function:  ReduceHandleCount()
