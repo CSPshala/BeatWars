@@ -144,6 +144,9 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp">
       <Filter>SGD Wrappers</Filter>
     </ClCompile>
+    <ClCompile Include="source\CPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h">
       <Filter>SGD Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CPlayer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

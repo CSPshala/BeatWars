@@ -313,7 +313,7 @@ bool CBeatManager::LoadSong(string szFileName)
 			theSong->Release();
 
 			// Adding song pointer to song list (just to keep track of what songs we have)
-			GetSongList().push_back(theSong);
+			GetSongList().push_back(theSong);			
 		
 	return true;
 }
@@ -360,8 +360,11 @@ void CBeatManager::Pause()
 	SetPause(!GetPause());
 
 	// Setting channel to paused
-	FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
-			derp->setPaused(GetPause());
+	if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
+	{
+		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
+				derp->setPaused(GetPause());
+	}
 }
 
 void CBeatManager::Stop()

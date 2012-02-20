@@ -29,7 +29,9 @@ CSong::CSong()
 	SetNextBeatIndex(1);	
 
 	// Start with ref to self
-	AddRef();
+	m_uiRefCount = 1;
+
+	m_nType = OBJ_SONG;
 
 	// Asset IDs
 	SetSongID(-1);
@@ -73,8 +75,7 @@ void CSong::Update(float fElapsedTime)
 		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1000))
 		{
 			m_vActiveBeats.push_back(m_vBeats[GetCurrentBeatIndex()]);
-			// Adding ref
-			m_vActiveBeats.back().AddRef();
+			
 			m_vActiveBeats.back().SetIsActive(true);
 
 			// Setting the next beat to call

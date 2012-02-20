@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////
 // File Name	:	"CSong.h"
 //
-// Author		:	JC Ricks
+// Author		:	JC Ricks(@CSPshala)
 //
 // Purpose		:	To contain all notes in a song
 //////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ public:
 		int				GetBackgroundID() {return m_nImageID;}
 		int				GetCurrentBeatIndex() {return m_nCurrentBeat;}
 		int				GetNextBeatIndex() {return m_nNextBeat;}
-		int				GetType() {return -1;}
+		int				GetType() {return m_nType;}
 		RECT			GetCollisionRect();
 		bool			CheckCollision(IBaseInterface* pBase);
 
@@ -73,7 +73,7 @@ public:
 		void			SetNextBeatIndex(int nBeat) {m_nNextBeat = nBeat;}
 
 protected:
-		
+		int m_nType;
 
 private:
 
