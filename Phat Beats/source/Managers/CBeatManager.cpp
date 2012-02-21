@@ -198,6 +198,27 @@ bool CBeatManager::LoadSong(string szFileName)
 
 			theBeat.SetTimeOfBeat(nBeatTime);
 
+			//********HEIGHT AND WIDTH ARENT IN ORDER W/ XML FILE B/C I NEED THEM FOR POSITION*******//
+			//******************SETTING NOTE WIDTH***************//
+			if(pBeat->Attribute("width") == NULL)
+				return false;
+
+			int nWidth = 0;
+
+			pBeat->Attribute("width",&nWidth);
+
+			theBeat.SetWidth(nWidth);
+
+			//******************SETTING NOTE HEIGHT**************//
+			if(pBeat->Attribute("height") == NULL)
+				return false;
+
+			int nHeight = 0;
+
+			pBeat->Attribute("height",&nHeight);
+
+			theBeat.SetHeight(nHeight);
+
 			//*****************GETTING DIRECTION OF NOTE**********//
 			if(pBeat->Attribute("direction") == NULL)
 				return false;
@@ -264,25 +285,7 @@ bool CBeatManager::LoadSong(string szFileName)
 			else if(szDiff == "hard")
 				theBeat.SetDifficulty(HARD);
 
-			//******************SETTING NOTE WIDTH***************//
-			if(pBeat->Attribute("width") == NULL)
-				return false;
-
-			int nWidth = 0;
-
-			pBeat->Attribute("width",&nWidth);
-
-			theBeat.SetWidth(nWidth);
-
-			//******************SETTING NOTE HEIGHT**************//
-			if(pBeat->Attribute("height") == NULL)
-				return false;
-
-			int nHeight = 0;
-
-			pBeat->Attribute("height",&nHeight);
-
-			theBeat.SetHeight(nHeight);
+			
 
 			//******************GETTING NOTE EVENT***************//
 			if(pBeat->Attribute("event") == NULL)
@@ -348,7 +351,7 @@ void CBeatManager::Play(string szSongName)
 		if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
 		{
 			FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
-			derp->setPaused(GetPause());
+			derp->setPaused(IsPaused());
 		}
 		else
 			FMODMAN->PlaySound(GetCurrentlyPlayingSong()->GetSongID());
@@ -357,13 +360,13 @@ void CBeatManager::Play(string szSongName)
 void CBeatManager::Pause()
 {
 	// Toggleing pause
-	SetPause(!GetPause());
+	SetPause(!IsPaused());
 
 	// Setting channel to paused
 	if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
-				derp->setPaused(GetPause());
+				derp->setPaused(IsPaused());
 	}
 }
 
@@ -392,22 +395,12 @@ void CBeatManager::Reset()
 
 void CBeatManager::Update()
 {
-	// Playing song
-	if(!GetPause())
-	{		
-		OM->UpdateObjects(GAME->GetTimer().GetDeltaTime());
-	}	
+	
 }
 
 void CBeatManager::Render()
 {	
-	// Objectmanager rendering objects
-	OM->RenderObjects();
-
-	if (fuckyou == true)
-	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("Note is past XY 200 pix",500,500,255,0,0);
-	}
+	
 }
 
 void CBeatManager::HandleEvent( CEvent* pEvent )

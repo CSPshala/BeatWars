@@ -62,7 +62,11 @@ void CObjectManager::CheckCollisions(IBaseInterface* pBase)
 	
 	for (vector<IBaseInterface*>::size_type i = 0; i < m_vObjectList.size(); ++i)
 	{
-		pBase->CheckCollision(m_vObjectList[i]);
+		// Making sure we're not checking with ourselves
+		// List is actually checking notes against passed in pointer (which IS a player)
+		// And even then it only checks against active beats, and not the whole list
+		if(pBase != m_vObjectList[i])
+			m_vObjectList[i]->CheckCollision(pBase);
 	}
 }
 

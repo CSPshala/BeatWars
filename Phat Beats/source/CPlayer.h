@@ -13,6 +13,7 @@
 ////////////////////////////////////////
 #include "CBase.h"
 #include "CBeat.h"
+#include "IBaseInterface.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -24,12 +25,14 @@ class CPlayer : public CBase
 {
 public:
 	/********** Construct / Deconstruct / OP Overloads ************/
-	CPlayer();
+	CPlayer(ObjType eType = OBJ_PLAYER1);
 	~CPlayer();
 	/********** Public Utility Functions ************/
 	void Input();
 	void Update(float fElapsedTime);
 	void Render();
+	RECT GetCollisionRect();  // Gonna override the CBase collision rect
+	bool CheckCollision(IBaseInterface* pBase);
 	/********** Public Accessors ************/
 	int				GetCurrentHP() {return m_nHP;}
 	int				GetMaxHP() {return m_nMaxHP;}
@@ -76,12 +79,27 @@ private:
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
 
+		// Asset IDs
+			// Images
+			int m_nBeatConeID;
+			// Sound
+			int m_nBeatSuccessID;
+			int m_nBeatMissID;
+		
+
 
 	/********** Private Accessors ************/
+			int GetBeatConeID() {return m_nBeatConeID;}
+			int GetBeatSuccessID() {return m_nBeatSuccessID;}
+			int GetBeatMissID() {return m_nBeatMissID;}
 
 	/********** Private Mutators ************/
+			void SetBeatConeID(int nBeatConeID) {m_nBeatConeID = nBeatConeID;}
+			void SetBeatSuccessID(int nBeatSuccessID) {m_nBeatSuccessID = nBeatSuccessID;}
+			void SetBeatMissID(int nBeatMissID) {m_nBeatMissID = nBeatMissID;}
 
 	/********** Private Utility Functions ************/
-
+			void P1InputHandling();
+			void P2InputHandling();
 };
 #endif

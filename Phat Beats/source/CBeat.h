@@ -38,6 +38,9 @@ public:
 	/********** Public Utility Functions ************/
 		void ResetBeat();
 		void Update(float fElapsedTime);
+		void Render();
+		RECT GetCollisionRect();
+		void	HandleEvent(CEvent* pEvent);
 
 	/********** Public Accessors ************/
 		int			GetTimeOfBeat() {return m_nTimeofBeat;}
@@ -45,13 +48,14 @@ public:
 		char			GetKeyToPress() {return m_cKeyToPress;}
 		string			GetEvent() {return m_szEvent;}
 		BeatDirection	GetDirection() {return m_eDirection;}
+		bool			GetHasCollided() {return m_bCollision;}
 	/********** Public Mutators  ************/	
 		void	SetTimeOfBeat(int fTime) {m_nTimeofBeat = fTime;}
 		void	SetDifficulty(int	nDifficulty) {m_nDifficulty = nDifficulty;}
 		void	SetKeyToPress(char	cKey) {m_cKeyToPress = cKey;}
 		void    SetEvent(string szEvent) {m_szEvent = szEvent;}
 		void	SetDirection(BeatDirection);
-		void	HandleEvent(CEvent* pEvent);
+		
 private:	
 
 	/********** Private Members ************/
@@ -60,6 +64,10 @@ private:
 		char	m_cKeyToPress;
 		string  m_szEvent;
 		BeatDirection m_eDirection;
+
+		// For note collision event
+		bool	m_bCollision;
+		
 
 		// For saving original position for reset call
 		float m_fOriginalXPos;

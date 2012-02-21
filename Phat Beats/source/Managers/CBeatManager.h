@@ -45,15 +45,18 @@ public:
 		void Render();
 		
 	/********** Public Accessors ************/
-		int				GetNumberNotesHit() {return m_nNumHit;}
-		vector<CSong*>&	GetSongList() {return m_vSongs;}
+		int					GetNumberNotesHit() {return m_nNumHit;}
+		vector<CSong*>&		GetSongList() {return m_vSongs;}
 		vector<int>&		GetSongBackground() {return m_nvImageID;}
-		string	GetCurrentlyPlayingSongName();
+		string				GetCurrentlyPlayingSongName();
+		bool				IsPaused() {return m_bPause;}
 		
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
+		
+
 private:
 
 	/********** Private Members ************/
@@ -67,7 +70,7 @@ private:
 		int	 m_nCurrentlyPlayingSongIndex;
 		bool fuckyou;
 		/********** Private Accessors ************/
-		bool GetPause() {return m_bPause;}
+		
 		int GetCurrentlyPlayingSongIndex() {return m_nCurrentlyPlayingSongIndex;}
 		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
 

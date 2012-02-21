@@ -6,7 +6,7 @@
 #ifndef _CGameplay_State_H_
 #define _CGameplay_State_H_
 
-
+// Managers / Wrappers
 #include "IGameState.h"
 #include "../CGame.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
@@ -18,6 +18,9 @@
 #include "../Managers/IListener.h"
 #include "../Managers/CEventSystem.h"
 #include "../Managers/CMessageSystem.h"
+
+// Classes
+#include "../CPlayer.h"
 
 // Forward Declarations
 class Bitmap_Font;
@@ -54,11 +57,17 @@ private:
 
 	bool m_bPlayAnimation;
 
+	//Players
+	CPlayer* m_Player1;
+	CPlayer* m_Player2;
+
 		// Managers
 	CBeatManager BeatManager;
 CAnimationManager AnimationManager;
 		
 static bool dickhead;
+
+	
 };
 
 #endif
