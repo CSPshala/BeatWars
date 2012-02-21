@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////
 // File Name	:	"Macros.h"
 //
-// Author Name	:	JC Ricks
+// Author Name	:	JC Ricks(@CSPshala)
 //
 // Purpose		:	Macros for overused stuff, mainly singleton access
 ////////////////////////////////////////////////////////////////////////
@@ -12,7 +12,7 @@
 #define TEXTUREMAN CSGD_TextureManager::GetInstance()
 #define FMODMAN CSGD_FModManager::GetInstance()
 #define DI CSGD_DirectInput::GetInstance()
-//#define OM CSGD_ObjectManager::GetInstance()
+#define OM CObjectManager::GetInstance()
 //#define MS CSGD_MessageSystem::GetInstance()
 //#define ES CSGD_EventSystem::GetInstance()
 #define GAME CGame::GetInstance()

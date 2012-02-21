@@ -11,6 +11,7 @@
 #include "JCMacros.h"
 #include "CSong.h"
 #include "CGame.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
 
 
 ////////////////////////////////////////
@@ -22,11 +23,16 @@
 ///////////////////////////////////////////////
 CSong::CSong()
 {
-	SetCurrentSongTime(0.0f);
+	SetCurrentSongTime(0);
 	SetSongName("DEFAULT SONG NAME");
 	SetCurrentBeatIndex(0);
-	SetNextBeatIndex(1);
-	
+	SetNextBeatIndex(1);	
+
+	// Start with ref to self
+	m_uiRefCount = 1;
+
+	m_nType = OBJ_SONG;
+
 	// Asset IDs
 	SetSongID(-1);
 	SetBackgroundID(-1);
@@ -34,7 +40,7 @@ CSong::CSong()
 
 CSong::~CSong()
 {
-
+	// Releasing beat list
 }
 
 CSong::CSong(const CSong& theSong)
@@ -47,8 +53,8 @@ CSong& CSong::operator=(const CSong& theSong)
 	m_vBeats = theSong.m_vBeats;
 	m_vActiveBeats = theSong.m_vActiveBeats;
 	m_szName = theSong.m_szName;
-	m_fCurrentSongTime = theSong.m_fCurrentSongTime;
-	m_fSongDuration = theSong.m_fSongDuration;
+	m_nCurrentSongTime = theSong.m_nCurrentSongTime;
+	m_nSongDuration = theSong.m_nSongDuration;
 	m_nCurrentBeat = theSong.m_nCurrentBeat;
 	m_nNextBeat = theSong.m_nNextBeat;
 
@@ -62,14 +68,17 @@ CSong& CSong::operator=(const CSong& theSong)
 ////////////////////////////////////////
 //		PUBLIC UTILITY FUNCTIONS
 ////////////////////////////////////////
-void CSong::UpdateSong()
+void CSong::Update(float fElapsedTime)
 {
 	// Checking upcomming beat and adding it to active vector when it's within tolerance
 	if(!((unsigned int)GetCurrentBeatIndex() >= m_vBeats.size()))
-		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1.0))
+		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1000))
 		{
 			m_vActiveBeats.push_back(m_vBeats[GetCurrentBeatIndex()]);
+			
 			m_vActiveBeats.back().SetIsActive(true);
+
+			// Setting the next beat to call
 			SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
 		}	
 
@@ -78,11 +87,23 @@ void CSong::UpdateSong()
 		for(unsigned int i = 0; i < m_vActiveBeats.size(); ++i)
 			m_vActiveBeats[i].Update(GAME->GetTimer().GetDeltaTime());
 
-	// Updating song time
-	SetCurrentSongTime(GetCurrentSongTime() + GAME->GetTimer().GetDeltaTime());
+	// Updating song time	
+	if(FMODMAN->IsSoundPlaying(GetSongID()))
+	{
+		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetSongID());
+
+		unsigned int daTyme = 0;
+
+		derp->getPosition(&daTyme,FMOD_TIMEUNIT_MS);
+
+		// Sound info struct for Debugging
+		//tSoundInfo test = FMODMAN->GetSound(GetSongID());
+
+		SetCurrentSongTime((int)daTyme);
+	}
 }
 
-void CSong::RenderSong()
+void CSong::Render()
 {
 	// Rendering Notes
 	if(m_vActiveBeats.size() > 0)
@@ -95,16 +116,41 @@ void CSong::ResetSong()
 {
 	
 	// Setting everything back to normal
-	SetCurrentSongTime(0.0f);
+	SetCurrentSongTime(0);
 	SetCurrentBeatIndex(0);
 	SetNextBeatIndex(1);
 
-	// Clearing active beats vector
+
 	m_vActiveBeats.clear();
 
 	// Resetting beats
 	for(unsigned int i = 0; i < m_vBeats.size(); ++i)
 		m_vBeats[i].ResetBeat();
+}
+
+RECT CSong::GetCollisionRect()
+{
+	// Garbage ass rect because I don't need it
+	RECT derp;
+	derp.bottom = 0;
+	derp.left = 0;
+	derp.right = 0;
+	derp.top = 0;
+
+	return derp;
+}
+
+bool CSong::CheckCollision(IBaseInterface* pBase)
+{
+	return false;
+}
+
+void CSong::Release()
+{
+	m_uiRefCount--;
+
+	if(m_uiRefCount == 0)
+		delete this;
 }
 
 ////////////////////////////////////////

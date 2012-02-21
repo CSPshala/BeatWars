@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////
 // File Name	:	"CBeat.cpp"
 //
-// Author		:	JC Ricks
+// Author		:	JC Ricks(@CSPshala)
 //
 // Purpose		:	To Contain a single beat's info
 //////////////////////////////////////////////////////
@@ -21,10 +21,11 @@
 
 CBeat::CBeat() : CBase()
 {
-	SetTimeOfBeat(0.0f);
+	SetTimeOfBeat(0);
 	SetDifficulty(0);
 	SetDirection(UP);
 	m_nType = OBJ_BEAT;
+	SetEvent("");
 	CEventSystem::GetInstance()->RegisterClient("test.event",this);
 }
 
@@ -42,10 +43,11 @@ CBeat& CBeat::operator=(const CBeat& theBeat)
 {
 	CBase::operator=(theBeat);
 	
-	m_fTimeofBeat = theBeat.m_fTimeofBeat;
+	m_nTimeofBeat = theBeat.m_nTimeofBeat;
 	m_nDifficulty = theBeat.m_nDifficulty;
 	m_cKeyToPress = theBeat.m_cKeyToPress;
 	m_eDirection = theBeat.m_eDirection;
+	m_szEvent = theBeat.m_szEvent;
 
 	m_fOriginalXPos = theBeat.m_fOriginalXPos;
 	m_fOriginalYPos = theBeat.m_fOriginalYPos;

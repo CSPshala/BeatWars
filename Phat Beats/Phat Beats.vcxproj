@@ -83,6 +83,7 @@
     <ClCompile Include="source\CFX.cpp" />
     <ClCompile Include="source\CGame.cpp" />
     <ClCompile Include="source\CParticle.cpp" />
+    <ClCompile Include="source\CPlayer.cpp" />
     <ClCompile Include="source\CSong.cpp" />
     <ClCompile Include="source\Managers\CAnimationManager.cpp" />
     <ClCompile Include="source\Managers\CBeatManager.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="source\CFX.h" />
     <ClInclude Include="source\CGame.h" />
     <ClInclude Include="source\CParticle.h" />
+    <ClInclude Include="source\CPlayer.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
     <ClInclude Include="source\JCMacros.h" />

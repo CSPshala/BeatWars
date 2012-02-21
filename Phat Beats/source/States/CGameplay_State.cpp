@@ -42,7 +42,7 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
-		BeatManager.Play();
+		BeatManager.Play("Avicii - Levels");
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
 	{
@@ -81,6 +81,8 @@ void CGameplay_State::Render(void)
 	
 	BeatManager.Render(); 
 	AnimationManager.Render();
+	CObjectManager::GetInstance()->RenderObjects();
+
 	if (dickhead == true)
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("this is a message test",320,340,255,0,0);
