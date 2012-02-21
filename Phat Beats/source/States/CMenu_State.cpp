@@ -115,14 +115,27 @@ void CMenu_State::Render(void)
 	CSGD_TextureManager::GetInstance()->Draw(m_nTile,145,25,2.0f,1.0f);
 	CBitmapFont::GetInstance()->SetScale(3.0f);
 	CBitmapFont::GetInstance()->PrintInRect("New Game\nLoad\n0ptions\nCredits\nExit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
-/*
-
+	/*
+RECT rNewGame = {0,175,800,205};
+	RECT rLoad = {0,205,800,235};
+	RECT rOptions = {0,235,800,265};
+	RECT rCredits = {0,265,800,295};
+	RECT rExit = {0,295,800,330};
+	CBitmapFont::GetInstance()->SetScale(1.0f);
+	//CBitmapFont::GetInstance()->PrintText("new game", 225, 175,D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintInRect("new game", &rNewGame, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-	CBitmapFont::GetInstance()->PrintText("PLAY", 225, 175,D3DCOLOR_XRGB(255, 255, 255));
-	CBitmapFont::GetInstance()->PrintText("OPTIONS", 225, 215,D3DCOLOR_XRGB(255, 255, 255));
-	CBitmapFont::GetInstance()->PrintText("SKILLS TEST", 225, 255,D3DCOLOR_XRGB(255, 255, 255));
-	CBitmapFont::GetInstance()->PrintText("CREDITS", 225, 295,D3DCOLOR_XRGB(255, 255, 255));
-	CBitmapFont::GetInstance()->PrintText("EXIT", 225, 335,D3DCOLOR_XRGB(255, 255, 255));
+	//CBitmapFont::GetInstance()->PrintText("load", 250, 215,D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintInRect("load", &rLoad, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->SetScale(2.0f);
+	//CBitmapFont::GetInstance()->PrintText("options", 300, 255,D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintInRect("options", &rOptions, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->SetScale(2.5f);
+	//CBitmapFont::GetInstance()->PrintText("credits", 325, 295,D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintInRect("credits", &rCredits, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->SetScale(3.0f);
+	//CBitmapFont::GetInstance()->PrintText("exit", 350, 335,D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintInRect("exit", &rExit, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
 */
 
 	int topSelection = 175;

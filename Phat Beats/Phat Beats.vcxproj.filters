@@ -144,6 +144,9 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp">
       <Filter>Managers / Factories</Filter>
     </ClCompile>
+    <ClCompile Include="source\Managers\CAiManager.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">

@@ -84,6 +84,7 @@
     <ClCompile Include="source\CGame.cpp" />
     <ClCompile Include="source\CParticle.cpp" />
     <ClCompile Include="source\CSong.cpp" />
+    <ClCompile Include="source\Managers\CAiManager.cpp" />
     <ClCompile Include="source\Managers\CAnimationManager.cpp" />
     <ClCompile Include="source\Managers\CBeatManager.cpp" />
     <ClCompile Include="source\Managers\CEventSystem.cpp" />
