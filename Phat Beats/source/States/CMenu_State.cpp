@@ -84,6 +84,7 @@ bool CMenu_State::Input(void)
 			break;		
 		case MAINMENU_CREDITS:
 			{
+				//CGame::GetInstance()->ChangeState()
 			}
 			break;
 
