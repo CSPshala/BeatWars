@@ -6,7 +6,7 @@
 #include "../CBase.h"
 using namespace std;
 
-class CBeat;
+static enum{AI_EASY, AI_NORMAL, AI_HARD, AI_INSANE, NUM_DIFFICULTY};
 class CAiManager
 {
 private:
@@ -15,12 +15,14 @@ private:
 	CAiManager(const CAiManager&);
 	CAiManager& operator=(const CAiManager&);
 
-	vector<CBeat*> m_vBeatNotes;
+	
 
 public:
 
-	void Update(float fElaspedTime);
+	static CAiManager* GetInsatance();
+	//void Update(float fElaspedTime);
 
+	bool RandomDifficult(int Level);
 	//accessors
 
 
