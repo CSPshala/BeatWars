@@ -11,8 +11,10 @@
 #include "JCMacros.h"
 #include "CSong.h"
 #include "CGame.h"
+#include "CPlayer.h"
 #include "SGD Wrappers\CSGD_FModManager.h"
-
+#include "Managers\CEvent.h"
+#include "Managers\CEventSystem.h"
 
 ////////////////////////////////////////
 //				MISC
@@ -36,11 +38,13 @@ CSong::CSong()
 	// Asset IDs
 	SetSongID(-1);
 	SetBackgroundID(-1);
+
+	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
 }
 
 CSong::~CSong()
 {
-	// Releasing beat list
+	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
 }
 
 CSong::CSong(const CSong& theSong)
@@ -82,10 +86,28 @@ void CSong::Update(float fElapsedTime)
 			SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
 		}	
 
+
+	list<CBeat>::iterator i = m_vActiveBeats.begin();
 	// Updating active beats
-	if(m_vActiveBeats.size() > 0)
-		for(unsigned int i = 0; i < m_vActiveBeats.size(); ++i)
-			m_vActiveBeats[i].Update(GAME->GetTimer().GetDeltaTime());
+	if(m_vActiveBeats.size() > 0)		
+		do
+		{	
+			if(i->GetIsActive())
+				i->Update(GAME->GetTimer().GetDeltaTime());
+			else
+				i = m_vActiveBeats.erase(i);
+			
+			// Jesus christ...
+			if(i == m_vActiveBeats.end())
+				break;
+			else 
+				++i;
+
+			if(i == m_vActiveBeats.end())
+				break;
+			
+		}while(true);
+		
 
 	// Updating song time	
 	if(FMODMAN->IsSoundPlaying(GetSongID()))
@@ -106,9 +128,11 @@ void CSong::Update(float fElapsedTime)
 void CSong::Render()
 {
 	// Rendering Notes
+	list<CBeat>::iterator i = m_vActiveBeats.begin();
+
 	if(m_vActiveBeats.size() > 0)
-		for(unsigned int i = 0; i < m_vActiveBeats.size(); ++i)
-			m_vActiveBeats[i].Render();
+		for(; i != m_vActiveBeats.end(); ++i)
+			i->Render();
 
 }
 
@@ -121,6 +145,7 @@ void CSong::ResetSong()
 	SetNextBeatIndex(1);
 
 
+	
 	m_vActiveBeats.clear();
 
 	// Resetting beats
@@ -142,7 +167,30 @@ RECT CSong::GetCollisionRect()
 
 bool CSong::CheckCollision(IBaseInterface* pBase)
 {
-	return false;
+	if(IsCurrentlyPlayingSong())
+	{
+		CPlayer* pPlayer = (CPlayer*)pBase;
+		// Only checking with beats that are currently active
+		list<CBeat>::iterator i = m_vActiveBeats.begin();
+
+		for(; i != m_vActiveBeats.end(); ++i)	
+		{
+			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
+				if(pPlayer->CheckCollision(&(*i)))
+				{
+					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
+				}
+				// Note has collided before and is not colliding now
+				// so this means it's past the point where player can hit
+				else if(i->GetHasCollided() == true)
+				{
+					i->SetIsActive(false);					
+				}
+		}
+		return true;
+	}
+	else
+		return false;
 }
 
 void CSong::Release()
@@ -151,6 +199,11 @@ void CSong::Release()
 
 	if(m_uiRefCount == 0)
 		delete this;
+}
+
+void CSong::HandleEvent(CEvent* pEvent)
+{
+
 }
 
 ////////////////////////////////////////
