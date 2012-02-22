@@ -9,7 +9,7 @@
 #include "CGameplay_State.h"
 #include "COptionsState.h"
 #include "../Globals.h"
-
+#include "CLevelSelect_State.h"
 CMenu_State::CMenu_State()
 {
 	
@@ -87,6 +87,11 @@ bool CMenu_State::Input(void)
 				//CGame::GetInstance()->ChangeState()
 			}
 			break;
+		case MAINMENU_LEVEL:
+			{
+				CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
+			}
+			break;
 
 
 		case MAINMENU_EXIT:
@@ -115,7 +120,7 @@ void CMenu_State::Render(void)
 	//CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
 	CSGD_TextureManager::GetInstance()->Draw(m_nTile,145,25,2.0f,1.0f);
 	CBitmapFont::GetInstance()->SetScale(3.0f);
-	CBitmapFont::GetInstance()->PrintInRect("New Game\nLoad\n0ptions\nCredits\nExit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->PrintInRect("new game\nload\noptions\ncredits\nlevel select\nexit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	/*
 RECT rNewGame = {0,175,800,205};
 	RECT rLoad = {0,205,800,235};
@@ -164,6 +169,12 @@ RECT rNewGame = {0,175,800,205};
 	case MAINMENU_CREDITS:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_CREDITS) );
+		}
+		break;
+
+	case MAINMENU_LEVEL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LEVEL) );
 		}
 		break;
 

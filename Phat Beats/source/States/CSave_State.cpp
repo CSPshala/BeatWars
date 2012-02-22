@@ -46,15 +46,11 @@ void CSave_State::Update(void)
 
 void CSave_State::Render(void)
 {
-	CSGD_Direct3D::GetInstance()->Clear(0,0,0);
-	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();	
+	
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->DeviceEnd();
-	CSGD_Direct3D::GetInstance()->Present();
+	
 }
 
 void CSave_State::Exit(void)

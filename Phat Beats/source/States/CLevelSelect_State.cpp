@@ -5,11 +5,14 @@
 //////////////////////////////////////////////////////
 
 #include "CLevelSelect_State.h"
-
+#include "CBitmapFont.h"
+#include "../CSong.h"
+#include "CMenu_State.h"
+#include "../CGame.h"
 
 CLevelSelect_State::CLevelSelect_State()
 {
-	Bitmap_Font* m_bMenu_Font = NULL;
+	CBitmapFont* m_bMenu_Font = NULL;
 	m_nMenuSelection = 0;
 
 	// Asset IDs
@@ -35,7 +38,7 @@ bool CLevelSelect_State::Input(void)
 {
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
-		return false;
+		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	return true;
 }
@@ -47,7 +50,7 @@ void CLevelSelect_State::Update(void)
 
 void CLevelSelect_State::Render(void)
 {
-	RECT rLevel1={0,25,800,100};
+	RECT rLevel1={0,25,45,45};
 	CSGD_Direct3D::GetInstance()->DrawRect(rLevel1,255,0,0);
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
