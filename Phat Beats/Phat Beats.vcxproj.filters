@@ -48,9 +48,6 @@
     <ClCompile Include="source\SGD Wrappers\CSGD_TextureManager.cpp">
       <Filter>SGD Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp">
-      <Filter>SGD Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="source\XML\tinystr.cpp">
       <Filter>XML</Filter>
     </ClCompile>
@@ -141,9 +138,24 @@
     <ClCompile Include="source\Managers\CMessageSystem.cpp">
       <Filter>Managers / Factories</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="source\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+=======
     <ClCompile Include="source\States\COptionsState.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp">
+      <Filter>SGD Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="source\CPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Managers\CAiManager.cpp">
+      <Filter>Managers / Factories</Filter>
+    </ClCompile>
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -165,9 +177,6 @@
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h">
-      <Filter>SGD Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="source\SGD Wrappers\CSGD_XAudio2.h">
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h">
@@ -248,7 +257,13 @@
     <ClInclude Include="source\JCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-   <ClInclude Include="source\States\CBitmapFont.h">
+    <ClInclude Include="source\States\CBitmapFont.h">
+<<<<<<< HEAD
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\States\COptionsState.h">
+=======
+>>>>>>> master
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Managers\CEvent.h">
@@ -266,8 +281,24 @@
     <ClInclude Include="source\Managers\IListener.h">
       <Filter>Managers / Factories</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="ColorF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Random.h">
+=======
     <ClInclude Include="source\States\COptionsState.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CAiManager.h">
+      <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h">
+      <Filter>SGD Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\CPlayer.h">
+>>>>>>> master
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

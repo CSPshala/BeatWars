@@ -50,10 +50,14 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 		if( pNewAnim->Attribute("IsLooping") == NULL )
 			return false;
 
-		double dIsLooping = 0;
+		int dIsLooping = 0;
 
-		pNewAnim->Attribute("IsLooping",&dIsLooping);
-		Anim->SetIsLooping((bool)dIsLooping);
+		pNewAnim->Attribute("IsLooping", &dIsLooping);
+
+		if(dIsLooping)
+			Anim->SetIsLooping(true);
+		else
+			Anim->SetIsLooping(false);
 		
 		//***************Animation File****************************//
 		if( pNewAnim->Attribute("File") == NULL )

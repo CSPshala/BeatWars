@@ -39,9 +39,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Visual Leak Detector\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib\Win32;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,7 +87,9 @@
     <ClCompile Include="source\CFX.cpp" />
     <ClCompile Include="source\CGame.cpp" />
     <ClCompile Include="source\CParticle.cpp" />
+    <ClCompile Include="source\CPlayer.cpp" />
     <ClCompile Include="source\CSong.cpp" />
+    <ClCompile Include="source\Managers\CAiManager.cpp" />
     <ClCompile Include="source\Managers\CAnimationManager.cpp" />
     <ClCompile Include="source\Managers\CBeatManager.cpp" />
     <ClCompile Include="source\Managers\CEventSystem.cpp" />
@@ -92,10 +98,11 @@
     <ClCompile Include="source\Managers\CMessageSystem.cpp" />
     <ClCompile Include="source\Managers\CObjectManager.cpp" />
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
+    <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_DirectInput.cpp" />
+    <ClCompile Include="source\SGD Wrappers\CSGD_FModManager.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_TextureManager.cpp" />
-    <ClCompile Include="source\SGD Wrappers\CSGD_XAudio2.cpp" />
     <ClCompile Include="source\SGD_Math.cpp" />
     <ClCompile Include="source\States\CArcadeMode_State.cpp" />
     <ClCompile Include="source\States\CBitmapFont.cpp" />
@@ -116,6 +123,7 @@
     <ClCompile Include="source\XML\xmltest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColorF.h" />
     <ClInclude Include="source\CAnimation.h" />
     <ClInclude Include="source\CBase.h" />
     <ClInclude Include="source\CBeat.h" />
@@ -124,9 +132,11 @@
     <ClInclude Include="source\CFX.h" />
     <ClInclude Include="source\CGame.h" />
     <ClInclude Include="source\CParticle.h" />
+    <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
     <ClInclude Include="source\JCMacros.h" />
+    <ClInclude Include="source\Managers\CAiManager.h" />
     <ClInclude Include="source\Managers\CAnimationManager.h" />
     <ClInclude Include="source\Managers\CBeatManager.h" />
     <ClInclude Include="source\Managers\CEvent.h" />
@@ -139,8 +149,8 @@
     <ClInclude Include="source\Managers\IListener.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_DirectInput.h" />
+    <ClInclude Include="source\SGD Wrappers\CSGD_FModManager.h" />
     <ClInclude Include="source\SGD Wrappers\CSGD_TextureManager.h" />
-    <ClInclude Include="source\SGD Wrappers\CSGD_XAudio2.h" />
     <ClInclude Include="source\SGD Wrappers\SGD_Util.h" />
     <ClInclude Include="source\SGD_Math.h" />
     <ClInclude Include="source\States\CArcadeMode_State.h" />

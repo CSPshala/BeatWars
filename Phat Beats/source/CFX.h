@@ -7,9 +7,6 @@
 #ifndef C_FX_H
 #define C_FX_H
 
-#include <list>
-using std::list;
-
 #include "CEmitter.h"
 
 class CFX
@@ -18,15 +15,19 @@ public:
 	CFX();
 	~CFX();
 
+	void Render();
+	void Update(float fElapsedTime);
+	void AddEffect(CEmitter* pEffect);
+	const bool IsDead(void);
+	const bool GetRepeat(void) {return m_bRepeat;}
+	const void SetRepeat(const bool bNewRepeat) {m_bRepeat = bNewRepeat;}
+
 private:
 
 	//*****MEMBERS******//
-	list<CEmitter> m_listEmitters;
-
-	// Asset IDs
-	int m_nSoundID;
-	int m_nFXID;
-
+	std::vector<CEmitter*> m_listAliveEmitters;
+	std::vector<CEmitter*> m_listDeadEmitters;
+	bool m_bRepeat;
 };
 
 #endif

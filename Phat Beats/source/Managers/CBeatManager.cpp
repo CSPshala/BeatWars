@@ -9,10 +9,9 @@
 ////////////////////////////////////////
 #include "CBeatManager.h"
 #include "../JCMacros.h"
-#include "../SGD Wrappers/CSGD_XAudio2.h"
+
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
-//#include "CObjectFactory.h"
 #include "../XML/tinystr.h"
 #include "../XML/tinyxml.h"
 #include "CEventSystem.h"
@@ -31,6 +30,7 @@ CBeatManager::CBeatManager()
 	SetPause(true);
 	CEventSystem::GetInstance()->RegisterClient("test.event",this);
 	fuckyou = false;
+	SetCurrentlyPlayingSong("none");
 }
 
 CBeatManager::~CBeatManager()
@@ -46,7 +46,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	TiXmlDocument doc;
 
 	// Song for new song creation
-	CSong theSong;
+	CSong* theSong = new CSong();
 
 	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
@@ -78,7 +78,7 @@ bool CBeatManager::LoadSong(string szFileName)
 		szSongPath += buffer;
 
 		// Loading song and setting SongID.
-		theSong.SetSongID(CSGD_XAudio2::GetInstance()->MusicLoadSong(szSongPath.c_str()));
+		theSong->SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str()));
 		
 	//*************SETTING SONG NAME********************//
 		const char* txtName = NULL;
@@ -89,43 +89,135 @@ bool CBeatManager::LoadSong(string szFileName)
 
 		strcpy_s(buffer,_countof(buffer),txtName);
 
-		theSong.SetSongName(buffer);
+		theSong->SetSongName(buffer);
 
 	//*************SETTING DURATION********************//
 		if(pRoot->Attribute("duration") == NULL)
 			return false;
 
-		double dDuration = 0.0;
+		int nDuration;
 
-		pRoot->Attribute("duration",&dDuration);
+		pRoot->Attribute("duration",&nDuration);
 
-		theSong.SetSongDuration((float)dDuration);
+		theSong->SetSongDuration(nDuration);
 
 //***************END OF SONG SPECIFICS********************//
+
+		//*********SETTING ICON PATHS*********************//
+		TiXmlElement* pIcons = pRoot->FirstChildElement("icons");
+
+		string szIconPath = "resource/graphics/";
+		string szWKey;
+		string szAKey;
+		string szSKey;
+		string szDKey;
+
+		//******WKEY*********//
+		const char* txtIcon = NULL;
+		txtIcon = pIcons->Attribute("wkey");
+
+		if(txtIcon == NULL)
+			return false;
+
+		strcpy_s(buffer,_countof(buffer),txtIcon);
+
+		szWKey = szIconPath + buffer;
+
+		//******AKEY*********//
+		txtIcon = NULL;
+		txtIcon = pIcons->Attribute("akey");
+
+		if(txtIcon == NULL)
+			return false;
+
+		strcpy_s(buffer,_countof(buffer),txtIcon);
+
+		szAKey = szIconPath + buffer;
+
+		//******SKEY*********//
+		txtIcon = NULL;
+		txtIcon = pIcons->Attribute("skey");
+
+		if(txtIcon == NULL)
+			return false;
+
+		strcpy_s(buffer,_countof(buffer),txtIcon);
+
+		szSKey = szIconPath + buffer;
 		
+		//******DKEY*********//
+		txtIcon = NULL;
+		txtIcon = pIcons->Attribute("dkey");
+
+		if(txtIcon == NULL)
+			return false;
+
+		strcpy_s(buffer,_countof(buffer),txtIcon);
+
+		szDKey = szIconPath + buffer;
+
+		//*********LOADING NOTE GRAPHICS*************//
+		// Pre-loading textures for notes
+		int nImpNote = CSGD_TextureManager::GetInstance()->LoadTexture(szAKey.c_str());
+		int nRepNote = CSGD_TextureManager::GetInstance()->LoadTexture(szDKey.c_str());
+		int nSkullNote = CSGD_TextureManager::GetInstance()->LoadTexture(szWKey.c_str());
+		int nSunNote = CSGD_TextureManager::GetInstance()->LoadTexture(szSKey.c_str());
 
 //***************BEGIN BEAT SETTING***********************//
 		TiXmlElement* pBeat = pRoot->FirstChildElement("Beat");
 
-		// Pre-loading textures for notes
-		int nImpNote = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/ImpNote.png");
-		int nRepNote = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/RepNote.png");
-		int nSkullNote = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/SkullNote.png");
-		int nSunNote = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/SunNote.png");
+		
 
 		while(pBeat)
 		{
-			CBeat* theBeat = new CBeat();
+			CBeat theBeat;
+
+			//****************CHECKING FOR NOTE COMPLETENESS**********//
+			if(pBeat->Attribute("beatis") == NULL)
+				return false;
+
+			int nBeatIs = 0;
+
+			pBeat->Attribute("beatis",&nBeatIs);
+
+			// Ignoring non-complete note sets
+			if(nBeatIs != 0)
+			{
+				pBeat = pBeat->NextSiblingElement("Beat");
+				continue;
+			}
+			
 
 			//****************GETTING BEAT HIT TIME***************//
 			if(pBeat->Attribute("timeofbeat") == NULL)
 				return false;
 
-			double dBeatTime = 0.0;
+			int nBeatTime = 0;
 
-			pBeat->Attribute("timeofbeat",&dBeatTime);
+			pBeat->Attribute("timeofbeat",&nBeatTime);
 
-			theBeat->SetTimeOfBeat((float)dBeatTime);
+			theBeat.SetTimeOfBeat(nBeatTime);
+
+			//********HEIGHT AND WIDTH ARENT IN ORDER W/ XML FILE B/C I NEED THEM FOR POSITION*******//
+			//******************SETTING NOTE WIDTH***************//
+			if(pBeat->Attribute("width") == NULL)
+				return false;
+
+			int nWidth = 0;
+
+			pBeat->Attribute("width",&nWidth);
+
+			theBeat.SetWidth(nWidth);
+
+			//******************SETTING NOTE HEIGHT**************//
+			if(pBeat->Attribute("height") == NULL)
+				return false;
+
+			int nHeight = 0;
+
+			pBeat->Attribute("height",&nHeight);
+
+			theBeat.SetHeight(nHeight);
 
 			//*****************GETTING DIRECTION OF NOTE**********//
 			if(pBeat->Attribute("direction") == NULL)
@@ -139,21 +231,21 @@ bool CBeatManager::LoadSong(string szFileName)
 			string szDirection = buffer;
 
 			if(szDirection == "left")
-				theBeat->SetDirection(LEFT);
+				theBeat.SetDirection(LEFT);
 			else if(szDirection == "up")
-				theBeat->SetDirection(UP);
+				theBeat.SetDirection(UP);
 			else if(szDirection == "right")
-				theBeat->SetDirection(RIGHT);
+				theBeat.SetDirection(RIGHT);
 			else if(szDirection == "down")
-				theBeat->SetDirection(DOWN);
+				theBeat.SetDirection(DOWN);
 			else if(szDirection == "leftup")
-				theBeat->SetDirection(LEFTUP);
+				theBeat.SetDirection(LEFTUP);
 			else if(szDirection == "rightup")
-				theBeat->SetDirection(RIGHTUP);
+				theBeat.SetDirection(RIGHTUP);
 			else if(szDirection == "rightdown")
-				theBeat->SetDirection(RIGHTDOWN);
+				theBeat.SetDirection(RIGHTDOWN);
 			else if(szDirection == "leftdown")
-				theBeat->SetDirection(LEFTDOWN);
+				theBeat.SetDirection(LEFTDOWN);
 
 			//******************GETTING KEYPRESS OF NOTE***********//
 			if(pBeat->Attribute("key") == NULL)
@@ -163,26 +255,18 @@ bool CBeatManager::LoadSong(string szFileName)
 
 			txtKey = pBeat->Attribute("key");
 
-			theBeat->SetKeyToPress(*txtKey);
+			theBeat.SetKeyToPress(*txtKey);
 
 			//******************SETTING IMAGE OF NOTE*************//
-			if(pBeat->Attribute("image") == NULL)
-				return false;
-
-			const char* txtImage = NULL;
-			txtImage = pBeat->Attribute("image");
-			strcpy_s(buffer,_countof(buffer),txtImage);
-
-			string szImage = buffer;
-
-			if(szImage == "ImpNote.png")
-				theBeat->SetImageID(nImpNote);
-			else if(szImage == "RepNote.png")
-				theBeat->SetImageID(nRepNote);
-			else if(szImage == "SkullNote.png")
-				theBeat->SetImageID(nSkullNote);
-			else if(szImage == "SunNote.png")
-				theBeat->SetImageID(nSunNote);
+		
+			if(*txtKey == 'w')
+				theBeat.SetImageID(nSkullNote);
+			else if(*txtKey == 'd')
+				theBeat.SetImageID(nRepNote);
+			else if(*txtKey == 'a')
+				theBeat.SetImageID(nImpNote);
+			else if(*txtKey == 's')
+				theBeat.SetImageID(nSunNote);
 
 			//*****************SETTING NOTE DIFFICULTY************//
 			if(pBeat->Attribute("difficulty") == NULL)
@@ -195,42 +279,44 @@ bool CBeatManager::LoadSong(string szFileName)
 			string szDiff = buffer;
 
 			if(szDiff == "easy")
-				theBeat->SetDifficulty(EASY);
+				theBeat.SetDifficulty(EASY);
 			else if(szDiff == "normal")
-				theBeat->SetDifficulty(NORMAL);
+				theBeat.SetDifficulty(NORMAL);
 			else if(szDiff == "hard")
-				theBeat->SetDifficulty(HARD);
+				theBeat.SetDifficulty(HARD);
 
-			//******************SETTING NOTE WIDTH***************//
-			if(pBeat->Attribute("width") == NULL)
+			
+
+			//******************GETTING NOTE EVENT***************//
+			if(pBeat->Attribute("event") == NULL)
 				return false;
 
-			int nWidth = 0;
+			const char* txtEvent = NULL;
+			txtEvent = pBeat->Attribute("event");
+			strcpy_s(buffer,_countof(buffer),txtEvent);
 
-			pBeat->Attribute("width",&nWidth);
+			string szEvent = buffer;
 
-			theBeat->SetWidth(nWidth);
-
-			//******************SETTING NOTE HEIGHT**************//
-			if(pBeat->Attribute("height") == NULL)
-				return false;
-
-			int nHeight = 0;
-
-			pBeat->Attribute("height",&nHeight);
-
-			theBeat->SetHeight(nHeight);
+			theBeat.SetEvent(szEvent);
 
 			//******************MOVING ON TO NEXT NOTE***********//
-				// Adding beat to song
-			//theSong.GetBeatList().push_back(theBeat);
-			CObjectManager::GetInstance()->AddObject(theBeat);
-			theBeat->Release();
+			
+			// Adding beat to Song List
+			theSong->GetBeatList().push_back(theBeat);
 			pBeat = pBeat->NextSiblingElement("Beat");
 		}
 
 		//***************ADDING SONG TO SONG LIST****************//
-		GetSongList().push_back(theSong);
+		// Releasing initial ref to song
+
+		// Adding song to Object Manager
+			CObjectManager::GetInstance()->AddObject(theSong);
+
+			// Releasing initial ref to the song
+			theSong->Release();
+
+			// Adding song pointer to song list (just to keep track of what songs we have)
+			GetSongList().push_back(theSong);			
 		
 	return true;
 }
@@ -238,10 +324,15 @@ bool CBeatManager::LoadSong(string szFileName)
 bool CBeatManager::UnloadSongs()
 {
 	CObjectManager::GetInstance()->RemoveAllObjects();
+
+	for(unsigned int i = 0; i < GetSongList().size(); ++i)
+		m_vSongs[i]->Release();
 	
 	GetSongList().clear();
 	GetSongBackground().clear();
 	SetNumberNotesHit(0);
+
+	SetCurrentlyPlayingSong("none");
 
 	if(GetSongList().size() == 0 && GetSongBackground().size() == 0)
 		return true;
@@ -249,31 +340,51 @@ bool CBeatManager::UnloadSongs()
 		return false;
 }
 
-void CBeatManager::Play()
+void CBeatManager::Play(string szSongName)
 {
 	SetPause(false);
 
+	SetCurrentlyPlayingSong(szSongName);
+
 	// If song was already playing when play was hit, unpause
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),false);
+	if(GetCurrentlyPlayingSongIndex() != -1)
+		if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
+		{
+			FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
+			derp->setPaused(IsPaused());
+		}
+		else
+			FMODMAN->PlaySound(GetCurrentlyPlayingSong()->GetSongID());
 }
 
 void CBeatManager::Pause()
 {
-	SetPause(true);
+	// Toggleing pause
+	SetPause(!IsPaused());
 
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicPauseSong(m_vSongs[0].GetSongID(),true);		
+	// Setting channel to paused
+	if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
+	{
+		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
+				derp->setPaused(IsPaused());
+	}
 }
 
 void CBeatManager::Stop()
 {
 	SetPause(true);
 
-	if(XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-		XAUDIO->MusicStopSong(m_vSongs[0].GetSongID());
-
-	m_vSongs[0].ResetSong();
+	
+	// Stopping currently playing song
+	if(m_nCurrentlyPlayingSongIndex != -1)
+	{
+		if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
+		{
+			FMODMAN->StopSound(GetCurrentlyPlayingSong()->GetSongID());
+		}
+	
+		m_vSongs[m_nCurrentlyPlayingSongIndex]->ResetSong();
+	}
 }
 
 void CBeatManager::Reset()
@@ -284,33 +395,47 @@ void CBeatManager::Reset()
 
 void CBeatManager::Update()
 {
-	float elasptedtime = CGame::GetInstance()->GetTimer().GetDeltaTime();
-
-	// Playing song
-	if(!GetPause())
-	{
-		if(!XAUDIO->MusicIsSongPlaying(m_vSongs[0].GetSongID()))
-			XAUDIO->MusicPlaySong(m_vSongs[0].GetSongID());
-
-		m_vSongs[0].UpdateSong();
-		CObjectManager::GetInstance()->UpdateObjects(elasptedtime);
-	}	
+	
 }
 
 void CBeatManager::Render()
-{
-	m_vSongs[0].RenderSong();
-	CObjectManager::GetInstance()->RenderObjects();
-	if (fuckyou == true)
-	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("Note is past XY 200 pix",500,500,255,0,0);
-	}
+{	
+	
 }
 
 void CBeatManager::HandleEvent( CEvent* pEvent )
 {
 	if(pEvent->GetEventID() == "test.event")
 		fuckyou = true;
+}
+
+string CBeatManager::GetCurrentlyPlayingSongName()
+{
+	return szCurrentlyPlayingSong;
+}
+
+void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
+{
+	if(szSongName == "none")
+	{
+		m_nCurrentlyPlayingSongIndex = -1;
+		return;
+	}
+	else if(szSongName == "")
+	{
+		return;
+	}
+	else
+	{
+		for(unsigned int i = 0; i < m_vSongs.size(); ++i)
+			if(m_vSongs[i]->GetSongName() == szSongName)
+			{
+				m_nCurrentlyPlayingSongIndex = i;
+				szCurrentlyPlayingSong = szSongName;
+				return;
+			}
+	}
+	return;
 }
 
 ////////////////////////////////////////

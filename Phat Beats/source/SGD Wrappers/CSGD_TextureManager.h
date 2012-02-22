@@ -199,7 +199,7 @@ public:
 		RECT* pSection = NULL, float fRotCenterX = 0.0f, float fRotCenterY = 0.0f, float fRotation = 0.0f, DWORD dwColor = 0xFFFFFFFF);
 
 	//////////////////////////////////////////////////
-	// Added by JC Ricks
+	// Added by JC Ricks(@CSPshala)
 	// 
 	// Draw Texture Function modified to use floats
 	//////////////////////////////////////////////////

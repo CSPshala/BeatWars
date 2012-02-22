@@ -5,6 +5,7 @@
 //					functionality for our game objects.
 ///////////////////////////////////////////////////////////////////////////
 #include "CBase.h"
+#include "CGame.h"
 #include "SGD Wrappers/CSGD_TextureManager.h"	//	Include where used
 
 CBase::CBase(void)
@@ -56,7 +57,10 @@ void CBase::Update(float fElapsedTime)
 
 void CBase::Render(void)
 {
-	CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
+	// Only draws the object if it's actually on screen
+	if(GetPosX() >= 0.0f && GetPosX() <= (float)CGame::GetInstance()->GetScreenWidth())
+		if(GetPosY() >= 0.0f && GetPosY() <= (float)CGame::GetInstance()->GetScreenHeight())
+			CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
 }
 
 RECT CBase::GetCollisionRect()

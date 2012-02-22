@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////
 // File Name	:	"CBeat.h"
 //
-// Author		:	JC Ricks
+// Author		:	JC Ricks(@CSPshala)
 //
 // Purpose		:	To contain beat / note info
 //////////////////////////////////////////////////////
@@ -15,6 +15,7 @@
 #include "Managers/IListener.h"
 #include "Managers/CEventSystem.h"
 #include "Managers/CMessageSystem.h"
+
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -37,25 +38,36 @@ public:
 	/********** Public Utility Functions ************/
 		void ResetBeat();
 		void Update(float fElapsedTime);
+		void Render();
+		RECT GetCollisionRect();
+		void	HandleEvent(CEvent* pEvent);
 
 	/********** Public Accessors ************/
-		float			GetTimeOfBeat() {return m_fTimeofBeat;}
+		int			GetTimeOfBeat() {return m_nTimeofBeat;}
 		int				GetDifficulty() {return m_nDifficulty;}
 		char			GetKeyToPress() {return m_cKeyToPress;}
+		string			GetEvent() {return m_szEvent;}
 		BeatDirection	GetDirection() {return m_eDirection;}
+		bool			GetHasCollided() {return m_bCollision;}
 	/********** Public Mutators  ************/	
-		void	SetTimeOfBeat(float fTime) {m_fTimeofBeat = fTime;}
+		void	SetTimeOfBeat(int fTime) {m_nTimeofBeat = fTime;}
 		void	SetDifficulty(int	nDifficulty) {m_nDifficulty = nDifficulty;}
 		void	SetKeyToPress(char	cKey) {m_cKeyToPress = cKey;}
+		void    SetEvent(string szEvent) {m_szEvent = szEvent;}
 		void	SetDirection(BeatDirection);
-		void	HandleEvent(CEvent* pEvent);
+		
 private:	
 
 	/********** Private Members ************/
-		float	m_fTimeofBeat;
+		int		m_nTimeofBeat;
 		int		m_nDifficulty;
 		char	m_cKeyToPress;
+		string  m_szEvent;
 		BeatDirection m_eDirection;
+
+		// For note collision event
+		bool	m_bCollision;
+		
 
 		// For saving original position for reset call
 		float m_fOriginalXPos;
