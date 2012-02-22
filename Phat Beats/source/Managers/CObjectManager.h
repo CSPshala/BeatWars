@@ -23,7 +23,7 @@ public:
 	// Public Utility Functions
 	void UpdateObjects(float fElapsedTime);
 	void RenderObjects();
-	void CheckCollisions();
+	void CheckCollisions(IBaseInterface* pBase);
 	void RemoveAllObjects();
 	void AddObject(IBaseInterface* pObject);
 	void RemoveObject(IBaseInterface* pObject);

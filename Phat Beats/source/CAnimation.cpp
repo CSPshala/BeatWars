@@ -11,12 +11,12 @@
 CAnimation::CAnimation()
 {
 	m_bIsLooping = true;
-	
+
 	//Asset IDs
 	m_nFrameID = -1;
 	m_nImageID = -1;
 
-	
+
 	m_bIsPlaying = false;
 	m_nCurrFrame = 0;
 	m_fTimeWaited = 0.0;
@@ -48,7 +48,7 @@ void CAnimation::Stop()
 }
 void CAnimation::Reset()						
 {
-	m_bIsPlaying = true;
+	m_bIsPlaying = false;
 	m_fTimeWaited = 0.0;
 	m_nCurrFrame = 0;
 
@@ -64,8 +64,9 @@ void CAnimation::Update(float fElapsedTime)
 		return;
 
 	m_fTimeWaited += fElapsedTime;
-
-	if (m_fTimeWaited > m_vecFrames[m_nCurrFrame]->GetDuration())
+	if( m_vecFrames.size() > 0)
+	{
+		if (m_fTimeWaited > m_vecFrames[m_nCurrFrame]->GetDuration())
 		{
 			m_fTimeWaited -= m_vecFrames[m_nCurrFrame]->GetDuration();
 			m_nCurrFrame++;
@@ -73,7 +74,10 @@ void CAnimation::Update(float fElapsedTime)
 			if( (unsigned)m_nCurrFrame >= m_vecFrames.size())
 			{
 				if( m_bIsLooping )
-					Reset();
+				{
+					m_fTimeWaited = 0.0;
+					m_nCurrFrame = 0;
+				}
 				else
 				{
 					Stop();
@@ -81,6 +85,8 @@ void CAnimation::Update(float fElapsedTime)
 				}
 			} 	
 		}	
+	}
+
 
 
 }
@@ -91,18 +97,25 @@ void CAnimation::Render()
 {
 	if( !m_bIsPlaying )
 		return;
+	if( m_vecFrames.size() > 0)
+	{
+		RECT DrawRect;
 
-	RECT DrawRect;
+		DrawRect.left = m_vecFrames[m_nCurrFrame]->GetDrawX();
+		DrawRect.top = m_vecFrames[m_nCurrFrame]->GetDrawY();
+		DrawRect.right = m_vecFrames[m_nCurrFrame]->GetDrawX() + m_vecFrames[m_nCurrFrame]->GetWidth();
+		DrawRect.bottom = m_vecFrames[m_nCurrFrame]->GetDrawY() + m_vecFrames[m_nCurrFrame]->GetHeight();
 
-	DrawRect.left = m_vecFrames[m_nCurrFrame]->GetDrawX();
-	DrawRect.top = m_vecFrames[m_nCurrFrame]->GetDrawY();
-	DrawRect.right = m_vecFrames[m_nCurrFrame]->GetDrawX() + m_vecFrames[m_nCurrFrame]->GetWidth();
-	DrawRect.bottom = m_vecFrames[m_nCurrFrame]->GetDrawY() + m_vecFrames[m_nCurrFrame]->GetHeight();
-
-	CSGD_TextureManager::GetInstance()->Draw(GetImageID(), 200 -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), 200 - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), 1.0,1.0, &DrawRect );
+		CSGD_TextureManager::GetInstance()->Draw(GetImageID(), 200 -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), 200 - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), 1.0,1.0, &DrawRect );
+	}
 }
 
 int CAnimation::GetImageID()
 {
 	return m_nImageID;
+}
+
+void CAnimation::SetIsPlaying(bool lPlay)
+{
+	m_bIsPlaying = lPlay;
 }

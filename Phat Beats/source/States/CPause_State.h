@@ -17,11 +17,12 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
-#include "..\SGD Wrappers\CSGD_XAudio2.h"
+
 
 // Forward Declarations
-class Bitmap_Font;
-
+class CBitmapFont;
+enum {PAUSEMENU_RESET, PAUSEMENU_EXIT, PAUSEMENU_MAINMENU, PAUSEMENU_LOAD, PAUSEMENU_SAVE,
+		 PAUSEMENU_OPTIONSTATE, NUM_PAUSEMENU_OPTIONS};
 class CPause_State : public IGameState
 {
 public:
@@ -46,7 +47,7 @@ private:
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
-	Bitmap_Font* m_bMenu_Font;
+	CBitmapFont* m_bMenu_Font;
 	int m_nMenuSelection;
 
 		// Asset IDs

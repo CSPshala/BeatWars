@@ -6,6 +6,7 @@
 
 #include "CLevelSelect_State.h"
 
+
 CLevelSelect_State::CLevelSelect_State()
 {
 	Bitmap_Font* m_bMenu_Font = NULL;
@@ -46,15 +47,10 @@ void CLevelSelect_State::Update(void)
 
 void CLevelSelect_State::Render(void)
 {
-	CSGD_Direct3D::GetInstance()->Clear(0,0,0);
-	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();	
-
+	RECT rLevel1={0,25,800,100};
+	CSGD_Direct3D::GetInstance()->DrawRect(rLevel1,255,0,0);
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->DeviceEnd();
-	CSGD_Direct3D::GetInstance()->Present();
 }
 
 void CLevelSelect_State::Exit(void)

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////
 // File Name	:	"CGame.cpp"
 //
-// Author Name	:	JC Ricks 
+// Author Name	:	JC Ricks(@CSPshala)
 //
 // Purpose		:	To Contain all game related code
 //////////////////////////////////////////////////////
@@ -16,11 +16,12 @@ CGame::CGame()
 {
 	m_pD3D  = NULL;
 	m_pDI	= NULL;
-	m_pTM	= NULL;
-	m_pXA	= NULL;	
+	m_pTM	= NULL;		
 	m_pBF	= NULL;
 	m_pES	= NULL;
 	m_pMS	= NULL;
+	m_pOM	= NULL;
+	m_pFM	= NULL;
 }
 
 CGame::~CGame()
@@ -42,16 +43,17 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_pD3D  = CSGD_Direct3D::GetInstance();
 	m_pDI	= CSGD_DirectInput::GetInstance();
 	m_pTM	= CSGD_TextureManager::GetInstance();
-	m_pXA	= CSGD_XAudio2::GetInstance();
 	m_pBF	= CBitmapFont::GetInstance();
 	m_pES	= CEventSystem::GetInstance();
 	m_pMS	= CMessageSystem::GetInstance();
+	m_pOM	= CObjectManager::GetInstance();
+	m_pFM	= CSGD_FModManager::GetInstance();
 
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
 	m_pTM->InitTextureManager(m_pD3D->GetDirect3DDevice(),m_pD3D->GetSprite());
 	m_pDI->InitDirectInput(hWnd,hInstance, DI_KEYBOARD| DI_MOUSE);
-	m_pXA->InitXAudio2();
+	m_pFM->InitFModManager(hWnd);
 
 	
 	ChangeState(CMenu_State::GetInstance());
@@ -61,7 +63,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_nWindowWidth = nScreenWidth;
 	m_nWindowHeight = nScreenHeight;
 
-	// Initilizing timer
+	// Initializing timer
 	cTimer.Reset();
 
 	srand((unsigned int)time(0));
@@ -72,10 +74,16 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	}
 	else
 	{
-		// set the font to starwar
+		// set the font to star war
 		m_pBF->SetFont("starwarfont.fnt");	
 		m_pBF->SetScale(1.0f);
 	}
+
+	//setting volume val
+	m_nFXVolume = 1.0f;
+	m_nMusicVolume = 0.50f;
+	m_nMusicPan = 0.0f;
+	
 	
 }
 
@@ -89,7 +97,6 @@ bool CGame::Main()
 	Update();
 	// Render
 	Render();
-
 	return true;
 }
 
@@ -97,8 +104,8 @@ bool CGame::Input()
 {
 	m_pDI->ReadDevices(); // called ONCE a frame
 
-	// Fullscreen / Window Shift  (KeyDown used on alt to make it
-	// so you don't hafta hit both keys exactly at the same time
+	// Full screen / Window Shift  (KeyDown used on alt to make it
+	// so you don't haft a hit both keys exactly at the same time
 	if(m_pDI->KeyPressed(DIK_RETURN) && (m_pDI->KeyDown(DIK_RALT) || m_pDI->KeyDown(DIK_LALT)))
 	{
 		m_pDI->ReadDevices();
@@ -127,8 +134,10 @@ void CGame::Update()
 
 	m_pCurState->Update();	// must be called or you will mess stuff up
 	m_pES->ProcessEvents();
-	m_pMS->ProcessMessages();
+	m_pMS->ProcessMessages();	
 
+	// Updating FMOD
+	m_pFM->Update();
 }
 
 void CGame::Render()
@@ -138,7 +147,8 @@ void CGame::Render()
 	m_pD3D->SpriteBegin();
 
 	m_pCurState->Render();
-
+	//CObjectManager::GetInstance()->RenderObjects();
+	
 	m_pD3D->SpriteEnd();
 	m_pD3D->DeviceEnd();
 	m_pD3D->Present();
@@ -147,6 +157,11 @@ void CGame::Render()
 
 void CGame::Shutdown()
 {
+	if (m_pOM)
+	{
+		m_pOM->RemoveAllObjects();
+		m_pOM->DeleteInstance();
+	}
 	if(m_pMS)
 	{
 		m_pMS->ShutdownMessageSystem();
@@ -154,10 +169,10 @@ void CGame::Shutdown()
 	}
 	m_pES->ShutdownEventSystem();
 	// Shutdown in the opposite order
-	if(m_pXA)
+	if(m_pFM)
 	{
-		m_pXA->ShutdownXAudio2();
-		m_pXA = NULL;
+		m_pFM->ShutdownFModManager();
+		m_pFM = NULL;
 	}
 
 	if(m_pDI)

@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////
 // File Name	:	"CGame.h"
 //
-// Author Name	:	JC Ricks
+// Author Name	:	JC Ricks(@CSPshala)
 //
 // Purpose		:	To Contain all game related code
 //////////////////////////////////////////////////////
@@ -12,7 +12,7 @@
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
-#include "SGD Wrappers\CSGD_XAudio2.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
 // Gamestates
 #include "States\IGameState.h"
 #include "States\CMenu_State.h"
@@ -21,7 +21,7 @@
 // Messages and Event system by Dave Brown
 #include "Managers/CEventSystem.h"
 #include "Managers/CMessageSystem.h"
-
+#include "Managers/CObjectManager.h"
 #include <string>
 using std::string;
 class CBitmapFont;
@@ -32,11 +32,12 @@ private:
 	// Singleton pointers:
 	CSGD_Direct3D*			m_pD3D;
 	CSGD_DirectInput*		m_pDI;
-	CSGD_TextureManager*	m_pTM;
-	CSGD_XAudio2*			m_pXA;
+	CSGD_TextureManager*	m_pTM;	
 	CBitmapFont*			m_pBF;
 	CEventSystem*			m_pES;
 	CMessageSystem*			m_pMS;
+	CObjectManager*			m_pOM;
+	CSGD_FModManager*		m_pFM;
 
 	// Game state Pointer
 	IGameState* m_pCurState;
@@ -44,6 +45,12 @@ private:
 	// Asset IDs:
 	//int						m_nImageID;
 	//int						m_nSoundID;
+
+
+	// Volume 
+	float m_nFXVolume;
+	float m_nMusicVolume;
+	float m_nMusicPan;
 
 	// Proper Singleton
 	// Trilogy of Evil:
@@ -87,12 +94,16 @@ public:
 	int GetScreenHeight(void) {return m_nWindowHeight;}
 	int GetScreenWidth(void) {return m_nWindowWidth;}
 
-	// Acessors
+	// Accessors
 	Timer& GetTimer() {return cTimer;}
-
-	// Mutators
+	float GetMusicVolume() const		{ return m_nMusicVolume; }
+	float GetSFXVolume() const			{ return m_nFXVolume; }
+	float GetPanVolume() const			{ return m_nMusicPan; }
 	
-
+	// Mutators
+	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
+	void SetSFXVolume(float val)		{ m_nFXVolume = val; }
+	void SetPanVolume(float val)		{ m_nMusicPan = val; }
 };
 
 

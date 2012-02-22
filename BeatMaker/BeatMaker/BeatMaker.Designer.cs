@@ -46,11 +46,28 @@
             this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackPanel = new System.Windows.Forms.Panel();
+            this.SelectedBeatBox = new System.Windows.Forms.GroupBox();
+            this.EditEventButton = new System.Windows.Forms.Button();
+            this.BeatEventValueLabel = new System.Windows.Forms.Label();
+            this.BeatEventLabel = new System.Windows.Forms.Label();
+            this.BeatTimeValueUpDown = new System.Windows.Forms.NumericUpDown();
+            this.BeatDirectionValueLabel = new System.Windows.Forms.Label();
+            this.BeatDirectionLabel = new System.Windows.Forms.Label();
+            this.BeatKeyValueLabel = new System.Windows.Forms.Label();
+            this.BeatKeyLabel = new System.Windows.Forms.Label();
+            this.BeatPictureBox = new System.Windows.Forms.PictureBox();
+            this.BeatDifficultyValueLabel = new System.Windows.Forms.Label();
+            this.BeatDifficultyLabel = new System.Windows.Forms.Label();
+            this.BeatTimeLabel = new System.Windows.Forms.Label();
             this.ModeBox = new System.Windows.Forms.GroupBox();
             this.BothRadio = new System.Windows.Forms.RadioButton();
-            this.IconsRadio = new System.Windows.Forms.RadioButton();
+            this.NotesRadio = new System.Windows.Forms.RadioButton();
             this.ArrowsRadio = new System.Windows.Forms.RadioButton();
             this.IconGroup = new System.Windows.Forms.GroupBox();
+            this.DeleteSelectionButton = new System.Windows.Forms.Button();
+            this.ClearSelectionButton = new System.Windows.Forms.Button();
+            this.NotePasteButton = new System.Windows.Forms.Button();
+            this.NoteCopyButton = new System.Windows.Forms.Button();
             this.ArrowLabel = new System.Windows.Forms.Label();
             this.UpLeftPictureBox = new System.Windows.Forms.PictureBox();
             this.DownLeftPictureBox = new System.Windows.Forms.PictureBox();
@@ -90,11 +107,20 @@
             this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
+            this.DifficultyBox = new System.Windows.Forms.GroupBox();
+            this.HardButton = new System.Windows.Forms.Button();
+            this.NormalButton = new System.Windows.Forms.Button();
+            this.EasyButton = new System.Windows.Forms.Button();
+            this.DifficultyLabel = new System.Windows.Forms.Label();
+            this.DifficultyValueLabel = new System.Windows.Forms.Label();
             this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.SelectedBeatBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatTimeValueUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatPictureBox)).BeginInit();
             this.ModeBox.SuspendLayout();
             this.IconGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpLeftPictureBox)).BeginInit();
@@ -112,6 +138,7 @@
             this.toolStrip1.SuspendLayout();
             this.PlayControlPanel.SuspendLayout();
             this.InfoGroup.SuspendLayout();
+            this.DifficultyBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // BeatMakerMenuStrip
@@ -226,7 +253,7 @@
             // 
             // MainStatusStrip
             // 
-            this.MainStatusStrip.Location = new System.Drawing.Point(0, 569);
+            this.MainStatusStrip.Location = new System.Drawing.Point(0, 586);
             this.MainStatusStrip.Name = "MainStatusStrip";
             this.MainStatusStrip.Size = new System.Drawing.Size(1042, 22);
             this.MainStatusStrip.TabIndex = 1;
@@ -247,33 +274,175 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.DifficultyBox);
+            this.splitContainer1.Panel2.Controls.Add(this.SelectedBeatBox);
             this.splitContainer1.Panel2.Controls.Add(this.ModeBox);
             this.splitContainer1.Panel2.Controls.Add(this.IconGroup);
             this.splitContainer1.Panel2.Controls.Add(this.PlayControlPanel);
             this.splitContainer1.Panel2.Controls.Add(this.InfoGroup);
-            this.splitContainer1.Size = new System.Drawing.Size(1042, 545);
-            this.splitContainer1.SplitterDistance = 279;
+            this.splitContainer1.Size = new System.Drawing.Size(1042, 562);
+            this.splitContainer1.SplitterDistance = 287;
             this.splitContainer1.TabIndex = 2;
             // 
             // TrackPanel
             // 
+            this.TrackPanel.AutoScroll = true;
             this.TrackPanel.BackColor = System.Drawing.Color.DimGray;
             this.TrackPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TrackPanel.Location = new System.Drawing.Point(3, 3);
             this.TrackPanel.Name = "TrackPanel";
             this.TrackPanel.Size = new System.Drawing.Size(1033, 269);
             this.TrackPanel.TabIndex = 0;
+            this.TrackPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseDown);
             this.TrackPanel.MouseEnter += new System.EventHandler(this.TrackPanel_MouseEnter);
             this.TrackPanel.MouseLeave += new System.EventHandler(this.TrackPanel_MouseLeave);
+            this.TrackPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseMove);
+            this.TrackPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseUp);
+            // 
+            // SelectedBeatBox
+            // 
+            this.SelectedBeatBox.Controls.Add(this.EditEventButton);
+            this.SelectedBeatBox.Controls.Add(this.BeatEventValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatEventLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatTimeValueUpDown);
+            this.SelectedBeatBox.Controls.Add(this.BeatDirectionValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatDirectionLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatKeyValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatKeyLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatPictureBox);
+            this.SelectedBeatBox.Controls.Add(this.BeatDifficultyValueLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatDifficultyLabel);
+            this.SelectedBeatBox.Controls.Add(this.BeatTimeLabel);
+            this.SelectedBeatBox.Location = new System.Drawing.Point(6, 149);
+            this.SelectedBeatBox.Name = "SelectedBeatBox";
+            this.SelectedBeatBox.Size = new System.Drawing.Size(239, 115);
+            this.SelectedBeatBox.TabIndex = 8;
+            this.SelectedBeatBox.TabStop = false;
+            this.SelectedBeatBox.Text = "Single Beat Info";
+            // 
+            // EditEventButton
+            // 
+            this.EditEventButton.Location = new System.Drawing.Point(175, 72);
+            this.EditEventButton.Name = "EditEventButton";
+            this.EditEventButton.Size = new System.Drawing.Size(58, 37);
+            this.EditEventButton.TabIndex = 12;
+            this.EditEventButton.Text = "Edit Event";
+            this.EditEventButton.UseVisualStyleBackColor = true;
+            this.EditEventButton.Click += new System.EventHandler(this.EditEventButton_Click);
+            // 
+            // BeatEventValueLabel
+            // 
+            this.BeatEventValueLabel.AutoSize = true;
+            this.BeatEventValueLabel.Location = new System.Drawing.Point(76, 96);
+            this.BeatEventValueLabel.Name = "BeatEventValueLabel";
+            this.BeatEventValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatEventValueLabel.TabIndex = 11;
+            this.BeatEventValueLabel.Text = "none";
+            // 
+            // BeatEventLabel
+            // 
+            this.BeatEventLabel.AutoSize = true;
+            this.BeatEventLabel.Location = new System.Drawing.Point(11, 96);
+            this.BeatEventLabel.Name = "BeatEventLabel";
+            this.BeatEventLabel.Size = new System.Drawing.Size(41, 13);
+            this.BeatEventLabel.TabIndex = 10;
+            this.BeatEventLabel.Text = "Event: ";
+            // 
+            // BeatTimeValueUpDown
+            // 
+            this.BeatTimeValueUpDown.Location = new System.Drawing.Point(98, 20);
+            this.BeatTimeValueUpDown.Maximum = new decimal(new int[] {
+            200000000,
+            0,
+            0,
+            0});
+            this.BeatTimeValueUpDown.Name = "BeatTimeValueUpDown";
+            this.BeatTimeValueUpDown.Size = new System.Drawing.Size(89, 20);
+            this.BeatTimeValueUpDown.TabIndex = 9;
+            this.BeatTimeValueUpDown.ValueChanged += new System.EventHandler(this.BeatTimeValueUpDown_ValueChanged);
+            // 
+            // BeatDirectionValueLabel
+            // 
+            this.BeatDirectionValueLabel.AutoSize = true;
+            this.BeatDirectionValueLabel.Location = new System.Drawing.Point(76, 76);
+            this.BeatDirectionValueLabel.Name = "BeatDirectionValueLabel";
+            this.BeatDirectionValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatDirectionValueLabel.TabIndex = 8;
+            this.BeatDirectionValueLabel.Text = "none";
+            // 
+            // BeatDirectionLabel
+            // 
+            this.BeatDirectionLabel.AutoSize = true;
+            this.BeatDirectionLabel.Location = new System.Drawing.Point(9, 76);
+            this.BeatDirectionLabel.Name = "BeatDirectionLabel";
+            this.BeatDirectionLabel.Size = new System.Drawing.Size(52, 13);
+            this.BeatDirectionLabel.TabIndex = 7;
+            this.BeatDirectionLabel.Text = "Direction:";
+            // 
+            // BeatKeyValueLabel
+            // 
+            this.BeatKeyValueLabel.AutoSize = true;
+            this.BeatKeyValueLabel.Location = new System.Drawing.Point(76, 60);
+            this.BeatKeyValueLabel.Name = "BeatKeyValueLabel";
+            this.BeatKeyValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatKeyValueLabel.TabIndex = 6;
+            this.BeatKeyValueLabel.Text = "none";
+            // 
+            // BeatKeyLabel
+            // 
+            this.BeatKeyLabel.AutoSize = true;
+            this.BeatKeyLabel.Location = new System.Drawing.Point(8, 60);
+            this.BeatKeyLabel.Name = "BeatKeyLabel";
+            this.BeatKeyLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatKeyLabel.TabIndex = 5;
+            this.BeatKeyLabel.Text = "Key: ";
+            // 
+            // BeatPictureBox
+            // 
+            this.BeatPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BeatPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.BeatPictureBox.Location = new System.Drawing.Point(193, 14);
+            this.BeatPictureBox.Name = "BeatPictureBox";
+            this.BeatPictureBox.Size = new System.Drawing.Size(40, 40);
+            this.BeatPictureBox.TabIndex = 4;
+            this.BeatPictureBox.TabStop = false;
+            // 
+            // BeatDifficultyValueLabel
+            // 
+            this.BeatDifficultyValueLabel.AutoSize = true;
+            this.BeatDifficultyValueLabel.Location = new System.Drawing.Point(76, 43);
+            this.BeatDifficultyValueLabel.Name = "BeatDifficultyValueLabel";
+            this.BeatDifficultyValueLabel.Size = new System.Drawing.Size(31, 13);
+            this.BeatDifficultyValueLabel.TabIndex = 3;
+            this.BeatDifficultyValueLabel.Text = "none";
+            // 
+            // BeatDifficultyLabel
+            // 
+            this.BeatDifficultyLabel.AutoSize = true;
+            this.BeatDifficultyLabel.Location = new System.Drawing.Point(9, 43);
+            this.BeatDifficultyLabel.Name = "BeatDifficultyLabel";
+            this.BeatDifficultyLabel.Size = new System.Drawing.Size(53, 13);
+            this.BeatDifficultyLabel.TabIndex = 2;
+            this.BeatDifficultyLabel.Text = "Difficulty: ";
+            // 
+            // BeatTimeLabel
+            // 
+            this.BeatTimeLabel.AutoSize = true;
+            this.BeatTimeLabel.Location = new System.Drawing.Point(9, 23);
+            this.BeatTimeLabel.Name = "BeatTimeLabel";
+            this.BeatTimeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.BeatTimeLabel.Size = new System.Drawing.Size(83, 13);
+            this.BeatTimeLabel.TabIndex = 0;
+            this.BeatTimeLabel.Text = "Beat Time (ms): ";
             // 
             // ModeBox
             // 
             this.ModeBox.Controls.Add(this.BothRadio);
-            this.ModeBox.Controls.Add(this.IconsRadio);
+            this.ModeBox.Controls.Add(this.NotesRadio);
             this.ModeBox.Controls.Add(this.ArrowsRadio);
-            this.ModeBox.Location = new System.Drawing.Point(10, 149);
+            this.ModeBox.Location = new System.Drawing.Point(269, 145);
             this.ModeBox.Name = "ModeBox";
-            this.ModeBox.Size = new System.Drawing.Size(188, 105);
+            this.ModeBox.Size = new System.Drawing.Size(133, 119);
             this.ModeBox.TabIndex = 7;
             this.ModeBox.TabStop = false;
             this.ModeBox.Text = "Beat Placement Modes";
@@ -282,6 +451,7 @@
             // 
             this.BothRadio.Appearance = System.Windows.Forms.Appearance.Button;
             this.BothRadio.AutoSize = true;
+            this.BothRadio.Checked = true;
             this.BothRadio.Location = new System.Drawing.Point(6, 76);
             this.BothRadio.Name = "BothRadio";
             this.BothRadio.Size = new System.Drawing.Size(111, 23);
@@ -290,17 +460,16 @@
             this.BothRadio.Text = "Both (Simultaneous)";
             this.BothRadio.UseVisualStyleBackColor = true;
             // 
-            // IconsRadio
+            // NotesRadio
             // 
-            this.IconsRadio.Appearance = System.Windows.Forms.Appearance.Button;
-            this.IconsRadio.AutoSize = true;
-            this.IconsRadio.Location = new System.Drawing.Point(6, 48);
-            this.IconsRadio.Name = "IconsRadio";
-            this.IconsRadio.Size = new System.Drawing.Size(65, 23);
-            this.IconsRadio.TabIndex = 1;
-            this.IconsRadio.TabStop = true;
-            this.IconsRadio.Text = "Just Icons";
-            this.IconsRadio.UseVisualStyleBackColor = true;
+            this.NotesRadio.Appearance = System.Windows.Forms.Appearance.Button;
+            this.NotesRadio.AutoSize = true;
+            this.NotesRadio.Location = new System.Drawing.Point(6, 48);
+            this.NotesRadio.Name = "NotesRadio";
+            this.NotesRadio.Size = new System.Drawing.Size(67, 23);
+            this.NotesRadio.TabIndex = 1;
+            this.NotesRadio.Text = "Just Notes";
+            this.NotesRadio.UseVisualStyleBackColor = true;
             // 
             // ArrowsRadio
             // 
@@ -310,12 +479,15 @@
             this.ArrowsRadio.Name = "ArrowsRadio";
             this.ArrowsRadio.Size = new System.Drawing.Size(71, 23);
             this.ArrowsRadio.TabIndex = 0;
-            this.ArrowsRadio.TabStop = true;
             this.ArrowsRadio.Text = "Just Arrows";
             this.ArrowsRadio.UseVisualStyleBackColor = true;
             // 
             // IconGroup
             // 
+            this.IconGroup.Controls.Add(this.DeleteSelectionButton);
+            this.IconGroup.Controls.Add(this.ClearSelectionButton);
+            this.IconGroup.Controls.Add(this.NotePasteButton);
+            this.IconGroup.Controls.Add(this.NoteCopyButton);
             this.IconGroup.Controls.Add(this.ArrowLabel);
             this.IconGroup.Controls.Add(this.UpLeftPictureBox);
             this.IconGroup.Controls.Add(this.DownLeftPictureBox);
@@ -336,10 +508,50 @@
             this.IconGroup.Controls.Add(this.toolStrip1);
             this.IconGroup.Location = new System.Drawing.Point(585, 8);
             this.IconGroup.Name = "IconGroup";
-            this.IconGroup.Size = new System.Drawing.Size(435, 242);
+            this.IconGroup.Size = new System.Drawing.Size(435, 256);
             this.IconGroup.TabIndex = 1;
             this.IconGroup.TabStop = false;
             this.IconGroup.Text = "Icon Selection";
+            // 
+            // DeleteSelectionButton
+            // 
+            this.DeleteSelectionButton.Location = new System.Drawing.Point(235, 227);
+            this.DeleteSelectionButton.Name = "DeleteSelectionButton";
+            this.DeleteSelectionButton.Size = new System.Drawing.Size(95, 23);
+            this.DeleteSelectionButton.TabIndex = 21;
+            this.DeleteSelectionButton.Text = "Delete Selection";
+            this.DeleteSelectionButton.UseVisualStyleBackColor = true;
+            this.DeleteSelectionButton.Click += new System.EventHandler(this.DeleteSelectionButton_Click);
+            // 
+            // ClearSelectionButton
+            // 
+            this.ClearSelectionButton.Location = new System.Drawing.Point(341, 227);
+            this.ClearSelectionButton.Name = "ClearSelectionButton";
+            this.ClearSelectionButton.Size = new System.Drawing.Size(88, 23);
+            this.ClearSelectionButton.TabIndex = 20;
+            this.ClearSelectionButton.Text = "Clear Selection";
+            this.ClearSelectionButton.UseVisualStyleBackColor = true;
+            this.ClearSelectionButton.Click += new System.EventHandler(this.ClearSelectionButton_Click);
+            // 
+            // NotePasteButton
+            // 
+            this.NotePasteButton.Location = new System.Drawing.Point(114, 227);
+            this.NotePasteButton.Name = "NotePasteButton";
+            this.NotePasteButton.Size = new System.Drawing.Size(95, 23);
+            this.NotePasteButton.TabIndex = 19;
+            this.NotePasteButton.Text = "Paste Note(s)";
+            this.NotePasteButton.UseVisualStyleBackColor = true;
+            this.NotePasteButton.Click += new System.EventHandler(this.NotePasteButton_Click);
+            // 
+            // NoteCopyButton
+            // 
+            this.NoteCopyButton.Location = new System.Drawing.Point(13, 227);
+            this.NoteCopyButton.Name = "NoteCopyButton";
+            this.NoteCopyButton.Size = new System.Drawing.Size(95, 23);
+            this.NoteCopyButton.TabIndex = 18;
+            this.NoteCopyButton.Text = "Copy Note(s)";
+            this.NoteCopyButton.UseVisualStyleBackColor = true;
+            this.NoteCopyButton.Click += new System.EventHandler(this.NoteCopyButton_Click);
             // 
             // ArrowLabel
             // 
@@ -361,6 +573,7 @@
             this.UpLeftPictureBox.Size = new System.Drawing.Size(40, 40);
             this.UpLeftPictureBox.TabIndex = 16;
             this.UpLeftPictureBox.TabStop = false;
+            this.UpLeftPictureBox.Click += new System.EventHandler(this.UpLeftPictureBox_Click);
             // 
             // DownLeftPictureBox
             // 
@@ -373,6 +586,7 @@
             this.DownLeftPictureBox.Size = new System.Drawing.Size(40, 40);
             this.DownLeftPictureBox.TabIndex = 15;
             this.DownLeftPictureBox.TabStop = false;
+            this.DownLeftPictureBox.Click += new System.EventHandler(this.DownLeftPictureBox_Click);
             // 
             // DownRightPictureBox
             // 
@@ -385,6 +599,7 @@
             this.DownRightPictureBox.Size = new System.Drawing.Size(40, 40);
             this.DownRightPictureBox.TabIndex = 14;
             this.DownRightPictureBox.TabStop = false;
+            this.DownRightPictureBox.Click += new System.EventHandler(this.DownRightPictureBox_Click);
             // 
             // UpRightPictureBox
             // 
@@ -397,6 +612,7 @@
             this.UpRightPictureBox.Size = new System.Drawing.Size(40, 40);
             this.UpRightPictureBox.TabIndex = 13;
             this.UpRightPictureBox.TabStop = false;
+            this.UpRightPictureBox.Click += new System.EventHandler(this.UpRightPictureBox_Click);
             // 
             // RightPictureBox
             // 
@@ -409,6 +625,7 @@
             this.RightPictureBox.Size = new System.Drawing.Size(40, 40);
             this.RightPictureBox.TabIndex = 12;
             this.RightPictureBox.TabStop = false;
+            this.RightPictureBox.Click += new System.EventHandler(this.RightPictureBox_Click);
             // 
             // DownPictureBox
             // 
@@ -421,6 +638,7 @@
             this.DownPictureBox.Size = new System.Drawing.Size(40, 40);
             this.DownPictureBox.TabIndex = 11;
             this.DownPictureBox.TabStop = false;
+            this.DownPictureBox.Click += new System.EventHandler(this.DownPictureBox_Click);
             // 
             // LeftPictureBox
             // 
@@ -433,6 +651,7 @@
             this.LeftPictureBox.Size = new System.Drawing.Size(40, 40);
             this.LeftPictureBox.TabIndex = 10;
             this.LeftPictureBox.TabStop = false;
+            this.LeftPictureBox.Click += new System.EventHandler(this.LeftPictureBox_Click);
             // 
             // UpPictureBox
             // 
@@ -445,6 +664,7 @@
             this.UpPictureBox.Size = new System.Drawing.Size(40, 40);
             this.UpPictureBox.TabIndex = 9;
             this.UpPictureBox.TabStop = false;
+            this.UpPictureBox.Click += new System.EventHandler(this.UpPictureBox_Click);
             // 
             // DKeyLabel
             // 
@@ -466,6 +686,7 @@
             this.DKeyPictureBox.Size = new System.Drawing.Size(40, 40);
             this.DKeyPictureBox.TabIndex = 7;
             this.DKeyPictureBox.TabStop = false;
+            this.DKeyPictureBox.Click += new System.EventHandler(this.DKeyPictureBox_Click);
             // 
             // SKeyLabel
             // 
@@ -487,6 +708,7 @@
             this.SKeyPictureBox.Size = new System.Drawing.Size(40, 40);
             this.SKeyPictureBox.TabIndex = 5;
             this.SKeyPictureBox.TabStop = false;
+            this.SKeyPictureBox.Click += new System.EventHandler(this.SKeyPictureBox_Click);
             // 
             // AKeyLabel
             // 
@@ -508,6 +730,7 @@
             this.AKeyPictureBox.Size = new System.Drawing.Size(40, 40);
             this.AKeyPictureBox.TabIndex = 3;
             this.AKeyPictureBox.TabStop = false;
+            this.AKeyPictureBox.Click += new System.EventHandler(this.AKeyPictureBox_Click);
             // 
             // WKeyLabel
             // 
@@ -529,6 +752,7 @@
             this.WKeyPictureBox.Size = new System.Drawing.Size(40, 40);
             this.WKeyPictureBox.TabIndex = 1;
             this.WKeyPictureBox.TabStop = false;
+            this.WKeyPictureBox.Click += new System.EventHandler(this.WKeyPictureBox_Click);
             // 
             // toolStrip1
             // 
@@ -590,7 +814,7 @@
             this.PlayControlPanel.Controls.Add(this.StopButton);
             this.PlayControlPanel.Controls.Add(this.PauseButton);
             this.PlayControlPanel.Controls.Add(this.FastForwardButton);
-            this.PlayControlPanel.Location = new System.Drawing.Point(289, 56);
+            this.PlayControlPanel.Location = new System.Drawing.Point(289, 24);
             this.PlayControlPanel.Name = "PlayControlPanel";
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
@@ -658,6 +882,8 @@
             // 
             // InfoGroup
             // 
+            this.InfoGroup.Controls.Add(this.DifficultyValueLabel);
+            this.InfoGroup.Controls.Add(this.DifficultyLabel);
             this.InfoGroup.Controls.Add(this.BPMCurrentLabel);
             this.InfoGroup.Controls.Add(this.BPMLabel);
             this.InfoGroup.Controls.Add(this.BeatCountLabel);
@@ -677,7 +903,7 @@
             // 
             this.BPMCurrentLabel.AutoSize = true;
             this.BPMCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BPMCurrentLabel.Location = new System.Drawing.Point(81, 111);
+            this.BPMCurrentLabel.Location = new System.Drawing.Point(81, 114);
             this.BPMCurrentLabel.Name = "BPMCurrentLabel";
             this.BPMCurrentLabel.Size = new System.Drawing.Size(13, 13);
             this.BPMCurrentLabel.TabIndex = 8;
@@ -686,7 +912,7 @@
             // BPMLabel
             // 
             this.BPMLabel.AutoSize = true;
-            this.BPMLabel.Location = new System.Drawing.Point(42, 111);
+            this.BPMLabel.Location = new System.Drawing.Point(42, 114);
             this.BPMLabel.Name = "BPMLabel";
             this.BPMLabel.Size = new System.Drawing.Size(33, 13);
             this.BPMLabel.TabIndex = 6;
@@ -696,7 +922,7 @@
             // 
             this.BeatCountLabel.AutoSize = true;
             this.BeatCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BeatCountLabel.Location = new System.Drawing.Point(81, 94);
+            this.BeatCountLabel.Location = new System.Drawing.Point(81, 97);
             this.BeatCountLabel.Name = "BeatCountLabel";
             this.BeatCountLabel.Size = new System.Drawing.Size(13, 13);
             this.BeatCountLabel.TabIndex = 5;
@@ -705,7 +931,7 @@
             // PlacedBeatsLabel
             // 
             this.PlacedBeatsLabel.AutoSize = true;
-            this.PlacedBeatsLabel.Location = new System.Drawing.Point(4, 94);
+            this.PlacedBeatsLabel.Location = new System.Drawing.Point(4, 97);
             this.PlacedBeatsLabel.Name = "PlacedBeatsLabel";
             this.PlacedBeatsLabel.Size = new System.Drawing.Size(73, 13);
             this.PlacedBeatsLabel.TabIndex = 4;
@@ -715,7 +941,7 @@
             // 
             this.TimeLengthLabel.AutoSize = true;
             this.TimeLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TimeLengthLabel.Location = new System.Drawing.Point(81, 64);
+            this.TimeLengthLabel.Location = new System.Drawing.Point(81, 62);
             this.TimeLengthLabel.Name = "TimeLengthLabel";
             this.TimeLengthLabel.Size = new System.Drawing.Size(24, 13);
             this.TimeLengthLabel.TabIndex = 3;
@@ -745,17 +971,77 @@
             // LengthLabel
             // 
             this.LengthLabel.AutoSize = true;
-            this.LengthLabel.Location = new System.Drawing.Point(5, 63);
+            this.LengthLabel.Location = new System.Drawing.Point(4, 62);
             this.LengthLabel.Name = "LengthLabel";
             this.LengthLabel.Size = new System.Drawing.Size(71, 13);
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
             // 
+            // DifficultyBox
+            // 
+            this.DifficultyBox.Controls.Add(this.EasyButton);
+            this.DifficultyBox.Controls.Add(this.NormalButton);
+            this.DifficultyBox.Controls.Add(this.HardButton);
+            this.DifficultyBox.Location = new System.Drawing.Point(432, 145);
+            this.DifficultyBox.Name = "DifficultyBox";
+            this.DifficultyBox.Size = new System.Drawing.Size(138, 119);
+            this.DifficultyBox.TabIndex = 9;
+            this.DifficultyBox.TabStop = false;
+            this.DifficultyBox.Text = "Difficulty";
+            // 
+            // HardButton
+            // 
+            this.HardButton.Location = new System.Drawing.Point(7, 18);
+            this.HardButton.Name = "HardButton";
+            this.HardButton.Size = new System.Drawing.Size(75, 23);
+            this.HardButton.TabIndex = 0;
+            this.HardButton.Text = "Hard";
+            this.HardButton.UseVisualStyleBackColor = true;
+            this.HardButton.Click += new System.EventHandler(this.HardButton_Click);
+            // 
+            // NormalButton
+            // 
+            this.NormalButton.Location = new System.Drawing.Point(7, 46);
+            this.NormalButton.Name = "NormalButton";
+            this.NormalButton.Size = new System.Drawing.Size(75, 23);
+            this.NormalButton.TabIndex = 1;
+            this.NormalButton.Text = "Normal";
+            this.NormalButton.UseVisualStyleBackColor = true;
+            this.NormalButton.Click += new System.EventHandler(this.NormalButton_Click);
+            // 
+            // EasyButton
+            // 
+            this.EasyButton.Location = new System.Drawing.Point(7, 75);
+            this.EasyButton.Name = "EasyButton";
+            this.EasyButton.Size = new System.Drawing.Size(75, 23);
+            this.EasyButton.TabIndex = 2;
+            this.EasyButton.Text = "Easy";
+            this.EasyButton.UseVisualStyleBackColor = true;
+            this.EasyButton.Click += new System.EventHandler(this.EasyButton_Click);
+            // 
+            // DifficultyLabel
+            // 
+            this.DifficultyLabel.AutoSize = true;
+            this.DifficultyLabel.Location = new System.Drawing.Point(4, 78);
+            this.DifficultyLabel.Name = "DifficultyLabel";
+            this.DifficultyLabel.Size = new System.Drawing.Size(53, 13);
+            this.DifficultyLabel.TabIndex = 9;
+            this.DifficultyLabel.Text = "Difficulty: ";
+            // 
+            // DifficultyValueLabel
+            // 
+            this.DifficultyValueLabel.AutoSize = true;
+            this.DifficultyValueLabel.Location = new System.Drawing.Point(81, 78);
+            this.DifficultyValueLabel.Name = "DifficultyValueLabel";
+            this.DifficultyValueLabel.Size = new System.Drawing.Size(29, 13);
+            this.DifficultyValueLabel.TabIndex = 10;
+            this.DifficultyValueLabel.Text = "easy";
+            // 
             // BeatMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1042, 591);
+            this.ClientSize = new System.Drawing.Size(1042, 608);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.MainStatusStrip);
             this.Controls.Add(this.BeatMakerMenuStrip);
@@ -772,6 +1058,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.SelectedBeatBox.ResumeLayout(false);
+            this.SelectedBeatBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatTimeValueUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BeatPictureBox)).EndInit();
             this.ModeBox.ResumeLayout(false);
             this.ModeBox.PerformLayout();
             this.IconGroup.ResumeLayout(false);
@@ -794,6 +1084,7 @@
             this.PlayControlPanel.PerformLayout();
             this.InfoGroup.ResumeLayout(false);
             this.InfoGroup.PerformLayout();
+            this.DifficultyBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -852,7 +1143,7 @@
         private System.Windows.Forms.ToolStripMenuItem musicVolumeToolStripMenuItem;
         private System.Windows.Forms.GroupBox ModeBox;
         private System.Windows.Forms.RadioButton BothRadio;
-        private System.Windows.Forms.RadioButton IconsRadio;
+        private System.Windows.Forms.RadioButton NotesRadio;
         private System.Windows.Forms.RadioButton ArrowsRadio;
         private System.Windows.Forms.Label ArrowLabel;
         private System.Windows.Forms.Label BPMCurrentLabel;
@@ -862,6 +1153,29 @@
         private System.Windows.Forms.ToolStripMenuItem beatListxmlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem musicTrackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setSongTitleToolStripMenuItem;
+        private System.Windows.Forms.GroupBox SelectedBeatBox;
+        private System.Windows.Forms.PictureBox BeatPictureBox;
+        private System.Windows.Forms.Label BeatDifficultyValueLabel;
+        private System.Windows.Forms.Label BeatDifficultyLabel;
+        private System.Windows.Forms.Label BeatTimeLabel;
+        private System.Windows.Forms.Label BeatDirectionValueLabel;
+        private System.Windows.Forms.Label BeatDirectionLabel;
+        private System.Windows.Forms.Label BeatKeyValueLabel;
+        private System.Windows.Forms.Label BeatKeyLabel;
+        private System.Windows.Forms.Button NotePasteButton;
+        private System.Windows.Forms.Button NoteCopyButton;
+        private System.Windows.Forms.Button ClearSelectionButton;
+        private System.Windows.Forms.NumericUpDown BeatTimeValueUpDown;
+        private System.Windows.Forms.Label BeatEventLabel;
+        private System.Windows.Forms.Button EditEventButton;
+        private System.Windows.Forms.Label BeatEventValueLabel;
+        private System.Windows.Forms.Button DeleteSelectionButton;
+        private System.Windows.Forms.GroupBox DifficultyBox;
+        private System.Windows.Forms.Button EasyButton;
+        private System.Windows.Forms.Button NormalButton;
+        private System.Windows.Forms.Button HardButton;
+        private System.Windows.Forms.Label DifficultyValueLabel;
+        private System.Windows.Forms.Label DifficultyLabel;
     }
 }
 

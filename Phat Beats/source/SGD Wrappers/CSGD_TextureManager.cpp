@@ -390,7 +390,7 @@ bool CSGD_TextureManager::Draw(int nID, int nX, int nY, float fScaleX, float fSc
 }
 
 //////////////////////////////////////////////////
-// Added by JC Ricks
+// Added by JC Ricks(@CSPshala)
 // 
 // Draw Texture Function modified to use floats
 //////////////////////////////////////////////////

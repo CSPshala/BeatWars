@@ -25,6 +25,7 @@ class CAnimation
 		~CAnimation();
 
 		void SetIsLooping(bool bLoop);
+		void SetIsPlaying(bool lPlay);
 		void SetName(std::string szName);
 
 
