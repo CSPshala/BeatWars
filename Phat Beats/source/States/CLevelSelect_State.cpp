@@ -50,7 +50,7 @@ void CLevelSelect_State::Update(void)
 
 void CLevelSelect_State::Render(void)
 {
-	RECT rLevel1={0,25,45,45};
+	RECT rLevel1={25,25,45,45};
 	CSGD_Direct3D::GetInstance()->DrawRect(rLevel1,255,0,0);
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
