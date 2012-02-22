@@ -7,7 +7,7 @@
 #pragma once
 #include "IBaseInterface.h"
 #include "SGD_Math.h"
-enum ObjType{OBJ_BASE,OBJ_PLAYER1 = 0,OBJ_PLAYER2,OBJ_BEAT,OBJ_SONG,OBJ_MAX};
+enum ObjType{OBJ_BASE,OBJ_PLAYER1 = 0,OBJ_PLAYER2,OBJ_BEAT,OBJ_SONG,OBJ_AI,OBJ_MAX};
 class CBase : public IBaseInterface
 {
 private:

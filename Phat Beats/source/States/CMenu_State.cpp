@@ -9,12 +9,10 @@
 #include "CGameplay_State.h"
 #include "COptionsState.h"
 #include "../Globals.h"
+#include "../Managers/CFXManager.h"
 
 CMenu_State::CMenu_State()
 {
-	
-	
-
 	// Asset IDs
 	m_nBackgroundID = -1;
 	m_nCursorImageID = -1;
@@ -34,6 +32,8 @@ void CMenu_State::Enter(void)
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor.png");
+	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
+	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
 }
 
@@ -84,6 +84,7 @@ bool CMenu_State::Input(void)
 			break;		
 		case MAINMENU_CREDITS:
 			{
+				//CGame::GetInstance()->ChangeState()
 			}
 			break;
 
@@ -102,7 +103,7 @@ bool CMenu_State::Input(void)
 
 void CMenu_State::Update(void)
 {
-	
+	CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 }
 
 void CMenu_State::Render(void)
@@ -110,6 +111,7 @@ void CMenu_State::Render(void)
 	RECT rBody = {225, 200, CGame::GetInstance()->GetScreenWidth(), 400};
 	RECT rTitle = {0,25,800,75};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,1.6f,1.3f);
+	
 	CBitmapFont::GetInstance()->SetScale(4.5f);
 	//CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
 	CSGD_TextureManager::GetInstance()->Draw(m_nTile,145,25,2.0f,1.0f);
@@ -172,7 +174,9 @@ RECT rNewGame = {0,175,800,205};
 		}
 		break;
 	}
+	
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
+	CFXManager::GetInstance()->Render();
 	
 }
 

@@ -33,7 +33,7 @@ bool CAiManager::RandomDifficult( int Level )
 	case AI_INSANE:
 		return rand()%100;
 	}
-return true;
+
 }
 
 /*

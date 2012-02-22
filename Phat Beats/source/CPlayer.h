@@ -11,9 +11,13 @@
 ////////////////////////////////////////
 //				INCLUDES
 ////////////////////////////////////////
+#include <vector>
+using std::vector;
+
 #include "CBase.h"
 #include "CBeat.h"
 #include "IBaseInterface.h"
+#include "Managers/IListener.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -21,7 +25,7 @@
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
-class CPlayer : public CBase
+class CPlayer : public CBase , public IListener
 {
 public:
 	/********** Construct / Deconstruct / OP Overloads ************/
@@ -33,6 +37,7 @@ public:
 	void Render();
 	RECT GetCollisionRect();  // Gonna override the CBase collision rect
 	bool CheckCollision(IBaseInterface* pBase);
+	void HandleEvent(CEvent* pEvent);
 	/********** Public Accessors ************/
 	int				GetCurrentHP() {return m_nHP;}
 	int				GetMaxHP() {return m_nMaxHP;}
@@ -45,6 +50,7 @@ public:
 	BeatDifficulty	GetPlayerDifficulty() {return m_eDifficulty;}
 	float			GetCurrentRotation() {return m_fRotation;}
 	BeatDirection	GetAimingDirection() {return m_eAimingDirection;}
+	vector<CBeat*>	GetAIBeats() {return m_vAIBeats;}
 	/********** Public Mutators  ************/	
 	void			SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void			SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
@@ -79,13 +85,17 @@ private:
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
 
+		// AI handling stuff
+		vector<CBeat*> m_vAIBeats;
+
 		// Asset IDs
 			// Images
 			int m_nBeatConeID;
 			// Sound
 			int m_nBeatSuccessID;
 			int m_nBeatMissID;
-		
+			bool m_IbwriteShit;
+
 
 
 	/********** Private Accessors ************/
@@ -101,5 +111,6 @@ private:
 	/********** Private Utility Functions ************/
 			void P1InputHandling();
 			void P2InputHandling();
+			void AIHandling();
 };
 #endif
