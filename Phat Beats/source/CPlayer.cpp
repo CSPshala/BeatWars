@@ -14,6 +14,8 @@
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
+#include "Managers\CBeatManager.h"
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
@@ -64,12 +66,14 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	// Event system register
 	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
-	m_IbwriteShit == false;
+	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	m_IbwriteShit = false;
 }
 
 CPlayer::~CPlayer()
 {
 	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
+	CEventSystem::GetInstance()->RegisterClient("player1button",this);
 }
 
 ////////////////////////////////////////
@@ -140,14 +144,13 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 		return false;
 }
 
-
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
 	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
 	{
 		bool found = false;
 				
-		for(int i = 0; i < GetAIBeats().size(); ++i)
+		for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
 			if(m_vAIBeats[i] == pEvent->GetParam())
 				found = true;
 		
@@ -155,8 +158,6 @@ void CPlayer::HandleEvent( CEvent* pEvent )
 			m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
 	}
 }
-
-
 
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
@@ -179,6 +180,31 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
+	
+	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
+	{
+		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
+		unsigned int nTime;
+		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
+
+
+		if(DI->KeyPressed(DIK_W))
+		{			
+			m_qKeyPresses.push(TBeatHit('w',nTime));
+		}
+		else if(DI->KeyPressed(DIK_A))
+		{
+			m_qKeyPresses.push(TBeatHit('a',nTime));
+		}
+		else if(DI->KeyPressed(DIK_S))
+		{
+			m_qKeyPresses.push(TBeatHit('s',nTime));
+		}
+		else if(DI->KeyPressed(DIK_D))
+		{
+			m_qKeyPresses.push(TBeatHit('d',nTime));
+		}
+	}
 }
 
 void CPlayer::P2InputHandling()

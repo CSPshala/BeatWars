@@ -1,45 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Song file="levels.mp3" name="Avicii" duration="202266">
   <icons wkey="SkullNote.png" akey="ImpNote.png" skey="SunNote.png" dkey="RepNote.png" />
+  <Beat timeofbeat="383" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="383" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="767" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="767" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="1173" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="1173" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="1642" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="1642" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="2495" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="2495" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="2943" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="2943" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="3391" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="3391" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="3839" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="3839" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="4266" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="4266" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="4757" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="4757" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="5205" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="5205" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="5653" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="5653" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="6079" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="6079" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="6506" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="6506" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="6954" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="6954" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="7530" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="7530" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="7978" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="7978" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="8362" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="8362" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="8810" direction="rightdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="8810" direction="rightdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="9002" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="9002" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="9258" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="9258" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="9471" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="9471" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="9663" direction="down" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="9663" direction="down" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="9983" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="9983" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="10239" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="10239" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="10431" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="10431" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="10858" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="10858" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="11157" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="11157" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="11413" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="11413" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="11647" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="11647" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
   <Beat timeofbeat="11882" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="11882" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="12074" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="12074" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="notecollision" />
+  <Beat timeofbeat="12565" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="combostart" />
   <Beat timeofbeat="12565" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="12821" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="12821" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="13013" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="13013" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="13269" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="13269" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="13461" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="13461" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="13674" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="13674" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="13887" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="13887" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
   <Beat timeofbeat="14058" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="14058" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
+  <Beat timeofbeat="14250" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="comboend" />
   <Beat timeofbeat="14250" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
 </Song>

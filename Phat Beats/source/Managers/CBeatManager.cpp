@@ -438,6 +438,13 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 	return;
 }
 
+CBeatManager* CBeatManager::GetInstance()
+{
+	// Lazy instantiation
+	static CBeatManager instance; // Static allows passing back of address
+	return &instance;	
+}
+
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
 ////////////////////////////////////////
