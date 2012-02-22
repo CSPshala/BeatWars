@@ -11,6 +11,8 @@
 #include "CMenu_State.h"
 #include "../CGame.h"
 #include "CPause_State.h"
+#include "../Managers/CAiManager.h"
+
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
@@ -39,7 +41,7 @@ void CGameplay_State::Enter(void)
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 
 	// Setting up Players
-	m_Player1 = new CPlayer(OBJ_PLAYER1);
+	m_Player1 = new CPlayer(OBJ_AI);
 	m_Player2 = new CPlayer(OBJ_PLAYER2);
 
 	// Adding players to Object Manager

@@ -14,6 +14,9 @@
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
+#include "Managers\CAiManager.h"
+#include "Managers\CEvent.h"
+#include "Managers\CEventSystem.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -52,11 +55,21 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		SetPosX(600.0f - 64.0f); // Ditto
 		SetPosY(300.0f - 128.0f);
 		break;
+	case OBJ_AI:
+		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p1cone.png"));
+		SetPosX(200.0f - 64.0f); // Ditto
+		SetPosY(300.0f - 128.0f);
+		break;
 	}
+
+	// Event system register
+	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	m_IbwriteShit == false;
 }
 
 CPlayer::~CPlayer()
 {
+	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
 }
 
 ////////////////////////////////////////
@@ -81,6 +94,10 @@ void CPlayer::Update(float fElapsedTime)
 	case OBJ_PLAYER2:
 		P2InputHandling();
 		break;
+
+	case OBJ_AI:
+		AIHandling();
+		break;
 	}
 }
 
@@ -90,6 +107,10 @@ void CPlayer::Render()
 	D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
+	if (m_IbwriteShit == true)
+	{
+		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
+	}
 	
 }
 
@@ -120,6 +141,23 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 }
 
 
+void CPlayer::HandleEvent( CEvent* pEvent )
+{
+	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
+	{
+		bool found = false;
+				
+		for(int i = 0; i < GetAIBeats().size(); ++i)
+			if(m_vAIBeats[i] == pEvent->GetParam())
+				found = true;
+		
+		if(!found)
+			m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
+	}
+}
+
+
+
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
 ////////////////////////////////////////
@@ -146,6 +184,25 @@ void CPlayer::P1InputHandling()
 void CPlayer::P2InputHandling()
 {
 
+}
+
+void CPlayer::AIHandling()
+{
+	
+	if(m_vAIBeats.size() != 0)
+	{
+				
+		if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
+		{
+			m_IbwriteShit = true;
+			
+		}
+		else
+			m_IbwriteShit = false;
+
+		m_vAIBeats.pop_back();
+
+	}
 }
 
 ////////////////////////////////////////
