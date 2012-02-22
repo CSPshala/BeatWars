@@ -35,6 +35,8 @@
             this.MnuSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.MnuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuTogglePlaying = new System.Windows.Forms.ToolStripMenuItem();
             this.PnlBorder = new System.Windows.Forms.Panel();
             this.PnlSurface = new ParticleFX.BufferedPanel();
             this.StatusMain = new System.Windows.Forms.StatusStrip();
@@ -49,9 +51,8 @@
             this.BtnDown = new System.Windows.Forms.Button();
             this.BtnPlay = new System.Windows.Forms.Button();
             this.BtnStop = new System.Windows.Forms.Button();
-            this.MnuOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.MnuTogglePlaying = new System.Windows.Forms.ToolStripMenuItem();
             this.BtnScreenShot = new System.Windows.Forms.Button();
+            this.ChkRepeat = new System.Windows.Forms.CheckBox();
             this.MnuMain.SuspendLayout();
             this.PnlBorder.SuspendLayout();
             this.StatusMain.SuspendLayout();
@@ -108,6 +109,22 @@
             this.MnuExit.Name = "MnuExit";
             this.MnuExit.Size = new System.Drawing.Size(221, 22);
             this.MnuExit.Text = "Exit Program";
+            // 
+            // MnuOptions
+            // 
+            this.MnuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MnuTogglePlaying});
+            this.MnuOptions.Name = "MnuOptions";
+            this.MnuOptions.Size = new System.Drawing.Size(61, 20);
+            this.MnuOptions.Text = "&Options";
+            // 
+            // MnuTogglePlaying
+            // 
+            this.MnuTogglePlaying.Name = "MnuTogglePlaying";
+            this.MnuTogglePlaying.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.MnuTogglePlaying.Size = new System.Drawing.Size(194, 22);
+            this.MnuTogglePlaying.Text = "Toggle Playing";
+            this.MnuTogglePlaying.Click += new System.EventHandler(this.MnuTogglePlaying_Click);
             // 
             // PnlBorder
             // 
@@ -225,7 +242,7 @@
             // BtnPlay
             // 
             this.BtnPlay.Image = ((System.Drawing.Image)(resources.GetObject("BtnPlay.Image")));
-            this.BtnPlay.Location = new System.Drawing.Point(539, 242);
+            this.BtnPlay.Location = new System.Drawing.Point(539, 304);
             this.BtnPlay.Name = "BtnPlay";
             this.BtnPlay.Size = new System.Drawing.Size(208, 78);
             this.BtnPlay.TabIndex = 10;
@@ -235,44 +252,39 @@
             // BtnStop
             // 
             this.BtnStop.Image = ((System.Drawing.Image)(resources.GetObject("BtnStop.Image")));
-            this.BtnStop.Location = new System.Drawing.Point(539, 326);
+            this.BtnStop.Location = new System.Drawing.Point(539, 388);
             this.BtnStop.Name = "BtnStop";
             this.BtnStop.Size = new System.Drawing.Size(208, 78);
             this.BtnStop.TabIndex = 11;
             this.BtnStop.UseVisualStyleBackColor = true;
             this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
-            // MnuOptions
-            // 
-            this.MnuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MnuTogglePlaying});
-            this.MnuOptions.Name = "MnuOptions";
-            this.MnuOptions.Size = new System.Drawing.Size(61, 20);
-            this.MnuOptions.Text = "&Options";
-            // 
-            // MnuTogglePlaying
-            // 
-            this.MnuTogglePlaying.Name = "MnuTogglePlaying";
-            this.MnuTogglePlaying.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.MnuTogglePlaying.Size = new System.Drawing.Size(194, 22);
-            this.MnuTogglePlaying.Text = "Toggle Playing";
-            this.MnuTogglePlaying.Click += new System.EventHandler(this.MnuTogglePlaying_Click);
-            // 
             // BtnScreenShot
             // 
             this.BtnScreenShot.Image = ((System.Drawing.Image)(resources.GetObject("BtnScreenShot.Image")));
-            this.BtnScreenShot.Location = new System.Drawing.Point(539, 410);
+            this.BtnScreenShot.Location = new System.Drawing.Point(539, 472);
             this.BtnScreenShot.Name = "BtnScreenShot";
             this.BtnScreenShot.Size = new System.Drawing.Size(208, 78);
             this.BtnScreenShot.TabIndex = 12;
             this.BtnScreenShot.UseVisualStyleBackColor = true;
             this.BtnScreenShot.Click += new System.EventHandler(this.BtnScreenShot_Click);
             // 
+            // ChkRepeat
+            // 
+            this.ChkRepeat.AutoSize = true;
+            this.ChkRepeat.Location = new System.Drawing.Point(539, 243);
+            this.ChkRepeat.Name = "ChkRepeat";
+            this.ChkRepeat.Size = new System.Drawing.Size(67, 17);
+            this.ChkRepeat.TabIndex = 13;
+            this.ChkRepeat.Text = "Repeat?";
+            this.ChkRepeat.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 584);
+            this.Controls.Add(this.ChkRepeat);
             this.Controls.Add(this.BtnScreenShot);
             this.Controls.Add(this.BtnStop);
             this.Controls.Add(this.BtnPlay);
@@ -329,6 +341,7 @@
         private System.Windows.Forms.ToolStripMenuItem MnuOptions;
         private System.Windows.Forms.ToolStripMenuItem MnuTogglePlaying;
         private System.Windows.Forms.Button BtnScreenShot;
+        private System.Windows.Forms.CheckBox ChkRepeat;
     }
 }
 

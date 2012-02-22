@@ -17,6 +17,7 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_XAudio2.h"
+#include "../Timer.h"
 
 // Forward Declarations
 
@@ -56,6 +57,7 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	
+	Timer GameTimer;
 };
 
 #endif

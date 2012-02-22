@@ -69,12 +69,6 @@ namespace ParticleFX
             GameTimer = new PerformanceCounter();
             Emitters = new List<ParticleEmitter>();
 
-            // Begin drawing AFTER initialization
-            //RenderBg = new BackgroundWorker();
-            //RenderBg.DoWork += new DoWorkEventHandler(RenderBg_DoWork);
-            //RenderBg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(RenderBg_RunWorkerCompleted);
-            //RenderBg.RunWorkerAsync();
-
             ToolEmitter = new FrmEmitter();
             ToolEmitter.Owner = this;
 
@@ -191,6 +185,11 @@ namespace ParticleFX
                     // Document Header
                     X.WriteStartDocument();
                     X.WriteStartElement("EffectEmitters");
+                    X.WriteStartAttribute("Repeat");
+                    {
+                        X.WriteValue(ChkRepeat.Checked);
+                    }
+                    X.WriteEndAttribute();
 
                     foreach (ParticleEmitter M in Emitters)
                     {
@@ -475,6 +474,8 @@ namespace ParticleFX
             {
                 XElement Root = XElement.Load(OFD.FileName);
                 IEnumerable<XElement> EM = Root.Elements("Emitter");
+                XAttribute RA = Root.Attribute("Repeat");
+                ChkRepeat.Checked = Convert.ToBoolean(RA.Value);
 
                 if (EM != null)
                 {

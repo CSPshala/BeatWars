@@ -144,6 +144,9 @@
     <ClCompile Include="source\Managers\CMessageSystem.cpp">
       <Filter>Managers / Factories</Filter>
     </ClCompile>
+    <ClCompile Include="source\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\CBase.h">
@@ -251,7 +254,7 @@
     <ClInclude Include="source\JCMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-   <ClInclude Include="source\States\CBitmapFont.h">
+    <ClInclude Include="source\States\CBitmapFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\States\COptionsState.h">
@@ -271,6 +274,12 @@
     </ClInclude>
     <ClInclude Include="source\Managers\IListener.h">
       <Filter>Managers / Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Random.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

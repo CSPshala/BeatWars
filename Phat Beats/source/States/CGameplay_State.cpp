@@ -5,7 +5,8 @@
 //////////////////////////////////////////////////////
 
 #include "CGameplay_State.h"
-#include "../CGame.h"#include "../States/CMenu_State.h"
+#include "../CGame.h"
+#include "../States/CMenu_State.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
