@@ -28,7 +28,7 @@ CSong::CSong()
 	SetCurrentSongTime(0);
 	SetSongName("DEFAULT SONG NAME");
 	SetCurrentBeatIndex(0);
-	SetNextBeatIndex(1);	
+	SetNextBeatIndex(1);
 
 	// Start with ref to self
 	m_uiRefCount = 1;
@@ -40,11 +40,15 @@ CSong::CSong()
 	SetBackgroundID(-1);
 
 	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	CEventSystem::GetInstance()->RegisterClient("combostart",this);
+	CEventSystem::GetInstance()->RegisterClient("comboend",this);
 }
 
 CSong::~CSong()
 {
 	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
+	CEventSystem::GetInstance()->UnregisterClient("combostart",this);
+	CEventSystem::GetInstance()->UnregisterClient("comboend",this);
 }
 
 CSong::CSong(const CSong& theSong)
