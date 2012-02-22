@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 
+//XML
+using System.Xml.Linq;
+
 namespace Animation_Tool
 {
     public partial class Form1 : Form
@@ -18,6 +21,7 @@ namespace Animation_Tool
 
         SGP.ManagedTextureManager TextureManager;
         SGP.ManagedDirect3D Direct3D;
+        string texture;
         int nID = -1;
         int nAnchorID = -1;
         bool bFrame = true;
@@ -102,6 +106,8 @@ namespace Animation_Tool
                 nID = TextureManager.LoadTexture( dlg.FileName.ToString(),0 );
 
                 Size nSize = new Size(TextureManager.GetTextureWidth(nID),TextureManager.GetTextureHeight(nID));
+
+                texture = dlg.FileName;
 
                 panel1.Size = nSize;
             }
@@ -208,42 +214,64 @@ namespace Animation_Tool
         private void button1_Click(object sender, EventArgs e)
         {
             Animations anim = new Animations();
-            anim.Name = "Unknown";
 
             lAnimations.Add(anim);
 
-
-            listBox1.Items.Add(anim);
+            listBox1.Items.Clear();
             listBox1.SelectedIndex = listBox1.Items.Count - 1;
+
+            int num = 0;
+
+            foreach (Animations curranim in lAnimations)
+            {
+                curranim.Ordernumber = num;
+                listBox1.Items.Add(curranim);
+                num += 1;
+            }
+
+            listBox2.ClearSelected();
+            listBox2.Items.Clear();
             listBox1.Invalidate();
+            listBox2.Invalidate();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             if(listBox1.SelectedIndex > -1)
             {
-                Frame newFrame = new Frame();
-
-                if (lAnimations[listBox1.SelectedIndex].lFrames == null)
-                    lAnimations[listBox1.SelectedIndex].lFrames = new List<Frame>();
-
-
-                lAnimations[listBox1.SelectedIndex].lFrames.Add(newFrame);
-
-                listBox2.Items.Clear();
-
-                int num = 0;
-
-                foreach (Frame f in lAnimations[listBox1.SelectedIndex].lFrames)
+                if (textBox2.Text == "")
                 {
-                    f.FrameNumber = num;
-                    f.Duration = fDuration;
-                    listBox2.Items.Add(f);
-                    num += 1;
-                }
+                    if (MessageBox.Show("The Animation has no name. Please name the Animation.") == DialogResult.OK)
+                    {
 
-                listBox2.SelectedIndex = listBox2.Items.Count - 1;
-                listBox2.Invalidate();
+                    }
+                }
+                else
+                {
+                    Frame newFrame = new Frame();
+
+                    if (lAnimations[listBox1.SelectedIndex].lFrames == null)
+                        lAnimations[listBox1.SelectedIndex].lFrames = new List<Frame>();
+
+
+                    lAnimations[listBox1.SelectedIndex].lFrames.Add(newFrame);
+
+
+                    listBox2.Items.Clear();
+
+                    int num = 0;
+
+                    foreach (Frame f in lAnimations[listBox1.SelectedIndex].lFrames)
+                    {
+                        f.FrameNumber = num;
+                        f.Duration = fDuration;
+                        listBox2.Items.Add(f);
+                        num += 1;
+                    }
+
+                    listBox2.SelectedIndex = listBox2.Items.Count - 1;
+                    listBox2.Invalidate();
+                }
             }
 
         }
@@ -322,7 +350,8 @@ namespace Animation_Tool
                         }
                         else
                         {
-
+                            if( listBox2.SelectedIndex < listBox2.Items.Count)
+                            {
                             Rectangle currRect = new Rectangle(lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawX,
                                                                 lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawY,
                                                                 lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawWidth,
@@ -331,6 +360,7 @@ namespace Animation_Tool
                             TextureManager.Draw(nID, (panel2.Width / 2) - (lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorX - lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawX),
                                 (panel2.Height / 2) - (lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorY - lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawY),
                                 1.0f, 1.0f, currRect, 0, 0, 0, Color.FromArgb(255, 255, 255, 255).ToArgb());
+                            }
 
                         }
                     }
@@ -518,7 +548,9 @@ namespace Animation_Tool
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-           if (lAnimations[listBox1.SelectedIndex].lFrames == null)
+            if (listBox1.SelectedIndex > -1)
+            {
+                if (lAnimations[listBox1.SelectedIndex].lFrames == null)
                     lAnimations[listBox1.SelectedIndex].lFrames = new List<Frame>();
 
                 textBox2.Text = lAnimations[listBox1.SelectedIndex].Name;
@@ -536,51 +568,54 @@ namespace Animation_Tool
 
                 listBox2.SelectedIndex = listBox2.Items.Count - 1;
                 listBox2.Invalidate();
+            }
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawX;
-            dY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawY;
-            dWidth = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawWidth;
-            dHeight = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawHeight;
-
-            cX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionX;
-            cY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionY;
-            cWidth = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionWidth;
-            cHeight = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionHeight;
-
-            anchorX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorX;
-            anchorY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorY;
-
-            fDuration = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].Duration;
-
-            textBox1.Text = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].TriggerEvent;
-            numericUpDown6.Value = anchorX;
-            numericUpDown5.Value = anchorY;
-            numericUpDown7.Value = (decimal)fDuration;
-
-            if (bFrame)
+            if (listBox1.SelectedIndex > -1 && listBox2.SelectedIndex > -1)
             {
-                numericUpDown1.Value = dY;
-                numericUpDown2.Value = dX;
-                numericUpDown3.Value = dWidth;
-                numericUpDown4.Value = dHeight;
-                numericUpDown6.Value = anchorX;
-                numericUpDown5.Value = anchorY;
-            }
-            else if (bCollision)
-            {
-                numericUpDown1.Value = cY;
-                numericUpDown2.Value = cX;
-                numericUpDown3.Value = cWidth;
-                numericUpDown4.Value = cHeight;
+                dX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawX;
+                dY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawY;
+                dWidth = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawWidth;
+                dHeight = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawHeight;
+
+                cX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionX;
+                cY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionY;
+                cWidth = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionWidth;
+                cHeight = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].CollisionHeight;
+
+                anchorX = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorX;
+                anchorY = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].AnchorY;
+
+                fDuration = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].Duration;
+
+                textBox1.Text = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].TriggerEvent;
                 numericUpDown6.Value = anchorX;
                 numericUpDown5.Value = anchorY;
                 numericUpDown7.Value = (decimal)fDuration;
+
+                if (bFrame)
+                {
+                    numericUpDown1.Value = dY;
+                    numericUpDown2.Value = dX;
+                    numericUpDown3.Value = dWidth;
+                    numericUpDown4.Value = dHeight;
+                    numericUpDown6.Value = anchorX;
+                    numericUpDown5.Value = anchorY;
+                }
+                else if (bCollision)
+                {
+                    numericUpDown1.Value = cY;
+                    numericUpDown2.Value = cX;
+                    numericUpDown3.Value = cWidth;
+                    numericUpDown4.Value = cHeight;
+                    numericUpDown6.Value = anchorX;
+                    numericUpDown5.Value = anchorY;
+                    numericUpDown7.Value = (decimal)fDuration;
+                }
+
             }
-
-
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -589,6 +624,7 @@ namespace Animation_Tool
             {
                 lAnimations[listBox1.SelectedIndex].Name = textBox2.Text;
             }
+            listBox1.Invalidate();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -611,12 +647,10 @@ namespace Animation_Tool
         {
             if (listBox1.SelectedIndex > -1 && listBox2.SelectedIndex > -1)
             {
-                // next frame
-
-                listBox2.SelectedIndex += 1;
-
-                if (listBox2.SelectedIndex >= listBox2.Items.Count)
+                if (listBox2.SelectedIndex + 1 >= listBox2.Items.Count)
                     listBox2.SelectedIndex = 0;
+                else
+                    listBox2.SelectedIndex += 1;
 
             }
         }
@@ -626,10 +660,14 @@ namespace Animation_Tool
             if (listBox1.SelectedIndex > -1 && listBox2.SelectedIndex > -1)
             {
                 // prev frame
-                listBox2.SelectedIndex -= 1;
-
-                if (listBox2.SelectedIndex < 0)
+                if (listBox2.SelectedIndex - 1 < 0)
                     listBox2.SelectedIndex = listBox2.Items.Count - 1;
+                else
+                    listBox2.SelectedIndex -= 1;
+
+                
+
+
             }
         }
 
@@ -659,8 +697,166 @@ namespace Animation_Tool
 
         private void saveXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "XML | *.xml;*.XML";
+            dlg.Title = "Save Current Animations";
+            dlg.DefaultExt = "xml";
+            dlg.FilterIndex = 2;
+            dlg.AddExtension = true;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                XElement xRoot = new XElement("Animations");
 
+                for (int i = 0; i < lAnimations.Count; ++i)
+                {
+                    XElement xAnim = new XElement("Animation");
+
+                    XAttribute xIsLooping = new XAttribute("IsLooping",false);
+                    xAnim.Add(xIsLooping);
+
+                    XAttribute xFile = new XAttribute("File",texture);
+                    xAnim.Add(xFile);
+
+                    XAttribute xName = new XAttribute("Name", lAnimations[i].Name);
+                    xAnim.Add(xName);
+
+
+                    for (int j = 0; j < lAnimations[i].lFrames.Count; ++j)
+                    {
+                        XElement xFrame = new XElement("Frames");
+
+                        //collision
+
+                        //framey
+                        XAttribute xCollisionY = new XAttribute("CollisionFrameY", lAnimations[i].lFrames[j].CollisionY);
+                        xFrame.Add(xCollisionY);
+
+                        //framex
+                        XAttribute xCollisionX = new XAttribute("CollisionFrameX", lAnimations[i].lFrames[j].CollisionX);
+                        xFrame.Add(xCollisionX);
+
+                        //draw width
+                        XAttribute xCollisionWidth = new XAttribute("CollisionWidth", lAnimations[i].lFrames[j].CollisionWidth);
+                        xFrame.Add(xCollisionWidth);
+
+                        //draw height
+                        XAttribute xCollisionHeight = new XAttribute("CollisionHeight", lAnimations[i].lFrames[j].CollisionHeight);
+                        xFrame.Add(xCollisionHeight);
+
+                        //Event
+                        if (lAnimations[i].lFrames[j].TriggerEvent != null)
+                        {
+                            XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
+                            xFrame.Add(xEvent);
+                        }
+
+
+                        //draw height
+                        XAttribute xDrawHeight = new XAttribute("Height", lAnimations[i].lFrames[j].DrawHeight);
+                        xFrame.Add(xDrawHeight);
+                       
+                        //draw width
+                        XAttribute xDrawWidth = new XAttribute("Width",lAnimations[i].lFrames[j].DrawWidth);
+                        xFrame.Add(xDrawWidth);
+                        
+                        //anchorx
+                        XAttribute xAnchorX = new XAttribute("AnchorX", lAnimations[i].lFrames[j].AnchorX - lAnimations[i].lFrames[j].DrawX);
+                        xFrame.Add(xAnchorX);
+                       
+                        //anchory
+                        XAttribute xAnchorY = new XAttribute("AnchorY",lAnimations[i].lFrames[j].AnchorY - lAnimations[i].lFrames[j].DrawY);
+                        xFrame.Add(xAnchorY);
+                       
+                        //framex
+                        XAttribute xDrawX = new XAttribute("FrameX",lAnimations[i].lFrames[j].DrawX);
+                        xFrame.Add(xDrawX);
+                       
+                        //framey
+                        XAttribute xDrawY = new XAttribute("FrameY",lAnimations[i].lFrames[j].DrawY);
+                        xFrame.Add(xDrawY);
+                       
+                        //duration
+                        float fDuration = lAnimations[i].lFrames[j].Duration / 1000;
+                        XAttribute xDuration = new XAttribute("Duration", fDuration);
+                        xFrame.Add(xDuration);
+                        xAnim.Add(xFrame);
+                    }
+
+                    xRoot.Add(xAnim);
+                }
+
+                xRoot.Save(dlg.FileName);
+                GC.Collect();
+            }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex > -1 && listBox2.SelectedIndex > -1)
+            {
+                if (listBox2.Items.Count > 1)
+                {
+                    lAnimations[listBox1.SelectedIndex].lFrames.RemoveAt(listBox2.SelectedIndex);
+                    listBox2.Items.RemoveAt(listBox2.SelectedIndex);
+                    if (listBox2.SelectedIndex - 1 < 0)
+                    {
+                        listBox2.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    lAnimations[listBox1.SelectedIndex].lFrames.Clear();
+                    listBox2.Items.Clear();
+                }
+
+                listBox2.Invalidate();
+            }
+        }
+
+        //remove animations
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex > -1)
+            {
+                lAnimations[listBox1.SelectedIndex].lFrames.Clear();
+
+                if (listBox1.Items.Count > 1)
+                {
+                    lAnimations.RemoveAt(listBox1.SelectedIndex);
+                    listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+
+                    if (listBox1.SelectedIndex - 1 < 0)
+                    {
+                        listBox1.SelectedIndex = 0;
+                    }
+                }
+                else
+                {
+                    lAnimations.Clear();
+                    listBox1.Items.Clear();
+                    listBox2.Items.Clear();
+                }
+
+
+                listBox1.Invalidate();
+                listBox2.Invalidate();
+            }
+        }
+
+        private void laodAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files(*.*)|*.*|XML Files(*.xml)|*.xml";
+            dlg.FilterIndex = 2;
+            dlg.DefaultExt = "xml";
+
+            if( dlg.ShowDialog() == DialogResult.OK)
+            {
+
+                XElement root = XElement.Load(dlg.FileName);
+            }
+        }
+
 
 
     }
