@@ -30,10 +30,7 @@ using std::string;
 class CBeatManager: public IListener
 {
 public:
-
-	/********** Construct / Deconstruct / OP Overloads ************/
-		CBeatManager();
-		~CBeatManager();
+		
 	/********** Public Utility Functions ************/
 		bool LoadSong(string szFileName);
 		bool UnloadSongs();
@@ -43,6 +40,8 @@ public:
 		void Reset();
 		void Update();
 		void Render();
+
+		static CBeatManager* GetInstance();
 		
 	/********** Public Accessors ************/
 		int					GetNumberNotesHit() {return m_nNumHit;}
@@ -50,14 +49,27 @@ public:
 		vector<int>&		GetSongBackground() {return m_nvImageID;}
 		string				GetCurrentlyPlayingSongName();
 		bool				IsPaused() {return m_bPause;}
+		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
 		
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
+
+	/********** Singleton Pointer *************/
+			
 		
 
 private:
+	/********** Construct / Deconstruct / OP Overloads ************/
+		// Proper singleton
+		CBeatManager(const CBeatManager&);
+		//		Assignment op
+		CBeatManager& operator=(const CBeatManager&);
+		//		Destructor
+		~CBeatManager();
+		//		Constructor
+		CBeatManager();
 
 	/********** Private Members ************/
 		vector<CSong*> m_vSongs;
@@ -72,7 +84,7 @@ private:
 		/********** Private Accessors ************/
 		
 		int GetCurrentlyPlayingSongIndex() {return m_nCurrentlyPlayingSongIndex;}
-		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
+		
 
 	/********** Private Mutators ************/
 		void SetPause(bool bPause) {m_bPause = bPause;}

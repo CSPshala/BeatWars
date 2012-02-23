@@ -210,12 +210,29 @@ const void CFXManager::UnloadAllFX(void)
 
 CFXManager* CFXManager::GetInstance()
 {
-	static CFXManager* Instance = new CFXManager();
-	return Instance;
+	static CFXManager Instance;
+	return &Instance;
 }
 
 const void CFXManager::QueueParticle(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
 		m_listActiveFX.push_back(m_fxTable[szKey]);
+}
+
+const void CFXManager::DequeueParticle(string szKey)
+{
+	CFX* pToRemove = m_fxTable[szKey];
+	if(pToRemove != nullptr)
+	{
+		std::vector<CFX*>::iterator i;
+		for(i = m_listActiveFX.begin(); i != m_listActiveFX.end(); ++i)
+		{
+			if((*i) == pToRemove)
+			{
+				m_listActiveFX.erase(i);
+				break;
+			}
+		}
+	}
 }
