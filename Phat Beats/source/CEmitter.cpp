@@ -147,6 +147,8 @@ void CEmitter::Update(float fElapsedTime)
 				else
 					break;
 			}
+
+			m_fCurLife -= m_fSpawnRate;
 		}
 	}
 }
@@ -161,4 +163,30 @@ void CEmitter::Render()
 	{
 		(*i)->Render(m_vTextureList);
 	}
+}
+
+const void CEmitter::SetMaxParticles(const short nNewMaxParticles)
+{
+	m_nMaxParticles = nNewMaxParticles;
+
+	std::vector<CParticle*>::size_type i;
+
+	for(i = 0; i < m_ListAliveParticles.size(); ++i)
+	{
+		delete m_ListAliveParticles[i];
+		m_ListAliveParticles[i] = nullptr;
+	}
+
+	m_ListAliveParticles.clear();
+
+	for(i = 0; i < m_ListDeadParticles.size(); ++i)
+	{
+		delete m_ListDeadParticles[i];
+		m_ListDeadParticles[i] = nullptr;
+	}
+
+	m_ListDeadParticles.clear();
+
+	for(short n = 0; n < GetMaxParticles(); ++n)
+		m_ListDeadParticles.push_back(new CParticle());
 }
