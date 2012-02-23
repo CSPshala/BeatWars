@@ -52,7 +52,6 @@ namespace Animation_Tool
         float fDuration = 250;
 
         bool bPlay = false;
-        bool bStop = false;
         bool bReset = false;
 
         float TimeWaited = 0;
@@ -108,7 +107,6 @@ namespace Animation_Tool
                 Size nSize = new Size(TextureManager.GetTextureWidth(nID),TextureManager.GetTextureHeight(nID));
 
                 texture = dlg.FileName;
-
                 panel1.Size = nSize;
             }
         }
@@ -675,7 +673,6 @@ namespace Animation_Tool
         {
             //Play
             bPlay = true;
-            bStop = false;
             bReset = false;
         }
 
@@ -683,7 +680,6 @@ namespace Animation_Tool
         {
             //Stop
             bPlay = false;
-            bStop = true;
             bReset = false;
         }
 
@@ -691,7 +687,6 @@ namespace Animation_Tool
         {
             //Reset
             bPlay = false;
-            bStop = false;
             bReset = true;
         }
 
@@ -703,6 +698,7 @@ namespace Animation_Tool
             dlg.DefaultExt = "xml";
             dlg.FilterIndex = 2;
             dlg.AddExtension = true;
+
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 XElement xRoot = new XElement("Animations");
@@ -711,12 +707,12 @@ namespace Animation_Tool
                 {
                     XElement xAnim = new XElement("Animation");
 
-                    XAttribute xIsLooping = new XAttribute("IsLooping",false);
+                    XAttribute xIsLooping = new XAttribute("IsLooping",0);
                     xAnim.Add(xIsLooping);
 
-                    XAttribute xFile = new XAttribute("File",texture);
-                    xAnim.Add(xFile);
-
+                    XAttribute xFileName = new XAttribute("File", texture);
+                    xAnim.Add(xFileName);
+                    
                     XAttribute xName = new XAttribute("Name", lAnimations[i].Name);
                     xAnim.Add(xName);
 
@@ -743,13 +739,19 @@ namespace Animation_Tool
                         XAttribute xCollisionHeight = new XAttribute("CollisionHeight", lAnimations[i].lFrames[j].CollisionHeight);
                         xFrame.Add(xCollisionHeight);
 
-                        //Event
                         if (lAnimations[i].lFrames[j].TriggerEvent != null)
                         {
                             XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
                             xFrame.Add(xEvent);
                         }
+                        else
+                        {
+                            string st = "";
 
+                            XAttribute xEvent = new XAttribute("Event", st);
+                            xFrame.Add(xEvent);
+
+                        }
 
                         //draw height
                         XAttribute xDrawHeight = new XAttribute("Height", lAnimations[i].lFrames[j].DrawHeight);
@@ -854,10 +856,149 @@ namespace Animation_Tool
             {
 
                 XElement root = XElement.Load(dlg.FileName);
+
+                IEnumerable<XElement> animations = root.Elements("Animation");
+
+
+                if (animations != null)
+                {
+                    lAnimations.Clear();
+                    int last = -1;
+
+                    foreach (XElement X in animations)
+                    {
+                        XAttribute A;
+                        Animations anim = new Animations();
+                        last = lAnimations.Count;
+
+                        //name
+                        A = X.Attribute("Name");
+                        anim.Name = Convert.ToString(A.Value);
+
+                        //file
+                        A = X.Attribute("File");
+                        texture = Convert.ToString(A.Value);
+
+                        nID = TextureManager.LoadTexture(texture,0);
+                        if (nID == -1)
+                        {
+                            OpenFileDialog opdlg = new OpenFileDialog();
+
+                            if (DialogResult.OK == opdlg.ShowDialog())
+                            {
+                                nID = TextureManager.LoadTexture(opdlg.FileName.ToString(), 0);
+
+                                Size nSize = new Size(TextureManager.GetTextureWidth(nID), TextureManager.GetTextureHeight(nID));
+
+                                texture = opdlg.FileName;
+
+                                panel1.Size = nSize;
+                            }
+                        }
+
+
+                        anim.Ordernumber = last;
+
+                        IEnumerable<XElement> frames = X.Elements("Frames");
+
+
+                        if (frames != null)
+                        {
+                            int framenumber = -1;
+
+                            foreach (XElement Z in frames)
+                            {
+                                if (anim.lFrames == null)
+                                {
+                                    anim.lFrames = new List<Frame>();
+                                }
+
+                                framenumber += 1;
+                                XAttribute B;
+                                Frame frame = new Frame();
+
+                                frame.FrameNumber = framenumber;
+
+                                //Duration
+                                B = Z.Attribute("Duration");
+                                frame.Duration = ((float)Convert.ToDecimal(B.Value)) * 1000;
+
+                                fDuration = frame.Duration;
+
+                                //FrameY
+                                B = Z.Attribute("FrameY");
+                                frame.DrawY = Convert.ToInt32(B.Value);
+                                dY = frame.DrawY;
+
+                                //FrameX
+                                B = Z.Attribute("FrameX");
+                                frame.DrawX = Convert.ToInt32(B.Value);
+                                dX = frame.DrawX;
+
+                                //AnchorY
+                                B = Z.Attribute("AnchorY");
+                                frame.AnchorY = Convert.ToInt32(B.Value) + frame.DrawY;
+                                anchorY = frame.AnchorY + frame.DrawY;
+
+                                //AnchorX
+                                B = Z.Attribute("AnchorX");
+                                frame.AnchorX = Convert.ToInt32(B.Value) + frame.DrawX;
+                                anchorX = frame.AnchorX + frame.DrawX;
+
+                                //Width
+                                B = Z.Attribute("Width");
+                                frame.DrawWidth = Convert.ToInt32(B.Value);
+                                dWidth = frame.DrawWidth;
+
+                                //Height
+                                B = Z.Attribute("Height");
+                                frame.DrawHeight = Convert.ToInt32(B.Value);
+                                dHeight = frame.DrawHeight;
+
+                                //Event
+                                B = Z.Attribute("Event");
+                                frame.TriggerEvent = Convert.ToString(B.Value);
+                                textBox1.Text = frame.TriggerEvent;
+
+                                //CollisionHeigh
+                                B = Z.Attribute("CollisionHeight");
+                                frame.CollisionHeight = Convert.ToInt32(B.Value);
+                                cHeight = frame.CollisionHeight;
+
+                                //CollisionWidth
+                                B = Z.Attribute("CollisionWidth");
+                                frame.CollisionWidth = Convert.ToInt32(B.Value);
+                                cWidth = frame.CollisionWidth;
+
+                                //CollisionFrameX
+                                B = Z.Attribute("CollisionFrameX");
+                                frame.CollisionX = Convert.ToInt32(B.Value);
+                                cX = frame.CollisionX;
+
+                                //CollisionFrameY
+                                B = Z.Attribute("CollisionFrameY");
+                                frame.CollisionY = Convert.ToInt32(B.Value);
+                                cY = frame.CollisionY;
+
+                                anim.lFrames.Add(frame);
+                                listBox2.Items.Add(anim.lFrames[framenumber]);
+
+                            }
+
+                        }
+                            lAnimations.Add(anim);
+                            listBox1.Items.Add(lAnimations[last]);
+
+
+                    }
+                    
+                }
+
+
+
+
             }
         }
-
-
 
     }
 }

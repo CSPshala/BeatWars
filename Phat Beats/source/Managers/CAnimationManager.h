@@ -19,7 +19,7 @@ class CAnimationManager
 {
 	public:
 	
-		bool LoadAnimation(string szFileName);
+		bool LoadAnimation(string szFileName, string szImageName);
 		bool UnloadAnimations();
 		vector<CAnimation*> m_vecAnimations;
 		
@@ -38,9 +38,6 @@ class CAnimationManager
 		~CAnimationManager(){}
 	 
 	private:
-	
-		//CAnimationManager(const CAnimationManager&) { }
-		//CAnimationManager& operator=(const CAnimationManager&) { }
 
 
 };
