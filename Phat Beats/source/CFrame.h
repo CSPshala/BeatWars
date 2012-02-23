@@ -7,7 +7,10 @@
 #ifndef C_FRAME_H
 #define C_FRAME_H
 
-class CFrame
+#include "Managers\IListener.h"
+#include "Managers\CEventSystem.h"
+
+class CFrame : public IListener
 {
 public:
 	CFrame();
@@ -20,6 +23,7 @@ public:
 	int GetDrawY();
 	int GetWidth();
 	int GetHeight();
+	string GetEvent() { return m_szEvent; }
 
 	void SetAnchorX(int X);
 	void SetanchorY(int Y);
@@ -28,6 +32,10 @@ public:
 	void SetDrawY(int Y);
 	void SetWidth(int nWidth);
 	void SetHeight(int nHeight);
+	void SetEvent(string szEvent);
+
+	
+	void HandleEvent(CEvent* pEvent);
 
 private:
 
@@ -39,6 +47,7 @@ private:
 	int m_nDrawY;
 	int m_nHeight;
 	int m_nWidth;
+	string m_szEvent;
 };
 
 #endif

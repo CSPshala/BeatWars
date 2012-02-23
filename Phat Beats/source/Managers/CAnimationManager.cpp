@@ -17,7 +17,7 @@ CAnimationManager::CAnimationManager()
 
 }
 
-bool CAnimationManager::LoadAnimation(string szFileName)
+bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
 {
 	TiXmlDocument doc;
 
@@ -25,6 +25,9 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 	// Adding Paths to filename for animations
 	string szPath = "resource/animations/";
 	szPath += szFileName;
+
+	string szImagePath = "resource/graphics/";
+	szImagePath += szImageName;
 
 	if( doc.LoadFile(szPath.c_str() ) == false )
 		return false;
@@ -60,20 +63,20 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 			Anim->SetIsLooping(false);
 		
 		//***************Animation File****************************//
-		if( pNewAnim->Attribute("File") == NULL )
-			return false;
+		//if( pNewAnim->Attribute("File") == NULL )
+		//	return false;
 
 	
-		const char* szFileName = NULL;
-		szFileName = pNewAnim->Attribute("File");
+		//const char* szFileName = NULL;
+		//szFileName = pNewAnim->Attribute("File");
 
-		char buffer[128] ={0};
-		strcpy_s(buffer,_countof(buffer), szFileName);
-		string szPath = "resource/graphics/";
+		//char buffer[128] ={0};
+		//strcpy_s(buffer,_countof(buffer), szImageName);
+		//string szPath = "resource/graphics/";
 
-		szPath += buffer;
+		//szPath += buffer;
 
-		Anim->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture(szPath.c_str() ) );
+		Anim->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture(szImagePath.c_str() ) );
 
 		//********************Animation Name*************************//
 
@@ -158,6 +161,22 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 
 			pNewFrame->Attribute("Duration",&dDuration);
 			Frame->SetDuration((float)dDuration);
+
+			//*********************Setting Event**********************************//
+			if( pNewFrame->Attribute("Event") == NULL)
+				return false;
+
+			
+			const char* szName;
+
+			szName = pNewAnim->Attribute("Event");
+
+			if( szName == NULL )
+			{
+				szName = "";
+			}
+
+			Frame->SetEvent(szName);
 
 			//*********************Add frame to vector and go to next*****************//
 			
