@@ -166,19 +166,15 @@ bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
 			if( pNewFrame->Attribute("Event") == NULL)
 				return false;
 
-			
-			const char* szName;
+			const char* szEvent = NULL;
+				char buffer[128] = {0};
 
-			szName = pNewAnim->Attribute("Event");
+			szEvent = pNewFrame->Attribute("Event");
 
-			if( szName == NULL )
-			{
-				szName = "";
-			}
+			strcpy_s(buffer,_countof(buffer),szEvent);
+			Frame->SetEvent(buffer);
 
-			Frame->SetEvent(szName);
-
-			//*********************Add frame to vector and go to next*****************//
+		//*********************Add frame to vector and go to next*****************//
 			
 			Anim->m_vecFrames.push_back(Frame);
 
@@ -214,23 +210,28 @@ bool CAnimationManager::UnloadAnimations()
 
 void CAnimationManager::Update(float fElapsedTime)
 {
-	m_vecAnimations[0]->Update(fElapsedTime);
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Update(fElapsedTime);
 }
 void CAnimationManager::Render()
 {
-	m_vecAnimations[0]->Render();
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Render();
 }
 void CAnimationManager::Play()	
 {
-	m_vecAnimations[0]->Play();
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Play();
 }
 void CAnimationManager::Stop()	
 {
-	m_vecAnimations[0]->Stop();
-
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Stop();
+	
 }
 void CAnimationManager::Reset()	
 {
+	if( m_vecAnimations.size() > 0)
 	m_vecAnimations[0]->Reset();
 
 }
