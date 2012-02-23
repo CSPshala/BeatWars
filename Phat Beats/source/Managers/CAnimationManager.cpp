@@ -14,7 +14,7 @@
 
 CAnimationManager::CAnimationManager()
 {
-
+	CEventSystem::GetInstance()->RegisterClient("comboend",this);
 }
 
 bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
@@ -233,4 +233,13 @@ void CAnimationManager::Reset()
 {
 	m_vecAnimations[0]->Reset();
 
+}
+
+void CAnimationManager::HandleEvent(CEvent* pEvent)
+{
+	if( pEvent->GetEventID() == "comboend")
+	{
+		Reset();
+		Play();
+	}
 }

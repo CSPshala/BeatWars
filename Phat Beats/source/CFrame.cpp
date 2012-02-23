@@ -100,8 +100,6 @@ void CFrame::HandleEvent(CEvent* pEvent)
 {
 	if( pEvent->GetEventID() == m_szEvent )
 	{
-		if( pEvent->GetParam() == this )
-		{
-		}
+
 	}
 }
