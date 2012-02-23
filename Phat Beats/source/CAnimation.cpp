@@ -58,6 +58,8 @@ void CAnimation::Reset()
 
 void CAnimation::Update(float fElapsedTime)	
 {
+	m_bIsLooping = true;
+
 	if( m_nMaxFrame == 0 )
 		m_nMaxFrame = m_vecFrames.size();
 

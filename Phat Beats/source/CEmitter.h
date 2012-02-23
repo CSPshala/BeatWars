@@ -54,6 +54,7 @@ private:
 
 	// Data
 	float m_fCurLife;
+	float m_fUpdate;
 
 public:
 	CEmitter();

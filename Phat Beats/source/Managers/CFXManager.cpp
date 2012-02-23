@@ -221,7 +221,10 @@ CFXManager* CFXManager::GetInstance()
 const void CFXManager::QueueParticle(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
+	{
+		m_fxTable[szKey]->Refresh();
 		m_listActiveFX.push_back(m_fxTable[szKey]);
+	}
 }
 
 const void CFXManager::DequeueParticle(string szKey)
