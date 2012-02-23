@@ -34,6 +34,14 @@ public:
 	static CSave_State* GetInstance();	
 
 private:
+	// Saving the file to the loadState
+	struct gameSave
+	{
+		int slotNumber;
+		string SavedFileNameSong;
+		CPlayer* curPlayer;
+	};
+
 	// Proper singleton
 	CSave_State(const CSave_State&);
 	//		Assignment op
@@ -43,6 +51,7 @@ private:
 	//		Constructor
 	CSave_State();
 
+	void saveGame(gameSave* save);
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
@@ -57,12 +66,7 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 
-	struct gameSave
-	{
-		int level;
-		string SavedFileNameSong;
-		CPlayer* curPlayer;
-	};
+	
 	
 };
 

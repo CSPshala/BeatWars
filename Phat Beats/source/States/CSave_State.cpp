@@ -7,6 +7,9 @@
 #include "CSave_State.h"
 #include "CBitmapFont.h"
 #include "../Globals.h"
+#include "../Managers/CBeatManager.h"
+#include "../CPlayer.h"
+#include "CGameplay_State.h"
 
 CSave_State::CSave_State()
 {
@@ -102,7 +105,7 @@ void CSave_State::Render(void)
 	RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
 	CBitmapFont::GetInstance()->PrintInRect("save", &rTitle, ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
 	CBitmapFont::GetInstance()->SetScale(1.0f);
-	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 380};
+	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 180};
 	CBitmapFont::GetInstance()->PrintInRect("slot one\n\nslot two\n\nslot three",
 		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
@@ -140,4 +143,10 @@ CSave_State* CSave_State::GetInstance()
 	// Lazy instantiation
 	static CSave_State instance; // Static allows passing back of address
 	return &instance;	
+}
+
+void CSave_State::saveGame( gameSave* save )
+{
+	save->SavedFileNameSong = CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
+	save->curPlayer = CGameplay_State::GetInstance()->GetPlayer1();
 }
