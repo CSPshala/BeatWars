@@ -57,6 +57,7 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	
+	
 };
 
 #endif

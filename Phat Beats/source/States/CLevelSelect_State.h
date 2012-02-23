@@ -21,7 +21,7 @@ using std::string;
 
 // Forward Declarations
 class Bitmap_Font;
-
+class CSong;
 class CLevelSelect_State : public IGameState
 {
 public:
@@ -46,7 +46,7 @@ private:
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
-	Bitmap_Font* m_bMenu_Font;
+	CBitmapFont* m_bMenu_Font;
 	int m_nMenuSelection;
 
 		// Asset IDs
@@ -57,6 +57,8 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	
+	//Song for the current level
+	CSong* currentLevel;
 };
 
 #endif

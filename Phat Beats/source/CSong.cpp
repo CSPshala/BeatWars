@@ -181,7 +181,7 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 		// Only checking with beats that are currently active
 		list<CBeat>::iterator i = m_vActiveBeats.begin();
 
-		int numHit = 0;
+		static int numHit = 0;
 
 		for(; i != m_vActiveBeats.end(); ++i)	
 		{
@@ -190,7 +190,6 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				{
 					++numHit;
 					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
-
 				if( numHit > 5 )
 				{
 					CEventSystem::GetInstance()->SendEvent("comboend");
@@ -203,8 +202,9 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				{
 					i->SetIsActive(false);					
 				}
-
+				}
 		}
+		
 		return true;
 	}
 	else

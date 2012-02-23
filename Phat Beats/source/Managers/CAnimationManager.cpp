@@ -165,7 +165,6 @@ bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
 			//*********************Setting Event**********************************//
 			if( pNewFrame->Attribute("Event") == NULL)
 				return false;
-
 			const char* szEvent = NULL;
 				char buffer[128] = {0};
 

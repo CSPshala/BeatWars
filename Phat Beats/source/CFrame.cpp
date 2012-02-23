@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////
 
 #include "CFrame.h"
+#include "Managers/CFXManager.h"
 
 CFrame::CFrame()
 {
@@ -100,6 +101,6 @@ void CFrame::HandleEvent(CEvent* pEvent)
 {
 	if( pEvent->GetEventID() == m_szEvent )
 	{
-
+		CFXManager::GetInstance()->QueueParticle("EVENT PARTICLE");
 	}
 }
