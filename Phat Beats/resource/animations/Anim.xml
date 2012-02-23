@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Animations>
-   <Animation Name="Fall Back" File="nxc_bat_heihachi.PNG" IsLooping="1">
-      <Frames Height="93" Width="80" AnchorX ="61" AnchorY="81" FrameX="11" FrameY ="177" Duration ="0.2"/>
-      <Frames Height="76" Width="81" AnchorX="68" AnchorY="64" FrameX="14" FrameY="277" Duration ="0.15" />
-      <Frames Height="83" Width="93" AnchorX="61" AnchorY="77" FrameX="103" FrameY="272" Duration ="0.15"/>
-      <Frames Height="75" Width="107" AnchorX="26" AnchorY="57" FrameX="194" FrameY="275" Duration ="0.1" />
-      <Frames Height="49" Width="115" AnchorX="22" AnchorY="31" FrameX="311" FrameY="298" Duration ="0.2" />
-   </Animation>
+  <Animation IsLooping="false" File="C:\Users\Ralph\Desktop\Students\Tool Test Images\nxc_bat_heihachi.PNG" Name="Fall Back">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Event="" Height="78" Width="84" AnchorX="65" AnchorY="67" FrameX="15" FrameY="275" Duration="0.25" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Event="" Height="86" Width="90" AnchorX="68" AnchorY="79" FrameX="94" FrameY="265" Duration="0.25" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Event="" Height="61" Width="111" AnchorX="27" AnchorY="50" FrameX="190" FrameY="282" Duration="0.25" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Event="Particle" Height="46" Width="123" AnchorX="23" AnchorY="29" FrameX="307" FrameY="298" Duration="0.25" />
+  </Animation>
 </Animations>
-
-
-
-
-

@@ -9,17 +9,20 @@
 
 #include <string>
 #include <vector>
+#include "IListener.h"
+#include "CEventSystem.h"
 using std::string;
 using std::vector;
+
 
 //Forward Declarations
 class CAnimation;
 
-class CAnimationManager
+class CAnimationManager : public IListener
 {
 	public:
 	
-		bool LoadAnimation(string szFileName);
+		bool LoadAnimation(string szFileName, string szImageName);
 		bool UnloadAnimations();
 		vector<CAnimation*> m_vecAnimations;
 		
@@ -33,14 +36,15 @@ class CAnimationManager
 		void Play();
 		void Stop();
 		void Reset();
+
+		void  HandleEvent(CEvent* pEvent);
 	
 		CAnimationManager();
-		~CAnimationManager(){}
+		~CAnimationManager()
+		{
+	CEventSystem::GetInstance()->UnregisterClient("comboend",this);}
 	 
 	private:
-	
-		//CAnimationManager(const CAnimationManager&) { }
-		//CAnimationManager& operator=(const CAnimationManager&) { }
 
 
 };

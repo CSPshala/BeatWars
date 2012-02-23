@@ -103,12 +103,16 @@ void CSong::Update(float fElapsedTime)
 			
 			// Jesus christ...
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			else 
 				++i;
 
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			
 		}while(true);
 		
@@ -177,12 +181,16 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 		// Only checking with beats that are currently active
 		list<CBeat>::iterator i = m_vActiveBeats.begin();
 
+		static int numHit = 0;
+
 		for(; i != m_vActiveBeats.end(); ++i)	
 		{
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
 				if(pPlayer->CheckCollision(&(*i)))
 				{
+					++numHit;
 					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
+					
 				}
 				// Note has collided before and is not colliding now
 				// so this means it's past the point where player can hit
@@ -191,6 +199,7 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 					i->SetIsActive(false);					
 				}
 		}
+		
 		return true;
 	}
 	else

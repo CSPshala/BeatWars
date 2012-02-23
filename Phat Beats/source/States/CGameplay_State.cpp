@@ -39,7 +39,7 @@ void CGameplay_State::Enter(void)
 	BeatManager = CBeatManager::GetInstance();
 
 	BeatManager->LoadSong("noteeventtest.xml");
-	AnimationManager.LoadAnimation("Anim.xml");
+	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 
 	// Setting up Players
