@@ -192,6 +192,8 @@ const void CFXManager::UnloadFX(string szKey)
 	{
 		delete m_fxTable[szKey];
 		m_fxTable[szKey] = nullptr;
+		std::map<std::string, CFX*>::iterator i = m_fxTable.find(szKey);
+		m_fxTable.erase(i);
 	}
 }
 
@@ -206,6 +208,7 @@ const void CFXManager::UnloadAllFX(void)
 	}
 
 	m_fxTable.clear();
+	m_listActiveFX.clear();
 }
 
 CFXManager* CFXManager::GetInstance()

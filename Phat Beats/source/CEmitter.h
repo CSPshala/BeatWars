@@ -101,7 +101,7 @@ public:
 	inline const void SetLifeSpawn(const float fNewLife) {m_fLifeSpan = fNewLife;}
 	inline const void SetSpawnRate(const float fNewSpawnRate) {m_fSpawnRate = fNewSpawnRate;}
 	inline const void SetCurrentLife(const float fNewLife) {m_fCurLife = fNewLife;}
-	inline const void SetMaxParticles(const short nNewMaxParticles){m_nMaxParticles = nNewMaxParticles;}
+	const void SetMaxParticles(const short nNewMaxParticles);
 	inline const void SetNumParticlesToSpit(const short nNewNumToSpit) {m_nNumParticlesToSpit = nNewNumToSpit;}
 	inline const void SetRandStartX(const bool bNewRandStartX) {m_bRandStartX = bNewRandStartX;}
 	inline const void SetRandStartY(const bool bNewRandStartY) {m_bRandStartY = bNewRandStartY;}

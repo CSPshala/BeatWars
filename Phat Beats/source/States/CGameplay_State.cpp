@@ -110,9 +110,9 @@ void CGameplay_State::Render(void)
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
 
-	if (dickhead == true)
+	if (dickhead == false)
 	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("this is a message test",320,340,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test for dickhead",320,340,255,0,0);
 	}
 	
 

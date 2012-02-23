@@ -182,7 +182,7 @@ RECT rNewGame = {0,175,800,205};
 
 void CMenu_State::Exit(void)
 {
-	
+	CFXManager::GetInstance()->UnloadFX("MENU_PARTICLE");
 }
 
 CMenu_State* CMenu_State::GetInstance()
