@@ -190,6 +190,7 @@ const void CFXManager::UnloadFX(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
 	{
+		DequeueParticle(szKey);
 		delete m_fxTable[szKey];
 		m_fxTable[szKey] = nullptr;
 		std::map<std::string, CFX*>::iterator i = m_fxTable.find(szKey);

@@ -12,6 +12,7 @@
 #include "../CGame.h"
 #include "CPause_State.h"
 #include "../Managers/CAiManager.h"
+#include "../Managers/CFXManager.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -88,6 +89,7 @@ void CGameplay_State::Update(void)
 {
 	
 	// Updating Objects (if beatmanager isn't paused)
+	CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	if(!BeatManager->IsPaused())
 	{
 		// Updating song
@@ -108,13 +110,14 @@ void CGameplay_State::Render(void)
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 		
 	AnimationManager.Render();
+	CFXManager::GetInstance()->Render();
 
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
 
 	if (dickhead == false)
 	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test for dickhead",320,340,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 	}
 	
 
