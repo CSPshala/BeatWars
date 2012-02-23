@@ -27,6 +27,7 @@ public:
 	const void UnloadFX(string szKey);
 	const void UnloadAllFX(void);
 	const void QueueParticle(string szKey);
+	const void DequeueParticle(string szKey);
 
 	static CFXManager* GetInstance();
 

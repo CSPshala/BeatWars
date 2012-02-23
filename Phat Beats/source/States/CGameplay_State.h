@@ -62,8 +62,8 @@ private:
 	CPlayer* m_Player2;
 
 		// Managers
-	CBeatManager BeatManager;
-CAnimationManager AnimationManager;
+	CBeatManager* BeatManager;
+	CAnimationManager AnimationManager;
 		
 static bool dickhead;
 

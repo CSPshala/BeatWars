@@ -132,6 +132,7 @@
     <ClInclude Include="source\CFX.h" />
     <ClInclude Include="source\CGame.h" />
     <ClInclude Include="source\CParticle.h" />
+    <ClInclude Include="source\CPlayer.h" />
     <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
