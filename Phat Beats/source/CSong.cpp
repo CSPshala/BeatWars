@@ -28,7 +28,7 @@ CSong::CSong()
 	SetCurrentSongTime(0);
 	SetSongName("DEFAULT SONG NAME");
 	SetCurrentBeatIndex(0);
-	SetNextBeatIndex(1);	
+	SetNextBeatIndex(1);
 
 	// Start with ref to self
 	m_uiRefCount = 1;
@@ -40,11 +40,15 @@ CSong::CSong()
 	SetBackgroundID(-1);
 
 	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	CEventSystem::GetInstance()->RegisterClient("combostart",this);
+	CEventSystem::GetInstance()->RegisterClient("comboend",this);
 }
 
 CSong::~CSong()
 {
 	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
+	CEventSystem::GetInstance()->UnregisterClient("combostart",this);
+	CEventSystem::GetInstance()->UnregisterClient("comboend",this);
 }
 
 CSong::CSong(const CSong& theSong)
@@ -99,12 +103,16 @@ void CSong::Update(float fElapsedTime)
 			
 			// Jesus christ...
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			else 
 				++i;
 
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			
 		}while(true);
 		
@@ -173,11 +181,14 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 		// Only checking with beats that are currently active
 		list<CBeat>::iterator i = m_vActiveBeats.begin();
 
+		int numHit = 0;
+
 		for(; i != m_vActiveBeats.end(); ++i)	
 		{
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
 				if(pPlayer->CheckCollision(&(*i)))
 				{
+					++numHit;
 					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
 				}
 				// Note has collided before and is not colliding now
@@ -185,6 +196,12 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				else if(i->GetHasCollided() == true)
 				{
 					i->SetIsActive(false);					
+				}
+
+				if( numHit >= 6 )
+				{
+					CEventSystem::GetInstance()->SendEvent("comboend");
+					numHit = 0;
 				}
 		}
 		return true;

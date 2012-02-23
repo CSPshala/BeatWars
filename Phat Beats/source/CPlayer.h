@@ -12,7 +12,9 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include <vector>
+#include <queue>
 using std::vector;
+using std::queue;
 
 #include "CBase.h"
 #include "CBeat.h"
@@ -25,6 +27,15 @@ using std::vector;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
+struct TBeatHit
+{
+	TBeatHit(char note,int time) {cHitNote = note; nTime = time;}
+
+	char cHitNote;
+	int  nTime;
+};
+
+
 class CPlayer : public CBase , public IListener
 {
 public:
@@ -88,6 +99,9 @@ private:
 		// AI handling stuff
 		vector<CBeat*> m_vAIBeats;
 
+		// Player hit vector
+		queue<TBeatHit> m_qKeyPresses;
+
 		// Asset IDs
 			// Images
 			int m_nBeatConeID;
@@ -113,4 +127,6 @@ private:
 			void P2InputHandling();
 			void AIHandling();
 };
+
+
 #endif

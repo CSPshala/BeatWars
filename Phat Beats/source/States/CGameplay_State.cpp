@@ -36,8 +36,10 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
-	BeatManager.LoadSong("noteeventtest.xml");
-	AnimationManager.LoadAnimation("Anim.xml");
+	BeatManager = CBeatManager::GetInstance();
+
+	BeatManager->LoadSong("noteeventtest.xml");
+	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 
 	// Setting up Players
@@ -55,23 +57,23 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
-		BeatManager.Play("Avicii");
+		BeatManager->Play("Avicii");
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
 	{
-		BeatManager.Pause();
+		BeatManager->Pause();
 	}
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
-		BeatManager.Reset();
+		BeatManager->Reset();
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_A) )
+	/*if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_A) )
 		AnimationManager.Play();
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_S))
 		AnimationManager.Stop();
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_D))
-		AnimationManager.Reset();
+		AnimationManager.Reset();*/
 	
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_I))
 	{
@@ -86,7 +88,7 @@ void CGameplay_State::Update(void)
 {
 	
 	// Updating Objects (if beatmanager isn't paused)
-	if(!BeatManager.IsPaused())
+	if(!BeatManager->IsPaused())
 	{
 		// Updating song
 		CObjectManager::GetInstance()->UpdateObjects(CGame::GetInstance()->GetTimer().GetDeltaTime());	

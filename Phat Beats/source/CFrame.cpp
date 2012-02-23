@@ -18,7 +18,10 @@ CFrame::CFrame()
 
 CFrame::~CFrame()
 {
-
+	if( m_szEvent != "")
+	{
+		CEventSystem::GetInstance()->UnregisterClient(m_szEvent,this);
+	}
 }
 
 int CFrame::GetAnchorX()
@@ -82,4 +85,21 @@ int CFrame::GetHeight()
 {
 	return m_nHeight;
 
+}
+
+void CFrame::SetEvent(string szEvent)
+{
+	if( szEvent != "" )
+	{
+		m_szEvent = "Particle.Animation.Event";
+		CEventSystem::GetInstance()->RegisterClient(m_szEvent,this);
+	}
+}
+
+void CFrame::HandleEvent(CEvent* pEvent)
+{
+	if( pEvent->GetEventID() == m_szEvent )
+	{
+
+	}
 }
