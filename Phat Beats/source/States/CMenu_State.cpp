@@ -35,7 +35,7 @@ void CMenu_State::Enter(void)
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor.png");
 	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
 	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
-	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
+	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 }
 
 bool CMenu_State::Input(void)
@@ -114,14 +114,14 @@ void CMenu_State::Update(void)
 
 void CMenu_State::Render(void)
 {
-	RECT rBody = {225, 200, CGame::GetInstance()->GetScreenWidth(), 400};
-	RECT rTitle = {0,25,800,75};
+	RECT rBody = {225, 200, CGame::GetInstance()->GetScreenWidth(), 635};
+	RECT rTitle = {0,0,540,349};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,1.6f,1.3f);
 	
 	CBitmapFont::GetInstance()->SetScale(4.5f);
 	//CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
-	CSGD_TextureManager::GetInstance()->Draw(m_nTile,145,25,2.0f,1.0f);
-	CBitmapFont::GetInstance()->SetScale(3.0f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nTile,125,1,.9f,.9f,&rTitle);
+	CBitmapFont::GetInstance()->SetScale(2.0f);
 	CBitmapFont::GetInstance()->PrintInRect("new game\nload\noptions\ncredits\nlevel select\nexit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	/*
 RECT rNewGame = {0,175,800,205};
@@ -146,8 +146,8 @@ RECT rNewGame = {0,175,800,205};
 	CBitmapFont::GetInstance()->PrintInRect("exit", &rExit, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
 */
 
-	int topSelection = 175;
-	int spacing = 63;
+	int topSelection = 325;
+	int spacing = 35;
 	switch(m_nMenuSelection)
 	{
 	case MAINMENU_NEWGAME:
