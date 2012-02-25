@@ -64,15 +64,13 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		break;
 	}
 
-	// Event system register
-	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	// Event system register	
 	CEventSystem::GetInstance()->RegisterClient("player1button",this);
 	m_IbwriteShit = false;
 }
 
 CPlayer::~CPlayer()
-{
-	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
+{	
 	CEventSystem::GetInstance()->RegisterClient("player1button",this);
 }
 
@@ -115,9 +113,10 @@ void CPlayer::Render()
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
 	}
+
+	
 	
 }
-
 
 RECT CPlayer::GetCollisionRect()
 {
@@ -132,16 +131,29 @@ RECT CPlayer::GetCollisionRect()
 
 bool CPlayer::CheckCollision(IBaseInterface* pBase)
 {
-	RECT rTemp;
-	// Players will only ever collide with notes
-	CBeat* pBeat = (CBeat*)pBase;
-
-	if(IntersectRect(&rTemp,&GetCollisionRect(),&pBeat->GetCollisionRect()))
+	switch(pBase->GetType())
 	{
-		return true;
-	}
-	else
+
+	case OBJ_BEAT:
+		{
+			RECT rTemp;
+			// Players will only ever collide with notes
+			CBeat* pBeat = (CBeat*)pBase;
+
+			if(IntersectRect(&rTemp,&GetCollisionRect(),&pBeat->GetCollisionRect()))
+			{
+				pBeat->SetHasCollided(true);
+				return true;
+			}
+			else
+				return false;
+		}
+		break;
+
+	default:
 		return false;
+		break;
+	}
 }
 
 void CPlayer::HandleEvent( CEvent* pEvent )
@@ -205,6 +217,8 @@ void CPlayer::P1InputHandling()
 			m_qKeyPresses.push(TBeatHit('d',nTime));
 		}
 	}
+
+	DI->ClearInput();
 }
 
 void CPlayer::P2InputHandling()
@@ -273,6 +287,11 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 		break;
 
 	}
+}
+
+TBeatHit& CPlayer::GetMostRecentKeyPress()
+{	
+	return m_qKeyPresses.front();
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

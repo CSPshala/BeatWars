@@ -17,9 +17,12 @@
 #include "CEventSystem.h"
 #include "CObjectManager.h"
 #include "../CGame.h"
+#include "../CPlayer.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
+// 300ms margin for hitting beat
+#define MARGINOFERROR 300
 
 ///////////////////////////////////////////////
 //  CONSTRUCTOR / DECONSTRUCT / OP OVERLOADS
@@ -436,6 +439,88 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 			}
 	}
 	return;
+}
+
+void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
+{
+
+	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
+	{
+		// Getting the range where a beat hit is registered
+		// If a player hits a beat in this timeframe it registers as a hit.
+		//int frontMargin = GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetTimeOfBeat() - MARGINOFERROR;
+		//int backMargin = GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetTimeOfBeat() + MARGINOFERROR;
+
+		// Checking time and direction and character.
+		/*if(aPlayer->GetMostRecentKeyPress().nTime <= backMargin && aPlayer->GetMostRecentKeyPress().nTime >= frontMargin
+			&& aPlayer->GetAimingDirection() == GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetDirection()
+			&& aPlayer->GetMostRecentKeyPress().cHitNote == GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetKeyToPress())*/
+
+		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
+		{
+			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
+				&& aPlayer->GetMostRecentKeyPress().cHitNote == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
+			{			
+				switch(aPlayer->GetType())
+				{
+				case OBJ_PLAYER1:
+					{					
+						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer1Hit())
+						{
+							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
+							// Player hit the note, handling all relevant info.
+							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+						}
+						// Player already hit the note, and it's not visible anymore so it's a miss
+						else
+							aPlayer->SetCurrentStreak(0);
+
+					}
+					break;
+				
+				case OBJ_PLAYER2:
+					{
+						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
+						{
+							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer2Hit(true);
+							// Player hit the note, handling all relevant info.
+							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+						}
+						// Player already hit the note, and it's not visible anymore so it's a miss
+						else
+							aPlayer->SetCurrentStreak(0);
+					}
+					break;
+
+				case OBJ_AI:
+					{
+						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
+						{
+							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer2Hit(true);
+							// Player hit the note, handling all relevant info.
+							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+						}
+						// Player already hit the note, and it's not visible anymore so it's a miss
+						else
+							aPlayer->SetCurrentStreak(0);
+					}
+					break;
+				}
+			}
+			else
+			{
+				aPlayer->SetCurrentStreak(0);			
+			}
+			
+		}
+
+		// Clearing last keypress
+			aPlayer->GetPlayerHitQueue().pop();
+	}
+
 }
 
 CBeatManager* CBeatManager::GetInstance()

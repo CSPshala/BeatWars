@@ -50,30 +50,32 @@ public:
 	bool CheckCollision(IBaseInterface* pBase);
 	void HandleEvent(CEvent* pEvent);
 	/********** Public Accessors ************/
-	int				GetCurrentHP() {return m_nHP;}
-	int				GetMaxHP() {return m_nMaxHP;}
-	int				GetCurrentPower() {return m_nPower;}
-	int				GetMaxPower() {return m_nMaxPower;}
-	int				GetTotalBeatsHit() {return m_nBeatsHitTotal;}
-	int				GetCurrentStreak() {return m_nCurrentStreak;}
-	int				GetCurrentScore() {return m_nCurrentScore;}
-	int				GetTotalScore() {return m_nTotalScore;}
-	BeatDifficulty	GetPlayerDifficulty() {return m_eDifficulty;}
-	float			GetCurrentRotation() {return m_fRotation;}
-	BeatDirection	GetAimingDirection() {return m_eAimingDirection;}
-	vector<CBeat*>	GetAIBeats() {return m_vAIBeats;}
+	int					GetCurrentHP() {return m_nHP;}
+	int					GetMaxHP() {return m_nMaxHP;}
+	int					GetCurrentPower() {return m_nPower;}
+	int					GetMaxPower() {return m_nMaxPower;}
+	int					GetTotalBeatsHit() {return m_nBeatsHitTotal;}
+	int					GetCurrentStreak() {return m_nCurrentStreak;}
+	int					GetCurrentScore() {return m_nCurrentScore;}
+	int					GetTotalScore() {return m_nTotalScore;}
+	BeatDifficulty		GetPlayerDifficulty() {return m_eDifficulty;}
+	float				GetCurrentRotation() {return m_fRotation;}
+	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
+	vector<CBeat*>		GetAIBeats() {return m_vAIBeats;}
+	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
+	TBeatHit&			GetMostRecentKeyPress();
 	/********** Public Mutators  ************/	
-	void			SetCurrentHP(int nHP) {m_nHP = nHP;}
-	void			SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
-	void			SetCurrentPower(int nPower) {m_nPower = nPower;}
-	void			SetMaxPower(int nMaxPower) {m_nMaxPower = nMaxPower;}
-	void			SetTotalBeatsHit(int nBeatsHitTotal) {m_nBeatsHitTotal = nBeatsHitTotal;}
-	void			SetCurrentStreak(int nCurrentStreak) {m_nCurrentStreak = nCurrentStreak;}
-	void			SetCurrentScore(int nCurrentScore) {m_nCurrentScore = nCurrentScore;}
-	void			SetTotalScore(int nTotalScore) {m_nTotalScore = nTotalScore;}
-	void			SetPlayerDifficulty(BeatDifficulty eDifficulty) {m_eDifficulty = eDifficulty;}
-	void			SetCurrentRotation(float fRotation) {m_fRotation = fRotation;}
-	void			SetAimingDirection(BeatDirection eAimingDirection);
+	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
+	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
+	void				SetCurrentPower(int nPower) {m_nPower = nPower;}
+	void				SetMaxPower(int nMaxPower) {m_nMaxPower = nMaxPower;}
+	void				SetTotalBeatsHit(int nBeatsHitTotal) {m_nBeatsHitTotal = nBeatsHitTotal;}
+	void				SetCurrentStreak(int nCurrentStreak) {m_nCurrentStreak = nCurrentStreak;}
+	void				SetCurrentScore(int nCurrentScore) {m_nCurrentScore = nCurrentScore;}
+	void				SetTotalScore(int nTotalScore) {m_nTotalScore = nTotalScore;}
+	void				SetPlayerDifficulty(BeatDifficulty eDifficulty) {m_eDifficulty = eDifficulty;}
+	void				SetCurrentRotation(float fRotation) {m_fRotation = fRotation;}
+	void				SetAimingDirection(BeatDirection eAimingDirection);
 
 
 	

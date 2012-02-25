@@ -43,7 +43,7 @@ void CGameplay_State::Enter(void)
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 
 	// Setting up Players
-	m_Player1 = new CPlayer(OBJ_AI);
+	m_Player1 = new CPlayer(OBJ_PLAYER1);
 	m_Player2 = new CPlayer(OBJ_PLAYER2);
 
 	// Adding players to Object Manager
@@ -97,6 +97,10 @@ void CGameplay_State::Update(void)
 		// Checking collisions
 		CObjectManager::GetInstance()->CheckCollisions(m_Player1);
 		//CObjectManager::GetInstance()->CheckCollisions(m_Player2);
+
+		// Taking care of player input
+		BeatManager->CheckPlayerInput(m_Player1);
+
 	}
 
 	
