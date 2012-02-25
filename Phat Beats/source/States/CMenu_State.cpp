@@ -21,6 +21,8 @@ CMenu_State::CMenu_State()
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
 	m_nTile = -1;
+
+	CFXManager::GetInstance()->LoadFX("Event.xml", "EVENT PARTICLE");
 }
 
 CMenu_State::~CMenu_State()
@@ -194,7 +196,7 @@ RECT rNewGame = {0,175,800,205};
 
 void CMenu_State::Exit(void)
 {
-	
+	CFXManager::GetInstance()->UnloadFX("MENU_PARTICLE");
 }
 
 CMenu_State* CMenu_State::GetInstance()

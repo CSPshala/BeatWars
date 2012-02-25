@@ -193,6 +193,10 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				{
 					m_vHittableBeats.push_back(*i);
 					CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));					
+					if( numHit > 5 )					{
+						CEventSystem::GetInstance()->SendEvent("comboend");
+						numHit = 0;
+					}
 				}
 				// Note has collided before and is not colliding now
 				// so this means it's past the point where player can hit

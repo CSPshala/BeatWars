@@ -50,6 +50,19 @@ void CFX::Update(float fElapsedTime)
 	}
 }
 
+void CFX::Refresh(void)
+{
+	std::vector<CEmitter*>::iterator i;
+
+	for(i = m_listDeadEmitters.begin(); i != m_listDeadEmitters.end(); ++i)
+		m_listAliveEmitters.push_back((*i));
+
+	m_listDeadEmitters.clear();
+
+	for(i = m_listAliveEmitters.begin(); i != m_listAliveEmitters.end(); ++i)
+		(*i)->SetCurrentLife(0.0f);
+}
+
 void CFX::AddEffect(CEmitter* pEffect)
 {
 	m_listAliveEmitters.push_back(pEffect);

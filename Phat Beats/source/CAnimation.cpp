@@ -7,6 +7,7 @@
 #include "CAnimation.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "CFrame.h"
+#include "Managers/CEventSystem.h"
 
 CAnimation::CAnimation()
 {
@@ -57,6 +58,8 @@ void CAnimation::Reset()
 
 void CAnimation::Update(float fElapsedTime)	
 {
+	m_bIsLooping = true;
+
 	if( m_nMaxFrame == 0 )
 		m_nMaxFrame = m_vecFrames.size();
 
@@ -66,6 +69,11 @@ void CAnimation::Update(float fElapsedTime)
 	m_fTimeWaited += fElapsedTime;
 	if( m_vecFrames.size() > 0)
 	{
+		if(m_vecFrames[m_nCurrFrame]->GetEvent() != "" )
+		{
+			CEventSystem::GetInstance()->SendEvent("Particle.Animation.Event");
+		}
+
 		if (m_fTimeWaited > m_vecFrames[m_nCurrFrame]->GetDuration())
 		{
 			m_fTimeWaited -= m_vecFrames[m_nCurrFrame]->GetDuration();
