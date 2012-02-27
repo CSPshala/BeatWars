@@ -21,7 +21,7 @@ using std::string;
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
-
+class CPlayer;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -40,6 +40,7 @@ public:
 		void Reset();
 		void Update();
 		void Render();
+		void CheckPlayerInput(CPlayer* aPlayer);
 
 		static CBeatManager* GetInstance();
 		

@@ -10,6 +10,7 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include "CBeat.h"
+#include "CPlayer.h"
 #include "JCMacros.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
@@ -29,17 +30,17 @@ CBeat::CBeat() : CBase()
 	SetDifficulty(0);
 	SetDirection(UP);
 	m_nType = OBJ_BEAT;
-	SetEvent("");
-	CEventSystem::GetInstance()->RegisterClient("test.event",this);
-	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	SetEvent("");	
+	
 	m_bCollision = false;
+	m_bPlayer1Hit = false;
+	m_bPlayer2Hit = false;
 
 }
 
 CBeat::~CBeat()
 {
-	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
-	CEventSystem::GetInstance()->UnregisterClient("notecollision",this);
+
 }
 
 CBeat::CBeat(const CBeat& theBeat)
@@ -61,9 +62,8 @@ CBeat& CBeat::operator=(const CBeat& theBeat)
 	m_fOriginalYPos = theBeat.m_fOriginalYPos;
 
 	m_bCollision = theBeat.m_bCollision;
-
-	CEventSystem::GetInstance()->RegisterClient("test.event",this);
-	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
+	m_bPlayer1Hit = theBeat.m_bPlayer1Hit;
+	m_bPlayer2Hit = theBeat.m_bPlayer2Hit;	
 
 	return *this;
 }
@@ -76,14 +76,15 @@ void CBeat::ResetBeat()
 	SetPosX(GetOriginalXPos());
 	SetPosY(GetOriginalYPos());
 	SetIsActive(false);
+	SetHasCollided(false);
+	SetPlayer1Hit(false);
+	SetPlayer2Hit(false);
 }
 
 void CBeat::Update(float fElapsedTime)
 {
 	CBase::Update(fElapsedTime);
-
-	if((GetPosX() > 200 && GetPosY() > 200))
-		CEventSystem::GetInstance()->SendEvent("test.event",this);
+	
 
 	if (GetPosX() < 0 && GetPosY() < 0)
 	{
@@ -95,12 +96,25 @@ void CBeat::Update(float fElapsedTime)
 
 void CBeat::Render()
 {
-	CBase::Render();
+	// Hitbox rect for player1's notes for debugging purposes
+	//D3D->DrawRect(GetCollisionRect(),0,120,0);
 
-	D3D->DrawRect(GetCollisionRect(),0,120,0);
+	// Only draws the object if it's actually on screen
+	if(GetPosX() >= 0.0f && GetPosX() <= (float)CGame::GetInstance()->GetScreenWidth())
+		if(GetPosY() >= 0.0f && GetPosY() <= (float)CGame::GetInstance()->GetScreenHeight())
+		{
+			// Drawing player1 notes if not already hit
+			if(!GetPlayer1Hit())
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
+			// Drawing player2 notes if not already hit
+			if(!GetPlayer2Hit())
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400,GetPosY());
+		}
 
-	if(m_bCollision == true)
-		D3D->DrawTextA("Note is colliding",400,100,255,0,0);	
+	// Drawing when player hits note
+	if(GetPlayer1Hit())
+		D3D->DrawText("P1 Hit",10,10,255,0,0);
+		
 }
 
 RECT CBeat::GetCollisionRect()
@@ -204,11 +218,7 @@ void CBeat::SetDirection(BeatDirection dir)
 
 void CBeat::HandleEvent( CEvent* pEvent )
 {
-	if(pEvent->GetEventID() == "notecollision")
-	{
-		if(pEvent->GetParam() == this)
-			m_bCollision = true;		
-	}
+	
 }
 
 ////////////////////////////////////////

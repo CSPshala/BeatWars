@@ -38,14 +38,21 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.musicVolumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSongTitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.NormalSpeedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HalfSpeedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ThirdSpeedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrackPanel = new System.Windows.Forms.Panel();
+            this.DifficultyBox = new System.Windows.Forms.GroupBox();
+            this.EasyButton = new System.Windows.Forms.Button();
+            this.NormalButton = new System.Windows.Forms.Button();
+            this.HardButton = new System.Windows.Forms.Button();
             this.SelectedBeatBox = new System.Windows.Forms.GroupBox();
             this.EditEventButton = new System.Windows.Forms.Button();
             this.BeatEventValueLabel = new System.Windows.Forms.Label();
@@ -92,13 +99,14 @@
             this.loadSImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlayControlPanel = new System.Windows.Forms.Panel();
-            this.PlayLabel = new System.Windows.Forms.Label();
             this.RewindButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PauseButton = new System.Windows.Forms.Button();
             this.FastForwardButton = new System.Windows.Forms.Button();
             this.InfoGroup = new System.Windows.Forms.GroupBox();
+            this.DifficultyValueLabel = new System.Windows.Forms.Label();
+            this.DifficultyLabel = new System.Windows.Forms.Label();
             this.BPMCurrentLabel = new System.Windows.Forms.Label();
             this.BPMLabel = new System.Windows.Forms.Label();
             this.BeatCountLabel = new System.Windows.Forms.Label();
@@ -107,17 +115,16 @@
             this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
-            this.DifficultyBox = new System.Windows.Forms.GroupBox();
-            this.HardButton = new System.Windows.Forms.Button();
-            this.NormalButton = new System.Windows.Forms.Button();
-            this.EasyButton = new System.Windows.Forms.Button();
-            this.DifficultyLabel = new System.Windows.Forms.Label();
-            this.DifficultyValueLabel = new System.Windows.Forms.Label();
+            this.PlaySpeed1xButton = new System.Windows.Forms.Button();
+            this.PlaySpeedHalfButton = new System.Windows.Forms.Button();
+            this.PlaySpeedThirdButton = new System.Windows.Forms.Button();
+            this.PlaySpeedLabel = new System.Windows.Forms.Label();
             this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.DifficultyBox.SuspendLayout();
             this.SelectedBeatBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BeatTimeValueUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BeatPictureBox)).BeginInit();
@@ -138,7 +145,6 @@
             this.toolStrip1.SuspendLayout();
             this.PlayControlPanel.SuspendLayout();
             this.InfoGroup.SuspendLayout();
-            this.DifficultyBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // BeatMakerMenuStrip
@@ -211,24 +217,49 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.musicVolumeToolStripMenuItem,
-            this.setSongTitleToolStripMenuItem});
+            this.setSongTitleToolStripMenuItem,
+            this.musicSpeedToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
-            // musicVolumeToolStripMenuItem
-            // 
-            this.musicVolumeToolStripMenuItem.Name = "musicVolumeToolStripMenuItem";
-            this.musicVolumeToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
-            this.musicVolumeToolStripMenuItem.Text = "Music &Volume";
-            // 
             // setSongTitleToolStripMenuItem
             // 
             this.setSongTitleToolStripMenuItem.Name = "setSongTitleToolStripMenuItem";
-            this.setSongTitleToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.setSongTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.setSongTitleToolStripMenuItem.Text = "&Set Song Title";
             this.setSongTitleToolStripMenuItem.Click += new System.EventHandler(this.setSongTitleToolStripMenuItem_Click);
+            // 
+            // musicSpeedToolStripMenuItem
+            // 
+            this.musicSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NormalSpeedMenuItem,
+            this.HalfSpeedMenuItem,
+            this.ThirdSpeedMenuItem});
+            this.musicSpeedToolStripMenuItem.Name = "musicSpeedToolStripMenuItem";
+            this.musicSpeedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.musicSpeedToolStripMenuItem.Text = "Music Speed";
+            // 
+            // NormalSpeedMenuItem
+            // 
+            this.NormalSpeedMenuItem.Name = "NormalSpeedMenuItem";
+            this.NormalSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NormalSpeedMenuItem.Text = "1x";
+            this.NormalSpeedMenuItem.Click += new System.EventHandler(this.NormalSpeedMenuItem_Click);
+            // 
+            // HalfSpeedMenuItem
+            // 
+            this.HalfSpeedMenuItem.Name = "HalfSpeedMenuItem";
+            this.HalfSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.HalfSpeedMenuItem.Text = "1/2";
+            this.HalfSpeedMenuItem.Click += new System.EventHandler(this.HalfSpeedMenuItem_Click);
+            // 
+            // ThirdSpeedMenuItem
+            // 
+            this.ThirdSpeedMenuItem.Name = "ThirdSpeedMenuItem";
+            this.ThirdSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ThirdSpeedMenuItem.Text = "1/3";
+            this.ThirdSpeedMenuItem.Click += new System.EventHandler(this.ThirdSpeedMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -298,6 +329,48 @@
             this.TrackPanel.MouseLeave += new System.EventHandler(this.TrackPanel_MouseLeave);
             this.TrackPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseMove);
             this.TrackPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TrackPanel_MouseUp);
+            // 
+            // DifficultyBox
+            // 
+            this.DifficultyBox.Controls.Add(this.EasyButton);
+            this.DifficultyBox.Controls.Add(this.NormalButton);
+            this.DifficultyBox.Controls.Add(this.HardButton);
+            this.DifficultyBox.Location = new System.Drawing.Point(432, 145);
+            this.DifficultyBox.Name = "DifficultyBox";
+            this.DifficultyBox.Size = new System.Drawing.Size(138, 119);
+            this.DifficultyBox.TabIndex = 9;
+            this.DifficultyBox.TabStop = false;
+            this.DifficultyBox.Text = "Difficulty";
+            // 
+            // EasyButton
+            // 
+            this.EasyButton.Location = new System.Drawing.Point(7, 75);
+            this.EasyButton.Name = "EasyButton";
+            this.EasyButton.Size = new System.Drawing.Size(75, 23);
+            this.EasyButton.TabIndex = 2;
+            this.EasyButton.Text = "Easy";
+            this.EasyButton.UseVisualStyleBackColor = true;
+            this.EasyButton.Click += new System.EventHandler(this.EasyButton_Click);
+            // 
+            // NormalButton
+            // 
+            this.NormalButton.Location = new System.Drawing.Point(7, 46);
+            this.NormalButton.Name = "NormalButton";
+            this.NormalButton.Size = new System.Drawing.Size(75, 23);
+            this.NormalButton.TabIndex = 1;
+            this.NormalButton.Text = "Normal";
+            this.NormalButton.UseVisualStyleBackColor = true;
+            this.NormalButton.Click += new System.EventHandler(this.NormalButton_Click);
+            // 
+            // HardButton
+            // 
+            this.HardButton.Location = new System.Drawing.Point(7, 18);
+            this.HardButton.Name = "HardButton";
+            this.HardButton.Size = new System.Drawing.Size(75, 23);
+            this.HardButton.TabIndex = 0;
+            this.HardButton.Text = "Hard";
+            this.HardButton.UseVisualStyleBackColor = true;
+            this.HardButton.Click += new System.EventHandler(this.HardButton_Click);
             // 
             // SelectedBeatBox
             // 
@@ -808,7 +881,10 @@
             // 
             // PlayControlPanel
             // 
-            this.PlayControlPanel.Controls.Add(this.PlayLabel);
+            this.PlayControlPanel.Controls.Add(this.PlaySpeedLabel);
+            this.PlayControlPanel.Controls.Add(this.PlaySpeedThirdButton);
+            this.PlayControlPanel.Controls.Add(this.PlaySpeedHalfButton);
+            this.PlayControlPanel.Controls.Add(this.PlaySpeed1xButton);
             this.PlayControlPanel.Controls.Add(this.RewindButton);
             this.PlayControlPanel.Controls.Add(this.PlayButton);
             this.PlayControlPanel.Controls.Add(this.StopButton);
@@ -819,19 +895,10 @@
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
             // 
-            // PlayLabel
-            // 
-            this.PlayLabel.AutoSize = true;
-            this.PlayLabel.Location = new System.Drawing.Point(116, 59);
-            this.PlayLabel.Name = "PlayLabel";
-            this.PlayLabel.Size = new System.Drawing.Size(38, 13);
-            this.PlayLabel.TabIndex = 6;
-            this.PlayLabel.Text = "Space";
-            // 
             // RewindButton
             // 
             this.RewindButton.BackgroundImage = global::BeatMaker.Properties.Resources.rewind32;
-            this.RewindButton.Location = new System.Drawing.Point(3, 24);
+            this.RewindButton.Location = new System.Drawing.Point(3, 3);
             this.RewindButton.Name = "RewindButton";
             this.RewindButton.Size = new System.Drawing.Size(33, 32);
             this.RewindButton.TabIndex = 5;
@@ -842,7 +909,7 @@
             // PlayButton
             // 
             this.PlayButton.BackgroundImage = global::BeatMaker.Properties.Resources.play32;
-            this.PlayButton.Location = new System.Drawing.Point(81, 24);
+            this.PlayButton.Location = new System.Drawing.Point(81, 3);
             this.PlayButton.Name = "PlayButton";
             this.PlayButton.Size = new System.Drawing.Size(32, 32);
             this.PlayButton.TabIndex = 1;
@@ -852,7 +919,7 @@
             // StopButton
             // 
             this.StopButton.BackgroundImage = global::BeatMaker.Properties.Resources.stop32;
-            this.StopButton.Location = new System.Drawing.Point(42, 24);
+            this.StopButton.Location = new System.Drawing.Point(42, 3);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(33, 32);
             this.StopButton.TabIndex = 4;
@@ -862,7 +929,7 @@
             // PauseButton
             // 
             this.PauseButton.BackgroundImage = global::BeatMaker.Properties.Resources.pause32;
-            this.PauseButton.Location = new System.Drawing.Point(119, 24);
+            this.PauseButton.Location = new System.Drawing.Point(119, 3);
             this.PauseButton.Name = "PauseButton";
             this.PauseButton.Size = new System.Drawing.Size(33, 32);
             this.PauseButton.TabIndex = 2;
@@ -872,7 +939,7 @@
             // FastForwardButton
             // 
             this.FastForwardButton.BackgroundImage = global::BeatMaker.Properties.Resources.fastforward32;
-            this.FastForwardButton.Location = new System.Drawing.Point(158, 24);
+            this.FastForwardButton.Location = new System.Drawing.Point(158, 3);
             this.FastForwardButton.Name = "FastForwardButton";
             this.FastForwardButton.Size = new System.Drawing.Size(33, 32);
             this.FastForwardButton.TabIndex = 3;
@@ -898,6 +965,24 @@
             this.InfoGroup.TabIndex = 0;
             this.InfoGroup.TabStop = false;
             this.InfoGroup.Text = "Song Info";
+            // 
+            // DifficultyValueLabel
+            // 
+            this.DifficultyValueLabel.AutoSize = true;
+            this.DifficultyValueLabel.Location = new System.Drawing.Point(81, 78);
+            this.DifficultyValueLabel.Name = "DifficultyValueLabel";
+            this.DifficultyValueLabel.Size = new System.Drawing.Size(29, 13);
+            this.DifficultyValueLabel.TabIndex = 10;
+            this.DifficultyValueLabel.Text = "easy";
+            // 
+            // DifficultyLabel
+            // 
+            this.DifficultyLabel.AutoSize = true;
+            this.DifficultyLabel.Location = new System.Drawing.Point(4, 78);
+            this.DifficultyLabel.Name = "DifficultyLabel";
+            this.DifficultyLabel.Size = new System.Drawing.Size(53, 13);
+            this.DifficultyLabel.TabIndex = 9;
+            this.DifficultyLabel.Text = "Difficulty: ";
             // 
             // BPMCurrentLabel
             // 
@@ -977,65 +1062,45 @@
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
             // 
-            // DifficultyBox
+            // PlaySpeed1xButton
             // 
-            this.DifficultyBox.Controls.Add(this.EasyButton);
-            this.DifficultyBox.Controls.Add(this.NormalButton);
-            this.DifficultyBox.Controls.Add(this.HardButton);
-            this.DifficultyBox.Location = new System.Drawing.Point(432, 145);
-            this.DifficultyBox.Name = "DifficultyBox";
-            this.DifficultyBox.Size = new System.Drawing.Size(138, 119);
-            this.DifficultyBox.TabIndex = 9;
-            this.DifficultyBox.TabStop = false;
-            this.DifficultyBox.Text = "Difficulty";
+            this.PlaySpeed1xButton.Location = new System.Drawing.Point(42, 65);
+            this.PlaySpeed1xButton.Name = "PlaySpeed1xButton";
+            this.PlaySpeed1xButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeed1xButton.TabIndex = 6;
+            this.PlaySpeed1xButton.Text = "1x";
+            this.PlaySpeed1xButton.UseVisualStyleBackColor = true;
+            this.PlaySpeed1xButton.Click += new System.EventHandler(this.PlaySpeed1xButton_Click);
             // 
-            // HardButton
+            // PlaySpeedHalfButton
             // 
-            this.HardButton.Location = new System.Drawing.Point(7, 18);
-            this.HardButton.Name = "HardButton";
-            this.HardButton.Size = new System.Drawing.Size(75, 23);
-            this.HardButton.TabIndex = 0;
-            this.HardButton.Text = "Hard";
-            this.HardButton.UseVisualStyleBackColor = true;
-            this.HardButton.Click += new System.EventHandler(this.HardButton_Click);
+            this.PlaySpeedHalfButton.Location = new System.Drawing.Point(81, 65);
+            this.PlaySpeedHalfButton.Name = "PlaySpeedHalfButton";
+            this.PlaySpeedHalfButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeedHalfButton.TabIndex = 7;
+            this.PlaySpeedHalfButton.Text = "1/2";
+            this.PlaySpeedHalfButton.UseVisualStyleBackColor = true;
+            this.PlaySpeedHalfButton.Click += new System.EventHandler(this.PlaySpeedHalfButton_Click);
             // 
-            // NormalButton
+            // PlaySpeedThirdButton
             // 
-            this.NormalButton.Location = new System.Drawing.Point(7, 46);
-            this.NormalButton.Name = "NormalButton";
-            this.NormalButton.Size = new System.Drawing.Size(75, 23);
-            this.NormalButton.TabIndex = 1;
-            this.NormalButton.Text = "Normal";
-            this.NormalButton.UseVisualStyleBackColor = true;
-            this.NormalButton.Click += new System.EventHandler(this.NormalButton_Click);
+            this.PlaySpeedThirdButton.Location = new System.Drawing.Point(119, 65);
+            this.PlaySpeedThirdButton.Name = "PlaySpeedThirdButton";
+            this.PlaySpeedThirdButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeedThirdButton.TabIndex = 8;
+            this.PlaySpeedThirdButton.Text = "1/3";
+            this.PlaySpeedThirdButton.UseVisualStyleBackColor = true;
+            this.PlaySpeedThirdButton.Click += new System.EventHandler(this.PlaySpeedThirdButton_Click);
             // 
-            // EasyButton
+            // PlaySpeedLabel
             // 
-            this.EasyButton.Location = new System.Drawing.Point(7, 75);
-            this.EasyButton.Name = "EasyButton";
-            this.EasyButton.Size = new System.Drawing.Size(75, 23);
-            this.EasyButton.TabIndex = 2;
-            this.EasyButton.Text = "Easy";
-            this.EasyButton.UseVisualStyleBackColor = true;
-            this.EasyButton.Click += new System.EventHandler(this.EasyButton_Click);
-            // 
-            // DifficultyLabel
-            // 
-            this.DifficultyLabel.AutoSize = true;
-            this.DifficultyLabel.Location = new System.Drawing.Point(4, 78);
-            this.DifficultyLabel.Name = "DifficultyLabel";
-            this.DifficultyLabel.Size = new System.Drawing.Size(53, 13);
-            this.DifficultyLabel.TabIndex = 9;
-            this.DifficultyLabel.Text = "Difficulty: ";
-            // 
-            // DifficultyValueLabel
-            // 
-            this.DifficultyValueLabel.AutoSize = true;
-            this.DifficultyValueLabel.Location = new System.Drawing.Point(81, 78);
-            this.DifficultyValueLabel.Name = "DifficultyValueLabel";
-            this.DifficultyValueLabel.Size = new System.Drawing.Size(29, 13);
-            this.DifficultyValueLabel.TabIndex = 10;
-            this.DifficultyValueLabel.Text = "easy";
+            this.PlaySpeedLabel.AutoSize = true;
+            this.PlaySpeedLabel.Location = new System.Drawing.Point(68, 48);
+            this.PlaySpeedLabel.Name = "PlaySpeedLabel";
+            this.PlaySpeedLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PlaySpeedLabel.Size = new System.Drawing.Size(61, 13);
+            this.PlaySpeedLabel.TabIndex = 9;
+            this.PlaySpeedLabel.Text = "Play Speed";
             // 
             // BeatMaker
             // 
@@ -1058,6 +1123,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.DifficultyBox.ResumeLayout(false);
             this.SelectedBeatBox.ResumeLayout(false);
             this.SelectedBeatBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BeatTimeValueUpDown)).EndInit();
@@ -1084,7 +1150,6 @@
             this.PlayControlPanel.PerformLayout();
             this.InfoGroup.ResumeLayout(false);
             this.InfoGroup.PerformLayout();
-            this.DifficultyBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1135,12 +1200,10 @@
         private System.Windows.Forms.PictureBox DownLeftPictureBox;
         private System.Windows.Forms.PictureBox DownRightPictureBox;
         private System.Windows.Forms.PictureBox DownPictureBox;
-        private System.Windows.Forms.Label PlayLabel;
         private System.Windows.Forms.Label TimeLengthLabel;
         private System.Windows.Forms.Label TimeCurrentLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LengthLabel;
-        private System.Windows.Forms.ToolStripMenuItem musicVolumeToolStripMenuItem;
         private System.Windows.Forms.GroupBox ModeBox;
         private System.Windows.Forms.RadioButton BothRadio;
         private System.Windows.Forms.RadioButton NotesRadio;
@@ -1176,6 +1239,14 @@
         private System.Windows.Forms.Button HardButton;
         private System.Windows.Forms.Label DifficultyValueLabel;
         private System.Windows.Forms.Label DifficultyLabel;
+        private System.Windows.Forms.ToolStripMenuItem musicSpeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HalfSpeedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ThirdSpeedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem NormalSpeedMenuItem;
+        private System.Windows.Forms.Label PlaySpeedLabel;
+        private System.Windows.Forms.Button PlaySpeedThirdButton;
+        private System.Windows.Forms.Button PlaySpeedHalfButton;
+        private System.Windows.Forms.Button PlaySpeed1xButton;
     }
 }
 
