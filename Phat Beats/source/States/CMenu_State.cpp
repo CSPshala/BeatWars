@@ -32,7 +32,7 @@ void CMenu_State::Enter(void)
 {	
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
-	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor.png");
+	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
 	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
 	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
@@ -121,8 +121,7 @@ void CMenu_State::Render(void)
 	CBitmapFont::GetInstance()->SetScale(4.5f);
 	//CBitmapFont::GetInstance()->PrintInRect("BeatWars",&rTitle,ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
 	CSGD_TextureManager::GetInstance()->Draw(m_nTile,125,1,.9f,.9f,&rTitle);
-	CBitmapFont::GetInstance()->SetScale(2.0f);
-	CBitmapFont::GetInstance()->PrintInRect("new game\nload\noptions\ncredits\nlevel select\nexit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	
 	/*
 RECT rNewGame = {0,175,800,205};
 	RECT rLoad = {0,205,800,235};
@@ -152,41 +151,45 @@ RECT rNewGame = {0,175,800,205};
 	{
 	case MAINMENU_NEWGAME:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_NEWGAME) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_NEWGAME));
 		}
 		break;
 
 	case MAINMENU_LOAD: // skills test for now
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LOAD) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_LOAD) );
 		}
 		break;
 
 	case MAINMENU_OPTIONS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_OPTIONS) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_OPTIONS));
 		}
 		break;	
 
 	case MAINMENU_CREDITS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_CREDITS) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_CREDITS));
 		}
 		break;
 
 	case MAINMENU_LEVEL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LEVEL) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_LEVEL));
 		}
 		break;
 
 	case MAINMENU_EXIT:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_EXIT) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_EXIT));
 		}
 		break;
 	}
 	
+	CBitmapFont::GetInstance()->SetScale(2.1f);
+	CBitmapFont::GetInstance()->PrintInRect("new game\nload\noptions\ncredits\nlevel select\nexit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->SetScale(2.0f);
+	CBitmapFont::GetInstance()->PrintInRect("new game\nload\noptions\ncredits\nlevel select\nexit", &rBody, ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	CFXManager::GetInstance()->Render();
 	
