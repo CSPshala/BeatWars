@@ -89,7 +89,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_CLOSE:
 		{
 			// Sends us a WM_DESTROY
-			DestroyWindow(hWnd);			
+			DestroyWindow(hWnd);
 		}
 		break;
 
