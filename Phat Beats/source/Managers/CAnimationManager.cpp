@@ -239,7 +239,6 @@ void CAnimationManager::HandleEvent(CEvent* pEvent)
 {
 	if( pEvent->GetEventID() == "comboend")
 	{
-		Reset();
 		Play();
 	}
 }

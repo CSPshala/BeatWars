@@ -188,13 +188,7 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
 				if(pPlayer->CheckCollision(&(*i)))
 				{
-					++numHit;
 					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
-				if( numHit > 5 )
-				{
-					CEventSystem::GetInstance()->SendEvent("comboend");
-					numHit = 0;
-				}
 				}
 				// Note has collided before and is not colliding now
 				// so this means it's past the point where player can hit
@@ -202,9 +196,19 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				{
 					i->SetIsActive(false);					
 				}
-				}
+
+
+			
+		}		
+
+		++numHit;
+
+		if( numHit > 5 )
+		{
+			CEventSystem::GetInstance()->SendEvent("comboend");
+			numHit = 0;
 		}
-		
+
 		return true;
 	}
 	else
