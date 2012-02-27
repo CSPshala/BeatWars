@@ -76,6 +76,9 @@ void CBeat::ResetBeat()
 	SetPosX(GetOriginalXPos());
 	SetPosY(GetOriginalYPos());
 	SetIsActive(false);
+	SetHasCollided(false);
+	SetPlayer1Hit(false);
+	SetPlayer2Hit(false);
 }
 
 void CBeat::Update(float fElapsedTime)

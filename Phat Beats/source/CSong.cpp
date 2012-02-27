@@ -155,7 +155,7 @@ void CSong::ResetSong()
 	SetCurrentBeatIndex(0);
 	SetNextBeatIndex(1);
 
-
+	m_vHittableBeats.clear();
 	
 	m_vActiveBeats.clear();
 

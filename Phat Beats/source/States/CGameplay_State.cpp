@@ -39,6 +39,7 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 
+	BeatManager->LoadSong("cantina.xml");
 	BeatManager->LoadSong("noteeventtest.xml");
 	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
@@ -58,7 +59,7 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
-		BeatManager->Play("Avicii");
+		BeatManager->Play("cantina");
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
 	{
