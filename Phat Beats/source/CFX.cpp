@@ -60,7 +60,10 @@ void CFX::Refresh(void)
 	m_listDeadEmitters.clear();
 
 	for(i = m_listAliveEmitters.begin(); i != m_listAliveEmitters.end(); ++i)
+	{
 		(*i)->SetCurrentLife(0.0f);
+		(*i)->SetTick(0.0f);
+	}
 }
 
 void CFX::AddEffect(CEmitter* pEffect)

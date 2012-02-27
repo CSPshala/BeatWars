@@ -40,9 +40,7 @@ class CAnimationManager : public IListener
 		void  HandleEvent(CEvent* pEvent);
 	
 		CAnimationManager();
-		~CAnimationManager()
-		{
-	CEventSystem::GetInstance()->UnregisterClient("comboend",this);}
+		~CAnimationManager() { CEventSystem::GetInstance()->UnregisterClient("comboend",this); }
 	 
 	private:
 

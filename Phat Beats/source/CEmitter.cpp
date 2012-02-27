@@ -150,7 +150,7 @@ void CEmitter::Update(float fElapsedTime)
 					break;
 			}
 
-			m_fUpdate -= m_fSpawnRate;
+			SetTick(0.0f);
 		}
 	}
 }

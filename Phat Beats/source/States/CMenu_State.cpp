@@ -11,6 +11,7 @@
 #include "../Globals.h"
 #include "../Managers/CFXManager.h"
 #include "CLevelSelect_State.h"
+#include "CLU_State.h"
 
 CMenu_State::CMenu_State()
 {
@@ -71,7 +72,8 @@ bool CMenu_State::Input(void)
 		{
 		case MAINMENU_NEWGAME:
 			{
-				CGame::GetInstance()->ChangeState( CGameplay_State::GetInstance() );
+				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 			}
 			break;
 

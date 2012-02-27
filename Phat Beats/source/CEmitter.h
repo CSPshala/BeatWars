@@ -118,6 +118,7 @@ public:
 	inline const void SetEndScale(const float fNewEndScale) {m_fEndScale = fNewEndScale;}
 	inline const void SetStartRotation(const float fNewStartRotation) {m_fStartRotation = fNewStartRotation;}
 	inline const void SetEndRotation(const float fNewEndRotation) {m_fEndRotation = fNewEndRotation;}
+	inline const void SetTick(const float fTick) {m_fUpdate = fTick;}
 };
 
 #endif
