@@ -446,16 +446,6 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
-		// Getting the range where a beat hit is registered
-		// If a player hits a beat in this timeframe it registers as a hit.
-		//int frontMargin = GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetTimeOfBeat() - MARGINOFERROR;
-		//int backMargin = GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetTimeOfBeat() + MARGINOFERROR;
-
-		// Checking time and direction and character.
-		/*if(aPlayer->GetMostRecentKeyPress().nTime <= backMargin && aPlayer->GetMostRecentKeyPress().nTime >= frontMargin
-			&& aPlayer->GetAimingDirection() == GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetDirection()
-			&& aPlayer->GetMostRecentKeyPress().cHitNote == GetCurrentlyPlayingSong()->GetActiveBeatList().front().GetKeyToPress())*/
-
 		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
 		{
 			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()

@@ -98,7 +98,7 @@ void CGameplay_State::Update(void)
 		AnimationManager.Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 		// Checking collisions
 		CObjectManager::GetInstance()->CheckCollisions(m_Player1);
-		//CObjectManager::GetInstance()->CheckCollisions(m_Player2);
+		CObjectManager::GetInstance()->CheckCollisions(m_Player2);
 
 		// Taking care of player input
 		BeatManager->CheckPlayerInput(m_Player1);

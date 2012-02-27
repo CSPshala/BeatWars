@@ -87,6 +87,8 @@ void CPlayer::Update(float fElapsedTime)
 {
 	// Just splitting up input for both players so this dosen't get all huge and gross
 	// (like your mom)
+	// Also comment out P2's handling for debugging, because right now P1 and P2 have
+	// same control scheme, so you'd prolly be moving both cones as one if you don't.
 	switch(m_nType)
 	{
 	case OBJ_PLAYER1:
@@ -94,7 +96,7 @@ void CPlayer::Update(float fElapsedTime)
 		break;
 
 	case OBJ_PLAYER2:
-		P2InputHandling();
+		//P2InputHandling();
 		break;
 
 	case OBJ_AI:
@@ -137,10 +139,20 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 	case OBJ_BEAT:
 		{
 			RECT rTemp;
+			RECT beatCollisionRect;
 			// Players will only ever collide with notes
 			CBeat* pBeat = (CBeat*)pBase;
 
-			if(IntersectRect(&rTemp,&GetCollisionRect(),&pBeat->GetCollisionRect()))
+			beatCollisionRect = pBeat->GetCollisionRect();
+
+			// Adjusting beat for Player2 (since all beats are really located at P1's position)
+			if(GetType() == OBJ_PLAYER2 || GetType() == OBJ_AI)
+			{
+				beatCollisionRect.left += 400;
+				beatCollisionRect.right += 400;
+			}
+
+			if(IntersectRect(&rTemp,&GetCollisionRect(),&beatCollisionRect))
 			{
 				pBeat->SetHasCollided(true);
 				return true;
@@ -223,7 +235,50 @@ void CPlayer::P1InputHandling()
 
 void CPlayer::P2InputHandling()
 {
+	// Don't ever have p2 input running same time as P1.  Control schemes are the same
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7))
+		SetAimingDirection(LEFTUP);
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1))
+		SetAimingDirection(LEFTDOWN);
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4))
+		SetAimingDirection(LEFT);
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9))
+		SetAimingDirection(RIGHTUP);
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3))
+		SetAimingDirection(RIGHTDOWN);
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6))
+		SetAimingDirection(RIGHT);
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8))
+		SetAimingDirection(UP);
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
+		SetAimingDirection(DOWN);
+	
+	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
+	{
+		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
+		unsigned int nTime;
+		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
+
+		if(DI->KeyPressed(DIK_W))
+		{			
+			m_qKeyPresses.push(TBeatHit('w',nTime));
+		}
+		else if(DI->KeyPressed(DIK_A))
+		{
+			m_qKeyPresses.push(TBeatHit('a',nTime));
+		}
+		else if(DI->KeyPressed(DIK_S))
+		{
+			m_qKeyPresses.push(TBeatHit('s',nTime));
+		}
+		else if(DI->KeyPressed(DIK_D))
+		{
+			m_qKeyPresses.push(TBeatHit('d',nTime));
+		}
+	}
+
+	DI->ClearInput();
 }
 
 void CPlayer::AIHandling()
