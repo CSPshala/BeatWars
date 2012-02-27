@@ -43,6 +43,8 @@ namespace BeatMaker
         SetTitle setTitleWindow = null;
         SetEvent setEventWindow = null;
         string szDifficulty = "easy";
+        float playSpeed = 1.0f; // Play speed modifier in MS (2 = half etc)
+        float originalFreq = 0.0f;
 
         // GAME LOOP
         public bool bRunning = true;
@@ -53,14 +55,13 @@ namespace BeatMaker
         bool bMouseSelect = false;
         public int nMouseSelectedIndex = -1;
         public int nMouseClickedIndex = -1;
-        Point pMouseSelectedCoords;
-        Point pMouseClickedIndex;
-        Beat MouseAddBeat = new Beat();
-        string szClickedEventEdit = "";
+        Point pMouseSelectedCoords;        
+        Beat MouseAddBeat = new Beat();        
         int nMouseScroll = 0;
         Point MouseSelectStartPoint;
         Rectangle MouseSelectRect;
         List<int> SelectedBeats = new List<int>();
+        string szClickedEventEdit;
 
         // COPY PASTE STUFF
         List<int> CopiedBeats = new List<int>();
@@ -167,7 +168,7 @@ namespace BeatMaker
                 fmodChannel.isPlaying(ref bPlaying);
 
                 // Updating current song time in MS
-                fmodChannel.getPosition(ref nCurrentPositionMS, FMOD.TIMEUNIT.MS);               
+                fmodChannel.getPosition(ref nCurrentPositionMS, FMOD.TIMEUNIT.MS);  
 
                 // Updating labels in info pane
 
@@ -1324,7 +1325,6 @@ namespace BeatMaker
                 listBeats[nMouseClickedIndex].TimeOfBeat = (uint)BeatTimeValueUpDown.Value;
         }       
 
-
         //*****************PLAYBACK AND EDITOR BUTTONS*******//
 
         private void PlayButton_Click(object sender, EventArgs e)
@@ -1412,6 +1412,21 @@ namespace BeatMaker
                 // Setting it so it gets sorted
                 bListChanged = true;
             }
+        }
+
+        private void PlaySpeed1xButton_Click(object sender, EventArgs e)
+        {
+            NormalSpeedMenuItem_Click(null, null);
+        }
+
+        private void PlaySpeedHalfButton_Click(object sender, EventArgs e)
+        {
+            HalfSpeedMenuItem_Click(null, null);
+        }
+
+        private void PlaySpeedThirdButton_Click(object sender, EventArgs e)
+        {
+            ThirdSpeedMenuItem_Click(null, null);
         }
 
         //*****************MAIN MENU ITEM STUFF***********************//
@@ -1930,6 +1945,36 @@ namespace BeatMaker
             }
         }
 
+        private void ThirdSpeedMenuItem_Click(object sender, EventArgs e)
+        {
+            playSpeed = 0.3f;
+            float freq = 0.0f;
+
+            // Setting frequency back to normal first
+            NormalSpeedMenuItem_Click(null, null);
+
+            fmodChannel.getFrequency(ref freq);
+            fmodChannel.setFrequency(playSpeed * freq);
+        }
+
+        private void HalfSpeedMenuItem_Click(object sender, EventArgs e)
+        {
+            playSpeed = 0.5f;
+            float freq = 0.0f;
+
+            // Setting frequency back to normal first
+            NormalSpeedMenuItem_Click(null, null);
+
+            fmodChannel.getFrequency(ref freq);          
+
+            fmodChannel.setFrequency(playSpeed * freq);
+        }
+
+        private void NormalSpeedMenuItem_Click(object sender, EventArgs e)
+        {       
+            fmodChannel.setFrequency(originalFreq);           
+        }
+
         //*****************FMOD SPECIFIC METHODS**************//
         private void LoadMusic(String szFilePath)
         {
@@ -1961,7 +2006,13 @@ namespace BeatMaker
             TimeLengthLabel.Text = ((nLengthMS * 0.001).ToString("F1")) + "(s)";
 
             
+            
             // GOOD TO GO!
+
+            PlayButton_Click(null, null);
+            PauseButton_Click(null, null);
+
+            fmodChannel.getFrequency(ref originalFreq);
         }
 
         private void GetWaveform()
@@ -2220,6 +2271,8 @@ namespace BeatMaker
             for (int i = 0; i < SelectedBeats.Count; ++i)
                 listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
         }
+
+       
 
         
     }

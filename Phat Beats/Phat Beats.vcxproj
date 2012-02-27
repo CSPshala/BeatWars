@@ -110,6 +110,7 @@
     <ClCompile Include="source\States\CGameplay_State.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
+    <ClCompile Include="source\States\CLU_State.cpp" />
     <ClCompile Include="source\States\CMenu_State.cpp" />
     <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="source\States\CGameplay_State.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />
+    <ClInclude Include="source\States\CLU_State.h" />
     <ClInclude Include="source\States\CMenu_State.h" />
     <ClInclude Include="source\States\COptionsState.h" />
     <ClInclude Include="source\States\CPause_State.h" />

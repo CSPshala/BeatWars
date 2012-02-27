@@ -33,6 +33,7 @@ CEmitter::CEmitter()
 	m_fCurLife = 0.0f;
 	m_d3dSource = D3DBLEND_SRCALPHA;
 	m_d3dDestination = D3DBLEND_ONE;
+	m_fUpdate = 0.0f;
 
 	for(short i = 0; i < m_nMaxParticles; ++i)
 		m_ListDeadParticles.push_back(new CParticle());
@@ -115,6 +116,7 @@ void CEmitter::RecycleParticle()
 void CEmitter::Update(float fElapsedTime)
 {
 	m_fCurLife += fElapsedTime;
+	m_fUpdate += fElapsedTime;
 
 	if(m_vTextureList.size())
 	{
@@ -138,7 +140,7 @@ void CEmitter::Update(float fElapsedTime)
 
 		}
 
-		if(m_fCurLife > m_fSpawnRate)
+		if(m_fUpdate > m_fSpawnRate)
 		{
 			for(int i = 0; i < m_nNumParticlesToSpit; ++i)
 			{
@@ -148,7 +150,7 @@ void CEmitter::Update(float fElapsedTime)
 					break;
 			}
 
-			m_fCurLife -= m_fSpawnRate;
+			SetTick(0.0f);
 		}
 	}
 }
