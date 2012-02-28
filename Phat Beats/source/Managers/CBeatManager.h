@@ -41,7 +41,7 @@ public:
 		void Update();
 		void Render();
 		void CheckPlayerInput(CPlayer* aPlayer);
-
+		
 		static CBeatManager* GetInstance();
 		
 	/********** Public Accessors ************/
@@ -51,12 +51,12 @@ public:
 		string				GetCurrentlyPlayingSongName();
 		bool				IsPaused() {return m_bPause;}
 		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
-		
+		string GetFileName() {return m_szFileName;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
-
+		void SetFileName(string szFileName) {m_szFileName = szFileName;}
 	/********** Singleton Pointer *************/
 			
 		
@@ -82,6 +82,7 @@ private:
 		// Index into vector of songs to play song
 		int	 m_nCurrentlyPlayingSongIndex;
 		bool fuckyou;
+		string m_szFileName;
 		/********** Private Accessors ************/
 		
 		int GetCurrentlyPlayingSongIndex() {return m_nCurrentlyPlayingSongIndex;}

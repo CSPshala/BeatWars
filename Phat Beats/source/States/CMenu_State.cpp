@@ -36,9 +36,17 @@ void CMenu_State::Enter(void)
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
+<<<<<<< HEAD
 	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
 	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+=======
+	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
+	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
+	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	//m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
+
+>>>>>>> JeremyDesha
 }
 
 bool CMenu_State::Input(void)
@@ -155,37 +163,37 @@ RECT rNewGame = {0,175,800,205};
 	{
 	case MAINMENU_NEWGAME:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_NEWGAME),2.0f,3.0f);
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_NEWGAME),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_LOAD: // skills test for now
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LOAD),2.0f,3.0f );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_LOAD),2.0f,3.0f );
 		}
 		break;
 
 	case MAINMENU_OPTIONS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_OPTIONS),2.0f,3.0f);
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_OPTIONS),2.0f,3.0f);
 		}
 		break;	
 
 	case MAINMENU_CREDITS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_CREDITS),2.0f,3.0f);
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_CREDITS),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_LEVEL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LEVEL),2.0f,3.0f);
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_LEVEL),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_EXIT:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_EXIT),2.0f,3.0f);
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 50, topSelection  + (spacing * MAINMENU_EXIT),2.0f,3.0f);
 		}
 		break;
 	}

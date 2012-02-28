@@ -43,7 +43,7 @@ bool CSave_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 				return false;
 				*/
-		
+
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
@@ -74,20 +74,22 @@ bool CSave_State::Input(void)
 		case SAVEMENU_SLOTONE:
 			{
 				m_nSlotNumber = 1;
-				
+				saveGame();
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
 			{
 				m_nSlotNumber = 2;
+				saveGame();
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
 			{
 				m_nSlotNumber = 3;
+				saveGame();
 			}
 			break;
-		
+
 		}
 	}
 	return true;
@@ -149,5 +151,21 @@ CSave_State* CSave_State::GetInstance()
 
 void CSave_State::saveGame()
 {
+	ofstream outFile("resource/saves/SaveGame.fu");
+
+	if (outFile.is_open())
+	{
+		if (outFile.good())
+		{
+			outFile<<m_nSlotNumber;
+			outFile<<"\n";
+			outFile<<CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<
+				CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<"\n";
+			outFile<<CBeatManager::GetInstance()->GetFileName();
+			
+		}
+		outFile.close();
+	}
 	
+
 }

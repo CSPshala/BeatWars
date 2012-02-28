@@ -34,6 +34,7 @@ CBeatManager::CBeatManager()
 	CEventSystem::GetInstance()->RegisterClient("test.event",this);
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
+
 }
 
 CBeatManager::~CBeatManager()
@@ -54,7 +55,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
 	szPath += szFileName;
-
+	SetFileName(szFileName);
 	if(doc.LoadFile(szPath.c_str()) == false)
 		return false;
 
