@@ -740,7 +740,7 @@ namespace Animation_Tool
                         XAttribute xCollisionHeight = new XAttribute("CollisionHeight", lAnimations[i].lFrames[j].CollisionHeight);
                         xFrame.Add(xCollisionHeight);
 
-                        if (lAnimations[i].lFrames[j].TriggerEvent != "")
+                        if (lAnimations[i].lFrames[j].TriggerEvent != "" || lAnimations[i].lFrames[j].TriggerEvent != null)
                         {
                             XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
                             xFrame.Add(xEvent);
