@@ -43,10 +43,11 @@ void CGameplay_State::Enter(void)
 	BeatManager->LoadSong("noteeventtest.xml");
 	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 
 	// Setting up Players
 	m_Player1 = new CPlayer(OBJ_PLAYER1);
-	m_Player2 = new CPlayer(OBJ_PLAYER2);
+	m_Player2 = new CPlayer(OBJ_AI);
 
 	// Adding players to Object Manager
 	CObjectManager::GetInstance()->AddObject(m_Player1);
@@ -103,7 +104,7 @@ void CGameplay_State::Update(void)
 
 		// Taking care of player input
 		BeatManager->CheckPlayerInput(m_Player1);
-
+		BeatManager->CheckPlayerInput(m_Player2);
 	}
 
 	
@@ -111,21 +112,22 @@ void CGameplay_State::Update(void)
 
 void CGameplay_State::Render(void)
 {
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,0.5f,0.5f);
 	// Drawing everything before this
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-		
+	
 	AnimationManager.Render();
 	CFXManager::GetInstance()->Render();
-
+	
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
-
+	
 	if (dickhead == false)
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 	}
 	
-
+	
 
 }
 

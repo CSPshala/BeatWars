@@ -17,11 +17,13 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
-
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 // Forward Declarations
-class Bitmap_Font;
-
+class CBitmapFont;
+enum {LOADMENU_SLOTONE, LOADMENU_SLOTTWO, LOADMENU_SLOTTHREE, NUM_LOADMENU_OPTIONS};
 class CLoad_State : public IGameState
 {
 public:
@@ -43,10 +45,10 @@ private:
 	//		Constructor
 	CLoad_State();
 
-
+	void loadGame();
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
-	Bitmap_Font* m_bMenu_Font;
+	CBitmapFont* m_bMenu_Font;
 	int m_nMenuSelection;
 
 		// Asset IDs
