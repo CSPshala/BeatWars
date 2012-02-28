@@ -82,5 +82,45 @@ const bool CFX::IsDead(void)
 		return true;
 
 	return false;
+}
 
+const void CFX::MoveEffect(const D3DXVECTOR2 tNewPos)
+{
+	std::vector<CEmitter*>::iterator i;
+	RECT rectNew;
+	D3DXVECTOR2 vGravDiff;
+	int nWidth;
+	int nHeight;
+
+	for(i = m_listAliveEmitters.begin(); i != m_listAliveEmitters.end(); ++i)
+	{
+		vGravDiff = (*i)->GetGravityPosition();
+
+		nWidth = (*i)->GetRange().right - (*i)->GetRange().left;
+		nHeight = (*i)->GetRange().bottom - (*i)->GetRange().top;
+
+		rectNew.left = (int)tNewPos.x;
+		rectNew.right = rectNew.left + nWidth;
+		rectNew.top = (int)tNewPos.y;
+		rectNew.bottom = rectNew.top + nHeight;
+
+		(*i)->SetRange(rectNew);
+		(*i)->SetGravityPosition(vGravDiff);
+	}
+
+	for(i = m_listDeadEmitters.begin(); i != m_listDeadEmitters.end(); ++i)
+	{
+		vGravDiff = (*i)->GetGravityPosition() - tNewPos;
+
+		nWidth = rectNew.right - rectNew.left;
+		nHeight = rectNew.bottom - rectNew.top;
+
+		rectNew.left = (int)tNewPos.x;
+		rectNew.right = rectNew.left + nWidth;
+		rectNew.top = (int)tNewPos.y;
+		rectNew.bottom = rectNew.top + nHeight;
+
+		(*i)->SetRange(rectNew);
+		(*i)->SetGravityPosition(tNewPos + vGravDiff);
+	}
 }

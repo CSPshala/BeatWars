@@ -223,13 +223,13 @@ namespace ParticleFX
                                 // X Location
                                 X.WriteStartAttribute("X");
                                 {
-                                    X.WriteValue(M.Gravity.X.ToString());
+                                    X.WriteValue((M.Gravity.X - M.SpawnRange.X).ToString());
                                 }
                                 X.WriteEndAttribute();
                                 // Y Location
                                 X.WriteStartAttribute("Y");
                                 {
-                                    X.WriteValue(M.Gravity.Y.ToString());
+                                    X.WriteValue((M.Gravity.Y - M.SpawnRange.Y).ToString());
                                 }
                                 X.WriteEndAttribute();
                                 // Pull Factor

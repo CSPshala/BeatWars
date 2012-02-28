@@ -58,8 +58,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		SetPosY(300.0f - 128.0f);
 		break;
 	case OBJ_AI:
-		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p1cone.png"));
-		SetPosX(200.0f - 64.0f); // Ditto
+		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
+		SetPosX(600.0f - 64.0f); // Ditto
 		SetPosY(300.0f - 128.0f);
 		break;
 	}
@@ -96,7 +96,7 @@ void CPlayer::Update(float fElapsedTime)
 		break;
 
 	case OBJ_PLAYER2:
-		//P2InputHandling();
+		P2InputHandling();
 		break;
 
 	case OBJ_AI:
@@ -283,21 +283,55 @@ void CPlayer::P2InputHandling()
 
 void CPlayer::AIHandling()
 {
+	CBeatManager* AIbeatDir;
+	AIbeatDir = CBeatManager::GetInstance();
+	CSong* AiSong;
+	AiSong = AIbeatDir->GetCurrentlyPlayingSong();
+	CBeat* hitPlayer;
 	
-	if(m_vAIBeats.size() != 0)
+	if (AiSong->GetHittableBeatList().size() > 0)
 	{
-				
-		if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
+		for (int i = 0; i < AiSong->GetHittableBeatList().size(); ++i)
 		{
-			m_IbwriteShit = true;
-			
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFT)
+				SetAimingDirection(LEFT);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == UP)
+				SetAimingDirection(UP);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == RIGHT)
+				SetAimingDirection(RIGHT);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFTUP)
+				SetAimingDirection(LEFTUP);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTUP)
+				SetAimingDirection(RIGHTUP);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == DOWN)
+				SetAimingDirection(DOWN);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == LEFTDOWN)
+				SetAimingDirection(LEFTDOWN);
+			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTDOWN)
+				SetAimingDirection(RIGHTDOWN);
 		}
-		else
-			m_IbwriteShit = false;
 
-		m_vAIBeats.pop_back();
+		if(m_vAIBeats.size() != 0)
+		{
 
+			if (CAiManager::GetInsatance()->RandomDifficult(2) == true)
+			{
+				m_IbwriteShit = true;
+
+				hitPlayer->SetPlayer2Hit(true);
+
+			}
+			else
+			{
+				m_IbwriteShit = false;
+				
+			}
+
+			m_vAIBeats.pop_back();
+
+		}
 	}
+	
 }
 
 ////////////////////////////////////////

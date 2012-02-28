@@ -18,6 +18,9 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 // Forward Declarations
 class CBitmapFont;
@@ -34,6 +37,8 @@ public:
 	static CSave_State* GetInstance();	
 
 private:
+	
+
 	// Proper singleton
 	CSave_State(const CSave_State&);
 	//		Assignment op
@@ -43,6 +48,7 @@ private:
 	//		Constructor
 	CSave_State();
 
+	void saveGame();
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
@@ -56,13 +62,9 @@ private:
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
+	int m_nSlotNumber;
 
-	struct gameSave
-	{
-		int level;
-		string SavedFileNameSong;
-		CPlayer* curPlayer;
-	};
+	
 	
 };
 

@@ -771,5 +771,11 @@ namespace ParticleFX
             if(Emitter != null)
                 Emitter.ParticleDurationMax = (float)NudMaxParticleDuration.Value;
         }
+
+        private void NudLifeDuration_ValueChanged(object sender, EventArgs e)
+        {
+            if (Emitter != null)
+                Emitter.LifeSpan = (float)NudLifeDuration.Value;
+        }
     }
 }

@@ -348,7 +348,7 @@ namespace Animation_Tool
                         }
                         else
                         {
-                            if( listBox2.SelectedIndex < listBox2.Items.Count)
+                            if( listBox2.SelectedIndex < lAnimations[listBox1.SelectedIndex].lFrames.Count)
                             {
                             Rectangle currRect = new Rectangle(lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawX,
                                                                 lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].DrawY,
@@ -554,6 +554,7 @@ namespace Animation_Tool
                 textBox2.Text = lAnimations[listBox1.SelectedIndex].Name;
 
                 listBox2.Items.Clear();
+                
 
                 int num = 0;
 
@@ -564,7 +565,7 @@ namespace Animation_Tool
                     num += 1;
                 }
 
-                listBox2.SelectedIndex = listBox2.Items.Count - 1;
+                listBox2.ClearSelected();
                 listBox2.Invalidate();
             }
         }
@@ -591,7 +592,7 @@ namespace Animation_Tool
                 textBox1.Text = lAnimations[listBox1.SelectedIndex].lFrames[listBox2.SelectedIndex].TriggerEvent;
                 numericUpDown6.Value = anchorX;
                 numericUpDown5.Value = anchorY;
-                numericUpDown7.Value = (decimal)fDuration;
+                numericUpDown7.Value = (int)fDuration;
 
                 if (bFrame)
                 {
@@ -739,7 +740,7 @@ namespace Animation_Tool
                         XAttribute xCollisionHeight = new XAttribute("CollisionHeight", lAnimations[i].lFrames[j].CollisionHeight);
                         xFrame.Add(xCollisionHeight);
 
-                        if (lAnimations[i].lFrames[j].TriggerEvent != "")
+                        if (lAnimations[i].lFrames[j].TriggerEvent.ToString() != "" && lAnimations[i].lFrames[j].TriggerEvent != null)
                         {
                             XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
                             xFrame.Add(xEvent);

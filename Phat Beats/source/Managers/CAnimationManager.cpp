@@ -165,6 +165,7 @@ bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
 			//*********************Setting Event**********************************//
 			if( pNewFrame->Attribute("Event") == NULL)
 				return false;
+
 			const char* szEvent = NULL;
 				char buffer[128] = {0};
 
@@ -207,31 +208,31 @@ bool CAnimationManager::UnloadAnimations()
 	return true;
 }
 
-void CAnimationManager::Update(float fElapsedTime)
+void CAnimationManager::Update(float fElapsedTime,CAnimation* pAnim)
 {
 	if( m_vecAnimations.size() > 0)
-		m_vecAnimations[0]->Update(fElapsedTime);
+		pAnim->Update(fElapsedTime);
 }
-void CAnimationManager::Render()
+void CAnimationManager::Render(CAnimation* pAnim)
 {
 	if( m_vecAnimations.size() > 0)
-		m_vecAnimations[0]->Render();
+		pAnim->Render();
 }
-void CAnimationManager::Play()	
+void CAnimationManager::Play(CAnimation* pAnim)	
 {
 	if( m_vecAnimations.size() > 0)
-		m_vecAnimations[0]->Play();
+		pAnim->Play();
 }
-void CAnimationManager::Stop()	
+void CAnimationManager::Stop(CAnimation* pAnim)	
 {
 	if( m_vecAnimations.size() > 0)
-		m_vecAnimations[0]->Stop();
+		pAnim->Stop();
 	
 }
-void CAnimationManager::Reset()	
+void CAnimationManager::Reset(CAnimation* pAnim)	
 {
 	if( m_vecAnimations.size() > 0)
-	m_vecAnimations[0]->Reset();
+	pAnim->Reset();
 
 }
 
@@ -239,6 +240,6 @@ void CAnimationManager::HandleEvent(CEvent* pEvent)
 {
 	if( pEvent->GetEventID() == "comboend")
 	{
-		Play();
+
 	}
 }

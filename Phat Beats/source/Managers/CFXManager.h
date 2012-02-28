@@ -12,6 +12,7 @@
 #include <list>
 #include <string>
 #include <map>
+#include "../SGD_Math.h"
 using std::string;
 
 class CFXManager
@@ -28,6 +29,7 @@ public:
 	const void UnloadAllFX(void);
 	const void QueueParticle(string szKey);
 	const void DequeueParticle(string szKey);
+	const void MoveEffectTo(std::string szID, const D3DXVECTOR2 tNewPos);
 
 	static CFXManager* GetInstance();
 
