@@ -37,13 +37,8 @@ void CMenu_State::Enter(void)
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
 	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
-<<<<<<< HEAD
 	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
-=======
-	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
-	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
->>>>>>> master
 }
 
 bool CMenu_State::Input(void)
