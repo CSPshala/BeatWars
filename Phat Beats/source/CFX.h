@@ -18,6 +18,7 @@ public:
 	void Render();
 	void Update(float fElapsedTime);
 	void AddEffect(CEmitter* pEffect);
+	void Refresh(void);
 	const bool IsDead(void);
 	const bool GetRepeat(void) {return m_bRepeat;}
 	const void SetRepeat(const bool bNewRepeat) {m_bRepeat = bNewRepeat;}

@@ -12,6 +12,7 @@
 #include "../CGame.h"
 #include "CPause_State.h"
 #include "../Managers/CAiManager.h"
+#include "../Managers/CFXManager.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -38,12 +39,13 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 
+	BeatManager->LoadSong("cantina.xml");
 	BeatManager->LoadSong("noteeventtest.xml");
-	AnimationManager.LoadAnimation("Anim.xml");
+	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 
 	// Setting up Players
-	m_Player1 = new CPlayer(OBJ_AI);
+	m_Player1 = new CPlayer(OBJ_PLAYER1);
 	m_Player2 = new CPlayer(OBJ_PLAYER2);
 
 	// Adding players to Object Manager
@@ -57,7 +59,7 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
-		BeatManager->Play("Avicii");
+		BeatManager->Play("cantina");
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
 	{
@@ -88,6 +90,7 @@ void CGameplay_State::Update(void)
 {
 	
 	// Updating Objects (if beatmanager isn't paused)
+	CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	if(!BeatManager->IsPaused())
 	{
 		// Updating song
@@ -96,7 +99,11 @@ void CGameplay_State::Update(void)
 		AnimationManager.Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 		// Checking collisions
 		CObjectManager::GetInstance()->CheckCollisions(m_Player1);
-		//CObjectManager::GetInstance()->CheckCollisions(m_Player2);
+		CObjectManager::GetInstance()->CheckCollisions(m_Player2);
+
+		// Taking care of player input
+		BeatManager->CheckPlayerInput(m_Player1);
+
 	}
 
 	
@@ -108,13 +115,14 @@ void CGameplay_State::Render(void)
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 		
 	AnimationManager.Render();
+	CFXManager::GetInstance()->Render();
 
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
 
-	if (dickhead == true)
+	if (dickhead == false)
 	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("this is a message test",320,340,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 	}
 	
 

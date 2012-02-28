@@ -15,6 +15,8 @@
 #include "SGD Wrappers\CSGD_FModManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
+#include "States\CGameplay_State.h"
+#include "States\COptionsState.h"
 
 ////////////////////////////////////////
 //				MISC
@@ -80,35 +82,42 @@ void CSong::Update(float fElapsedTime)
 {
 	// Checking upcomming beat and adding it to active vector when it's within tolerance
 	if(!((unsigned int)GetCurrentBeatIndex() >= m_vBeats.size()))
-		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1000))
+		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < ((int)GetCurrentSongTime() + 1000))
 		{
-			m_vActiveBeats.push_back(m_vBeats[GetCurrentBeatIndex()]);
-			
-			m_vActiveBeats.back().SetIsActive(true);
+			// Checking for difficulty, not adding it if it's below or equal to what we're set to
+			if(COptionsState::GetInstance()->GetDifficulty() >= m_vBeats[GetCurrentBeatIndex()].GetDifficulty())
+			{
+				m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);			
+				m_vActiveBeats.back()->SetIsActive(true);				
+			}
 
 			// Setting the next beat to call
 			SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
 		}	
 
 
-	list<CBeat>::iterator i = m_vActiveBeats.begin();
+	list<CBeat*>::iterator i = m_vActiveBeats.begin();
 	// Updating active beats
-	if(m_vActiveBeats.size() > 0)		
+	if(m_vActiveBeats.size() > 0)
 		do
 		{	
-			if(i->GetIsActive())
-				i->Update(GAME->GetTimer().GetDeltaTime());
+			if((*i)->GetIsActive())
+				(*i)->Update(GAME->GetTimer().GetDeltaTime());
 			else
 				i = m_vActiveBeats.erase(i);
 			
 			// Jesus christ...
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			else 
 				++i;
 
 			if(i == m_vActiveBeats.end())
+			{
 				break;
+			}
 			
 		}while(true);
 		
@@ -125,19 +134,21 @@ void CSong::Update(float fElapsedTime)
 		// Sound info struct for Debugging
 		//tSoundInfo test = FMODMAN->GetSound(GetSongID());
 
-		SetCurrentSongTime((int)daTyme);
+		SetCurrentSongTime(daTyme);
 	}
 }
 
 void CSong::Render()
 {
 	// Rendering Notes
-	list<CBeat>::iterator i = m_vActiveBeats.begin();
+	list<CBeat*>::iterator i = m_vActiveBeats.begin();
 
 	if(m_vActiveBeats.size() > 0)
 		for(; i != m_vActiveBeats.end(); ++i)
-			i->Render();
-
+		{
+			// Rendering Player 1 and Player 2 notes
+			(*i)->Render();			
+		}
 }
 
 void CSong::ResetSong()
@@ -148,7 +159,7 @@ void CSong::ResetSong()
 	SetCurrentBeatIndex(0);
 	SetNextBeatIndex(1);
 
-
+	m_vHittableBeats.clear();
 	
 	m_vActiveBeats.clear();
 
@@ -175,22 +186,35 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 	{
 		CPlayer* pPlayer = (CPlayer*)pBase;
 		// Only checking with beats that are currently active
-		list<CBeat>::iterator i = m_vActiveBeats.begin();
+		list<CBeat*>::iterator i = m_vActiveBeats.begin();
+
+		static int numHit = 0;
 
 		for(; i != m_vActiveBeats.end(); ++i)	
 		{
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
-				if(pPlayer->CheckCollision(&(*i)))
+				if(pPlayer->CheckCollision(*i))
 				{
-					CEventSystem::GetInstance()->SendEvent(i->GetEvent(),&(*i));
+					m_vHittableBeats.push_back(*i);
+					CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));					
+					if( numHit > 5 )					{
+						CEventSystem::GetInstance()->SendEvent("comboend");
+						numHit = 0;
+					}
 				}
 				// Note has collided before and is not colliding now
 				// so this means it's past the point where player can hit
-				else if(i->GetHasCollided() == true)
+				else if((*i)->GetHasCollided() == true)
 				{
-					i->SetIsActive(false);					
+					// Removing it from valid hittable beats
+					for(unsigned int x = 0; x < m_vHittableBeats.size(); ++x)
+						if(m_vHittableBeats[x] == (*i))
+							m_vHittableBeats.erase(m_vHittableBeats.begin() + x);
+
+					(*i)->SetIsActive(false);				
 				}
 		}
+		
 		return true;
 	}
 	else

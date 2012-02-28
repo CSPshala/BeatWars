@@ -36,9 +36,11 @@ public:
 	void HandleEvent(CEvent* pEvent);
 	static CGameplay_State* GetInstance();			
 	static void MessageProc(CBaseMessage* pMsg);// access to messageproc
-	CPlayer* GetPlayer1() {return m_Player1;}
-	CPlayer* GetPlayer2() {return m_Player2;}
-	int getBackground() {return m_nBackgroundID;}
+
+	// Access to players
+	const CPlayer*	GetPlayer1() {return m_Player1;}
+	const CPlayer*  GetPlayer2() {return m_Player2;}
+int getBackground() {return m_nBackgroundID;}
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);

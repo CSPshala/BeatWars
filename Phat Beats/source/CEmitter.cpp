@@ -33,6 +33,7 @@ CEmitter::CEmitter()
 	m_fCurLife = 0.0f;
 	m_d3dSource = D3DBLEND_SRCALPHA;
 	m_d3dDestination = D3DBLEND_ONE;
+	m_fUpdate = 0.0f;
 
 	for(short i = 0; i < m_nMaxParticles; ++i)
 		m_ListDeadParticles.push_back(new CParticle());
@@ -115,6 +116,7 @@ void CEmitter::RecycleParticle()
 void CEmitter::Update(float fElapsedTime)
 {
 	m_fCurLife += fElapsedTime;
+	m_fUpdate += fElapsedTime;
 
 	if(m_vTextureList.size())
 	{
@@ -138,7 +140,7 @@ void CEmitter::Update(float fElapsedTime)
 
 		}
 
-		if(m_fCurLife > m_fSpawnRate)
+		if(m_fUpdate > m_fSpawnRate)
 		{
 			for(int i = 0; i < m_nNumParticlesToSpit; ++i)
 			{
@@ -147,6 +149,8 @@ void CEmitter::Update(float fElapsedTime)
 				else
 					break;
 			}
+
+			SetTick(0.0f);
 		}
 	}
 }
@@ -161,4 +165,30 @@ void CEmitter::Render()
 	{
 		(*i)->Render(m_vTextureList);
 	}
+}
+
+const void CEmitter::SetMaxParticles(const short nNewMaxParticles)
+{
+	m_nMaxParticles = nNewMaxParticles;
+
+	std::vector<CParticle*>::size_type i;
+
+	for(i = 0; i < m_ListAliveParticles.size(); ++i)
+	{
+		delete m_ListAliveParticles[i];
+		m_ListAliveParticles[i] = nullptr;
+	}
+
+	m_ListAliveParticles.clear();
+
+	for(i = 0; i < m_ListDeadParticles.size(); ++i)
+	{
+		delete m_ListDeadParticles[i];
+		m_ListDeadParticles[i] = nullptr;
+	}
+
+	m_ListDeadParticles.clear();
+
+	for(short n = 0; n < GetMaxParticles(); ++n)
+		m_ListDeadParticles.push_back(new CParticle());
 }

@@ -190,8 +190,11 @@ const void CFXManager::UnloadFX(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
 	{
+		DequeueParticle(szKey);
 		delete m_fxTable[szKey];
 		m_fxTable[szKey] = nullptr;
+		std::map<std::string, CFX*>::iterator i = m_fxTable.find(szKey);
+		m_fxTable.erase(i);
 	}
 }
 
@@ -206,6 +209,7 @@ const void CFXManager::UnloadAllFX(void)
 	}
 
 	m_fxTable.clear();
+	m_listActiveFX.clear();
 }
 
 CFXManager* CFXManager::GetInstance()
@@ -217,7 +221,10 @@ CFXManager* CFXManager::GetInstance()
 const void CFXManager::QueueParticle(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
+	{
+		m_fxTable[szKey]->Refresh();
 		m_listActiveFX.push_back(m_fxTable[szKey]);
+	}
 }
 
 const void CFXManager::DequeueParticle(string szKey)

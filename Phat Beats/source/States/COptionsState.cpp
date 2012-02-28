@@ -40,13 +40,13 @@ void COptionsState::Enter(void)
 	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 	//m_nLives = CGame::GetInstance()->GetStartingLives();
 
-
+	SetDifficulty(HARD);
 
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png" );	
 
 	//TODO:
 	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
-	m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/12 End of Line.mp3", FMOD_LOOP_NORMAL);
+	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/cantina.mp3", FMOD_LOOP_NORMAL);
 
 
 
@@ -54,7 +54,7 @@ void COptionsState::Enter(void)
 	CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
 	CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
 
-	CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
+	//CSGD_FModManager::GetInstance()->PlaySound(m_nBGM);
 }
 bool COptionsState::Input(void)
 {
@@ -63,7 +63,7 @@ bool COptionsState::Input(void)
 	{
 		m_nMenuSelection -= 1;
 
-		if( m_nMenuSelection == -1 )
+		if( m_nMenuSelection < OPTIONSMENU_SFXVOL )
 		{
 			m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
 		}
@@ -75,9 +75,9 @@ bool COptionsState::Input(void)
 	{
 		m_nMenuSelection += 1;
 
-		if( m_nMenuSelection == NUM_OPTIONSMENU_OPTIONS )
+		if( m_nMenuSelection >= NUM_OPTIONSMENU_OPTIONS)
 		{
-			m_nMenuSelection = 0;
+			m_nMenuSelection = OPTIONSMENU_SFXVOL;
 		}
 
 	}
@@ -113,26 +113,39 @@ bool COptionsState::Input(void)
 			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
 			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
 			break;
+		
 		}		
 	}
+
+	
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) )
 	{
 		switch (m_nMenuSelection)
 		{
-		case OPTIONSMENU_LIVES:
-			m_nLives -= 1;
-			if( m_nLives <= 1 )
-			{
-				m_nLives = 1;
-			}
-			//CGame::GetInstance()->SetStartingLives(m_nLives);
-			break;
+			// Not Needed
+		//case OPTIONSMENU_LIVES:
+			//m_nLives -= 1;
+			//if( m_nLives <= 1 )
+			//{
+			//	m_nLives = 1;
+			//}
+			////CGame::GetInstance()->SetStartingLives(m_nLives);
+			//break;
 		case OPTIONSMENU_WINDOWED:
 			{
 				//CGame::GetInstance()->ChangeWindowMode();
 			}
 			break;
+
+		case OPTIONSMENU_DIFFICULTY:
+		{
+			SetDifficulty(BeatDifficulty((int)GetDifficulty() - 1));
+
+			if(GetDifficulty() < EASY)
+				SetDifficulty(HARD);
+		}
+		break;
 
 		}
 
@@ -196,7 +209,8 @@ bool COptionsState::Input(void)
 	{
 		switch (m_nMenuSelection)
 		{
-		case OPTIONSMENU_LIVES:
+			// Not Needed
+		//case OPTIONSMENU_LIVES:
 			/*
 			m_nLives += 1;
 			if( m_nLives >= CGame::GetInstance()->GetMaxStartingLives() )
@@ -210,6 +224,15 @@ bool COptionsState::Input(void)
 		case OPTIONSMENU_WINDOWED:
 			{
 				//CGame::GetInstance()->ChangeWindowMode();
+			}
+			break;
+
+		case OPTIONSMENU_DIFFICULTY:
+			{
+			SetDifficulty(BeatDifficulty((int)GetDifficulty() + 1));
+
+			if(GetDifficulty() > HARD)
+				SetDifficulty(EASY);
 			}
 			break;
 		}
@@ -269,8 +292,8 @@ void COptionsState::Render(void)
 	//BF.PrintText("Options", 10, 10, 1, D3DCOLOR_XRGB(255, 255, 255), true);
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
-	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 380};
-	CBitmapFont::GetInstance()->PrintInRect("SFx volume\n\nMusic volume\n\nMusic Pan\n\nStarting Lives\n\nWindowed Mode\n\nBack\n\ngo back to game", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	RECT rMenuOptions = { 225, 175, CGame::GetInstance()->GetScreenWidth(), 378};
+	CBitmapFont::GetInstance()->PrintInRect("SFx volume\n\nMusic volume\n\nMusic Pan\n\nDifficulty\n\nWindowed Mode\n\nBack\n\ngo back to game", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));
 	//BF.PrintText("SFX Volume", 100, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 147, D3DCOLOR_XRGB(225, 225, 225));
@@ -287,10 +310,28 @@ void COptionsState::Render(void)
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 227, D3DCOLOR_XRGB(225, 225, 225));
 	//BF.PrintText(buffer, 400, 110, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 
-	sprintf_s( buffer, "%i", m_nLives);
+	// Not needed right now, if not EVER  - JC
+	//sprintf_s( buffer, "%i", m_nLives);
 	//BF.PrintText("Starting Lives", 100, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
-	CBitmapFont::GetInstance()->PrintText(buffer, 450, 267, D3DCOLOR_XRGB(225, 225, 225));
+	//CBitmapFont::GetInstance()->PrintText(buffer, 450, 267, D3DCOLOR_XRGB(225, 225, 225));
 	//BF.PrintText(buffer, 420, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+
+	switch(GetDifficulty())
+	{
+	case EASY:
+		sprintf_s( buffer,"easy");
+		break;
+
+	case NORMAL:
+		sprintf_s( buffer,"normal");
+		break;
+
+	case HARD:
+		sprintf_s( buffer,"hard");
+		break;
+	}
+
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 267, D3DCOLOR_XRGB(225, 225, 225));
 
 	//BF.PrintText("Back", 100, 170, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 
@@ -299,42 +340,49 @@ void COptionsState::Render(void)
 	{
 	case OPTIONSMENU_SFXVOL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_SFXVOL * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_SFXVOL * 40) );
 		}
 		break;
 
 	case OPTIONSMENU_MUSICVOL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_MUSICVOL * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_MUSICVOL * 40) );
 		}
 		break;
 
 	case OPTIONSMENU_PAN:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_PAN * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_PAN * 40) );
 		}
 		break;
 
-	case OPTIONSMENU_LIVES:
+	// Again commented out because not needed - JC
+	/*case OPTIONSMENU_LIVES:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_LIVES * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_LIVES * 40) );
+		}
+		break;*/
+
+	case OPTIONSMENU_DIFFICULTY:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_DIFFICULTY * 40) );
 		}
 		break;
 
 	case OPTIONSMENU_WINDOWED:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_WINDOWED * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_WINDOWED * 40) );
 		}
 		break;
 
 	case OPTIONSMENU_EXIT:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140 + (OPTIONSMENU_EXIT * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_EXIT * 40) );
 		}
 		break;
 	case OPTIONSMENU_GAME:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 140, + (OPTIONSMENU_GAME * 40));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143, + (OPTIONSMENU_GAME * 40));
 		}
 		break;
 	}

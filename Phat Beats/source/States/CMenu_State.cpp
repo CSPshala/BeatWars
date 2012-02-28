@@ -11,6 +11,7 @@
 #include "../Globals.h"
 #include "../Managers/CFXManager.h"
 #include "CLevelSelect_State.h"
+#include "CLU_State.h"
 
 CMenu_State::CMenu_State()
 {
@@ -21,6 +22,8 @@ CMenu_State::CMenu_State()
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
 	m_nTile = -1;
+
+	CFXManager::GetInstance()->LoadFX("Event.xml", "EVENT PARTICLE");
 }
 
 CMenu_State::~CMenu_State()
@@ -34,8 +37,13 @@ void CMenu_State::Enter(void)
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star-gazing2.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
 	CFXManager::GetInstance()->LoadFX("Test.xml", "MENU_PARTICLE");
+<<<<<<< HEAD
 	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+=======
+	CFXManager::GetInstance()->QueueParticle("MENU_PARTICLE");
+	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/title.png");
+>>>>>>> master
 }
 
 bool CMenu_State::Input(void)
@@ -69,7 +77,8 @@ bool CMenu_State::Input(void)
 		{
 		case MAINMENU_NEWGAME:
 			{
-				CGame::GetInstance()->ChangeState( CGameplay_State::GetInstance() );
+				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 			}
 			break;
 
@@ -197,7 +206,7 @@ RECT rNewGame = {0,175,800,205};
 
 void CMenu_State::Exit(void)
 {
-	
+	CFXManager::GetInstance()->UnloadFX("MENU_PARTICLE");
 }
 
 CMenu_State* CMenu_State::GetInstance()

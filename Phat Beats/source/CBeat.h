@@ -19,7 +19,7 @@
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
-
+class CPlayer;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -43,30 +43,37 @@ public:
 		void	HandleEvent(CEvent* pEvent);
 
 	/********** Public Accessors ************/
-		int			GetTimeOfBeat() {return m_nTimeofBeat;}
-		int				GetDifficulty() {return m_nDifficulty;}
+		int				GetTimeOfBeat() {return m_nTimeofBeat;}
+		BeatDifficulty	GetDifficulty() {return m_nDifficulty;}
 		char			GetKeyToPress() {return m_cKeyToPress;}
 		string			GetEvent() {return m_szEvent;}
 		BeatDirection	GetDirection() {return m_eDirection;}
 		bool			GetHasCollided() {return m_bCollision;}
+		bool			GetPlayer1Hit() {return m_bPlayer1Hit;}
+		bool			GetPlayer2Hit() {return m_bPlayer2Hit;}
 	/********** Public Mutators  ************/	
 		void	SetTimeOfBeat(int fTime) {m_nTimeofBeat = fTime;}
-		void	SetDifficulty(int	nDifficulty) {m_nDifficulty = nDifficulty;}
+		void	SetDifficulty(BeatDifficulty nDifficulty) {m_nDifficulty = nDifficulty;}
 		void	SetKeyToPress(char	cKey) {m_cKeyToPress = cKey;}
 		void    SetEvent(string szEvent) {m_szEvent = szEvent;}
 		void	SetDirection(BeatDirection);
-		
+		void	SetHasCollided(bool collide) {m_bCollision = collide;}
+		void	SetPlayer1Hit(bool hit) {m_bPlayer1Hit = hit;}
+		void    SetPlayer2Hit(bool hit) {m_bPlayer2Hit = hit;}
+
 private:	
 
 	/********** Private Members ************/
 		int		m_nTimeofBeat;
-		int		m_nDifficulty;
+		BeatDifficulty	m_nDifficulty;
 		char	m_cKeyToPress;
 		string  m_szEvent;
 		BeatDirection m_eDirection;
 
 		// For note collision event
 		bool	m_bCollision;
+		bool    m_bPlayer1Hit;
+		bool    m_bPlayer2Hit;
 		
 
 		// For saving original position for reset call

@@ -54,6 +54,7 @@ private:
 
 	// Data
 	float m_fCurLife;
+	float m_fUpdate;
 
 public:
 	CEmitter();
@@ -101,7 +102,7 @@ public:
 	inline const void SetLifeSpawn(const float fNewLife) {m_fLifeSpan = fNewLife;}
 	inline const void SetSpawnRate(const float fNewSpawnRate) {m_fSpawnRate = fNewSpawnRate;}
 	inline const void SetCurrentLife(const float fNewLife) {m_fCurLife = fNewLife;}
-	inline const void SetMaxParticles(const short nNewMaxParticles){m_nMaxParticles = nNewMaxParticles;}
+	const void SetMaxParticles(const short nNewMaxParticles);
 	inline const void SetNumParticlesToSpit(const short nNewNumToSpit) {m_nNumParticlesToSpit = nNewNumToSpit;}
 	inline const void SetRandStartX(const bool bNewRandStartX) {m_bRandStartX = bNewRandStartX;}
 	inline const void SetRandStartY(const bool bNewRandStartY) {m_bRandStartY = bNewRandStartY;}
@@ -117,6 +118,7 @@ public:
 	inline const void SetEndScale(const float fNewEndScale) {m_fEndScale = fNewEndScale;}
 	inline const void SetStartRotation(const float fNewStartRotation) {m_fStartRotation = fNewStartRotation;}
 	inline const void SetEndRotation(const float fNewEndRotation) {m_fEndRotation = fNewEndRotation;}
+	inline const void SetTick(const float fTick) {m_fUpdate = fTick;}
 };
 
 #endif

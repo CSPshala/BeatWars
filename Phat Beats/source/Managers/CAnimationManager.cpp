@@ -14,10 +14,10 @@
 
 CAnimationManager::CAnimationManager()
 {
-
+	CEventSystem::GetInstance()->RegisterClient("comboend",this);
 }
 
-bool CAnimationManager::LoadAnimation(string szFileName)
+bool CAnimationManager::LoadAnimation(string szFileName, string szImageName)
 {
 	TiXmlDocument doc;
 
@@ -25,6 +25,9 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 	// Adding Paths to filename for animations
 	string szPath = "resource/animations/";
 	szPath += szFileName;
+
+	string szImagePath = "resource/graphics/";
+	szImagePath += szImageName;
 
 	if( doc.LoadFile(szPath.c_str() ) == false )
 		return false;
@@ -60,20 +63,20 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 			Anim->SetIsLooping(false);
 		
 		//***************Animation File****************************//
-		if( pNewAnim->Attribute("File") == NULL )
-			return false;
+		//if( pNewAnim->Attribute("File") == NULL )
+		//	return false;
 
 	
-		const char* szFileName = NULL;
-		szFileName = pNewAnim->Attribute("File");
+		//const char* szFileName = NULL;
+		//szFileName = pNewAnim->Attribute("File");
 
-		char buffer[128] ={0};
-		strcpy_s(buffer,_countof(buffer), szFileName);
-		string szPath = "resource/graphics/";
+		//char buffer[128] ={0};
+		//strcpy_s(buffer,_countof(buffer), szImageName);
+		//string szPath = "resource/graphics/";
 
-		szPath += buffer;
+		//szPath += buffer;
 
-		Anim->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture(szPath.c_str() ) );
+		Anim->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture(szImagePath.c_str() ) );
 
 		//********************Animation Name*************************//
 
@@ -159,7 +162,18 @@ bool CAnimationManager::LoadAnimation(string szFileName)
 			pNewFrame->Attribute("Duration",&dDuration);
 			Frame->SetDuration((float)dDuration);
 
-			//*********************Add frame to vector and go to next*****************//
+			//*********************Setting Event**********************************//
+			if( pNewFrame->Attribute("Event") == NULL)
+				return false;
+			const char* szEvent = NULL;
+				char buffer[128] = {0};
+
+			szEvent = pNewFrame->Attribute("Event");
+
+			strcpy_s(buffer,_countof(buffer),szEvent);
+			Frame->SetEvent(buffer);
+
+		//*********************Add frame to vector and go to next*****************//
 			
 			Anim->m_vecFrames.push_back(Frame);
 
@@ -195,23 +209,36 @@ bool CAnimationManager::UnloadAnimations()
 
 void CAnimationManager::Update(float fElapsedTime)
 {
-	m_vecAnimations[0]->Update(fElapsedTime);
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Update(fElapsedTime);
 }
 void CAnimationManager::Render()
 {
-	m_vecAnimations[0]->Render();
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Render();
 }
 void CAnimationManager::Play()	
 {
-	m_vecAnimations[0]->Play();
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Play();
 }
 void CAnimationManager::Stop()	
 {
-	m_vecAnimations[0]->Stop();
-
+	if( m_vecAnimations.size() > 0)
+		m_vecAnimations[0]->Stop();
+	
 }
 void CAnimationManager::Reset()	
 {
+	if( m_vecAnimations.size() > 0)
 	m_vecAnimations[0]->Reset();
 
+}
+
+void CAnimationManager::HandleEvent(CEvent* pEvent)
+{
+	if( pEvent->GetEventID() == "comboend")
+	{
+		Play();
+	}
 }

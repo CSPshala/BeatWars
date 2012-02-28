@@ -23,9 +23,23 @@ namespace Animation_Tool
             set { lframes = value; }
         }
 
+        int ordernumber;
+
+        public int Ordernumber
+        {
+            get { return ordernumber; }
+            set { ordernumber = value; }
+        }
+
         public override string ToString()
         {
-            return name;
+            string str;
+
+            str = "Animation #";
+
+            str += ordernumber;
+
+            return str;
         }
     }
 }

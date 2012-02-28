@@ -49,9 +49,9 @@ void CParticle::Render(const std::vector<int>& vTextures)
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	if(m_nImageID >= 0)
 	{
-		m_tOrigin.x = ((float)(pTM->GetTextureWidth(m_nImageID) >> 1));
-		m_tOrigin.y = ((float)(pTM->GetTextureHeight(m_nImageID) >> 1));
-		pTM->DrawF(m_nImageID, m_tPosition.x - m_tOrigin.x, m_tPosition.y - m_tOrigin.y, m_fScale, m_fScale, nullptr, m_tOrigin.x, m_tOrigin.y, m_fRotation, m_Overlay.TOD3DCOLOR());
+		m_tOrigin.x = ((float)(pTM->GetTextureWidth(m_nImageID) >> 1)) * GetScale();
+		m_tOrigin.y = ((float)(pTM->GetTextureHeight(m_nImageID) >> 1))  * GetScale();
+		pTM->DrawF(m_nImageID, m_tPosition.x - m_tOrigin.x, m_tPosition.y - m_tOrigin.y, GetScale(), GetScale(), nullptr, m_tOrigin.x, m_tOrigin.y, GetRotation(), m_Overlay.TOD3DCOLOR());
 	}
 }
 
