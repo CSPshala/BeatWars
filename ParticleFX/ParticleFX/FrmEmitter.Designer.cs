@@ -34,10 +34,13 @@
             this.BtnImageToEmitter = new System.Windows.Forms.Button();
             this.LblTexturesInWorkingDir = new System.Windows.Forms.Label();
             this.LblEmitterTextures = new System.Windows.Forms.Label();
+            this.PnlParticle = new ParticleFX.BufferedPanel();
             this.LstWorkDirFiles = new System.Windows.Forms.ListBox();
             this.LstEmitterTextures = new System.Windows.Forms.ListBox();
             this.ToolMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.BtnChangeWorkDir = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.TsRandMaxParticles = new System.Windows.Forms.ToolStripMenuItem();
             this.TsRandLifeDuration = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,6 +73,8 @@
             this.NudStartAlpha = new System.Windows.Forms.NumericUpDown();
             this.BtnEndColor = new System.Windows.Forms.Button();
             this.BtnStartColor = new System.Windows.Forms.Button();
+            this.PnlEndColor = new ParticleFX.BufferedPanel();
+            this.PnlStartColor = new ParticleFX.BufferedPanel();
             this.GrpDirection = new System.Windows.Forms.GroupBox();
             this.ChkRandomEndVelY = new System.Windows.Forms.CheckBox();
             this.ChkRandVelocityY = new System.Windows.Forms.CheckBox();
@@ -123,11 +128,6 @@
             this.NudGravityY = new System.Windows.Forms.NumericUpDown();
             this.NudGravityX = new System.Windows.Forms.NumericUpDown();
             this.BtnRandomize = new System.Windows.Forms.Button();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.PnlEndColor = new ParticleFX.BufferedPanel();
-            this.PnlStartColor = new ParticleFX.BufferedPanel();
-            this.PnlParticle = new ParticleFX.BufferedPanel();
             this.GrpTextures.SuspendLayout();
             this.ToolMain.SuspendLayout();
             this.GrpBlend.SuspendLayout();
@@ -229,6 +229,18 @@
             this.LblEmitterTextures.TabIndex = 4;
             this.LblEmitterTextures.Text = "Textures in Emitter";
             // 
+            // PnlParticle
+            // 
+            this.PnlParticle.BackColor = System.Drawing.Color.Black;
+            this.PnlParticle.Location = new System.Drawing.Point(320, 45);
+            this.PnlParticle.Name = "PnlParticle";
+            this.PnlParticle.Size = new System.Drawing.Size(64, 64);
+            this.PnlParticle.TabIndex = 3;
+            this.PnlParticle.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlParticle_Paint);
+            this.PnlParticle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PnlParticle_MouseDoubleClick);
+            this.PnlParticle.MouseEnter += new System.EventHandler(this.PnlParticle_MouseEnter);
+            this.PnlParticle.MouseLeave += new System.EventHandler(this.PnlParticle_MouseLeave);
+            // 
             // LstWorkDirFiles
             // 
             this.LstWorkDirFiles.BackColor = System.Drawing.Color.White;
@@ -268,6 +280,12 @@
             this.ToolMain.TabIndex = 4;
             this.ToolMain.Text = "toolStrip1";
             // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(56, 22);
+            this.toolStripLabel1.Text = "Work Dir.";
+            // 
             // BtnChangeWorkDir
             // 
             this.BtnChangeWorkDir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -277,6 +295,12 @@
             this.BtnChangeWorkDir.Size = new System.Drawing.Size(23, 22);
             this.BtnChangeWorkDir.Text = "Change work directory";
             this.BtnChangeWorkDir.Click += new System.EventHandler(this.BtnChangeWorkDir_Click);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(87, 22);
+            this.toolStripLabel2.Text = "Randomization";
             // 
             // toolStripDropDownButton1
             // 
@@ -589,6 +613,24 @@
             this.BtnStartColor.Text = "Start Color";
             this.BtnStartColor.UseVisualStyleBackColor = true;
             this.BtnStartColor.Click += new System.EventHandler(this.BtnStartColor_Click);
+            // 
+            // PnlEndColor
+            // 
+            this.PnlEndColor.BackColor = System.Drawing.Color.Black;
+            this.PnlEndColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PnlEndColor.Location = new System.Drawing.Point(162, 57);
+            this.PnlEndColor.Name = "PnlEndColor";
+            this.PnlEndColor.Size = new System.Drawing.Size(31, 31);
+            this.PnlEndColor.TabIndex = 1;
+            // 
+            // PnlStartColor
+            // 
+            this.PnlStartColor.BackColor = System.Drawing.Color.White;
+            this.PnlStartColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PnlStartColor.Location = new System.Drawing.Point(162, 20);
+            this.PnlStartColor.Name = "PnlStartColor";
+            this.PnlStartColor.Size = new System.Drawing.Size(31, 31);
+            this.PnlStartColor.TabIndex = 0;
             // 
             // GrpDirection
             // 
@@ -1078,6 +1120,7 @@
             // 
             // NudLifeDuration
             // 
+            this.NudLifeDuration.DecimalPlaces = 3;
             this.NudLifeDuration.Location = new System.Drawing.Point(110, 41);
             this.NudLifeDuration.Maximum = new decimal(new int[] {
             50,
@@ -1087,6 +1130,7 @@
             this.NudLifeDuration.Name = "NudLifeDuration";
             this.NudLifeDuration.Size = new System.Drawing.Size(83, 20);
             this.NudLifeDuration.TabIndex = 13;
+            this.NudLifeDuration.ValueChanged += new System.EventHandler(this.NudLifeDuration_ValueChanged);
             // 
             // NudMaxParticles
             // 
@@ -1351,48 +1395,6 @@
             this.BtnRandomize.Text = "Randomize!";
             this.BtnRandomize.UseVisualStyleBackColor = true;
             this.BtnRandomize.Click += new System.EventHandler(this.BtnRandomize_Click);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(56, 22);
-            this.toolStripLabel1.Text = "Work Dir.";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(87, 22);
-            this.toolStripLabel2.Text = "Randomization";
-            // 
-            // PnlEndColor
-            // 
-            this.PnlEndColor.BackColor = System.Drawing.Color.Black;
-            this.PnlEndColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PnlEndColor.Location = new System.Drawing.Point(162, 57);
-            this.PnlEndColor.Name = "PnlEndColor";
-            this.PnlEndColor.Size = new System.Drawing.Size(31, 31);
-            this.PnlEndColor.TabIndex = 1;
-            // 
-            // PnlStartColor
-            // 
-            this.PnlStartColor.BackColor = System.Drawing.Color.White;
-            this.PnlStartColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PnlStartColor.Location = new System.Drawing.Point(162, 20);
-            this.PnlStartColor.Name = "PnlStartColor";
-            this.PnlStartColor.Size = new System.Drawing.Size(31, 31);
-            this.PnlStartColor.TabIndex = 0;
-            // 
-            // PnlParticle
-            // 
-            this.PnlParticle.BackColor = System.Drawing.Color.Black;
-            this.PnlParticle.Location = new System.Drawing.Point(320, 45);
-            this.PnlParticle.Name = "PnlParticle";
-            this.PnlParticle.Size = new System.Drawing.Size(64, 64);
-            this.PnlParticle.TabIndex = 3;
-            this.PnlParticle.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlParticle_Paint);
-            this.PnlParticle.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.PnlParticle_MouseDoubleClick);
-            this.PnlParticle.MouseEnter += new System.EventHandler(this.PnlParticle_MouseEnter);
-            this.PnlParticle.MouseLeave += new System.EventHandler(this.PnlParticle_MouseLeave);
             // 
             // FrmEmitter
             // 

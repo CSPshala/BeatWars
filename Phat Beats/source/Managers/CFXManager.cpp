@@ -13,7 +13,6 @@ CFXManager::CFXManager()
 {
 
 }
-
 CFXManager::~CFXManager()
 {
 	UnloadAllFX();
@@ -25,7 +24,6 @@ const void CFXManager::Render()
 	for(i = m_listActiveFX.begin();i != m_listActiveFX.end();++i)
 		(*i)->Render();	
 }
-
 const void CFXManager::Update(float fElapsedTime)
 {
 	std::vector<CFX*>::iterator i;
@@ -42,12 +40,10 @@ const void CFXManager::Update(float fElapsedTime)
 		}
 	}
 }
-
 const void CFXManager::AddFX(CFX* pEffect, string szKey)
 {
 	m_fxTable[szKey] = pEffect;
 }
-
 const void CFXManager::LoadFX(string szFileName, string szKey)
 {
 	TiXmlDocument Doc;
@@ -101,6 +97,12 @@ const void CFXManager::LoadFX(string szFileName, string szKey)
 		int nHeight;
 		pEl->Attribute("Width", &nWidth);
 		pEl->Attribute("Height", &nHeight);
+		RECT Range;
+		Range.left = 0;
+		Range.right = Range.left + nWidth;
+		Range.top = 0;
+		Range.bottom = Range.top + nHeight;
+		EM->SetRange(Range);
 		pEl = pEl->NextSiblingElement();
 		int nSR; pEl->Attribute("Red", &nSR);
 		int nSG; pEl->Attribute("Green", &nSG);
@@ -185,7 +187,6 @@ const void CFXManager::LoadFX(string szFileName, string szKey)
 
 	m_fxTable[szKey] = Effect;
 }
-
 const void CFXManager::UnloadFX(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
@@ -197,7 +198,6 @@ const void CFXManager::UnloadFX(string szKey)
 		m_fxTable.erase(i);
 	}
 }
-
 const void CFXManager::UnloadAllFX(void)
 {
 	std::map<string, CFX*>::iterator i;
@@ -211,13 +211,11 @@ const void CFXManager::UnloadAllFX(void)
 	m_fxTable.clear();
 	m_listActiveFX.clear();
 }
-
 CFXManager* CFXManager::GetInstance()
 {
 	static CFXManager Instance;
 	return &Instance;
 }
-
 const void CFXManager::QueueParticle(string szKey)
 {
 	if(m_fxTable[szKey] != nullptr)
@@ -226,7 +224,6 @@ const void CFXManager::QueueParticle(string szKey)
 		m_listActiveFX.push_back(m_fxTable[szKey]);
 	}
 }
-
 const void CFXManager::DequeueParticle(string szKey)
 {
 	CFX* pToRemove = m_fxTable[szKey];
@@ -242,4 +239,10 @@ const void CFXManager::DequeueParticle(string szKey)
 			}
 		}
 	}
+}
+const void CFXManager::MoveEffectTo(std::string szID, const D3DXVECTOR2 tNewPos)
+{
+	CFX* pToMove = m_fxTable[szID];
+	if(pToMove != nullptr)
+		pToMove->MoveEffect(tNewPos);
 }
