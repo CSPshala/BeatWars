@@ -457,10 +457,10 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 					{					
 						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer1Hit())
 						{
-							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
+							(GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else

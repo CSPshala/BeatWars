@@ -13,6 +13,7 @@
 #include "CPause_State.h"
 #include "../Managers/CAiManager.h"
 #include "../Managers/CFXManager.h"
+#include "COptionsState.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -27,6 +28,7 @@ CGameplay_State::CGameplay_State()
 	m_bPlayAnimation = false;
 	m_Player1 = NULL;
 	m_Player2 = NULL;
+
 	
 }
 
