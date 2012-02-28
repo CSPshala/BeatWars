@@ -40,7 +40,7 @@ public:
 	// Access to players
 	const CPlayer*	GetPlayer1() {return m_Player1;}
 	const CPlayer*  GetPlayer2() {return m_Player2;}
-
+int getBackground() {return m_nBackgroundID;}
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
