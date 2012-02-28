@@ -103,6 +103,15 @@ void CBitmapFont::PrintText(string textToPrint, int nPosX, int nPosY, DWORD dwCo
 		}
 }
 
+void CBitmapFont::PrintStrokedText(string szText, int nPosX, int nPosY, DWORD dBgColor, DWORD dFgColor)
+{
+	PrintText(szText, nPosX - 1, nPosY, dBgColor);
+	PrintText(szText, nPosX, nPosY - 1, dBgColor);
+	PrintText(szText, nPosX + 1, nPosY, dBgColor);
+	PrintText(szText, nPosX, nPosY + 1, dBgColor);
+	PrintText(szText, nPosX, nPosY, dFgColor);
+}
+
 ///////////////////////////////////////////////////
 //	Function	:	"PrintInRect"
 //	

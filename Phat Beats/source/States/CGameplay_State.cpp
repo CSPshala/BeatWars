@@ -43,10 +43,17 @@ void CGameplay_State::Enter(void)
 	BeatManager->LoadSong("noteeventtest.xml");
 	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
+	CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
+	CFXManager::GetInstance()->QueueParticle("BACKGROUND");
+	CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
+	CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
 
 	// Setting up Players
 	m_Player1 = new CPlayer(OBJ_PLAYER1);
 	m_Player2 = new CPlayer(OBJ_PLAYER2);
+
+	CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
+	CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
 
 	// Adding players to Object Manager
 	CObjectManager::GetInstance()->AddObject(m_Player1);
@@ -88,7 +95,6 @@ bool CGameplay_State::Input(void)
 
 void CGameplay_State::Update(void)
 {
-	
 	// Updating Objects (if beatmanager isn't paused)
 	CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	if(!BeatManager->IsPaused())
@@ -139,6 +145,10 @@ void CGameplay_State::Exit(void)
 
 	if(m_Player2)
 		m_Player2->Release();
+
+	CFXManager::GetInstance()->UnloadFX("BACKGROUND");
+	CFXManager::GetInstance()->UnloadFX("P1_HIT");
+	CFXManager::GetInstance()->UnloadFX("P2_HIT");
 }
 
 CGameplay_State* CGameplay_State::GetInstance()

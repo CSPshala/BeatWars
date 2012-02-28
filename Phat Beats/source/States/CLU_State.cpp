@@ -127,11 +127,12 @@ void CLU_State::Render(void)
 	for(char i = 0; i < m_cNumDots; ++i)
 		Dots << '.';
 
-	CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 9, 10, D3DCOLOR_XRGB(0, 0, 0));
-	CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 9, D3DCOLOR_XRGB(0, 0, 0));
-	CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 11, 10, D3DCOLOR_XRGB(0, 0, 0));
-	CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 11, D3DCOLOR_XRGB(0, 0, 0));
-	CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 10, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintStrokedText(Dots.str(), 10, 10, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 9, 10, D3DCOLOR_XRGB(0, 0, 0));
+	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 9, D3DCOLOR_XRGB(0, 0, 0));
+	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 11, 10, D3DCOLOR_XRGB(0, 0, 0));
+	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 11, D3DCOLOR_XRGB(0, 0, 0));
+	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 10, D3DCOLOR_XRGB(255, 255, 255));
 }
 void CLU_State::Exit(void)
 {
