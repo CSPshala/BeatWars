@@ -59,9 +59,19 @@ private:
 	int m_nBackSoundID;
 	int m_nFontID;
 	int m_nTitleID;
+	int m_nHudID;
 
-	bool m_bPlayAnimation;
+	//Rects for HUD
+	
+	RECT rLeftHandle;
+	RECT rRightHandle;
 
+	RECT rLeftSaber;
+	RECT rRightSaber;
+
+	RECT rLeftPowerUpBar;
+	RECT rRightPowerUpBar;
+	
 	//Players
 	CPlayer* m_Player1;
 	CPlayer* m_Player2;
