@@ -23,6 +23,7 @@ CSave_State::CSave_State()
 	m_nTitleID = -1;
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
+	m_nSlotNumber = 0;
 }
 
 CSave_State::~CSave_State()
@@ -32,7 +33,7 @@ CSave_State::~CSave_State()
 
 void CSave_State::Enter(void)
 {	
-	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png");
+	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png");
 }
 
 bool CSave_State::Input(void)
@@ -72,17 +73,18 @@ bool CSave_State::Input(void)
 		{
 		case SAVEMENU_SLOTONE:
 			{
+				m_nSlotNumber = 1;
 				
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
 			{
-				
+				m_nSlotNumber = 2;
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
 			{
-				
+				m_nSlotNumber = 3;
 			}
 			break;
 		
@@ -135,7 +137,7 @@ void CSave_State::Render(void)
 
 void CSave_State::Exit(void)
 {
-	
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nCursorImageID);
 }
 
 CSave_State* CSave_State::GetInstance()
@@ -145,8 +147,7 @@ CSave_State* CSave_State::GetInstance()
 	return &instance;	
 }
 
-void CSave_State::saveGame( gameSave* save )
+void CSave_State::saveGame()
 {
-	save->SavedFileNameSong = CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
-	save->curPlayer = CGameplay_State::GetInstance()->GetPlayer1();
+	
 }

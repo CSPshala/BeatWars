@@ -35,12 +35,15 @@ public:
 
 private:
 	// Saving the file to the loadState
-	struct gameSave
+	/*
+struct gameSave
 	{
 		int slotNumber;
 		string SavedFileNameSong;
 		CPlayer* curPlayer;
+		int BackgroundImg_ID;
 	};
+*/
 
 	// Proper singleton
 	CSave_State(const CSave_State&);
@@ -51,7 +54,7 @@ private:
 	//		Constructor
 	CSave_State();
 
-	void saveGame(gameSave* save);
+	void saveGame();
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
@@ -65,6 +68,7 @@ private:
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
+	int m_nSlotNumber;
 
 	
 	

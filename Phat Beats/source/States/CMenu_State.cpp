@@ -145,43 +145,43 @@ RECT rNewGame = {0,175,800,205};
 	CBitmapFont::GetInstance()->PrintInRect("exit", &rExit, ALIGN_CENTER, D3DCOLOR_XRGB(225, 225, 225));
 */
 
-	int topSelection = 325;
-	int spacing = 35;
+	int topSelection = 295;
+	int spacing = 40;
 	switch(m_nMenuSelection)
 	{
 	case MAINMENU_NEWGAME:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_NEWGAME));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_NEWGAME),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_LOAD: // skills test for now
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_LOAD) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LOAD),2.0f,3.0f );
 		}
 		break;
 
 	case MAINMENU_OPTIONS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_OPTIONS));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_OPTIONS),2.0f,3.0f);
 		}
 		break;	
 
 	case MAINMENU_CREDITS:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_CREDITS));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_CREDITS),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_LEVEL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_LEVEL));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_LEVEL),2.0f,3.0f);
 		}
 		break;
 
 	case MAINMENU_EXIT:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 25, topSelection  + (spacing * MAINMENU_EXIT));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 100, topSelection  + (spacing * MAINMENU_EXIT),2.0f,3.0f);
 		}
 		break;
 	}
