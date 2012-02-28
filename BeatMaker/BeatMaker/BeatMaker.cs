@@ -244,6 +244,7 @@ namespace BeatMaker
 
             // Drawing zoom
             D3D.DrawText("Zoom: " + nZoom.ToString() + "X", 10, 10, Color.Red);
+            D3D.DrawText("Speed: " + playSpeed.ToString() + "X", 130, 10, Color.Red);
 
             // Drawing song line and count in track window
             DrawSong();
@@ -1947,32 +1948,42 @@ namespace BeatMaker
 
         private void ThirdSpeedMenuItem_Click(object sender, EventArgs e)
         {
-            playSpeed = 0.3f;
-            float freq = 0.0f;
+            if (fmodChannel != null)
+            {
+                playSpeed = 0.3f;
+                float freq = 0.0f;
 
-            // Setting frequency back to normal first
-            NormalSpeedMenuItem_Click(null, null);
+                // Setting frequency back to normal first
+                fmodChannel.setFrequency(originalFreq);
 
-            fmodChannel.getFrequency(ref freq);
-            fmodChannel.setFrequency(playSpeed * freq);
+                fmodChannel.getFrequency(ref freq);
+                fmodChannel.setFrequency(playSpeed * freq);
+            }
         }
 
         private void HalfSpeedMenuItem_Click(object sender, EventArgs e)
         {
-            playSpeed = 0.5f;
-            float freq = 0.0f;
+            if (fmodChannel != null)
+            {
+                playSpeed = 0.5f;
+                float freq = 0.0f;
 
-            // Setting frequency back to normal first
-            NormalSpeedMenuItem_Click(null, null);
+                // Setting frequency back to normal first
+                fmodChannel.setFrequency(originalFreq);
 
-            fmodChannel.getFrequency(ref freq);          
+                fmodChannel.getFrequency(ref freq);
 
-            fmodChannel.setFrequency(playSpeed * freq);
+                fmodChannel.setFrequency(playSpeed * freq);
+            }
         }
 
         private void NormalSpeedMenuItem_Click(object sender, EventArgs e)
-        {       
-            fmodChannel.setFrequency(originalFreq);           
+        {
+            if (fmodChannel != null)
+            {
+                playSpeed = 1.0f;
+                fmodChannel.setFrequency(originalFreq);
+            }
         }
 
         //*****************FMOD SPECIFIC METHODS**************//
@@ -2218,8 +2229,22 @@ namespace BeatMaker
         private void DeleteSelectionButton_Click(object sender, EventArgs e)
         {
             // Only removing a single note
-            if (nMouseClickedIndex >= 0)
-                listBeats.RemoveAt(nMouseClickedIndex);
+            if (SelectedBeats.Count > 0)
+            {
+                List<Beat> toRemove = new List<Beat>();
+
+                // Getting beats to remove (since removing at an index will invalidate selected beats)
+                for (int i = 0; i < SelectedBeats.Count; ++i)
+                {
+                    toRemove.Add( listBeats[SelectedBeats[i]]);                    
+                }
+
+                // Now Removing specific items
+                for (int i = 0; i < toRemove.Count; ++i)
+                {
+                    listBeats.Remove(toRemove[i]);
+                }
+            }
 
             nMouseClickedIndex = -1;
 
@@ -2270,10 +2295,7 @@ namespace BeatMaker
 
             for (int i = 0; i < SelectedBeats.Count; ++i)
                 listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
-        }
-
-       
-
+        }     
         
     }
 }

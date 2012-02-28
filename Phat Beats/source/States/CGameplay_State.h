@@ -40,7 +40,7 @@ public:
 	// Access to players
 	const CPlayer*	GetPlayer1() {return m_Player1;}
 	const CPlayer*  GetPlayer2() {return m_Player2;}
-
+int getBackground() {return m_nBackgroundID;}
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -59,9 +59,19 @@ private:
 	int m_nBackSoundID;
 	int m_nFontID;
 	int m_nTitleID;
+	int m_nHudID;
 
-	bool m_bPlayAnimation;
+	//Rects for HUD
+	
+	RECT rLeftHandle;
+	RECT rRightHandle;
 
+	RECT rLeftSaber;
+	RECT rRightSaber;
+
+	RECT rLeftPowerUpBar;
+	RECT rRightPowerUpBar;
+	
 	//Players
 	CPlayer* m_Player1;
 	CPlayer* m_Player2;

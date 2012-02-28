@@ -136,6 +136,7 @@ public:
 	void PrintInRect(string textToPrint, RECT* paramRect, int alignment, DWORD dwColor);
 
 	void PrintStrokedText(string szText, int nPosX, int nPosY, DWORD dBgColor, DWORD dFgColor);
+	void PrintStrokedTextInRect(string szText, RECT* layoutRect, int nAlignment, DWORD dBgColor, DWORD dFgColor);
 
 	///////////////////////////////////////////////////
 	//	Function	:	"LoadXMLFont"

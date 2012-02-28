@@ -24,18 +24,17 @@ class CAnimationManager : public IListener
 	
 		bool LoadAnimation(string szFileName, string szImageName);
 		bool UnloadAnimations();
-		vector<CAnimation*> m_vecAnimations;
 		
 		vector<CAnimation*> GetAnimations()
 		{
 			return m_vecAnimations;
 		}
 	
-		void Update(float fElapsedTime);
-		void Render();
-		void Play();
-		void Stop();
-		void Reset();
+		void Update(float fElapsedTime,CAnimation* pAnim);
+		void Render(CAnimation* pAnim);
+		void Play(CAnimation* pAnim);
+		void Stop(CAnimation* pAnim);
+		void Reset(CAnimation* pAnim);
 
 		void  HandleEvent(CEvent* pEvent);
 	
@@ -43,6 +42,7 @@ class CAnimationManager : public IListener
 		~CAnimationManager() { CEventSystem::GetInstance()->UnregisterClient("comboend",this); }
 	 
 	private:
+		vector<CAnimation*> m_vecAnimations;
 
 
 };

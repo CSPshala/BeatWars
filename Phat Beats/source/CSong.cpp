@@ -16,6 +16,7 @@
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
 #include "States\CGameplay_State.h"
+#include "States\COptionsState.h"
 
 ////////////////////////////////////////
 //				MISC
@@ -81,11 +82,14 @@ void CSong::Update(float fElapsedTime)
 {
 	// Checking upcomming beat and adding it to active vector when it's within tolerance
 	if(!((unsigned int)GetCurrentBeatIndex() >= m_vBeats.size()))
-		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < (GetCurrentSongTime() - 1000))
+		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < ((int)GetCurrentSongTime() + 1000))
 		{
-			m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);
-			
-			m_vActiveBeats.back()->SetIsActive(true);
+			// Checking for difficulty, not adding it if it's below or equal to what we're set to
+			if(COptionsState::GetInstance()->GetDifficulty() >= m_vBeats[GetCurrentBeatIndex()].GetDifficulty())
+			{
+				m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);			
+				m_vActiveBeats.back()->SetIsActive(true);				
+			}
 
 			// Setting the next beat to call
 			SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
@@ -94,7 +98,7 @@ void CSong::Update(float fElapsedTime)
 
 	list<CBeat*>::iterator i = m_vActiveBeats.begin();
 	// Updating active beats
-	if(m_vActiveBeats.size() > 0)		
+	if(m_vActiveBeats.size() > 0)
 		do
 		{	
 			if((*i)->GetIsActive())
@@ -130,7 +134,7 @@ void CSong::Update(float fElapsedTime)
 		// Sound info struct for Debugging
 		//tSoundInfo test = FMODMAN->GetSound(GetSongID());
 
-		SetCurrentSongTime((int)daTyme);
+		SetCurrentSongTime(daTyme);
 	}
 }
 

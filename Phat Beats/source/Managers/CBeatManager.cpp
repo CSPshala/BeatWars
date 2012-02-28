@@ -329,8 +329,8 @@ bool CBeatManager::UnloadSongs()
 {
 	CObjectManager::GetInstance()->RemoveAllObjects();
 
-	for(unsigned int i = 0; i < GetSongList().size(); ++i)
-		m_vSongs[i]->Release();
+	//for(unsigned int i = 0; i < GetSongList().size(); ++i)
+	//	m_vSongs[i]->Release();
 	
 	GetSongList().clear();
 	GetSongBackground().clear();

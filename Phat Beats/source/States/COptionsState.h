@@ -3,7 +3,11 @@
 #include "IGameState.h"
 #include "../CGame.h"
 
-enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_LIVES, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS};
+// Included for Difficulty ENUM
+#include "../CBeat.h"
+
+// JC - I cleaned up the enum a bit because stuff like lives isn't needed for now.
+enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
 class COptionsState : public IGameState
 {
 	private:
@@ -18,6 +22,8 @@ class COptionsState : public IGameState
 	float m_nMusicVolume;
 	float m_nMusicPan;
 	int	  m_nLives;
+	BeatDifficulty m_eDifficulty;  // Sets difficulty
+
 
 	COptionsState( void );
 	COptionsState( const COptionsState& );
@@ -32,4 +38,7 @@ public:
 	void Update(void);
 	void Render(void);
 	void Exit(void);
+
+	void SetDifficulty(BeatDifficulty eDiff) {m_eDifficulty = eDiff;}
+	BeatDifficulty GetDifficulty() {return m_eDifficulty;}
 };
