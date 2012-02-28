@@ -53,7 +53,7 @@ public:
 		list<CBeat*>&	GetActiveBeatList() {return m_vActiveBeats;}
 		vector<CBeat*>& GetHittableBeatList() {return m_vHittableBeats;}
 		string			GetSongName() {return m_szName;}
-		int				GetCurrentSongTime() {return m_nCurrentSongTime;}
+		unsigned int				GetCurrentSongTime() {return m_nCurrentSongTime;}
 		int				GetSongDuration() {return m_nSongDuration;}
 		int				GetSongID()	{return m_nSoundID;}
 		int				GetBackgroundID() {return m_nImageID;}
@@ -72,7 +72,7 @@ public:
 
 	/********** Public Mutators  ************/	
 		void			SetSongName(string szName) {m_szName = szName;}
-		void			SetCurrentSongTime(int fSongTime) {m_nCurrentSongTime = fSongTime;}
+		void			SetCurrentSongTime(unsigned int fSongTime) {m_nCurrentSongTime = fSongTime;}
 		void			SetSongDuration(int fDuration) {m_nSongDuration = fDuration;}
 		void			SetSongID(int ID) {m_nSoundID = ID;}
 		void			SetBackgroundID(int ID) {m_nImageID = ID;}
@@ -90,7 +90,7 @@ private:
 		list<CBeat*>	m_vActiveBeats; // Active Beats manages which beats are currently visible on screen
 		vector<CBeat*>	m_vHittableBeats; // Hittable beats holds which beats are able to currently be hit
 		string			m_szName;
-		int				m_nCurrentSongTime;
+		unsigned int	m_nCurrentSongTime;
 		int				m_nSongDuration;
 		int				m_nCurrentBeat;
 		int				m_nNextBeat;

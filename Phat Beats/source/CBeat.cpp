@@ -27,7 +27,7 @@
 CBeat::CBeat() : CBase()
 {
 	SetTimeOfBeat(0);
-	SetDifficulty(0);
+	SetDifficulty(EASY);
 	SetDirection(UP);
 	m_nType = OBJ_BEAT;
 	SetEvent("");	

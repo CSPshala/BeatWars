@@ -157,8 +157,8 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 {
 	switch (pMsg->GetMsgID())
 	{
-	case MSG_TEST:
-		dickhead = true;
+		case MSG_TEST:
+			dickhead = true;
 		break;
 
 	
