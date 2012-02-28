@@ -11,10 +11,10 @@
 CEmitter::CEmitter()
 {
 	m_szName = "";
-	m_rectRange.left = 384;
-	m_rectRange.top = 384;
-	m_rectRange.right = 384 + 32;
-	m_rectRange.bottom = 384 + 32;
+	//m_rectRange.left = 384;
+	//m_rectRange.top = 384;
+	//m_rectRange.right = 384 + 32;
+	//m_rectRange.bottom = 384 + 32;
 	m_tGravityPos = D3DXVECTOR2(0.0f, 0.0f);
 	m_fGravitationalPull = 0.0f;
 	m_fParticleDurationMin = 0.5f;
@@ -69,7 +69,9 @@ void CEmitter::RecycleParticle()
 		m_ListDeadParticles.erase(m_ListDeadParticles.begin());
 		
 		m_ListAliveParticles[index]->SetPosition(D3DXVECTOR2((float)Random::Next(GetRange().left, GetRange().right), (float)Random::Next(GetRange().top, GetRange().bottom)));
+		
 		int imgindex = rand() % m_vTextureList.size();
+		
 		m_ListAliveParticles[index]->SetImageID(m_vTextureList[imgindex]);
 		m_ListAliveParticles[index]->SetVelocity(m_vStartVelocity);
 		m_ListAliveParticles[index]->SetColor(m_tStartColor);
@@ -159,12 +161,11 @@ void CEmitter::Render()
 {
 	std::vector<CParticle*>::iterator i;
 
-	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_SRCBLEND, m_d3dSource);
-	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_DESTBLEND, m_d3dDestination);
+	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_SRCBLEND, GetSourceBlend());
+	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_DESTBLEND, GetDestinationBlend());
+
 	for(i = m_ListAliveParticles.begin(); i != m_ListAliveParticles.end(); ++i)
-	{
 		(*i)->Render(m_vTextureList);
-	}
 }
 
 const void CEmitter::SetMaxParticles(const short nNewMaxParticles)

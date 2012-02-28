@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "../CBase.h"
+#include "../CBeat.h"
 using namespace std;
 
 static enum{AI_EASY, AI_NORMAL, AI_HARD, AI_INSANE, NUM_DIFFICULTY};
@@ -14,8 +15,7 @@ private:
 	~CAiManager(void);
 	CAiManager(const CAiManager&);
 	CAiManager& operator=(const CAiManager&);
-
-	
+	CBeat* hitBeat;
 
 public:
 
@@ -24,8 +24,9 @@ public:
 
 	bool RandomDifficult(int Level);
 	//accessors
-
+	CBeat* GetBeat() { return hitBeat;}
 
 	//mutator
+	void SetBeatHit(CBeat* BeatHit) {hitBeat = BeatHit;}
 };
 #endif

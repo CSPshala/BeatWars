@@ -18,6 +18,7 @@
 #include "CObjectManager.h"
 #include "../CGame.h"
 #include "../CPlayer.h"
+#include "CFXManager.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -34,6 +35,7 @@ CBeatManager::CBeatManager()
 	CEventSystem::GetInstance()->RegisterClient("test.event",this);
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
+
 }
 
 CBeatManager::~CBeatManager()
@@ -54,7 +56,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
 	szPath += szFileName;
-
+	SetFileName(szFileName);
 	if(doc.LoadFile(szPath.c_str()) == false)
 		return false;
 
@@ -328,8 +330,8 @@ bool CBeatManager::UnloadSongs()
 {
 	CObjectManager::GetInstance()->RemoveAllObjects();
 
-	for(unsigned int i = 0; i < GetSongList().size(); ++i)
-		m_vSongs[i]->Release();
+	//for(unsigned int i = 0; i < GetSongList().size(); ++i)
+	//	m_vSongs[i]->Release();
 	
 	GetSongList().clear();
 	GetSongBackground().clear();
@@ -460,7 +462,8 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+							CFXManager::GetInstance()->QueueParticle("P1_HIT");
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else
@@ -477,6 +480,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+							CFXManager::GetInstance()->QueueParticle("P2_HIT");
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else
