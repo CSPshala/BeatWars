@@ -41,42 +41,31 @@ void CGameplay_State::Enter(void)
 {
 	if (m_bPreviouslyPlaying == false)
 	{
-		BeatManager = CBeatManager::GetInstance();
-
-	
-	
-		BeatManager->LoadSong("cantina.xml");
-	
+		BeatManager = CBeatManager::GetInstance();	
+		BeatManager->LoadSong("cantina.xml");	
 		BeatManager->LoadSong("noteeventtest.xml");
 		AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 		m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
-// Setting up Players
-	m_Player1 = new CPlayer(OBJ_PLAYER1);
-	m_Player2 = new CPlayer(OBJ_AI);
+	// Setting up Players
+		m_Player1 = new CPlayer(OBJ_PLAYER1);
+		m_Player2 = new CPlayer(OBJ_AI);
 	// Adding players to Object Manager
-	CObjectManager::GetInstance()->AddObject(m_Player1);
-	CObjectManager::GetInstance()->AddObject(m_Player2);
+		CObjectManager::GetInstance()->AddObject(m_Player1);
+		CObjectManager::GetInstance()->AddObject(m_Player2);
+
 		CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
 		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+		
 		BeatManager->Play("cantina");
 
 
-		m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
-
-		// Setting up Players
-		m_Player1 = new CPlayer(OBJ_PLAYER1);
-		m_Player2 = new CPlayer(OBJ_AI);
-
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
-
-		// Adding players to Object Manager
-		CObjectManager::GetInstance()->AddObject(m_Player1);
-		CObjectManager::GetInstance()->AddObject(m_Player2);
+				
 
 		rLeftHandle.left = 20;
 		rLeftHandle.top = 10;
