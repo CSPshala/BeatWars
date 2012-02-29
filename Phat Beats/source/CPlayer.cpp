@@ -112,13 +112,15 @@ void CPlayer::Render()
 	D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
-	/*
+
+
 
 	if (m_IbwriteShit == true)
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
 	}
-*/
+
+
 
 
 
@@ -295,15 +297,14 @@ void CPlayer::AIHandling()
 	CSong* AiSong;
 	AiSong = AIbeatDir->GetCurrentlyPlayingSong();
 	list<CBeat*>::iterator iter;
-		
+	
 	// checking the random difficult
 	// that returns a bool to set the hit to true or false
 	if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
 	{
-		m_IbwriteShit = true;
-		
+		m_IbwriteShit = true;		
 	}
-	if(CAiManager::GetInsatance()->RandomDifficult(0) == false )
+	else
 	{
 		m_IbwriteShit = false;				
 	}

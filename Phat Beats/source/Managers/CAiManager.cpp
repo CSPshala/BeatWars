@@ -34,10 +34,30 @@ bool CAiManager::RandomDifficult( int Level )
 	}
 }
 
-/*
-void CAiManager::Update( float fElaspedTime )
+bool CAiManager::CheckNotesHit( CBeat* hit )
 {
-
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		if (hit == (*iter))
+		{
+			return 0;
+		}
+		else
+			addNote(hit);
+			return false;
+	}
+	
 }
-*/
+
+void CAiManager::addNote(CBeat* hit)
+{
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		notesHit.push_back(hit);
+
+	}
+}
+
 

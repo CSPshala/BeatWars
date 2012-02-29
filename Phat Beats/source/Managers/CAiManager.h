@@ -5,6 +5,7 @@
 #include <vector>
 #include "../CBase.h"
 #include "../CBeat.h"
+#include "../CSong.h"
 using namespace std;
 
 static enum{AI_EASY, AI_NORMAL, AI_HARD, AI_INSANE, NUM_DIFFICULTY};
@@ -16,6 +17,7 @@ private:
 	CAiManager(const CAiManager&);
 	CAiManager& operator=(const CAiManager&);
 	CBeat* hitBeat;
+	vector<CBeat*> notesHit;
 
 public:
 
@@ -28,5 +30,9 @@ public:
 
 	//mutator
 	void SetBeatHit(CBeat* BeatHit) {hitBeat = BeatHit;}
+
+	bool CheckNotesHit(CBeat* hit);
+
+	void addNote(CBeat* hit);
 };
 #endif
