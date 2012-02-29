@@ -146,6 +146,9 @@ void CGameplay_State::Update(void)
 		// Taking care of player input
 		BeatManager->CheckPlayerInput(m_Player1);
 		BeatManager->CheckPlayerInput(m_Player2);
+
+		// Updating beatmanager (handles current streak counting and player dmg)
+		BeatManager->Update();
 	}
 
 	
@@ -170,6 +173,15 @@ void CGameplay_State::Render(void)
 	
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
+
+	char p1hp[50];
+	char p2hp[50];
+
+	itoa(m_Player1->GetCurrentHP(),p1hp,10);
+	itoa(m_Player2->GetCurrentHP(),p2hp,10);
+
+	CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
+	CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
 	
 	if (dickhead == false)
 	{

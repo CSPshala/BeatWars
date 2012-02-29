@@ -37,6 +37,12 @@ CSong::CSong()
 
 	m_nType = OBJ_SONG;
 
+	m_bAmIPlaying = false;
+	m_nSongDuration = -1;
+
+	m_nCurrentBeat = 0;
+	m_nNextBeat = 0;
+
 	// Asset IDs
 	SetSongID(-1);
 	SetBackgroundID(-1);
@@ -70,7 +76,7 @@ CSong& CSong::operator=(const CSong& theSong)
 
 	m_nSoundID = theSong.m_nSoundID;
 	m_nImageID = theSong.m_nImageID;
-	
+	m_bAmIPlaying = theSong.m_bAmIPlaying;
 
 	return *this;
 }
@@ -80,75 +86,93 @@ CSong& CSong::operator=(const CSong& theSong)
 ////////////////////////////////////////
 void CSong::Update(float fElapsedTime)
 {
-	// Checking upcomming beat and adding it to active vector when it's within tolerance
-	if(!((unsigned int)GetCurrentBeatIndex() >= m_vBeats.size()))
-		if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < ((int)GetCurrentSongTime() + 1000))
-		{
-			// Checking for difficulty, not adding it if it's below or equal to what we're set to
-			if(COptionsState::GetInstance()->GetDifficulty() >= m_vBeats[GetCurrentBeatIndex()].GetDifficulty())
+	if(IsCurrentlyPlayingSong())
+	{
+	
+			// Checking upcomming beat and adding it to active vector when it's within tolerance
+		if((unsigned int)GetCurrentBeatIndex() < m_vBeats.size())
+			if(m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat() < ((int)GetCurrentSongTime() + 1000))
 			{
-				m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);			
-				m_vActiveBeats.back()->SetIsActive(true);				
-			}
+				// Checking for difficulty, not adding it if it's below or equal to what we're set to
+				if(COptionsState::GetInstance()->GetDifficulty() >= m_vBeats[GetCurrentBeatIndex()].GetDifficulty())
+				{
+					bool found = false;
 
-			// Setting the next beat to call
-			SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
-		}	
+					list<CBeat*>::iterator x = m_vActiveBeats.begin();
+
+					for(; x != m_vActiveBeats.end(); ++x)
+						if((*x)->GetTimeOfBeat() == m_vBeats[GetCurrentBeatIndex()].GetTimeOfBeat())
+							found = true;
+
+					if(!found)
+					{
+						m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);	
+						m_vActiveBeats.back()->SetIsActive(true);	
+					}
+				}
+
+				// Setting the next beat to call
+				SetCurrentBeatIndex(GetCurrentBeatIndex() + 1);
+			}	
 
 
-	list<CBeat*>::iterator i = m_vActiveBeats.begin();
-	// Updating active beats
-	if(m_vActiveBeats.size() > 0)
-		do
-		{	
-			if((*i)->GetIsActive())
-				(*i)->Update(GAME->GetTimer().GetDeltaTime());
-			else
-				i = m_vActiveBeats.erase(i);
+		list<CBeat*>::iterator i = m_vActiveBeats.begin();
+		// Updating active beats
+		if(m_vActiveBeats.size() > 0)
+			do
+			{	
+				if((*i)->GetIsActive())
+					(*i)->Update(GAME->GetTimer().GetDeltaTime());
+				else
+					i = m_vActiveBeats.erase(i);
 			
-			// Jesus christ...
-			if(i == m_vActiveBeats.end())
-			{
-				break;
-			}
-			else 
-				++i;
+				// Jesus christ...
+				if(i == m_vActiveBeats.end())
+				{
+					break;
+				}
+				else 
+					++i;
 
-			if(i == m_vActiveBeats.end())
-			{
-				break;
-			}
+				if(i == m_vActiveBeats.end())
+				{
+					break;
+				}
 			
-		}while(true);
+			}while(true);
 		
 
-	// Updating song time	
-	if(FMODMAN->IsSoundPlaying(GetSongID()))
-	{
-		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetSongID());
+		// Updating song time	
+		if(FMODMAN->IsSoundPlaying(GetSongID()))
+		{
+			FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetSongID());
 
-		unsigned int daTyme = 0;
+			unsigned int daTyme = 0;
 
-		derp->getPosition(&daTyme,FMOD_TIMEUNIT_MS);
+			derp->getPosition(&daTyme,FMOD_TIMEUNIT_MS);
 
-		// Sound info struct for Debugging
-		//tSoundInfo test = FMODMAN->GetSound(GetSongID());
+			// Sound info struct for Debugging
+			//tSoundInfo test = FMODMAN->GetSound(GetSongID());
 
-		SetCurrentSongTime(daTyme);
+			SetCurrentSongTime(daTyme);
+		}
 	}
 }
 
 void CSong::Render()
 {
-	// Rendering Notes
-	list<CBeat*>::iterator i = m_vActiveBeats.begin();
+	if(IsCurrentlyPlayingSong())
+	{
+		// Rendering Notes
+		list<CBeat*>::iterator i = m_vActiveBeats.begin();
 
-	if(m_vActiveBeats.size() > 0)
-		for(; i != m_vActiveBeats.end(); ++i)
-		{
-			// Rendering Player 1 and Player 2 notes
-			(*i)->Render();			
-		}
+		if(m_vActiveBeats.size() > 0)
+			for(; i != m_vActiveBeats.end(); ++i)
+			{
+				// Rendering Player 1 and Player 2 notes
+				(*i)->Render();			
+			}
+	}
 }
 
 void CSong::ResetSong()
@@ -195,7 +219,16 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
 				if(pPlayer->CheckCollision(*i))
 				{
-					m_vHittableBeats.push_back(*i);
+					bool found = false;
+
+					for(unsigned int y = 0; y < m_vHittableBeats.size(); ++y)
+						if(m_vHittableBeats[y] == (*i))
+							found = true;
+
+					if(!found)
+						m_vHittableBeats.push_back(*i);
+
+
 					CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));					
 					if( numHit > 5 )					
 					{
@@ -212,7 +245,16 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 						if(m_vHittableBeats[x] == (*i))
 							m_vHittableBeats.erase(m_vHittableBeats.begin() + x);
 
-					(*i)->SetIsActive(false);				
+					
+					ES->SendEvent("notepassed",NULL);
+
+					(*i)->SetIsActive(false);	
+
+					// Also removing from active beats (CAUSE ITS NOT ACTIVE HUR HUR)
+					i = m_vActiveBeats.erase(i);
+
+					if(i == m_vActiveBeats.end())
+						break;
 				}
 		}
 		
