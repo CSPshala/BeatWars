@@ -14,7 +14,7 @@
 
 COptionsState::COptionsState( void )
 {
-
+	SetDifficulty(HARD);
 }
 COptionsState::~COptionsState(void)
 {
@@ -40,7 +40,7 @@ void COptionsState::Enter(void)
 	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 	//m_nLives = CGame::GetInstance()->GetStartingLives();
 
-	SetDifficulty(HARD);
+	
 
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png" );	
 

@@ -13,6 +13,7 @@
 #include "CPause_State.h"
 #include "../Managers/CAiManager.h"
 #include "../Managers/CFXManager.h"
+#include "COptionsState.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -26,6 +27,7 @@ CGameplay_State::CGameplay_State()
 	m_nTitleID = -1;
 	m_Player1 = NULL;
 	m_Player2 = NULL;
+
 	
 	m_bPreviouslyPlaying = false;
 }
@@ -164,6 +166,9 @@ void CGameplay_State::Update(void)
 		// Taking care of player input
 		BeatManager->CheckPlayerInput(m_Player1);
 		BeatManager->CheckPlayerInput(m_Player2);
+
+		// Updating beatmanager (handles current streak counting and player dmg)
+		BeatManager->Update();
 	}
 
 	
@@ -188,14 +193,22 @@ void CGameplay_State::Render(void)
 	//	AnimationManager.Render();
 		CFXManager::GetInstance()->Render();
 	
-		// You know what's up
-		CObjectManager::GetInstance()->RenderObjects();
-	
+	// You know what's up
+	CObjectManager::GetInstance()->RenderObjects();
+
+	char p1hp[50];
+	char p2hp[50];
+
+	itoa(m_Player1->GetCurrentHP(),p1hp,10);
+	itoa(m_Player2->GetCurrentHP(),p2hp,10);
+
+	CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
+	CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
+
 		if (dickhead == false)
 		{
 			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 		}
-	
 	
 	}
 }

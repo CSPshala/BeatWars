@@ -13,8 +13,9 @@
 #define FMODMAN CSGD_FModManager::GetInstance()
 #define DI CSGD_DirectInput::GetInstance()
 #define OM CObjectManager::GetInstance()
-//#define MS CSGD_MessageSystem::GetInstance()
-//#define ES CSGD_EventSystem::GetInstance()
+#define MS CMessageSystem::GetInstance()
+#define ES CEventSystem::GetInstance()
 #define GAME CGame::GetInstance()
+#define GAMEPLAY CGameplay_State::GetInstance()
 
 #endif
