@@ -72,6 +72,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 CPlayer::~CPlayer()
 {	
 	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+
 }
 
 ////////////////////////////////////////
@@ -111,13 +112,16 @@ void CPlayer::Render()
 	D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
+	/*
+
 	if (m_IbwriteShit == true)
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
 	}
+*/
 
-	
-	
+
+
 }
 
 RECT CPlayer::GetCollisionRect()
@@ -170,17 +174,19 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
+	/*
 	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
-	{
-		bool found = false;
-				
-		for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
-			if(m_vAIBeats[i] == pEvent->GetParam())
-				found = true;
-		
-		if(!found)
-			m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
-	}
+		{
+			bool found = false;
+	
+			for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
+				if(m_vAIBeats[i] == pEvent->GetParam())
+					found = true;
+	
+			if(!found)
+				m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
+		}*/
+	
 }
 
 ////////////////////////////////////////
@@ -204,7 +210,7 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
-	
+
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
@@ -252,7 +258,7 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
-	
+
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
@@ -283,56 +289,73 @@ void CPlayer::P2InputHandling()
 
 void CPlayer::AIHandling()
 {
+	// local variables for function
 	CBeatManager* AIbeatDir;
 	AIbeatDir = CBeatManager::GetInstance();
 	CSong* AiSong;
 	AiSong = AIbeatDir->GetCurrentlyPlayingSong();
-	CBeat* hitPlayer;
-	
-	if (AiSong->GetHittableBeatList().size() > 0)
+	list<CBeat*>::iterator iter;
+		
+	// checking the random difficult
+	// that returns a bool to set the hit to true or false
+	if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
 	{
-		for (int i = 0; i < AiSong->GetHittableBeatList().size(); ++i)
+		m_IbwriteShit = true;
+		
+	}
+	if(CAiManager::GetInsatance()->RandomDifficult(0) == false )
+	{
+		m_IbwriteShit = false;				
+	}
+
+	for (iter = AiSong->GetActiveBeatList().begin(); iter != AiSong->GetActiveBeatList().end(); ++iter)
+	{
+
+		if ((*iter)->GetDirection() == LEFT && (*iter)->GetHasCollided() == m_IbwriteShit)
 		{
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFT)
-				SetAimingDirection(LEFT);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == UP)
-				SetAimingDirection(UP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == RIGHT)
-				SetAimingDirection(RIGHT);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFTUP)
-				SetAimingDirection(LEFTUP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTUP)
-				SetAimingDirection(RIGHTUP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == DOWN)
-				SetAimingDirection(DOWN);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == LEFTDOWN)
-				SetAimingDirection(LEFTDOWN);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTDOWN)
-				SetAimingDirection(RIGHTDOWN);
+			SetAimingDirection(LEFT);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
 		}
-
-		if(m_vAIBeats.size() != 0)
+		if ((*iter)->GetDirection()  == UP && (*iter)->GetHasCollided() == m_IbwriteShit)
 		{
-
-			if (CAiManager::GetInsatance()->RandomDifficult(2) == true)
-			{
-				m_IbwriteShit = true;
-
-				hitPlayer->SetPlayer2Hit(true);
-
-			}
-			else
-			{
-				m_IbwriteShit = false;
-				
-			}
-
-			m_vAIBeats.pop_back();
-
+			SetAimingDirection(UP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection()  == RIGHT && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHT);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection()  == LEFTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(LEFTUP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == RIGHTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHTUP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == DOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(DOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == LEFTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(LEFTDOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == RIGHTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHTDOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
 		}
 	}
 	
 }
+
+
 
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
@@ -346,7 +369,7 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 	case LEFT:
 		SetCurrentRotation(270.0f);
 		break;
-		
+
 	case UP:
 		SetCurrentRotation(0.0f);
 		break;

@@ -12,6 +12,7 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include <vector>
+#include <list>
 #include <queue>
 using std::vector;
 using std::queue;
@@ -100,7 +101,7 @@ private:
 
 		// AI handling stuff
 		vector<CBeat*> m_vAIBeats;
-
+		
 		// Player hit vector
 		queue<TBeatHit> m_qKeyPresses;
 

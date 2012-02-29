@@ -5,7 +5,7 @@
 
 CAiManager::CAiManager( void )
 {
-
+	
 }
 
 CAiManager::~CAiManager( void )
@@ -21,7 +21,6 @@ CAiManager* CAiManager::GetInsatance()
 
 bool CAiManager::RandomDifficult( int Level )
 {
-	srand(unsigned int(time(0)));
 	switch (Level)
 	{
 	case AI_EASY:
@@ -33,7 +32,6 @@ bool CAiManager::RandomDifficult( int Level )
 	case AI_INSANE:
 		return rand()%100;
 	}
-
 }
 
 /*

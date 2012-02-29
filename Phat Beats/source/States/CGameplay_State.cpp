@@ -43,7 +43,7 @@ void CGameplay_State::Enter(void)
 	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
+	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
 	// Setting up Players
 	m_Player1 = new CPlayer(OBJ_PLAYER1);
 	m_Player2 = new CPlayer(OBJ_AI);
@@ -133,7 +133,7 @@ void CGameplay_State::Update(void)
 
 		// Taking care of player input
 		BeatManager->CheckPlayerInput(m_Player1);
-		BeatManager->CheckPlayerInput(m_Player2);
+		//BeatManager->CheckPlayerInput(m_Player2);
 	}
 
 	
@@ -141,7 +141,7 @@ void CGameplay_State::Update(void)
 
 void CGameplay_State::Render(void)
 {
-
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0,0.4f,0.35f);
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,10,1.0,1.0,&rLeftSaber);
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,513,10,1.0,1.0,&rRightSaber);
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,20,17,1.0,1.0,&rLeftHandle);
@@ -149,7 +149,7 @@ void CGameplay_State::Render(void)
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,45,1.0,1.0,&rLeftPowerUpBar);
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,529,45,1.0,1.0,&rRightPowerUpBar);
 
-
+	
 	// Drawing everything before this
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	
