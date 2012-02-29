@@ -50,17 +50,20 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p1cone.png"));
 		SetPosX(200.0f - 64.0f);  // Offsetting to get the base of the cone right on point
 		SetPosY(300.0f - 128.0f);
+		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxJedi.png");
 		break;
 
 	case OBJ_PLAYER2:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
 		SetPosX(600.0f - 64.0f); // Ditto
 		SetPosY(300.0f - 128.0f);
+		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxSith.png");
 		break;
 	case OBJ_AI:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
 		SetPosX(600.0f - 64.0f); // Ditto
 		SetPosY(300.0f - 128.0f);
+		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxSith.png");
 		break;
 	}
 
@@ -72,6 +75,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 CPlayer::~CPlayer()
 {	
 	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 }
 
 ////////////////////////////////////////
@@ -108,8 +112,9 @@ void CPlayer::Update(float fElapsedTime)
 void CPlayer::Render()
 {
 	
-	D3D->DrawRect(GetCollisionRect(),100,100,100);
+	//D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
+	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
 	if (m_IbwriteShit == true)
 	{
