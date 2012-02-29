@@ -89,19 +89,23 @@ void CPlayer::Update(float fElapsedTime)
 	// (like your mom)
 	// Also comment out P2's handling for debugging, because right now P1 and P2 have
 	// same control scheme, so you'd prolly be moving both cones as one if you don't.
-	switch(m_nType)
+	if(!CBeatManager::GetInstance()->IsPaused())
 	{
-	case OBJ_PLAYER1:
-		P1InputHandling();
-		break;
 
-	case OBJ_PLAYER2:
-		P2InputHandling();
-		break;
+		switch(m_nType)
+		{
+		case OBJ_PLAYER1:
+			P1InputHandling();
+			break;
 
-	case OBJ_AI:
-		AIHandling();
-		break;
+		case OBJ_PLAYER2:
+			P2InputHandling();
+			break;
+
+		case OBJ_AI:
+			AIHandling();
+			break;
+		}
 	}
 }
 
