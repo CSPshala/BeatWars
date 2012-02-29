@@ -41,6 +41,8 @@ public:
 	CPlayer*	GetPlayer1() {return m_Player1;}
 	CPlayer*  GetPlayer2() {return m_Player2;}
 int getBackground() {return m_nBackgroundID;}
+	bool GetPreviouslyPlaying() {return m_bPreviouslyPlaying;}
+	void SetPreviouslyPlaying(bool prevplay) {m_bPreviouslyPlaying = prevplay;}
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -53,6 +55,8 @@ private:
 
 	//*******MEMBERS**********//
 	Bitmap_Font* m_bMenu_Font;
+	bool m_bPreviouslyPlaying;
+
 	
 		// Asset IDs
 	int m_nBackgroundID;

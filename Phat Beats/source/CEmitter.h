@@ -95,7 +95,7 @@ public:
 	// Mutators
 	inline const void SetName(const std::string szNewName) {m_szName = szNewName;}
 	inline const void SetRange(const RECT& rectNewRange) {m_rectRange = rectNewRange;}
-	inline const void SetGravityPosition(const D3DXVECTOR2& vNewPos){m_tGravityPos = vNewPos;}
+	inline const void SetGravityPosition(const D3DXVECTOR2& vNewPos){m_tGravityPos = D3DXVECTOR2(GetRange().left + vNewPos.x, GetRange().top + vNewPos.y);}
 	inline const void SetGravitationalPull(const float fNewPull) {m_fGravitationalPull = fNewPull;}
 	inline const void SetParticleDurationMin(const float fNewDurationMin) {m_fParticleDurationMin = fNewDurationMin;}
 	inline const void SetParticleDurationMax(const float fNewDurationMax) {m_fPatricleDurationMax = fNewDurationMax;}

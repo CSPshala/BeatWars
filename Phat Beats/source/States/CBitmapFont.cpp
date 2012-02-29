@@ -103,6 +103,30 @@ void CBitmapFont::PrintText(string textToPrint, int nPosX, int nPosY, DWORD dwCo
 		}
 }
 
+void CBitmapFont::PrintStrokedText(string szText, int nPosX, int nPosY, DWORD dBgColor, DWORD dFgColor)
+{
+	PrintText(szText, nPosX - 1, nPosY, dBgColor);
+	PrintText(szText, nPosX, nPosY - 1, dBgColor);
+	PrintText(szText, nPosX + 1, nPosY, dBgColor);
+	PrintText(szText, nPosX, nPosY + 1, dBgColor);
+	PrintText(szText, nPosX, nPosY, dFgColor);
+}
+
+void CBitmapFont::PrintStrokedTextInRect(string szText, RECT* layoutRect, int nAlignment, DWORD dBgColor, DWORD dFgColor)
+{
+	RECT offRect = *layoutRect;
+	offRect.left -= 1; offRect.right -= 1;
+	PrintInRect(szText, &offRect, nAlignment, dBgColor);
+	offRect.top -= 1; offRect.bottom -= 1; offRect.left += 1; offRect.right += 1;
+	PrintInRect(szText, &offRect, nAlignment, dBgColor);
+	offRect.top += 1; offRect.bottom += 1; offRect.left += 1; offRect.right += 1;
+	PrintInRect(szText, &offRect, nAlignment, dBgColor);
+	offRect.top += 1; offRect.bottom += 1;
+	PrintInRect(szText, &offRect, nAlignment, dBgColor);
+
+	PrintInRect(szText, layoutRect, nAlignment, dFgColor);
+}
+
 ///////////////////////////////////////////////////
 //	Function	:	"PrintInRect"
 //	

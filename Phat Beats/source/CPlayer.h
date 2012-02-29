@@ -108,6 +108,7 @@ private:
 
 		// Asset IDs
 			// Images
+			int m_nHitBoxImage;
 			int m_nBeatConeID;
 			// Sound
 			int m_nBeatSuccessID;

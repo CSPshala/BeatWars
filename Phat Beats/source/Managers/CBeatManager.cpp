@@ -12,17 +12,21 @@
 
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
+#include "../States/CGameplay_State.h"
 #include "../XML/tinystr.h"
 #include "../XML/tinyxml.h"
 #include "CEventSystem.h"
 #include "CObjectManager.h"
 #include "../CGame.h"
 #include "../CPlayer.h"
+#include "CFXManager.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
 // 300ms margin for hitting beat
 #define MARGINOFERROR 300
+// Define for easy changing of Damage Threshold
+#define COMBODAMAGETHRESHOLD 5
 
 ///////////////////////////////////////////////
 //  CONSTRUCTOR / DECONSTRUCT / OP OVERLOADS
@@ -32,14 +36,16 @@ CBeatManager::CBeatManager()
 	SetNumberNotesHit(0);
 	SetPause(true);
 	CEventSystem::GetInstance()->RegisterClient("test.event",this);
+	ES->RegisterClient("notepassed",this);
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
-
+	SetComboThreshold(COMBODAMAGETHRESHOLD);
 }
 
 CBeatManager::~CBeatManager()
 {
 	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
+	ES->UnregisterClient("notepassed",this);
 }
 
 ////////////////////////////////////////
@@ -329,8 +335,8 @@ bool CBeatManager::UnloadSongs()
 {
 	CObjectManager::GetInstance()->RemoveAllObjects();
 
-	for(unsigned int i = 0; i < GetSongList().size(); ++i)
-		m_vSongs[i]->Release();
+	//for(unsigned int i = 0; i < GetSongList().size(); ++i)
+	//	m_vSongs[i]->Release();
 	
 	GetSongList().clear();
 	GetSongBackground().clear();
@@ -399,7 +405,8 @@ void CBeatManager::Reset()
 
 void CBeatManager::Update()
 {
-	
+	// Checking combo
+	EvaluatePlayerCombos();
 }
 
 void CBeatManager::Render()
@@ -410,7 +417,19 @@ void CBeatManager::Render()
 void CBeatManager::HandleEvent( CEvent* pEvent )
 {
 	if(pEvent->GetEventID() == "test.event")
+	{
 		fuckyou = true;
+		return;
+	}
+
+	if(pEvent->GetEventID() == "notepassed")
+	{
+		// Upping the note count of notes that have passed by
+		SetNotesPassed(GetNotesPassed() + 1);
+		return;
+	}
+
+	
 }
 
 string CBeatManager::GetCurrentlyPlayingSongName()
@@ -436,6 +455,7 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 			{
 				m_nCurrentlyPlayingSongIndex = i;
 				szCurrentlyPlayingSong = szSongName;
+				m_vSongs[i]->SetCurrentlyPlayingSong(true);
 				return;
 			}
 	}
@@ -444,11 +464,13 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 
 void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
+	bool found = false;
 
 	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
 		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
-		{
+		{			
+
 			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
 				&& aPlayer->GetMostRecentKeyPress().cHitNote == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
 			{			
@@ -458,14 +480,25 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 					{					
 						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer1Hit())
 						{
-							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
+							(GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+							CFXManager::GetInstance()->QueueParticle("P1_HIT");
+
+							// Upping Player1's Current combo for damage
+							SetP1CurrentCombo(GetP1CurrentCombo() + 1);							
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else
-							aPlayer->SetCurrentStreak(0);
+						{
+							//aPlayer->SetCurrentStreak(0);
+
+							//// Player missed so wiping out combo
+							//SetP1CurrentCombo(0);
+
+							break;
+						}
 
 					}
 					break;
@@ -478,10 +511,19 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+							CFXManager::GetInstance()->QueueParticle("P2_HIT");
+
+							// Upping Player2's Current combo for damage
+							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else
+						{
 							aPlayer->SetCurrentStreak(0);
+
+							// Player missed so wiping out combo
+							SetP2CurrentCombo(0);
+						}
 					}
 					break;
 
@@ -493,16 +535,30 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+
+							
+							// Upping Player2's Current combo for damage
+							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
 						// Player already hit the note, and it's not visible anymore so it's a miss
 						else
+						{
 							aPlayer->SetCurrentStreak(0);
+							
+							// Player missed so wiping out combo
+							SetP2CurrentCombo(0);
+						}
 					}
 					break;
 				}
 			}
 			else
 			{
+				if(aPlayer->GetType() == OBJ_PLAYER1)
+					SetP1CurrentCombo(0);
+				else if(aPlayer->GetType() == OBJ_PLAYER2 || aPlayer->GetType() == OBJ_AI)
+					SetP2CurrentCombo(0);
+
 				aPlayer->SetCurrentStreak(0);			
 			}
 			
@@ -524,7 +580,27 @@ CBeatManager* CBeatManager::GetInstance()
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
 ////////////////////////////////////////
+void CBeatManager::EvaluatePlayerCombos()
+{
+	if(GetNotesPassed() >= GetComboThreshold())
+	{
+		if(GetP1CurrentCombo() > GetP2CurrentCombo())
+		{
+			DealDamageToPlayer(GAMEPLAY->GetPlayer2());
+		}
+		else if(GetP2CurrentCombo() > GetP1CurrentCombo())
+		{
+			DealDamageToPlayer(GAMEPLAY->GetPlayer1());
+		}
 
+		SetNotesPassed(0);
+	}
+}
+
+void CBeatManager::DealDamageToPlayer(CPlayer* aPlayer)
+{
+	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 3);
+}
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
 ////////////////////////////////////////
