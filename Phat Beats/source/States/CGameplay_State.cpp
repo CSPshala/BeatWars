@@ -39,7 +39,7 @@ void CGameplay_State::Enter(void)
 	BeatManager = CBeatManager::GetInstance();
 
 	BeatManager->LoadSong("cantina.xml");
-	BeatManager->LoadSong("noteeventtest.xml");
+	//BeatManager->LoadSong("noteeventtest.xml");
 	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
     m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
