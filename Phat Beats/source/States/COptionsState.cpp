@@ -382,7 +382,7 @@ void COptionsState::Render(void)
 		break;
 	case OPTIONSMENU_GAME:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143, + (OPTIONSMENU_GAME * 40));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_GAME * 40));
 		}
 		break;
 	}
