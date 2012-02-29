@@ -296,7 +296,7 @@ void CPlayer::AIHandling()
 	
 	if (AiSong->GetHittableBeatList().size() > 0)
 	{
-		for (int i = 0; i < AiSong->GetHittableBeatList().size(); ++i)
+		for (unsigned int i = 0; i < AiSong->GetHittableBeatList().size(); ++i)
 		{
 			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFT)
 				SetAimingDirection(LEFT);
