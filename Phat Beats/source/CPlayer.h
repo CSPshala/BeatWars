@@ -96,6 +96,9 @@ private:
 		int m_nAILevel; // setting the ai level from option state
 		// Aim Specific stuff
 		float m_fRotation; // Rotation of cone (in degrees)
+		
+		// Attack mode bool.  If false = Defense mode
+		bool m_bAttackMode;
 
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
@@ -121,11 +124,13 @@ private:
 			int GetBeatConeID() {return m_nBeatConeID;}
 			int GetBeatSuccessID() {return m_nBeatSuccessID;}
 			int GetBeatMissID() {return m_nBeatMissID;}
+			bool GetAttackMode() {return m_bAttackMode;}
 
 	/********** Private Mutators ************/
 			void SetBeatConeID(int nBeatConeID) {m_nBeatConeID = nBeatConeID;}
 			void SetBeatSuccessID(int nBeatSuccessID) {m_nBeatSuccessID = nBeatSuccessID;}
 			void SetBeatMissID(int nBeatMissID) {m_nBeatMissID = nBeatMissID;}
+			void SetAttackMode(bool nMode) {m_bAttackMode = nMode;}
 
 	/********** Private Utility Functions ************/
 			void P1InputHandling();

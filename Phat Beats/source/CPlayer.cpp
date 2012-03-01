@@ -19,6 +19,7 @@
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
+
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -44,6 +45,9 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	// Setting aiming to upwards
 	SetAimingDirection(UP);	
 
+	// Putting player in attack mode
+	SetAttackMode(true);
+
 	switch(m_nType)
 	{
 	case OBJ_PLAYER1:
@@ -67,14 +71,12 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		break;
 	}
 
-	// Event system register	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	// Event system register		
 	m_IbwriteShit = false;
 }
 
 CPlayer::~CPlayer()
-{	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+{		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 }
 
@@ -184,18 +186,7 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
-	/*
-	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
-		{
-			bool found = false;
 	
-			for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
-				if(m_vAIBeats[i] == pEvent->GetParam())
-					found = true;
-	
-			if(!found)
-				m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
-		}*/
 	
 }
 
@@ -220,6 +211,8 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
+	else if(DI->KeyDown(DIK_SPACE))
+		SetAttackMode(!GetAttackMode()); // Toggling attack/defense
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -310,7 +303,7 @@ void CPlayer::AIHandling()
 	// that returns a bool to set the hit to true or false
 	if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
 	{
-		m_IbwriteShit = true;		
+		m_IbwriteShit = true;	
 	}
 	else
 	{

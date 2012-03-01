@@ -464,13 +464,12 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 
 void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
-	bool found = false;
-
 	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
 		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
 		{			
-
+			// Here we're looking at the current hittable beat, checking if the player is aiming at it,
+			// and if they hit the correct key or not
 			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
 				&& aPlayer->GetMostRecentKeyPress().cHitNote == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
 			{			
@@ -488,17 +487,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 							// Upping Player1's Current combo for damage
 							SetP1CurrentCombo(GetP1CurrentCombo() + 1);							
-						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							//aPlayer->SetCurrentStreak(0);
-
-							//// Player missed so wiping out combo
-							//SetP1CurrentCombo(0);
-
-							break;
-						}
+						}						
 
 					}
 					break;
@@ -516,14 +505,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Upping Player2's Current combo for damage
 							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							aPlayer->SetCurrentStreak(0);
-
-							// Player missed so wiping out combo
-							SetP2CurrentCombo(0);
-						}
+						
 					}
 					break;
 
@@ -535,19 +517,12 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-
+							CFXManager::GetInstance()->QueueParticle("P2_HIT");
 							
 							// Upping Player2's Current combo for damage
 							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							aPlayer->SetCurrentStreak(0);
-							
-							// Player missed so wiping out combo
-							SetP2CurrentCombo(0);
-						}
+						
 					}
 					break;
 				}
@@ -597,7 +572,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 }
 
-void CBeatManager::DealDamageToPlayer(CPlayer* aPlayer)
+void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
 	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 3);
 }
