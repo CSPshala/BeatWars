@@ -70,7 +70,13 @@ public:
 	TBeatHit&			GetMostRecentKeyPress();
 	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
 	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
-	int					NumberofAnimations() { return m_vecAnimations.size(); }
+	int					NumberofAnimations()
+						{ 
+							if( !m_vecAnimations.empty() )
+								return m_vecAnimations.size(); 
+
+							return 0;
+						}
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
