@@ -15,6 +15,7 @@
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_FModManager.h"
+#include "CGame.h"
 #include "Managers\CBeatManager.h"
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
@@ -40,6 +41,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
 	SetTotalScore(0);
+	SetAttackModeTimer(0);
 	// Defaults to easy
 	SetPlayerDifficulty(EASY);
 	// Setting aiming to upwards
@@ -113,6 +115,8 @@ void CPlayer::Update(float fElapsedTime)
 			break;
 		}
 	}
+
+	SetAttackModeTimer(GetAttackModeTimer() + GAME->GetTimer().GetDeltaTime());
 }
 
 void CPlayer::Render()
@@ -212,7 +216,13 @@ void CPlayer::P1InputHandling()
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
 	else if(DI->KeyDown(DIK_SPACE))
-		SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+	{
+		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+		}
+	}
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -261,6 +271,14 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
+	else if(DI->KeyDown(DIK_SPACE))
+	{
+		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+		}
+	}
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{

@@ -561,11 +561,11 @@ void CBeatManager::EvaluatePlayerCombos()
 	{
 		if(GetP1CurrentCombo() > GetP2CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer2());
+			DealDamageToPlayer(GAMEPLAY->GetPlayer2(),GAMEPLAY->GetPlayer1());
 		}
 		else if(GetP2CurrentCombo() > GetP1CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer1());
+			DealDamageToPlayer(GAMEPLAY->GetPlayer1(), GAMEPLAY->GetPlayer2());
 		}
 
 		SetNotesPassed(0);
@@ -574,7 +574,21 @@ void CBeatManager::EvaluatePlayerCombos()
 
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 8);
+	// Player is in attack mode
+	if(playerToDmg->GetAttackMode())
+	{
+		if(damageDealer->GetAttackMode())
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
+		else
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
+	}
+	else
+	{
+		if(damageDealer->GetAttackMode())
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
+		else
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
+	}
 }
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS

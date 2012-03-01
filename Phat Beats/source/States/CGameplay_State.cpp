@@ -125,7 +125,10 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		{
 			BeatManager->Reset();
-			m_bGameOver = true;
+			m_bGameOver = false;
+
+			m_Player1->SetCurrentHP(100);
+			m_Player2->SetCurrentHP(100);
 		}
 
 		/*if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_A) )
