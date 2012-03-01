@@ -18,20 +18,21 @@ bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
 	m_bMenu_Font = NULL;
-	
-		// Asset IDs
+
+	// Asset IDs
 	m_nBackgroundID = -1;
 	m_nBackSoundID = -1;
 	m_nFontID = -1;
 	m_nTitleID = -1;
 	m_Player1 = NULL;
 	m_Player2 = NULL;
-	
+
+
 }
 
 CGameplay_State::~CGameplay_State()
 {
-	
+
 }
 
 void CGameplay_State::Enter(void)
@@ -40,9 +41,8 @@ void CGameplay_State::Enter(void)
 
 	BeatManager->LoadSong("cantina.xml");
 	BeatManager->LoadSong("noteeventtest.xml");
-	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
-    m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
 
 	CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
@@ -72,7 +72,7 @@ void CGameplay_State::Enter(void)
 	rRightHandle.top = 12;
 	rRightHandle.right = 492;
 	rRightHandle.bottom = 23;
-	
+
 	rLeftSaber.left = 20;
 	rLeftSaber.top = 349;
 	rLeftSaber.right = 227;
@@ -82,7 +82,7 @@ void CGameplay_State::Enter(void)
 	rRightSaber.top = 348;
 	rRightSaber.right = 466;
 	rRightSaber.bottom = 382;
-	
+
 	rRightPowerUpBar.left = 303;
 	rRightPowerUpBar.top = 107;
 	rRightPowerUpBar.right = 495;
@@ -92,6 +92,9 @@ void CGameplay_State::Enter(void)
 	rLeftPowerUpBar.top = 107;
 	rLeftPowerUpBar.right = 214;
 	rLeftPowerUpBar.bottom = 140;
+
+	m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+	m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
 }
 
 bool CGameplay_State::Input(void)
@@ -109,20 +112,66 @@ bool CGameplay_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		BeatManager->Reset();
 
-	/*if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_A) )
-		AnimationManager.Play();
+	if(m_Player1->NumberofAnimations() > 0 ) 
+	{
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_S))
-		AnimationManager.Stop();
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B) )
+		{
+			m_Player1->SetCurrAnimation("Idle");
+			m_Player1->PlayAnimation();
+		}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_D))
-		AnimationManager.Reset();*/
-	
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_N))
+		{
+			m_Player1->SetCurrAnimation("Attack");
+			m_Player1->PlayAnimation();
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_M))
+		{
+			m_Player1->SetCurrAnimation("Block");
+			m_Player1->PlayAnimation();
+		}
+
+		if( m_Player1->GetCurrAnim()->GetPlayedAlready() )
+		{
+			m_Player1->SetCurrAnimation("Idle");
+			m_Player1->PlayAnimation();
+		}
+
+	}
+	if( m_Player2->NumberofAnimations() > 0 )
+	{
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_J) )
+		{
+			m_Player2->SetCurrAnimation("Idle");
+			m_Player2->PlayAnimation();
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
+		{
+			m_Player2->SetCurrAnimation("Attack");
+			m_Player2->PlayAnimation();
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_L))
+		{
+			m_Player2->SetCurrAnimation("Block");
+			m_Player2->PlayAnimation();
+		}
+
+		if( m_Player2->GetCurrAnim()->GetPlayedAlready() )
+		{
+			m_Player2->SetCurrAnimation("Idle");
+			m_Player2->PlayAnimation();
+		}
+
+	}
+
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_I))
 	{
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
-	
 
 	return true;
 }
@@ -135,8 +184,6 @@ void CGameplay_State::Update(void)
 	{
 		// Updating song
 		CObjectManager::GetInstance()->UpdateObjects(CGame::GetInstance()->GetTimer().GetDeltaTime());	
-		// Updating animations
-//		AnimationManager.Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 		// Checking collisions
 		CObjectManager::GetInstance()->CheckCollisions(m_Player1);
 		CObjectManager::GetInstance()->CheckCollisions(m_Player2);
@@ -146,11 +193,12 @@ void CGameplay_State::Update(void)
 		BeatManager->CheckPlayerInput(m_Player2);
 	}
 
-	
+
 }
 
 void CGameplay_State::Render(void)
 {
+
 
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,10,1.0,1.0,&rLeftSaber);
 	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,513,10,1.0,1.0,&rRightSaber);
@@ -162,32 +210,38 @@ void CGameplay_State::Render(void)
 
 	// Drawing everything before this
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-	
-//	AnimationManager.Render();
+
+	//	AnimationManager.Render();
 	CFXManager::GetInstance()->Render();
-	
+
 	// You know what's up
 	CObjectManager::GetInstance()->RenderObjects();
-	
+
 	if (dickhead == false)
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 	}
-	
-	
+
+
 
 }
 
 void CGameplay_State::Exit(void)
 {
-	AnimationManager.UnloadAnimations();
-
 	// Removing references to players on the way out so they'll get cleaned up
+
+
 	if(m_Player1)
+	{
+		AnimationManager.UnloadAnimations(m_Player1->GetAnimations() );
 		m_Player1->Release();
+	}
 
 	if(m_Player2)
+	{
+		AnimationManager.UnloadAnimations(m_Player2->GetAnimations() );
 		m_Player2->Release();
+	}
 
 	CBeatManager::GetInstance()->Stop();
 	CBeatManager::GetInstance()->UnloadSongs();
@@ -213,11 +267,11 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 {
 	switch (pMsg->GetMsgID())
 	{
-		case MSG_TEST:
-			dickhead = true;
+	case MSG_TEST:
+		dickhead = true;
 		break;
 
-	
+
 	}
 }
 

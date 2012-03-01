@@ -67,11 +67,14 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	// Event system register	
 	CEventSystem::GetInstance()->RegisterClient("player1button",this);
 	m_IbwriteShit = false;
+
+	m_nCurrAnim = 0;
 }
 
 CPlayer::~CPlayer()
 {	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	CEventSystem::GetInstance()->UnregisterClient("player1button",this);
+
 }
 
 ////////////////////////////////////////
@@ -85,6 +88,10 @@ void CPlayer::Input()
 
 void CPlayer::Update(float fElapsedTime)
 {
+	//UpdateAnimations
+	if( m_vecAnimations.size() > 0 )
+	m_vecAnimations[m_nCurrAnim]->Update(fElapsedTime);
+
 	// Just splitting up input for both players so this dosen't get all huge and gross
 	// (like your mom)
 	// Also comment out P2's handling for debugging, because right now P1 and P2 have
@@ -107,7 +114,19 @@ void CPlayer::Update(float fElapsedTime)
 
 void CPlayer::Render()
 {
-	
+	//Render Animations
+	if( m_nType == OBJ_PLAYER1 )
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(200,200,-1.0);
+	}
+	else
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(500,200,1.0);
+
+	}
+
 	D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
@@ -381,6 +400,32 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 TBeatHit& CPlayer::GetMostRecentKeyPress()
 {	
 	return m_qKeyPresses.front();
+}
+
+void CPlayer::PlayAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Play();
+}
+void CPlayer::StopAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Stop();
+}
+void CPlayer::ResetAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Reset();
+}
+
+void CPlayer::SetCurrAnimation(string szAnimName )
+{
+	for( int i = 0; i < m_vecAnimations.size(); ++i )
+	{
+		if( m_vecAnimations[i]->GetName() == szAnimName )
+		{
+			m_nCurrAnim = i;
+			m_vecAnimations[m_nCurrAnim]->Reset();
+			break;
+		}
+	}
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

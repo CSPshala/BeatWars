@@ -27,19 +27,22 @@ class CAnimation
 		void SetIsLooping(bool bLoop);
 		void SetIsPlaying(bool lPlay);
 		void SetName(std::string szName);
+		void SetPlayAlready( bool bPlayed ) {m_PlayedAlready = bPlayed;}
 
 
 		vector<CFrame*> m_vecFrames;
 
 		void SetImageID( int nImage );
 		int GetImageID();
+		string GetName() {return m_szName;}
+		bool GetPlayedAlready() {return m_PlayedAlready; }
 
 		
 		void Play();
 		void Stop();
 		void Reset();
 		void Update(float fElapsedTime);
-		void Render();
+		void Render(int posX, int posY, float fScale);
 		
 	
 	private:
@@ -55,6 +58,7 @@ class CAnimation
 		// Player Stuff
 		
 		bool m_bIsPlaying;
+		bool m_PlayedAlready;
 		int m_nCurrFrame;
 		int m_nMaxFrame;
 		float m_fTimeWaited;
