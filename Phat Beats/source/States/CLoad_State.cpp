@@ -153,7 +153,7 @@ void CLoad_State::loadGame()
 	{
 		if (inFile.good())
 		{
-
+			
 		}
 	}
 }

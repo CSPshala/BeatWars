@@ -19,6 +19,7 @@
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
+#include "States\COptionsState.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -308,7 +309,7 @@ void CPlayer::AIHandling()
 	
 	// checking the random difficult
 	// that returns a bool to set the hit to true or false
-	if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
+	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 	{
 		m_IbwriteShit = true;		
 	}

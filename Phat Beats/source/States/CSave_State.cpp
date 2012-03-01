@@ -160,7 +160,8 @@ void CSave_State::saveGame()
 			outFile<<m_nSlotNumber;
 			outFile<<"\n";
 			outFile<<CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<
-				CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<"\n";
+				CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentPower()<<
+				CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentScore()<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetFileName();
 			
 		}
