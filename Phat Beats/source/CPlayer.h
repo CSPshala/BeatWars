@@ -21,6 +21,7 @@ using std::queue;
 #include "CBeat.h"
 #include "IBaseInterface.h"
 #include "Managers/IListener.h"
+#include "CAnimation.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
 ////////////////////////////////////////
@@ -50,6 +51,9 @@ public:
 	RECT GetCollisionRect();  // Gonna override the CBase collision rect
 	bool CheckCollision(IBaseInterface* pBase);
 	void HandleEvent(CEvent* pEvent);
+	void PlayAnimation();
+	void StopAnimation();
+	void ResetAnimation();
 	/********** Public Accessors ************/
 	int					GetCurrentHP() {return m_nHP;}
 	int					GetMaxHP() {return m_nMaxHP;}
@@ -66,6 +70,9 @@ public:
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
 	TBeatHit&			GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
+	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
+	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
+	int					NumberofAnimations() { return m_vecAnimations.size(); }
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
@@ -78,7 +85,10 @@ public:
 	void				SetPlayerDifficulty(BeatDifficulty eDifficulty) {m_eDifficulty = eDifficulty;}
 	void				SetCurrentRotation(float fRotation) {m_fRotation = fRotation;}
 	void				SetAimingDirection(BeatDirection eAimingDirection);
+	void				SetAnimations( vector<CAnimation*> vecAnim ){  m_vecAnimations = vecAnim;}
+	void				SetCurrAnimation(string szAnimName );
 	void				SetAILevel(int nAILevel) {m_nAILevel = nAILevel;}
+
 
 	
 private:
@@ -114,6 +124,10 @@ private:
 			int m_nBeatSuccessID;
 			int m_nBeatMissID;
 			bool m_IbwriteShit;
+
+		// Player Animations
+			vector<CAnimation*> m_vecAnimations;
+			int m_nCurrAnim;
 
 
 
