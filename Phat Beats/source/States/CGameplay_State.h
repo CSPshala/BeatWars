@@ -43,6 +43,8 @@ public:
 int getBackground() {return m_nBackgroundID;}
 	bool GetPreviouslyPlaying() {return m_bPreviouslyPlaying;}
 	void SetPreviouslyPlaying(bool prevplay) {m_bPreviouslyPlaying = prevplay;}
+	
+	
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -57,6 +59,7 @@ private:
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
 	bool m_bGameOver;
+	bool m_bCheckAnimations;
 
 	
 		// Asset IDs
