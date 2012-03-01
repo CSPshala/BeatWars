@@ -574,7 +574,7 @@ void CBeatManager::EvaluatePlayerCombos()
 
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 3);
+	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 8);
 }
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
