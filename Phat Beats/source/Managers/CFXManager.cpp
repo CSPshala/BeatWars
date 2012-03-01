@@ -204,6 +204,7 @@ const void CFXManager::UnloadAllFX(void)
 
 	for(i = m_fxTable.begin(); i != m_fxTable.end(); ++i)
 	{
+		DequeueParticle(i->first);
 		delete i->second;
 		i->second = nullptr;
 	}

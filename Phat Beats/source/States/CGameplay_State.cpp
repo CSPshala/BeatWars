@@ -43,7 +43,6 @@ void CGameplay_State::Enter(void)
 
 	BeatManager->LoadSong("cantina.xml");
 	//BeatManager->LoadSong("noteeventtest.xml");
-	AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
     m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
@@ -74,12 +73,7 @@ void CGameplay_State::Enter(void)
 		// Adding players to Object Manager
 		CObjectManager::GetInstance()->AddObject(m_Player1);
 		CObjectManager::GetInstance()->AddObject(m_Player2);
-
-		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-		CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
-		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+		
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
