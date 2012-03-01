@@ -153,7 +153,7 @@ bool CGameplay_State::Input(void)
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
-			CSave_State::GetInstance()->saveGame();
+			
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
@@ -161,7 +161,10 @@ bool CGameplay_State::Input(void)
 			BeatManager->Reset();
 			m_bGameOver = true;
 		}
-
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
+		{
+			CSave_State::GetInstance()->saveGame();
+		}
 		if( m_bCheckAnimations) 
 		{
 
