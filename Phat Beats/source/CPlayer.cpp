@@ -72,6 +72,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	m_IbwriteShit = false;
 
 	m_nCurrAnim = 0;
+	m_bAnimationsEmpty = false;
 }
 
 CPlayer::~CPlayer()

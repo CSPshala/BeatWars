@@ -57,6 +57,7 @@ private:
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
 	bool m_bGameOver;
+	bool m_bCheckAnimations;
 
 	
 		// Asset IDs

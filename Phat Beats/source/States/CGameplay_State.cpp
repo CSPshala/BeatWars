@@ -45,6 +45,12 @@ void CGameplay_State::Enter(void)
 		BeatManager->LoadSong("noteeventtest.xml");
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
+
+		CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
+		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
+		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
+		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+
 		m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
 		// Setting up Players
 		m_Player1 = new CPlayer(OBJ_PLAYER1);
@@ -90,8 +96,14 @@ void CGameplay_State::Enter(void)
 		rLeftPowerUpBar.right = 214;
 		rLeftPowerUpBar.bottom = 140;
 
+
+		m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player1->SetAnimationsIsEmpty(false);
+		m_Player2->SetAnimationsIsEmpty(false);
 		
 		BeatManager->Play("cantina");
+		m_bCheckAnimations = true;
 	}
 	else
 	{
@@ -100,8 +112,6 @@ void CGameplay_State::Enter(void)
 
 	m_bGameOver = false;
 
-	m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-	m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
 }
 
 bool CGameplay_State::Input(void)
@@ -127,7 +137,7 @@ bool CGameplay_State::Input(void)
 			m_bGameOver = true;
 		}
 
-		if( m_Player1->NumberofAnimations() > 0 ) 
+		if( m_bCheckAnimations) 
 		{
 
 			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B) )
@@ -155,7 +165,8 @@ bool CGameplay_State::Input(void)
 			}
 
 		}
-		if( m_Player2->NumberofAnimations() > 0 )
+
+		if( m_bCheckAnimations)
 		{
 			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_J) )
 			{
@@ -275,15 +286,20 @@ void CGameplay_State::Exit(void)
 		// Removing references to players on the way out so they'll get cleaned up
 		if(m_Player1)
 		{
+			m_Player1->SetAnimationsIsEmpty(true);
 			AnimationManager.UnloadAnimations(m_Player1->GetAnimations() );
 			m_Player1->Release();
 		}
 
 		if(m_Player2)
 		{
+			
+			m_Player2->SetAnimationsIsEmpty(true);
 			AnimationManager.UnloadAnimations(m_Player2->GetAnimations() );
 			m_Player2->Release();
 		}
+
+		m_bCheckAnimations = false;
 
 		CBeatManager::GetInstance()->Stop();
 		CBeatManager::GetInstance()->UnloadSongs();

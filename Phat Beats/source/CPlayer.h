@@ -72,9 +72,10 @@ public:
 	int					GetAILevel() {return m_nAILevel;}
 	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
 	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
+	bool				GetAnimationIsEmpty() { return m_bAnimationsEmpty; }
 	int					NumberofAnimations()
 						{ 
-							if( !m_vecAnimations.empty() )
+							if( !m_bAnimationsEmpty )
 								return m_vecAnimations.size(); 
 
 							return 0;
@@ -94,6 +95,7 @@ public:
 	void				SetAnimations( vector<CAnimation*> vecAnim ){  m_vecAnimations = vecAnim;}
 	void				SetCurrAnimation(string szAnimName );
 	void				SetAILevel(int nAILevel) {m_nAILevel = nAILevel;}
+	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
 
 
 	
@@ -134,6 +136,7 @@ private:
 		// Player Animations
 			vector<CAnimation*> m_vecAnimations;
 			int m_nCurrAnim;
+			bool m_bAnimationsEmpty;
 
 
 
