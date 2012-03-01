@@ -9,8 +9,6 @@
 
 #include <string>
 #include <vector>
-#include "IListener.h"
-#include "CEventSystem.h"
 using std::string;
 using std::vector;
 
@@ -18,31 +16,15 @@ using std::vector;
 //Forward Declarations
 class CAnimation;
 
-class CAnimationManager : public IListener
+class CAnimationManager
 {
 	public:
 	
-		bool LoadAnimation(string szFileName, string szImageName);
-		bool UnloadAnimations();
-		
-		vector<CAnimation*> GetAnimations()
-		{
-			return m_vecAnimations;
-		}
-	
-		void Update(float fElapsedTime,CAnimation* pAnim);
-		void Render(CAnimation* pAnim);
-		void Play(CAnimation* pAnim);
-		void Stop(CAnimation* pAnim);
-		void Reset(CAnimation* pAnim);
-
-		void  HandleEvent(CEvent* pEvent);
-	
+		vector<CAnimation*> LoadAnimation(string szFileName, string szImageName);
+		bool UnloadAnimations(vector<CAnimation*> vecAnim);
+			
 		CAnimationManager();
-		~CAnimationManager() { CEventSystem::GetInstance()->UnregisterClient("comboend",this); }
-	 
 	private:
-		vector<CAnimation*> m_vecAnimations;
 
 
 };
