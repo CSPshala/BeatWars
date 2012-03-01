@@ -32,9 +32,16 @@ public:
 	void Update(void); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State
-
+	void loadGame();
 	static CLoad_State* GetInstance();	
 
+	// Accessors
+	int GetSlotNumber() {return m_nSlotNumber;}
+	string GetFileName() {return m_szSongFileName;}
+	bool GetLoadFlag() {return m_nLoadFlag;}
+	// Mutators
+	void SetFileName(string szFileName) {m_szSongFileName = szFileName;}
+	void SetSlotNumber(int nSlotNumber) {m_nSlotNumber = nSlotNumber;}
 private:
 	// Proper singleton
 	CLoad_State(const CLoad_State&);
@@ -45,7 +52,7 @@ private:
 	//		Constructor
 	CLoad_State();
 
-	void loadGame();
+	
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
 	CBitmapFont* m_bMenu_Font;
@@ -58,7 +65,10 @@ private:
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
-	
+	int m_nSlotNumber;
+	string m_szSongFileName;
+	bool m_nLoadFlag;
+
 	
 };
 

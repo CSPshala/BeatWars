@@ -14,7 +14,7 @@
 #include "../Managers/CAiManager.h"
 #include "../Managers/CFXManager.h"
 #include "COptionsState.h"
-
+#include "CLoad_State.h"
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
@@ -42,7 +42,13 @@ void CGameplay_State::Enter(void)
 	if (m_bPreviouslyPlaying == false)
 	{
 		BeatManager = CBeatManager::GetInstance();	
-		BeatManager->LoadSong("cantina.xml");	
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			CLoad_State::GetInstance()->loadGame();
+		}
+		else
+			BeatManager->LoadSong("cantina.xml");	
+
 		BeatManager->LoadSong("noteeventtest.xml");
 		AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
