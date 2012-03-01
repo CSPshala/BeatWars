@@ -159,7 +159,8 @@ void CSave_State::saveGame()
 		{
 			outFile<<m_nSlotNumber;
 			outFile<<"\n";
-			outFile<<CBeatManager::GetInstance()->GetFileName();			
+			outFile<<CBeatManager::GetInstance()->GetFileName()<<"\n";
+			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
 		}
 		outFile.close();
 	}

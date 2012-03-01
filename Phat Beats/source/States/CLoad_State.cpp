@@ -11,7 +11,7 @@
 #include "../CPlayer.h"
 #include "CGameplay_State.h"
 #include "../CGame.h"
-
+#include "../Managers/CBeatManager.h"
 CLoad_State::CLoad_State()
 {
 	CBitmapFont* m_bMenu_Font = NULL;
@@ -144,18 +144,20 @@ CLoad_State* CLoad_State::GetInstance()
 	return &instance;	
 }
 
-void CLoad_State::loadGame()
+string CLoad_State::loadGame()
 {
 	ifstream inFile("resource/saves/SaveGame.fu");
-
+	
 	if (inFile.is_open())
 	{
 		if (inFile.good())
 		{
 			inFile>>m_nSlotNumber;
 			inFile>>m_szSongFileName;
-			CBeatManager::GetInstance()->LoadSong(m_szSongFileName);
+			inFile>>m_szSongName;
+			SetSongName(m_szSongName);
 		}
 		inFile.close();
 	}
+	return GetFileName();
 }

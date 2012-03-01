@@ -15,6 +15,7 @@
 #include "../Managers/CFXManager.h"
 #include "COptionsState.h"
 #include "CLoad_State.h"
+#include "CSave_State.h"
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
@@ -44,12 +45,12 @@ void CGameplay_State::Enter(void)
 		BeatManager = CBeatManager::GetInstance();	
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
-			CLoad_State::GetInstance()->loadGame();
+			BeatManager->LoadSong(CLoad_State::GetInstance()->loadGame());
 		}
 		else
 			BeatManager->LoadSong("cantina.xml");	
 
-		BeatManager->LoadSong("noteeventtest.xml");
+		//BeatManager->LoadSong("noteeventtest.xml");
 		AnimationManager.LoadAnimation("Anim.xml","nxc_bat_heihachi.PNG");
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
@@ -65,8 +66,13 @@ void CGameplay_State::Enter(void)
 		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
 		
-		BeatManager->Play("cantina");
 
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
@@ -106,7 +112,13 @@ void CGameplay_State::Enter(void)
 	}
 	else
 	{
-		BeatManager->Play("cantina");
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
+
 	}
 }
 
@@ -125,6 +137,7 @@ bool CGameplay_State::Input(void)
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
+			CSave_State::GetInstance()->saveGame();
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
@@ -208,8 +221,10 @@ void CGameplay_State::Render(void)
 		{
 			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 		}
-	
 	}
+	
+
+
 }
 
 void CGameplay_State::Exit(void)

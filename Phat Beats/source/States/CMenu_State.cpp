@@ -12,7 +12,7 @@
 #include "../Managers/CFXManager.h"
 #include "CLevelSelect_State.h"
 #include "CLU_State.h"
-
+#include "CLoad_State.h"
 CMenu_State::CMenu_State()
 {
 	// Asset IDs
@@ -76,6 +76,7 @@ bool CMenu_State::Input(void)
 
 		case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
 			{
+				CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
 			}
 			break;
 
