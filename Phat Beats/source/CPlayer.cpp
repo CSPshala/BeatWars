@@ -15,12 +15,11 @@
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_FModManager.h"
-#include "CGame.h"
 #include "Managers\CBeatManager.h"
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
-
+#include "States\COptionsState.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -75,6 +74,9 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	// Event system register		
 	m_IbwriteShit = false;
+
+	m_nCurrAnim = 0;
+	m_bAnimationsEmpty = false;
 }
 
 CPlayer::~CPlayer()
@@ -93,6 +95,10 @@ void CPlayer::Input()
 
 void CPlayer::Update(float fElapsedTime)
 {
+	//UpdateAnimations
+	if( m_vecAnimations.size() > 0 )
+	m_vecAnimations[m_nCurrAnim]->Update(fElapsedTime);
+
 	// Just splitting up input for both players so this dosen't get all huge and gross
 	// (like your mom)
 	// Also comment out P2's handling for debugging, because right now P1 and P2 have
@@ -121,7 +127,19 @@ void CPlayer::Update(float fElapsedTime)
 
 void CPlayer::Render()
 {
-	
+	//Render Animations
+	if( m_nType == OBJ_PLAYER1 )
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(200,200,-1.0);
+	}
+	else
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(500,200,1.0);
+
+	}
+
 	//D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
@@ -319,7 +337,7 @@ void CPlayer::AIHandling()
 	
 	// checking the random difficult
 	// that returns a bool to set the hit to true or false
-	if (CAiManager::GetInsatance()->RandomDifficult(0) == true)
+	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 	{
 		m_IbwriteShit = true;	
 	}
@@ -424,6 +442,32 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 TBeatHit& CPlayer::GetMostRecentKeyPress()
 {	
 	return m_qKeyPresses.front();
+}
+
+void CPlayer::PlayAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Play();
+}
+void CPlayer::StopAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Stop();
+}
+void CPlayer::ResetAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Reset();
+}
+
+void CPlayer::SetCurrAnimation(string szAnimName )
+{
+	for( int i = 0; i < m_vecAnimations.size(); ++i )
+	{
+		if( m_vecAnimations[i]->GetName() == szAnimName )
+		{
+			m_nCurrAnim = i;
+			m_vecAnimations[m_nCurrAnim]->Reset();
+			break;
+		}
+	}
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

@@ -6,6 +6,7 @@
 // Included for Difficulty ENUM
 #include "../CBeat.h"
 #include "../CPlayer.h"
+#include "../Managers/CAiManager.h"
 
 // JC - I cleaned up the enum a bit because stuff like lives isn't needed for now.
 enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_AILEVEL, OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
