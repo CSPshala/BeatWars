@@ -41,9 +41,9 @@ void CMenu_State::Enter(void)
 bool CMenu_State::Input(void)
 {
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
 		return false;
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP) )
 	{
 		m_nMenuSelection -= 1;
 		if( m_nMenuSelection == -1 )
@@ -53,7 +53,7 @@ bool CMenu_State::Input(void)
 
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN) )
 	{
 		m_nMenuSelection += 1;
 
@@ -63,7 +63,7 @@ bool CMenu_State::Input(void)
 		}
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) )
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) )
 	{
 		switch( m_nMenuSelection )
 		{
@@ -110,6 +110,7 @@ bool CMenu_State::Input(void)
 
 void CMenu_State::Update(void)
 {
+
 }
 
 void CMenu_State::Render(void)

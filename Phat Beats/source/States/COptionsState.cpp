@@ -59,7 +59,7 @@ void COptionsState::Enter(void)
 bool COptionsState::Input(void)
 {
 	// If you're at the top and press up, cycle the cursor to the bottom selection
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_UP))
 	{
 		m_nMenuSelection -= 1;
 
@@ -71,7 +71,7 @@ bool COptionsState::Input(void)
 	}
 
 	// If you're at the bottom and press down, cycle the cursor back to the top selection
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_DOWN) )
 	{
 		m_nMenuSelection += 1;
 
@@ -82,7 +82,7 @@ bool COptionsState::Input(void)
 
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) )
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_LEFT) )
 	{
 		switch (m_nMenuSelection)
 		{
@@ -119,7 +119,7 @@ bool COptionsState::Input(void)
 
 	
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_LEFT))
 	{
 		switch (m_nMenuSelection)
 		{
@@ -153,7 +153,7 @@ bool COptionsState::Input(void)
 
 
 	// Play the a sample sound when the user releases Left while changing the volume of the sound effects
-	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT) )
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIK_LEFT) )
 	{
 		switch (m_nMenuSelection)
 		{
@@ -162,13 +162,13 @@ bool COptionsState::Input(void)
 			break;	
 		}
 	}
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 	{
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
 
 
-	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT) )
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_RIGHT) )
 	{
 		switch (m_nMenuSelection)
 		{
@@ -205,7 +205,7 @@ bool COptionsState::Input(void)
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIK_RIGHT) )
 	{
 		switch (m_nMenuSelection)
 		{
@@ -240,7 +240,7 @@ bool COptionsState::Input(void)
 
 
 	// Play the a sample sound when the user releases Right while changing the volume of the sound effects
-	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT) )
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIK_RIGHT) )
 	{
 		switch (m_nMenuSelection)
 		{
@@ -250,7 +250,7 @@ bool COptionsState::Input(void)
 		}
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) )
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6) )
 	{
 		switch( m_nMenuSelection )
 		{

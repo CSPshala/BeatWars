@@ -122,7 +122,7 @@ void CPlayer::Render()
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
 	if (m_IbwriteShit == true)
 	{
-		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawText("This is a test of the Ai hit",200,24,255,0,0);
 	}
 
 	
@@ -197,21 +197,21 @@ void CPlayer::HandleEvent( CEvent* pEvent )
 ////////////////////////////////////////
 void CPlayer::P1InputHandling()
 {
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_UP))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIK_LEFT))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_UP))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIK_RIGHT))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIK_UP))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIK_DOWN))
 		SetAimingDirection(DOWN);
 	
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
@@ -221,19 +221,19 @@ void CPlayer::P1InputHandling()
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
 
-		if(DI->KeyPressed(DIK_W))
+		if(DI->KeyPressed(DIK_W) || DI->JoystickGetLStickDirPressed(0))
 		{			
 			m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
-		else if(DI->KeyPressed(DIK_A))
+		else if(DI->KeyPressed(DIK_A) || DI->JoystickGetLStickDirPressed(1))
 		{
 			m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickGetLStickDirPressed(2))
 		{
 			m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
-		else if(DI->KeyPressed(DIK_D))
+		else if(DI->KeyPressed(DIK_D) || DI->JoystickGetLStickDirPressed(3))
 		{
 			m_qKeyPresses.push(TBeatHit('d',nTime));
 		}
@@ -245,21 +245,21 @@ void CPlayer::P1InputHandling()
 void CPlayer::P2InputHandling()
 {
 	// Don't ever have p2 input running same time as P1.  Control schemes are the same
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_UP))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetRStickDirDown(DIK_LEFT))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetRStickDirDown(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_UP))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetRStickDirPressed(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetRStickDirDown(DIK_RIGHT))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetRStickDirDown(DIK_UP))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetRStickDirDown(DIK_DOWN))
 		SetAimingDirection(DOWN);
 	
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
@@ -269,19 +269,19 @@ void CPlayer::P2InputHandling()
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
 
-		if(DI->KeyPressed(DIK_W))
+		if(DI->KeyPressed(DIK_W) || DI->JoystickGetRStickDirPressed(0))
 		{			
 			m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
-		else if(DI->KeyPressed(DIK_A))
+		else if(DI->KeyPressed(DIK_A) || DI->JoystickGetRStickDirPressed(1))
 		{
 			m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickGetRStickDirPressed(2))
 		{
 			m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
-		else if(DI->KeyPressed(DIK_D))
+		else if(DI->KeyPressed(DIK_D) || DI->JoystickGetRStickDirPressed(3))
 		{
 			m_qKeyPresses.push(TBeatHit('d',nTime));
 		}

@@ -6,6 +6,7 @@
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
 #include "CBitmapFont.h"
+#include "CGameplay_State.h"
 #include <sstream>
 
 // Proper singleton
@@ -110,10 +111,18 @@ void CLU_State::Update(void)
 
 			// TODO : Complete Animation
 			if(m_bAnimComplete)
-				CGame::GetInstance()->ChangeState(m_pNewState);
+			{
+				m_nGameTransitionAlpha += (int)(175 * CGame::GetInstance()->GetTimer().GetDeltaTime());
+				if (m_nGameTransitionAlpha >= 255)
+				{
+					CGame::GetInstance()->ChangeState(m_pNewState);
+					m_nGameTransitionAlpha = 1;
+				}				
+			}
 		}
 		break;
 	};
+
 }
 void CLU_State::Render(void)
 {
@@ -133,6 +142,10 @@ void CLU_State::Render(void)
 	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 11, 10, D3DCOLOR_XRGB(0, 0, 0));
 	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 11, D3DCOLOR_XRGB(0, 0, 0));
 	//CBitmapFont::GetInstance()->PrintText(Dots.str().c_str(), 10, 10, D3DCOLOR_XRGB(255, 255, 255));
+	if (m_bAnimComplete)
+	{
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_nGameTransitionAlpha, 0, 0, 0));
+	}
 }
 void CLU_State::Exit(void)
 {

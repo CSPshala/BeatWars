@@ -40,10 +40,10 @@ bool CLoad_State::Input(void)
 {
 
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_UP))
 	{
 		m_nMenuSelection -= 1;
 		if (m_nMenuSelection == -1)
@@ -52,7 +52,7 @@ bool CLoad_State::Input(void)
 
 		}
 	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIK_DOWN) )
 	{
 		m_nMenuSelection += 1;
 
@@ -63,7 +63,7 @@ bool CLoad_State::Input(void)
 
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) )
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) )
 	{
 		switch( m_nMenuSelection )
 		{

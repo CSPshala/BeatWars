@@ -28,6 +28,9 @@ CGameplay_State::CGameplay_State()
 	m_Player1 = NULL;
 	m_Player2 = NULL;
 
+	m_SongTransitionAlpha = 255;
+
+	m_bStartTransition = true;
 	
 	m_bPreviouslyPlaying = false;
 }
@@ -169,6 +172,18 @@ void CGameplay_State::Update(void)
 
 		// Updating beatmanager (handles current streak counting and player dmg)
 		BeatManager->Update();
+
+		
+	}
+
+	if (m_bStartTransition)
+	{
+		m_SongTransitionAlpha -= 0.25f;
+		if (m_SongTransitionAlpha <= 1)
+		{
+			m_bStartTransition = false;
+			m_SongTransitionAlpha = 255;
+		}
 	}
 
 	
@@ -194,22 +209,30 @@ void CGameplay_State::Render(void)
 		CFXManager::GetInstance()->Render();
 	
 	// You know what's up
-	CObjectManager::GetInstance()->RenderObjects();
+		CObjectManager::GetInstance()->RenderObjects();
 
-	char p1hp[50];
-	char p2hp[50];
+		char p1hp[50];
+		char p2hp[50];
 
-	itoa(m_Player1->GetCurrentHP(),p1hp,10);
-	itoa(m_Player2->GetCurrentHP(),p2hp,10);
+		itoa(m_Player1->GetCurrentHP(),p1hp,10);
+		itoa(m_Player2->GetCurrentHP(),p2hp,10);
 
-	CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
-	CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
 
 		if (dickhead == false)
 		{
 			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 		}
-	
+
+
+
+		if (m_bStartTransition)
+		{
+			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
+
+		}
+
 	}
 }
 
@@ -260,4 +283,10 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 	}
 }
 
+void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
+{
+	int ImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/blackscreen.png");
+
+	CSGD_TextureManager::GetInstance()->Draw(ImageID, 0, 0, 1.0f, 1.0f, 0, 800, 600, 0, argbColor);
+}
 
