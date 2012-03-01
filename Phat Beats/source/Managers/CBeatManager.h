@@ -73,6 +73,12 @@ private:
 		CBeatManager();
 
 	/********** Private Members ************/
+		// Current combo counter for Combo purposes.
+		int m_nPlayer1CurrentCombo;  // Counts how many in the current combo threshold that P1 Hit
+		int m_nPlayer2CurrentCombo;  // Counts how many in the current combo threshold that P2 Hit
+		int m_nComboThreshold; // The combo threshold. Checks player's current combo against this 
+		int m_nNotesPassed; // Counts how many notes have passed in the current combo threshold
+
 		vector<CSong*> m_vSongs;
 		vector<int> m_nvImageID;
 		int m_nNumHit;
@@ -83,16 +89,26 @@ private:
 		int	 m_nCurrentlyPlayingSongIndex;
 		bool fuckyou;
 		string m_szFileName;
-		/********** Private Accessors ************/
+
 		
+
+		/********** Private Accessors ************/		
 		int GetCurrentlyPlayingSongIndex() {return m_nCurrentlyPlayingSongIndex;}
-		
+		int GetP1CurrentCombo() {return m_nPlayer1CurrentCombo;}
+		int GetP2CurrentCombo() {return m_nPlayer2CurrentCombo;}
+		int GetComboThreshold() {return m_nComboThreshold;}
+		int GetNotesPassed() {return m_nNotesPassed;}
 
 	/********** Private Mutators ************/
 		void SetPause(bool bPause) {m_bPause = bPause;}
+		void SetP1CurrentCombo(int nCurrent) {m_nPlayer1CurrentCombo = nCurrent;}
+		void SetP2CurrentCombo(int nCurrent) {m_nPlayer2CurrentCombo = nCurrent;}
+		void SetComboThreshold(int nThresh) {m_nComboThreshold = nThresh;}
+		void SetNotesPassed(int nPassed) {m_nNotesPassed = nPassed;}
 
 	/********** Private Utility Functions ************/
-	
+		void EvaluatePlayerCombos(); // Evaluates whether combo threshold has passed, and if so who gets damage (if any)
+		void DealDamageToPlayer(CPlayer* aPlayer); // Applies damage to a player
 
 
 

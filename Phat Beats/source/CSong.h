@@ -78,7 +78,7 @@ public:
 		void			SetBackgroundID(int ID) {m_nImageID = ID;}
 		void			SetCurrentBeatIndex(int nBeat) {m_nCurrentBeat = nBeat;}
 		void			SetNextBeatIndex(int nBeat) {m_nNextBeat = nBeat;}
-		bool			SetCurrentlyPlayingSong(bool bPlay) {m_bAmIPlaying = bPlay;}
+		void			SetCurrentlyPlayingSong(bool bPlay) {m_bAmIPlaying = bPlay;}
 
 protected:
 		int m_nType;

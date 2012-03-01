@@ -12,6 +12,7 @@
 //				INCLUDES
 ////////////////////////////////////////
 #include <vector>
+#include <list>
 #include <queue>
 using std::vector;
 using std::queue;
@@ -68,6 +69,7 @@ public:
 	vector<CBeat*>		GetAIBeats() {return m_vAIBeats;}
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
 	TBeatHit&			GetMostRecentKeyPress();
+	int					GetAILevel() {return m_nAILevel;}
 	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
 	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
 	int					NumberofAnimations()
@@ -91,6 +93,7 @@ public:
 	void				SetAimingDirection(BeatDirection eAimingDirection);
 	void				SetAnimations( vector<CAnimation*> vecAnim ){  m_vecAnimations = vecAnim;}
 	void				SetCurrAnimation(string szAnimName );
+	void				SetAILevel(int nAILevel) {m_nAILevel = nAILevel;}
 
 
 	
@@ -106,7 +109,7 @@ private:
 		int m_nCurrentScore; // Current Level score (if we implement it)
 		int m_nTotalScore; // Current playthrough score (ditto)
 		BeatDifficulty m_eDifficulty; // Player's set difficulty (enum from CBeat.h)
-
+		int m_nAILevel; // setting the ai level from option state
 		// Aim Specific stuff
 		float m_fRotation; // Rotation of cone (in degrees)
 
@@ -115,12 +118,13 @@ private:
 
 		// AI handling stuff
 		vector<CBeat*> m_vAIBeats;
-
+		
 		// Player hit vector
 		queue<TBeatHit> m_qKeyPresses;
 
 		// Asset IDs
 			// Images
+			int m_nHitBoxImage;
 			int m_nBeatConeID;
 			// Sound
 			int m_nBeatSuccessID;

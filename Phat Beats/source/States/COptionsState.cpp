@@ -14,7 +14,7 @@
 
 COptionsState::COptionsState( void )
 {
-
+	SetDifficulty(HARD);
 }
 COptionsState::~COptionsState(void)
 {
@@ -30,7 +30,7 @@ void COptionsState::Enter(void)
 {
 	m_nMenuSelection = 0;
 	m_nSFX = -1;
-
+	m_nAiLevel = -1;
 	//CGameProfiler::GetInstance()->LoadUserSettings("user settings.txt");
 
 	// assign values to the local variables
@@ -40,7 +40,7 @@ void COptionsState::Enter(void)
 	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 	//m_nLives = CGame::GetInstance()->GetStartingLives();
 
-	SetDifficulty(HARD);
+	
 
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png" );	
 
@@ -235,6 +235,10 @@ bool COptionsState::Input(void)
 				SetDifficulty(EASY);
 			}
 			break;
+		case OPTIONSMENU_AILEVEL:
+			{
+				
+			}
 		}
 	}
 
@@ -293,7 +297,7 @@ void COptionsState::Render(void)
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	RECT rMenuOptions = { 225, 175, CGame::GetInstance()->GetScreenWidth(), 378};
-	CBitmapFont::GetInstance()->PrintInRect("SFx volume\n\nMusic volume\n\nMusic Pan\n\nDifficulty\n\nWindowed Mode\n\nBack\n\ngo back to game", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	CBitmapFont::GetInstance()->PrintInRect("SFx volume\n\nMusic volume\n\nMusic Pan\n\nai level\n\nDifficulty\n\nWindowed Mode\n\nBack\n\ngo back to game", &rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
 	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));
 	//BF.PrintText("SFX Volume", 100, 50, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 	CBitmapFont::GetInstance()->PrintText(buffer, 450, 147, D3DCOLOR_XRGB(225, 225, 225));
@@ -311,9 +315,23 @@ void COptionsState::Render(void)
 	//BF.PrintText(buffer, 400, 110, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 
 	// Not needed right now, if not EVER  - JC
-	//sprintf_s( buffer, "%i", m_nLives);
-	//BF.PrintText("Starting Lives", 100, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
-	//CBitmapFont::GetInstance()->PrintText(buffer, 450, 267, D3DCOLOR_XRGB(225, 225, 225));
+	switch(GetAILevel())
+	{
+	case EASY:
+		sprintf_s( buffer,"easy");
+		break;
+
+	case NORMAL:
+		sprintf_s( buffer,"normal");
+		break;
+
+	case HARD:
+		sprintf_s( buffer,"hard");
+		break;
+	}
+	//sprintf_s( buffer, "%i", m_nAiLevel);
+	//BF.PrintText("AI Level", 100, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText(buffer, 450, 267, D3DCOLOR_XRGB(225, 225, 225));
 	//BF.PrintText(buffer, 420, 140, 0.75f, D3DCOLOR_XRGB(255, 255, 255));
 
 	switch(GetDifficulty())
@@ -357,11 +375,11 @@ void COptionsState::Render(void)
 		break;
 
 	// Again commented out because not needed - JC
-	/*case OPTIONSMENU_LIVES:
+	case OPTIONSMENU_AILEVEL:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_LIVES * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 75, 143 + (OPTIONSMENU_AILEVEL * 40) );
 		}
-		break;*/
+		break;
 
 	case OPTIONSMENU_DIFFICULTY:
 		{

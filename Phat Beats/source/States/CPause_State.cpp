@@ -74,6 +74,8 @@ bool CPause_State::Input(void)
 			break;
 		case PAUSEMENU_MAINMENU:
 			{
+				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+				CGameplay_State::GetInstance()->Exit();
 				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
 			}
 			break;
