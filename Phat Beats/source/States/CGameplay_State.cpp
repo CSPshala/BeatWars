@@ -39,6 +39,14 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
+	BeatManager = CBeatManager::GetInstance();
+
+	BeatManager->LoadSong("cantina.xml");
+	//BeatManager->LoadSong("noteeventtest.xml");
+	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
+    m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
+	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
+
 	if (m_bPreviouslyPlaying == false)
 	{
 		BeatManager = CBeatManager::GetInstance();	
@@ -65,12 +73,7 @@ void CGameplay_State::Enter(void)
 		// Adding players to Object Manager
 		CObjectManager::GetInstance()->AddObject(m_Player1);
 		CObjectManager::GetInstance()->AddObject(m_Player2);
-
-		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-		CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
-		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+		
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
@@ -78,7 +81,6 @@ void CGameplay_State::Enter(void)
 		else
 			BeatManager->Play("cantina");
 		
-
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
@@ -159,7 +161,10 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		{
 			BeatManager->Reset();
-			m_bGameOver = true;
+			m_bGameOver = false;
+
+			m_Player1->SetCurrentHP(100);
+			m_Player2->SetCurrentHP(100);
 		}
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
 		{

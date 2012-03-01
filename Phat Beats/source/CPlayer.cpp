@@ -40,10 +40,14 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
 	SetTotalScore(0);
+	SetAttackModeTimer(0);
 	// Defaults to easy
 	SetPlayerDifficulty(EASY);
 	// Setting aiming to upwards
 	SetAimingDirection(UP);	
+
+	// Putting player in attack mode
+	SetAttackMode(true);
 
 	switch(m_nType)
 	{
@@ -68,8 +72,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		break;
 	}
 
-	// Event system register	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	// Event system register		
 	m_IbwriteShit = false;
 
 	m_nCurrAnim = 0;
@@ -77,9 +80,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 }
 
 CPlayer::~CPlayer()
-{	
-	CEventSystem::GetInstance()->UnregisterClient("player1button",this);
-
+{		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 }
 
@@ -120,6 +121,8 @@ void CPlayer::Update(float fElapsedTime)
 			break;
 		}
 	}
+
+	SetAttackModeTimer(GetAttackModeTimer() + GAME->GetTimer().GetDeltaTime());
 }
 
 void CPlayer::Render()
@@ -205,18 +208,7 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
-	/*
-	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
-		{
-			bool found = false;
 	
-			for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
-				if(m_vAIBeats[i] == pEvent->GetParam())
-					found = true;
-	
-			if(!found)
-				m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
-		}*/
 	
 }
 
@@ -241,6 +233,14 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
+	else if(DI->KeyDown(DIK_SPACE))
+	{
+		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+		}
+	}
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -289,6 +289,14 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
+	else if(DI->KeyDown(DIK_SPACE))
+	{
+		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+		}
+	}
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -331,7 +339,7 @@ void CPlayer::AIHandling()
 	// that returns a bool to set the hit to true or false
 	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 	{
-		m_IbwriteShit = true;		
+		m_IbwriteShit = true;	
 	}
 	else
 	{
