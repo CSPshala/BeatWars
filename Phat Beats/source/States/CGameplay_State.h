@@ -56,6 +56,7 @@ private:
 	//*******MEMBERS**********//
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
+	bool m_bGameOver;
 
 	
 		// Asset IDs

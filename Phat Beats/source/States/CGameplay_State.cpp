@@ -96,12 +96,13 @@ void CGameplay_State::Enter(void)
 		rLeftPowerUpBar.top = 107;
 		rLeftPowerUpBar.right = 214;
 		rLeftPowerUpBar.bottom = 140;
-
 	}
 	else
 	{
 		BeatManager->Play("cantina");
 	}
+
+	m_bGameOver = false;
 }
 
 bool CGameplay_State::Input(void)
@@ -122,7 +123,10 @@ bool CGameplay_State::Input(void)
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
+		{
 			BeatManager->Reset();
+			m_bGameOver = true;
+		}
 
 		/*if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_A) )
 			AnimationManager.Play();
@@ -145,7 +149,7 @@ bool CGameplay_State::Input(void)
 void CGameplay_State::Update(void)
 {
 	
-	if(!BeatManager->IsPaused())
+	if(!BeatManager->IsPaused() && !m_bGameOver)
 	{
 		// Updating Objects (if beatmanager isn't paused)
 		CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
@@ -163,14 +167,27 @@ void CGameplay_State::Update(void)
 
 		// Updating beatmanager (handles current streak counting and player dmg)
 		BeatManager->Update();
-	}
 
+		if(m_Player1->GetCurrentHP() <= 0 || m_Player2->GetCurrentHP() <= 0)
+			m_bGameOver = true;
+	}
 	
 }
 
 void CGameplay_State::Render(void)
 {
-	if(!BeatManager->IsPaused())
+	if(m_bGameOver)
+	{
+		CSGD_Direct3D::GetInstance()->DrawText("Game Over", 100, 100, 255, 40, 40);
+		if(m_Player1->GetCurrentHP()== 0)
+			CSGD_Direct3D::GetInstance()->DrawText("Player 2 Won!", 100, 120, 255, 40, 40);
+		else if(m_Player2->GetCurrentHP()== 0)
+			CSGD_Direct3D::GetInstance()->DrawText("Player 1 Won!", 100, 120, 255, 40, 40);
+
+		CSGD_Direct3D::GetInstance()->DrawText("Press 'R' to Restart or Escape to exit!", 100, 140, 255, 40, 40);
+	}
+
+	if(!BeatManager->IsPaused() && !m_bGameOver)
 	{
 	
 		CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,10,1.0,1.0,&rLeftSaber);
@@ -186,17 +203,17 @@ void CGameplay_State::Render(void)
 		//	AnimationManager.Render();
 		CFXManager::GetInstance()->Render();
 	
-	// You know what's up
-	CObjectManager::GetInstance()->RenderObjects();
+		// You know what's up
+		CObjectManager::GetInstance()->RenderObjects();
 
-	char p1hp[50];
-	char p2hp[50];
+		char p1hp[50];
+		char p2hp[50];
 
-	itoa(m_Player1->GetCurrentHP(),p1hp,10);
-	itoa(m_Player2->GetCurrentHP(),p2hp,10);
+		itoa(m_Player1->GetCurrentHP(),p1hp,10);
+		itoa(m_Player2->GetCurrentHP(),p2hp,10);
 
-	CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
-	CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
+		CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
 
 		if (dickhead == false)
 		{
