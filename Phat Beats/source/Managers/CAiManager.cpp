@@ -5,7 +5,7 @@
 
 CAiManager::CAiManager( void )
 {
-
+	
 }
 
 CAiManager::~CAiManager( void )
@@ -21,7 +21,6 @@ CAiManager* CAiManager::GetInsatance()
 
 bool CAiManager::RandomDifficult( int Level )
 {
-	srand(unsigned int(time(0)));
 	switch (Level)
 	{
 	case AI_EASY:
@@ -33,13 +32,32 @@ bool CAiManager::RandomDifficult( int Level )
 	case AI_INSANE:
 		return rand()%100;
 	}
-
 }
 
-/*
-void CAiManager::Update( float fElaspedTime )
+bool CAiManager::CheckNotesHit( CBeat* hit )
 {
-
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		if (hit == (*iter))
+		{
+			return 0;
+		}
+		else
+			addNote(hit);
+			return false;
+	}
+	
 }
-*/
+
+void CAiManager::addNote(CBeat* hit)
+{
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		notesHit.push_back(hit);
+
+	}
+}
+
 
