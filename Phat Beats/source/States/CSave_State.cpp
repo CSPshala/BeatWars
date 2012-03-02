@@ -10,7 +10,8 @@
 #include "../Managers/CBeatManager.h"
 #include "../CPlayer.h"
 #include "CGameplay_State.h"
-
+#include "COptionsState.h"
+#include "CPause_State.h"
 CSave_State::CSave_State()
 {
 	//m_bMenu_Font = NULL;
@@ -75,18 +76,21 @@ bool CSave_State::Input(void)
 			{
 				m_nSlotNumber = 1;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
 			{
 				m_nSlotNumber = 2;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
 			{
 				m_nSlotNumber = 3;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 
