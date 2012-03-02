@@ -15,6 +15,7 @@
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_FModManager.h"
+#include "Managers\CFXManager.h"
 #include "Managers\CBeatManager.h"
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
@@ -122,7 +123,8 @@ void CPlayer::Update(float fElapsedTime)
 		}
 	}
 
-	SetAttackModeTimer(GetAttackModeTimer() + GAME->GetTimer().GetDeltaTime());
+	// Attack mode cooldown
+	SetAttackModeTimer(GetAttackModeTimer() + fElapsedTime);
 }
 
 void CPlayer::Render()
@@ -233,12 +235,25 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
-	else if(DI->KeyDown(DIK_SPACE))
+
+	// Checking for Stance change
+	if(DI->KeyPressed(DIK_SPACE))
 	{
-		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+ 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
 			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
 			SetAttackModeTimer(0);
+			// Setting particle effect on hilt to show mode
+			if(GetAttackMode())
+			{
+				CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+				CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P1GUARD");
+			}
 		}
 	}
 
@@ -289,12 +304,25 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2))
 		SetAimingDirection(DOWN);
-	else if(DI->KeyDown(DIK_SPACE))
+	
+	// Checking for Stance change
+	if(DI->KeyDown(DIK_SPACE))
 	{
-		if(GetAttackModeTimer() > 10000) // Checking timer so player can't insta-change stances
+		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
 			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
 			SetAttackModeTimer(0);
+
+			if(GetAttackMode())
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+				CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P2GUARD");
+			}
 		}
 	}
 
@@ -459,7 +487,7 @@ void CPlayer::ResetAnimation()
 
 void CPlayer::SetCurrAnimation(string szAnimName )
 {
-	for( int i = 0; i < m_vecAnimations.size(); ++i )
+	for(unsigned int i = 0; i < m_vecAnimations.size(); ++i )
 	{
 		if( m_vecAnimations[i]->GetName() == szAnimName )
 		{

@@ -61,8 +61,12 @@ void CGameplay_State::Enter(void)
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 
-		CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
-		CFXManager::GetInstance()->QueueParticle("BACKGROUND");
+		CFXManager::GetInstance()->LoadFX("GameBG.xml", "P1ATTACK");
+		CFXManager::GetInstance()->LoadFX("GuardBG.xml","P1GUARD");
+		CFXManager::GetInstance()->LoadFX("GameBG.xml", "P2ATTACK");
+		CFXManager::GetInstance()->LoadFX("GuardBG.xml","P2GUARD");
+		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
 
@@ -84,7 +88,8 @@ void CGameplay_State::Enter(void)
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
-
+		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
+		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
 
 		rLeftHandle.left = 20;
 		rLeftHandle.top = 10;
@@ -294,13 +299,13 @@ void CGameplay_State::Render(void)
 
 		char p1hp[50];
 		char p2hp[50];
-
+				
 		itoa(m_Player1->GetCurrentHP(),p1hp,10);
 		itoa(m_Player2->GetCurrentHP(),p2hp,10);
 
 		CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
 		CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
-
+		
 		if (dickhead == false)
 		{
 			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
@@ -337,7 +342,10 @@ void CGameplay_State::Exit(void)
 		CBeatManager::GetInstance()->Stop();
 		CBeatManager::GetInstance()->UnloadSongs();
 
-		CFXManager::GetInstance()->UnloadFX("BACKGROUND");
+		CFXManager::GetInstance()->UnloadFX("P1ATTACK");
+		CFXManager::GetInstance()->UnloadFX("P1GUARD");
+		CFXManager::GetInstance()->UnloadFX("P2ATTACK");
+		CFXManager::GetInstance()->UnloadFX("P2GUARD");
 		CFXManager::GetInstance()->UnloadFX("P1_HIT");
 		CFXManager::GetInstance()->UnloadFX("P2_HIT");
 
