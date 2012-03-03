@@ -50,6 +50,10 @@ class CLevelManager
 	int m_nTitleID;
 	int m_nHudID;
 
+	// Offset for Hud
+	int m_nRightOffset;
+	int m_nLeftOffset;
+
 	// Asset Data
 	RECT rectLeftHandle;
 	RECT rectRightHandle;
