@@ -19,6 +19,7 @@
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
+#include "Managers\CFXManager.h"
 #include "States\COptionsState.h"
 ////////////////////////////////////////
 //				MISC
@@ -331,7 +332,8 @@ void CPlayer::AIHandling()
 	// that returns a bool to set the hit to true or false
 	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 	{
-		m_IbwriteShit = true;		
+		m_IbwriteShit = true;	
+		CFXManager::GetInstance()->QueueParticle("P2_HIT");
 	}
 	else
 	{
@@ -451,7 +453,8 @@ void CPlayer::ResetAnimation()
 
 void CPlayer::SetCurrAnimation(string szAnimName )
 {
-	for( int i = 0; i < m_vecAnimations.size(); ++i )
+	std::vector<CAnimation*>::size_type i;
+	for(i = 0; i < m_vecAnimations.size(); ++i)
 	{
 		if( m_vecAnimations[i]->GetName() == szAnimName )
 		{
