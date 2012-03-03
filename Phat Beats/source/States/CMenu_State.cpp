@@ -10,8 +10,11 @@
 #include "COptionsState.h"
 #include "../Globals.h"
 #include "../Managers/CFXManager.h"
+#include "../Managers/CBeatManager.h"
 #include "CLevelSelect_State.h"
 #include "CLU_State.h"
+#include "CLoad_State.h"
+#include "../JCMacros.h"
 
 CMenu_State::CMenu_State()
 {
@@ -31,6 +34,7 @@ CMenu_State::~CMenu_State()
 
 void CMenu_State::Enter(void)
 {	
+	// KEEPS LOADING, NEVER RELEASING
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
@@ -69,13 +73,15 @@ bool CMenu_State::Input(void)
 		{
 		case MAINMENU_NEWGAME:
 			{
-				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
-				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
+				// Private function that wraps up CLU load calls to 
+				// keep this area clean
+				LoadGameplayStateAssets();
 			}
 			break;
 
 		case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
 			{
+				CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
 			}
 			break;
 
@@ -183,4 +189,23 @@ CMenu_State* CMenu_State::GetInstance()
 	// Lazy instantiation
 	static CMenu_State instance; // Static allows passing back of address
 	return &instance;	
+}
+
+void CMenu_State::LoadGameplayStateAssets()
+{
+	// Using defines from JCMacros.h
+	CLU->SetNewState(CGameplay_State::GetInstance());
+
+	// Loading Effects
+	CLU->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+
+	// Loading up BeatManager specific stuff
+	CLU->QueueLoadCommand("cantina.xml","",Song);
+
+	GAME->ChangeState(CLU_State::GetInstance());
 }

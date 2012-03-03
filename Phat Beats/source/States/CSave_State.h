@@ -33,9 +33,9 @@ public:
 	void Update(void); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State
-
+	
 	static CSave_State* GetInstance();	
-
+	void saveGame();
 private:
 	
 
@@ -48,7 +48,7 @@ private:
 	//		Constructor
 	CSave_State();
 
-	void saveGame();
+	
 
 	//*****MEMBERS*******//
 	vector<string> m_vMenu;
@@ -63,8 +63,9 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	int m_nSlotNumber;
+	int m_nGameImageID;
+	int m_nSaveID;
 
-	
 	
 };
 

@@ -25,6 +25,9 @@ CPause_State::CPause_State()
 	m_nTitleID = -1;
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
+	m_nGameImageID = -1;
+	m_nPauseID = -1;
+	m_IsbGameState = false;
 }
 
 CPause_State::~CPause_State()
@@ -34,7 +37,10 @@ CPause_State::~CPause_State()
 
 void CPause_State::Enter(void)
 {	
-	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor.png");
+	m_nGameImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png");
+	m_nPauseID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/pause.png");
 }
 
 bool CPause_State::Input(void)
@@ -56,9 +62,9 @@ bool CPause_State::Input(void)
 	{
 		m_nMenuSelection += 1;
 
-		if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS )
+		if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
 		{
-			m_nMenuSelection = 0;
+			m_nMenuSelection = PAUSEMENU_EXIT;
 		}
 
 	}
@@ -92,6 +98,8 @@ bool CPause_State::Input(void)
 		case PAUSEMENU_OPTIONSTATE:
 			{
 				CGame::GetInstance()->ChangeState(COptionsState::GetInstance() );
+				m_IsbGameState = true;
+				SetPauseState(m_IsbGameState);
 			}
 			break;
 		}
@@ -106,43 +114,55 @@ void CPause_State::Update(void)
 
 void CPause_State::Render(void)
 {
-	CBitmapFont::GetInstance()->SetScale(3.5f);
-	RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
-	CBitmapFont::GetInstance()->PrintInRect("pause", &rTitle, ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
-	CBitmapFont::GetInstance()->SetScale(1.0f);
-	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 380};
-	CBitmapFont::GetInstance()->PrintInRect("return to game\n\nmain menu\n\nload\n\nsave\n\noptions menu",
-		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
+	
+	// rect for options title
+	RECT gOptions = {0,0,1000,120};
+	CSGD_TextureManager::GetInstance()->Draw(m_nPauseID,15,40,0.4f,0.9f,&gOptions);
+	// rect for game image 
+	RECT gImage = {0,350,290,550};
+	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
+
+	CBitmapFont::GetInstance()->SetScale(1.5f);
+	RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("return to game\n\nmain menu\n\nload\n\nsave\n\noptions menu",
+		&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
+
 	switch(m_nMenuSelection)
 	{
 	case PAUSEMENU_EXIT:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (PAUSEMENU_EXIT * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 235 + (PAUSEMENU_EXIT * 53) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 235  + (53* PAUSEMENU_EXIT), -1.0f);
 		}
 		break;
 
 	case PAUSEMENU_MAINMENU:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (PAUSEMENU_MAINMENU * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 235 + (PAUSEMENU_MAINMENU * 53) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 235  + (53* PAUSEMENU_MAINMENU), -1.0f);
 		}
 		break;
 
 	case PAUSEMENU_LOAD:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (PAUSEMENU_LOAD * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 235 + (PAUSEMENU_LOAD * 53) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 235  + (53* PAUSEMENU_LOAD), -1.0f);
 		}
 		break;
 
 	case PAUSEMENU_SAVE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (PAUSEMENU_SAVE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 235 + (PAUSEMENU_SAVE * 53) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 235  + (53* PAUSEMENU_SAVE), -1.0f);
 		}
 		break;
 
 	case PAUSEMENU_OPTIONSTATE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (PAUSEMENU_OPTIONSTATE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 235 + (PAUSEMENU_OPTIONSTATE * 53) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 235  + (53* PAUSEMENU_OPTIONSTATE), -1.0f);
 		}
 		break;
 	}	

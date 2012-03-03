@@ -18,7 +18,8 @@ CAnimation::CAnimation()
 	m_nImageID = -1;
 
 
-	m_bIsPlaying = false;
+	m_bIsPlaying = true;
+	m_PlayedAlready = false;
 	m_nCurrFrame = 0;
 	m_fTimeWaited = 0.0;
 	m_nMaxFrame = 0;
@@ -42,6 +43,7 @@ void CAnimation::SetImageID(int nImageID)
 void CAnimation::Play()						
 {
 	m_bIsPlaying = true;
+	m_PlayedAlready = false;
 }
 void CAnimation::Stop()						
 {
@@ -49,7 +51,8 @@ void CAnimation::Stop()
 }
 void CAnimation::Reset()						
 {
-	m_bIsPlaying = false;
+	m_bIsPlaying = true;
+	m_PlayedAlready = false;
 	m_fTimeWaited = 0.0;
 	m_nCurrFrame = 0;
 
@@ -58,8 +61,6 @@ void CAnimation::Reset()
 
 void CAnimation::Update(float fElapsedTime)	
 {
-	m_bIsLooping = true;
-
 	if( m_nMaxFrame == 0 )
 		m_nMaxFrame = m_vecFrames.size();
 
@@ -67,6 +68,7 @@ void CAnimation::Update(float fElapsedTime)
 		return;
 
 	m_fTimeWaited += fElapsedTime;
+
 	if( m_vecFrames.size() > 0)
 	{
 		if(m_vecFrames[m_nCurrFrame]->GetEvent() != "" )
@@ -90,6 +92,7 @@ void CAnimation::Update(float fElapsedTime)
 				{
 					Stop();
 					m_nCurrFrame = m_vecFrames.size() - 1;
+					m_PlayedAlready = true;
 				}
 			} 	
 		}	
@@ -101,10 +104,11 @@ void CAnimation::Update(float fElapsedTime)
 
 
 
-void CAnimation::Render()
+void CAnimation::Render(int posX, int posY, float fScale)
 {
 	if( !m_bIsPlaying )
 		return;
+
 	if( m_vecFrames.size() > 0)
 	{
 		RECT DrawRect;
@@ -114,7 +118,7 @@ void CAnimation::Render()
 		DrawRect.right = m_vecFrames[m_nCurrFrame]->GetDrawX() + m_vecFrames[m_nCurrFrame]->GetWidth();
 		DrawRect.bottom = m_vecFrames[m_nCurrFrame]->GetDrawY() + m_vecFrames[m_nCurrFrame]->GetHeight();
 
-		CSGD_TextureManager::GetInstance()->Draw(GetImageID(), 200 -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), 200 - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), 1.0,1.0, &DrawRect );
+		CSGD_TextureManager::GetInstance()->Draw(GetImageID(),posX -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), posY - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), fScale,1.0, &DrawRect );
 	}
 }
 

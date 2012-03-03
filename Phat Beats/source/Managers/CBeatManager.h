@@ -108,7 +108,7 @@ private:
 
 	/********** Private Utility Functions ************/
 		void EvaluatePlayerCombos(); // Evaluates whether combo threshold has passed, and if so who gets damage (if any)
-		void DealDamageToPlayer(CPlayer* aPlayer); // Applies damage to a player
+		void DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer); // Applies damage to a player
 
 
 

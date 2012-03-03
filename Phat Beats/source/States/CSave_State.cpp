@@ -10,7 +10,8 @@
 #include "../Managers/CBeatManager.h"
 #include "../CPlayer.h"
 #include "CGameplay_State.h"
-
+#include "COptionsState.h"
+#include "CPause_State.h"
 CSave_State::CSave_State()
 {
 	//m_bMenu_Font = NULL;
@@ -24,6 +25,8 @@ CSave_State::CSave_State()
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
 	m_nSlotNumber = 0;
+	m_nGameImageID = -1;
+	m_nSaveID = -1;
 }
 
 CSave_State::~CSave_State()
@@ -34,6 +37,9 @@ CSave_State::~CSave_State()
 void CSave_State::Enter(void)
 {	
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png");
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+	m_nSaveID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/save.png");
+	m_nGameImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 }
 
 bool CSave_State::Input(void)
@@ -75,18 +81,21 @@ bool CSave_State::Input(void)
 			{
 				m_nSlotNumber = 1;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
 			{
 				m_nSlotNumber = 2;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
 			{
 				m_nSlotNumber = 3;
 				saveGame();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
 			break;
 
@@ -103,33 +112,43 @@ void CSave_State::Update(void)
 void CSave_State::Render(void)
 {
 	
-	//CBitmapFont::GetInstance()->PrintText("slot one",215,175,D3DCOLOR_XRGB(255,255,255));
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
+
+	// rect for options title
+	RECT gOptions = {0,0,1000,120};
+	CSGD_TextureManager::GetInstance()->Draw(m_nSaveID,15,40,0.4f,0.9f,&gOptions);
+	// rect for game image 
+	RECT gImage = {0,350,290,550};
+	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
+
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
-	CBitmapFont::GetInstance()->SetScale(3.5f);
-	RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
-	CBitmapFont::GetInstance()->PrintInRect("save", &rTitle, ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
-	CBitmapFont::GetInstance()->SetScale(1.0f);
-	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 180};
-	CBitmapFont::GetInstance()->PrintInRect("slot one\n\nslot two\n\nslot three",
-		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+	
+	
+	CBitmapFont::GetInstance()->SetScale(1.5f);
+	RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
+		&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	switch(m_nMenuSelection)
 	{
 	case SAVEMENU_SLOTONE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (SAVEMENU_SLOTONE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (SAVEMENU_SLOTONE * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* SAVEMENU_SLOTONE), -1.0f);
 		}
 		break;
 
 	case SAVEMENU_SLOTTWO:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (SAVEMENU_SLOTTWO * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (SAVEMENU_SLOTTWO * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* SAVEMENU_SLOTTWO), -1.0f);
 		}
 		break;
 
 	case SAVEMENU_SLOTTHREE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (SAVEMENU_SLOTTHREE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (SAVEMENU_SLOTTHREE * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* SAVEMENU_SLOTTHREE), -1.0f);
 		}
 		break;
 
@@ -140,6 +159,9 @@ void CSave_State::Render(void)
 void CSave_State::Exit(void)
 {
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nCursorImageID);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSaveID);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nGameImageID);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBackgroundID);
 }
 
 CSave_State* CSave_State::GetInstance()
@@ -159,10 +181,8 @@ void CSave_State::saveGame()
 		{
 			outFile<<m_nSlotNumber;
 			outFile<<"\n";
-			outFile<<CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<
-				CGameplay_State::GetInstance()->GetPlayer1()->GetCurrentHP()<<"\n";
-			outFile<<CBeatManager::GetInstance()->GetFileName();
-			
+			outFile<<CBeatManager::GetInstance()->GetFileName()<<"\n";
+			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
 		}
 		outFile.close();
 	}

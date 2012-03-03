@@ -11,7 +11,7 @@
 #include "../CPlayer.h"
 #include "CGameplay_State.h"
 #include "../CGame.h"
-
+#include "../Managers/CBeatManager.h"
 CLoad_State::CLoad_State()
 {
 	CBitmapFont* m_bMenu_Font = NULL;
@@ -24,6 +24,7 @@ CLoad_State::CLoad_State()
 	m_nTitleID = -1;
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
+	m_nLoadFlag = false;
 }
 
 CLoad_State::~CLoad_State()
@@ -69,20 +70,20 @@ bool CLoad_State::Input(void)
 		{
 		case LOADMENU_SLOTONE:
 			{
-				
-				
+				m_nLoadFlag = true;
+				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 			}
 			break;
 		case LOADMENU_SLOTTWO:
 			{
-				
-				
+				m_nLoadFlag = true;			
+				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 			}
 			break;
 		case LOADMENU_SLOTTHREE:
 			{
-				
-				
+				m_nLoadFlag = true;		
+				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 			}
 			break;
 
@@ -145,15 +146,20 @@ CLoad_State* CLoad_State::GetInstance()
 	return &instance;	
 }
 
-void CLoad_State::loadGame()
+string CLoad_State::loadGame()
 {
 	ifstream inFile("resource/saves/SaveGame.fu");
-
+	
 	if (inFile.is_open())
 	{
 		if (inFile.good())
 		{
-
+			inFile>>m_nSlotNumber;
+			inFile>>m_szSongFileName;
+			inFile>>m_szSongName;
+			SetSongName(m_szSongName);
 		}
+		inFile.close();
 	}
+	return GetFileName();
 }

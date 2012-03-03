@@ -58,6 +58,10 @@ private:
 	
 	Timer GameTimer;
 	int m_nTile;
+
+	//*********PRIVATE UTILITY FUNCTIONS*************//
+	void LoadGameplayStateAssets();
+
 };
 
 #endif

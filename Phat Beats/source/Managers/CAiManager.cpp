@@ -1,11 +1,12 @@
 #include "CAiManager.h"
 #include <ctime>
 #include <time.h>
+#include "../Random.h"
 
 
 CAiManager::CAiManager( void )
 {
-
+	
 }
 
 CAiManager::~CAiManager( void )
@@ -21,25 +22,56 @@ CAiManager* CAiManager::GetInsatance()
 
 bool CAiManager::RandomDifficult( int Level )
 {
-	srand(unsigned int(time(0)));
+	INT randChance = Random::Next(0, 100);
+	bool bToReturn;
+
 	switch (Level)
 	{
 	case AI_EASY:
-		return rand()% 2;
+		bToReturn = randChance < 11 ? true : false;
+		break;
 	case AI_NORMAL:
-		return rand()%25;
+		bToReturn = randChance < 26 ? true : false;
+		break;
 	case AI_HARD:
-		return rand()%67;
+		bToReturn = randChance < 67 ? true : false;
+		break;
 	case AI_INSANE:
-		return rand()%100;
+		bToReturn = randChance < 90 ? true : false;
+		break;
+	default:
+		return false;
 	}
 
+	return bToReturn;
 }
 
-/*
-void CAiManager::Update( float fElaspedTime )
+bool CAiManager::CheckNotesHit( CBeat* hit )
 {
-
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		if (hit == (*iter))
+		{
+			return 0;
+		}
+		else
+		{
+			addNote(hit);
+			return false;
+		}
+	}
+	return false;
 }
-*/
+
+void CAiManager::addNote(CBeat* hit)
+{
+	vector<CBeat*>::iterator iter;
+	for (iter = notesHit.begin(); iter != notesHit.end(); ++iter)
+	{
+		notesHit.push_back(hit);
+
+	}
+}
+
 

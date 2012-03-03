@@ -261,7 +261,10 @@ int CSGD_TextureManager::LoadTexture(const char* szFilename, DWORD dwColorkey)
 void CSGD_TextureManager::UnloadTexture(int nID)
 {
 	// Make sure the nID is in range.
-	assert(nID > -1 && nID < (int)m_Textures.size() && "nID is out of range");
+	//assert(nID > -1 && nID < (int)m_Textures.size() && "nID is out of range");
+
+	if(!(nID > -1 && nID < (int)m_Textures.size()))
+		return;
 	
 	// Remove ref.
 	m_Textures[nID].ref--;
