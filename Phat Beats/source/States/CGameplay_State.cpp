@@ -117,14 +117,11 @@ bool CGameplay_State::Input(void)
 {
 	if(!BeatManager->IsPaused())
 	{
-	
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
-			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
 			BeatManager->Play("cantina");
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
