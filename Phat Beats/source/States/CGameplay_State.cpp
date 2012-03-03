@@ -228,15 +228,11 @@ bool CGameplay_State::Input(void)
 	return true;*/
 #pragma endregion
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN)) 
+	{
 		SetPreviouslyPlaying(true);
 		CLevelManager::GetInstance()->LeaveLevel();
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-	}
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) {
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 	}
 
 	CLevelManager::GetInstance()->HandleLevelInput();
@@ -331,10 +327,6 @@ void CGameplay_State::Render(void)
 	//}
 #pragma endregion
 	CLevelManager::GetInstance()->Render();
-		if (dickhead == false)
-		{
-			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
-		}
 
 
 
@@ -343,8 +335,6 @@ void CGameplay_State::Render(void)
 			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
 
 		}
-
-	}
 }
 
 void CGameplay_State::Exit(void)

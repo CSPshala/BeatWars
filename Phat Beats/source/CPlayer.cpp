@@ -220,25 +220,25 @@ void CPlayer::HandleEvent( CEvent* pEvent )
 ////////////////////////////////////////
 void CPlayer::P1InputHandling()
 {
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_UP))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT) && DI->JoystickGetLStickDirDown(DIR_UP))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT) && DI->JoystickGetLStickDirDown(DIR_DOWN))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIK_LEFT))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_UP))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT) && DI->JoystickGetLStickDirDown(DIR_UP))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT) && DI->JoystickGetLStickDirDown(DIR_DOWN))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIK_RIGHT))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIK_UP))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN))
 		SetAimingDirection(DOWN);
 
 	// Checking for Stance change
-	if(DI->KeyPressed(DIK_SPACE))
+	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickGetLStickDirPressed(4))
 	{
  		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -289,25 +289,25 @@ void CPlayer::P1InputHandling()
 void CPlayer::P2InputHandling()
 {
 	// Don't ever have p2 input running same time as P1.  Control schemes are the same
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_UP))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetRStickDirDown(DIR_LEFT) && DI->JoystickGetRStickDirDown(DIR_UP))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetRStickDirDown(DIR_LEFT) && DI->JoystickGetRStickDirDown(DIR_DOWN))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetRStickDirDown(DIK_LEFT))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetRStickDirDown(DIR_LEFT))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetRStickDirDown(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_UP))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetRStickDirDown(DIR_RIGHT) && DI->JoystickGetRStickDirDown(DIR_UP))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetRStickDirPressed(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetRStickDirPressed(DIR_RIGHT) && DI->JoystickGetRStickDirDown(DIR_DOWN))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetRStickDirDown(DIK_RIGHT))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetRStickDirDown(DIR_RIGHT))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetRStickDirDown(DIK_UP))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetRStickDirDown(DIR_UP))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetRStickDirDown(DIR_DOWN))
 		SetAimingDirection(DOWN);
 	
 	// Checking for Stance change
-	if(DI->KeyDown(DIK_SPACE))
+	if(DI->KeyDown(DIK_SPACE) || DI->JoystickGetRStickDirPressed(4))
 	{
 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
