@@ -39,7 +39,7 @@ private:
 	float m_fDotTick;
 	char m_cNumDots;
 	bool m_bStartGameTransition;
-	int m_nGameTransitionAlpha;
+	float m_fGameTransitionAlpha;
 
 	// Asset ID's
 	int m_nBgImage;

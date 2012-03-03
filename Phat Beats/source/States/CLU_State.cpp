@@ -112,11 +112,11 @@ void CLU_State::Update(void)
 			// TODO : Complete Animation
 			if(m_bAnimComplete)
 			{
-				m_nGameTransitionAlpha += (int)(175 * CGame::GetInstance()->GetTimer().GetDeltaTime());
-				if (m_nGameTransitionAlpha >= 255)
+				m_fGameTransitionAlpha += (175 * CGame::GetInstance()->GetTimer().GetDeltaTime());
+				if (m_fGameTransitionAlpha >= 255)
 				{
 					CGame::GetInstance()->ChangeState(m_pNewState);
-					m_nGameTransitionAlpha = 1;
+					m_fGameTransitionAlpha = 1;
 				}				
 			}
 		}
@@ -139,7 +139,7 @@ void CLU_State::Render(void)
 	CBitmapFont::GetInstance()->PrintStrokedText(Dots.str(), 10, 10, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	if (m_bAnimComplete)
 	{
-		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_nGameTransitionAlpha, 0, 0, 0));
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));
 	}
 }
 void CLU_State::Exit(void)
