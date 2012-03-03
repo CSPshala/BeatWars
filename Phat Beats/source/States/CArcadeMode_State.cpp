@@ -33,7 +33,7 @@ void CArcadeMode_State::Enter(void)
 bool CArcadeMode_State::Input(void)
 {
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
 		return false;
 
 	return true;

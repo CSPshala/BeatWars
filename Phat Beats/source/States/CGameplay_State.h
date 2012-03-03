@@ -39,8 +39,7 @@ public:
 
 	bool GetPreviouslyPlaying() {return m_bPreviouslyPlaying;}
 	void SetPreviouslyPlaying(bool prevplay) {m_bPreviouslyPlaying = prevplay;}
-	
-	
+	void DrawARGB(string filename, DWORD argbColor);
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -54,7 +53,8 @@ private:
 	//*******MEMBERS**********//
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
-
+	int m_SongTransitionAlpha;
+	bool m_bStartTransition;
 	// Managers
 	CBeatManager* BeatManager;
 	CAnimationManager AnimationManager;
