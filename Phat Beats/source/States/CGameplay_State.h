@@ -37,10 +37,6 @@ public:
 	static CGameplay_State* GetInstance();			
 	static void MessageProc(CBaseMessage* pMsg);// access to messageproc
 
-	// Access to players
-	CPlayer*	GetPlayer1() {return m_Player1;}
-	CPlayer*  GetPlayer2() {return m_Player2;}
-int getBackground() {return m_nBackgroundID;}
 	bool GetPreviouslyPlaying() {return m_bPreviouslyPlaying;}
 	void SetPreviouslyPlaying(bool prevplay) {m_bPreviouslyPlaying = prevplay;}
 	
@@ -58,37 +54,22 @@ private:
 	//*******MEMBERS**********//
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
-	bool m_bGameOver;
-	bool m_bCheckAnimations;
 
-	
-		// Asset IDs
-	int m_nBackgroundID;
-	int m_nBackSoundID;
-	int m_nFontID;
-	int m_nTitleID;
-	int m_nHudID;
-
-	//Rects for HUD
-	
-	RECT rLeftHandle;
-	RECT rRightHandle;
-
-	RECT rLeftSaber;
-	RECT rRightSaber;
-
-	RECT rLeftPowerUpBar;
-	RECT rRightPowerUpBar;
-	
-	//Players
-	CPlayer* m_Player1;
-	CPlayer* m_Player2;
-
-		// Managers
+	// Managers
 	CBeatManager* BeatManager;
 	CAnimationManager AnimationManager;
-		
-static bool dickhead;
+
+	static bool dickhead;
+
+	//*************PRIVATE UTILITY FUNCTIONS****************//
+	void DrawTutorialText();
+
+	//*************PRIVATE ACCESSORS************************//
+//	bool		GetIsTutorial() {return m_bTutorial;}
+
+	//*************PRIVATE MUTATORS*************************//
+//	void		SetIsTutorial(bool bSet) {m_bTutorial = bSet;}
+
 
 	
 };

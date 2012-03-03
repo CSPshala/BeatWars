@@ -71,7 +71,7 @@ public:
 	TBeatHit&			GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
 	bool				GetAttackMode() {return m_bAttackMode;}
-	int					GetAttackModeTimer() {return m_nAttackModeTimer;}
+	float				GetAttackModeTimer() {return m_fAttackModeTimer;}
 	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
 	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
 	bool				GetAnimationIsEmpty() { return m_bAnimationsEmpty; }
@@ -98,7 +98,7 @@ public:
 	void				SetCurrAnimation(string szAnimName );
 	void				SetAILevel(int nAILevel) {m_nAILevel = nAILevel;}
 	void				SetAttackMode(bool nMode) {m_bAttackMode = nMode;}
-	void				SetAttackModeTimer(int nTime) {m_nAttackModeTimer = nTime;}
+	void				SetAttackModeTimer(float nTime) {m_fAttackModeTimer = nTime;}
 	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
 
 
@@ -122,7 +122,7 @@ private:
 		// Attack mode bool.  If false = Defense mode
 		bool m_bAttackMode;
 			// Attack mode timer / so player can't spam attack/defense switching
-		int m_nAttackModeTimer;
+		float m_fAttackModeTimer;
 
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)

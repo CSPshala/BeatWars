@@ -20,6 +20,8 @@
 #include "../CGame.h"
 #include "../CPlayer.h"
 #include "CFXManager.h"
+#include "../../CLevelManager.h"
+
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -561,11 +563,11 @@ void CBeatManager::EvaluatePlayerCombos()
 	{
 		if(GetP1CurrentCombo() > GetP2CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer2(),GAMEPLAY->GetPlayer1());
+			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerTwo), CLevelManager::GetInstance()->GetPlayer(PlayerOne));
 		}
 		else if(GetP2CurrentCombo() > GetP1CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer1(), GAMEPLAY->GetPlayer2());
+			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
 
 		SetNotesPassed(0);
