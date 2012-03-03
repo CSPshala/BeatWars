@@ -256,6 +256,7 @@ void CGameplay_State::Update(void)
 
 		if(m_Player1->GetCurrentHP() <= 0 || m_Player2->GetCurrentHP() <= 0)
 			m_bGameOver = true;
+		
 	}
 
 }
