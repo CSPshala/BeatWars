@@ -294,9 +294,6 @@ void CGameplay_State::Update(void)
 	//	// Updating beatmanager (handles current streak counting and player dmg)
 	//	BeatManager->Update();
 
-	//	if(m_Player1->GetCurrentHP() <= 0 || m_Player2->GetCurrentHP() <= 0)
-	//		m_bGameOver = true;
-	//}
 #pragma endregion
 	CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	if (m_bStartTransition)
@@ -311,7 +308,6 @@ void CGameplay_State::Update(void)
 
 	
 }
-
 void CGameplay_State::Render(void)
 {
 #pragma region OLD
