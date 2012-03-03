@@ -34,6 +34,7 @@ CMenu_State::~CMenu_State()
 
 void CMenu_State::Enter(void)
 {	
+	// KEEPS LOADING, NEVER RELEASING
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
