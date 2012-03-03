@@ -197,12 +197,12 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
 	// Loading Effects
-	CLU->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-	CLU->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-	CLU->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-	CLU->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-	CLU->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-	CLU->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 
 	// Loading up BeatManager specific stuff
 	CLU->QueueLoadCommand("cantina.xml","",Song);
