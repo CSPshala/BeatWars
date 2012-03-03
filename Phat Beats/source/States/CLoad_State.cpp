@@ -26,6 +26,9 @@ CLoad_State::CLoad_State()
 	m_nBackSoundID = -1;
 	m_nCursorSoundID = -1;
 	m_nLoadFlag = false;
+	m_nGameImageID = -1;
+	m_nLoadImageID = -1;
+	m_nLoadID = -1;
 }
 
 CLoad_State::~CLoad_State()
@@ -36,6 +39,10 @@ CLoad_State::~CLoad_State()
 void CLoad_State::Enter(void)
 {	
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png");
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+	m_nLoadID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/load.png");
+	m_nGameImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	m_nLoadImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/phatbeatsscreen1.png");
 }
 
 bool CLoad_State::Input(void)
@@ -100,34 +107,47 @@ void CLoad_State::Update(void)
 
 void CLoad_State::Render(void)
 {
-	
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
+
+	// rect for options title
+	RECT gOptions = {0,0,1000,120};
+	CSGD_TextureManager::GetInstance()->Draw(m_nLoadID,15,40,0.4f,0.9f,&gOptions);
+	// rect for game image 
+	RECT gImage = {0,350,290,550};
+	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
+
 	
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
+	/*
 	CBitmapFont::GetInstance()->SetScale(3.5f);
-	RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
-	CBitmapFont::GetInstance()->PrintInRect("load", &rTitle, ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));
-	CBitmapFont::GetInstance()->SetScale(1.0f);
-	RECT rMenuOptions = { 225, 177, CGame::GetInstance()->GetScreenWidth(), 180};
-	CBitmapFont::GetInstance()->PrintInRect("slot one\n\nslot two\n\nslot three",
-		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(225, 225, 225));
+		RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
+		CBitmapFont::GetInstance()->PrintInRect("load", &rTitle, ALIGN_CENTER,D3DCOLOR_XRGB(242,251,4));*/
+	
+	CBitmapFont::GetInstance()->SetScale(1.5f);
+	RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
+		&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	switch(m_nMenuSelection)
 	{
 	case LOADMENU_SLOTONE:
-		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTONE * 40) );			
+		{			
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (LOADMENU_SLOTONE * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* LOADMENU_SLOTONE), -1.0f);
 		}
 		break;
 
 	case LOADMENU_SLOTTWO:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTWO * 40) );			
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (LOADMENU_SLOTTWO * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* LOADMENU_SLOTTWO), -1.0f);
 		}
 		break;
 
 	case LOADMENU_SLOTTHREE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTHREE * 40) );			
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (LOADMENU_SLOTTHREE * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* LOADMENU_SLOTTHREE), -1.0f);
 		}
 		break;
 
