@@ -29,6 +29,9 @@ CGameplay_State::CGameplay_State()
 	m_Player1 = NULL;
 	m_Player2 = NULL;
 
+	// Start off defaulted in tutorial mode (make it so player can skip later)
+	SetIsTutorial(true);
+
 	m_bPreviouslyPlaying = false;
 }
 
@@ -40,9 +43,7 @@ CGameplay_State::~CGameplay_State()
 void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
-
-	BeatManager->LoadSong("cantina.xml");
-	//BeatManager->LoadSong("noteeventtest.xml");
+	
 	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
     m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
@@ -56,21 +57,9 @@ void CGameplay_State::Enter(void)
 		}
 		else
 			BeatManager->LoadSong("cantina.xml");	
-
-		//BeatManager->LoadSong("noteeventtest.xml");
+	
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
-		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-
-		CFXManager::GetInstance()->LoadFX("GameBG.xml", "P1ATTACK");
-		CFXManager::GetInstance()->LoadFX("GuardBG.xml","P1GUARD");
-		CFXManager::GetInstance()->LoadFX("GameBG.xml", "P2ATTACK");
-		CFXManager::GetInstance()->LoadFX("GuardBG.xml","P2GUARD");
-		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
-		CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
-
-		m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
+		
 		// Setting up Players
 		m_Player1 = new CPlayer(OBJ_PLAYER1);
 		m_Player2 = new CPlayer(OBJ_AI);
@@ -85,12 +74,18 @@ void CGameplay_State::Enter(void)
 		else
 			BeatManager->Play("cantina");
 		
-
+		// Moving Effects to their propper position
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
 
+		// Queueing effects to display		
+		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+
+
+		// Setting rects for UI elements
 		rLeftHandle.left = 20;
 		rLeftHandle.top = 10;
 		rLeftHandle.right = 67;

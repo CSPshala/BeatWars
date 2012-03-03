@@ -61,6 +61,9 @@ private:
 	bool m_bGameOver;
 	bool m_bCheckAnimations;
 
+	// bool check for tutorial mode
+	bool m_bTutorial;
+
 	
 		// Asset IDs
 	int m_nBackgroundID;
@@ -84,11 +87,21 @@ private:
 	CPlayer* m_Player1;
 	CPlayer* m_Player2;
 
-		// Managers
+	// Managers
 	CBeatManager* BeatManager;
 	CAnimationManager AnimationManager;
-		
-static bool dickhead;
+
+	static bool dickhead;
+
+	//*************PRIVATE UTILITY FUNCTIONS****************//
+	void DrawTutorialText();
+
+	//*************PRIVATE ACCESSORS************************//
+	bool		GetIsTutorial() {return m_bTutorial;}
+
+	//*************PRIVATE MUTATORS*************************//
+	void		SetIsTutorial(bool bSet) {m_bTutorial = bSet;}
+
 
 	
 };
