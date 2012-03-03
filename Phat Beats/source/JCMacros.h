@@ -17,5 +17,7 @@
 #define ES CEventSystem::GetInstance()
 #define GAME CGame::GetInstance()
 #define GAMEPLAY CGameplay_State::GetInstance()
+#define CLU	CLU_State::GetInstance()
+#define BEATMAN CBeatManager::GetInstance()
 
 #endif

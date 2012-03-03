@@ -55,7 +55,7 @@ void CParticle::Render(const std::vector<int>& vTextures)
 	}
 }
 
-const float const CParticle::GetColorDelta(const ColorValue nColorIndex)
+const float CParticle::GetColorDelta(const ColorValue nColorIndex)
 {
 	switch(nColorIndex)
 	{
@@ -74,6 +74,9 @@ const float const CParticle::GetColorDelta(const ColorValue nColorIndex)
 	case A:
 		return m_fAlphaDelta;
 		break;
+
+	default:
+		return 0.0f;
 	}
 }
 const void CParticle::SetColorDelta(const ColorValue nColorIndex, const float fNewValue)
