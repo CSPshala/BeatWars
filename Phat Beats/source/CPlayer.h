@@ -70,6 +70,8 @@ public:
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
 	TBeatHit&			GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
+	bool				GetAttackMode() {return m_bAttackMode;}
+	int					GetAttackModeTimer() {return m_nAttackModeTimer;}
 	vector<CAnimation*> GetAnimations(){ return m_vecAnimations; }
 	CAnimation*			GetCurrAnim(){ return m_vecAnimations[m_nCurrAnim]; }
 	bool				GetAnimationIsEmpty() { return m_bAnimationsEmpty; }
@@ -95,6 +97,8 @@ public:
 	void				SetAnimations( vector<CAnimation*> vecAnim ){  m_vecAnimations = vecAnim;}
 	void				SetCurrAnimation(string szAnimName );
 	void				SetAILevel(int nAILevel) {m_nAILevel = nAILevel;}
+	void				SetAttackMode(bool nMode) {m_bAttackMode = nMode;}
+	void				SetAttackModeTimer(int nTime) {m_nAttackModeTimer = nTime;}
 	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
 
 
@@ -114,6 +118,11 @@ private:
 		int m_nAILevel; // setting the ai level from option state
 		// Aim Specific stuff
 		float m_fRotation; // Rotation of cone (in degrees)
+		
+		// Attack mode bool.  If false = Defense mode
+		bool m_bAttackMode;
+			// Attack mode timer / so player can't spam attack/defense switching
+		int m_nAttackModeTimer;
 
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
@@ -144,12 +153,13 @@ private:
 			int GetBeatConeID() {return m_nBeatConeID;}
 			int GetBeatSuccessID() {return m_nBeatSuccessID;}
 			int GetBeatMissID() {return m_nBeatMissID;}
+			
 
 	/********** Private Mutators ************/
 			void SetBeatConeID(int nBeatConeID) {m_nBeatConeID = nBeatConeID;}
 			void SetBeatSuccessID(int nBeatSuccessID) {m_nBeatSuccessID = nBeatSuccessID;}
 			void SetBeatMissID(int nBeatMissID) {m_nBeatMissID = nBeatMissID;}
-
+			
 	/********** Private Utility Functions ************/
 			void P1InputHandling();
 			void P2InputHandling();

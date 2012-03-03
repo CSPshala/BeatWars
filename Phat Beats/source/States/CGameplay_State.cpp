@@ -14,7 +14,8 @@
 #include "../Managers/CAiManager.h"
 #include "../Managers/CFXManager.h"
 #include "COptionsState.h"
-
+#include "CLoad_State.h"
+#include "CSave_State.h"
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
 {
@@ -38,11 +39,25 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
+	BeatManager = CBeatManager::GetInstance();
+
+	BeatManager->LoadSong("cantina.xml");
+	//BeatManager->LoadSong("noteeventtest.xml");
+	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
+    m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
+	m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
+
 	if (m_bPreviouslyPlaying == false)
 	{
 		BeatManager = CBeatManager::GetInstance();	
-		BeatManager->LoadSong("cantina.xml");	
-		BeatManager->LoadSong("noteeventtest.xml");
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->LoadSong(CLoad_State::GetInstance()->loadGame());
+		}
+		else
+			BeatManager->LoadSong("cantina.xml");	
+
+		//BeatManager->LoadSong("noteeventtest.xml");
 		CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
 		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 
@@ -58,9 +73,14 @@ void CGameplay_State::Enter(void)
 		// Adding players to Object Manager
 		CObjectManager::GetInstance()->AddObject(m_Player1);
 		CObjectManager::GetInstance()->AddObject(m_Player2);
-
-		m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-
+		
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
+		
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
@@ -107,7 +127,13 @@ void CGameplay_State::Enter(void)
 	}
 	else
 	{
-		BeatManager->Play("cantina");
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
+
 	}
 
 	m_bGameOver = false;
@@ -129,12 +155,16 @@ bool CGameplay_State::Input(void)
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
+			CSave_State::GetInstance()->saveGame();
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
 		{
 			BeatManager->Reset();
-			m_bGameOver = true;
+			m_bGameOver = false;
+
+			m_Player1->SetCurrentHP(100);
+			m_Player2->SetCurrentHP(100);
 		}
 
 		if( m_bCheckAnimations) 
@@ -276,6 +306,9 @@ void CGameplay_State::Render(void)
 			CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
 		}
 	}
+	
+
+
 
 }
 
