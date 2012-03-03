@@ -89,6 +89,9 @@ public:
 	const void Update(const float fElapsedTime);
 	const void Render(void);
 	const void Exit(void);
+
+	// Accessors
+	queue<string>* GetQueueString() {return &m_vSongs;}
 };
 
 #endif

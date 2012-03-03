@@ -71,7 +71,9 @@ private:
 	string m_szSongFileName;
 	bool m_nLoadFlag;
 	string m_szSongName;
-
+	int m_nGameImageID;
+	int m_nLoadID;
+	int m_nLoadImageID;
 	
 };
 
