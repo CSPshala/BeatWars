@@ -5,9 +5,11 @@
 
 // Included for Difficulty ENUM
 #include "../CBeat.h"
+#include "../CPlayer.h"
+#include "../Managers/CAiManager.h"
 
 // JC - I cleaned up the enum a bit because stuff like lives isn't needed for now.
-enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
+enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_AILEVEL, OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
 class COptionsState : public IGameState
 {
 	private:
@@ -23,7 +25,7 @@ class COptionsState : public IGameState
 	float m_nMusicPan;
 	int	  m_nLives;
 	BeatDifficulty m_eDifficulty;  // Sets difficulty
-
+	int	  m_nAiLevel;
 
 	COptionsState( void );
 	COptionsState( const COptionsState& );
@@ -41,4 +43,6 @@ public:
 
 	void SetDifficulty(BeatDifficulty eDiff) {m_eDifficulty = eDiff;}
 	BeatDifficulty GetDifficulty() {return m_eDifficulty;}
+	int GetAILevel() {return m_nAiLevel;}
+	void SetAILevel(int nAILevel) {m_nAiLevel = nAILevel;}
 };

@@ -130,6 +130,9 @@
     <ClCompile Include="source\States\CLU_State.cpp">
       <Filter>Game States\Source</Filter>
     </ClCompile>
+    <ClCompile Include="CLevelManager.cpp">
+      <Filter>Game Management\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h">
@@ -269,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="source\States\CLU_State.h">
       <Filter>Game States\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevelManager.h">
+      <Filter>Game Management\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

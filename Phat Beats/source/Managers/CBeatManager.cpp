@@ -20,6 +20,8 @@
 #include "../CGame.h"
 #include "../CPlayer.h"
 #include "CFXManager.h"
+#include "../../CLevelManager.h"
+
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -464,13 +466,12 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 
 void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
-	bool found = false;
-
 	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
 		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
 		{			
-
+			// Here we're looking at the current hittable beat, checking if the player is aiming at it,
+			// and if they hit the correct key or not
 			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
 				&& aPlayer->GetMostRecentKeyPress().cHitNote == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
 			{			
@@ -488,17 +489,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 							// Upping Player1's Current combo for damage
 							SetP1CurrentCombo(GetP1CurrentCombo() + 1);							
-						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							//aPlayer->SetCurrentStreak(0);
-
-							//// Player missed so wiping out combo
-							//SetP1CurrentCombo(0);
-
-							break;
-						}
+						}						
 
 					}
 					break;
@@ -516,14 +507,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Upping Player2's Current combo for damage
 							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							aPlayer->SetCurrentStreak(0);
-
-							// Player missed so wiping out combo
-							SetP2CurrentCombo(0);
-						}
+						
 					}
 					break;
 
@@ -535,19 +519,12 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							// Player hit the note, handling all relevant info.
 							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-
+							CFXManager::GetInstance()->QueueParticle("P2_HIT");
 							
 							// Upping Player2's Current combo for damage
 							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
 						}
-						// Player already hit the note, and it's not visible anymore so it's a miss
-						else
-						{
-							aPlayer->SetCurrentStreak(0);
-							
-							// Player missed so wiping out combo
-							SetP2CurrentCombo(0);
-						}
+						
 					}
 					break;
 				}
@@ -586,20 +563,34 @@ void CBeatManager::EvaluatePlayerCombos()
 	{
 		if(GetP1CurrentCombo() > GetP2CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer2());
+			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerTwo), CLevelManager::GetInstance()->GetPlayer(PlayerOne));
 		}
 		else if(GetP2CurrentCombo() > GetP1CurrentCombo())
 		{
-			DealDamageToPlayer(GAMEPLAY->GetPlayer1());
+			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
 
 		SetNotesPassed(0);
 	}
 }
 
-void CBeatManager::DealDamageToPlayer(CPlayer* aPlayer)
+void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	aPlayer->SetCurrentHP(aPlayer->GetCurrentHP() - 3);
+	// Player is in attack mode
+	if(playerToDmg->GetAttackMode())
+	{
+		if(damageDealer->GetAttackMode())
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
+		else
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
+	}
+	else
+	{
+		if(damageDealer->GetAttackMode())
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
+		else
+			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
+	}
 }
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS

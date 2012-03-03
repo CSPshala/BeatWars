@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="1" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\nxc_bat_heihachi.PNG" Name="Idle">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="96" Width="65" AnchorX="35" AnchorY="87" FrameX="9" FrameY="1325" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="98" Width="55" AnchorX="25" AnchorY="89" FrameX="75" FrameY="1322" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="99" Width="59" AnchorX="28" AnchorY="89" FrameX="128" FrameY="1325" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="105" Width="58" AnchorX="28" AnchorY="98" FrameX="185" FrameY="1315" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="99" Width="50" AnchorX="22" AnchorY="91" FrameX="247" FrameY="1320" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="100" Width="55" AnchorX="25" AnchorY="92" FrameX="299" FrameY="1321" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="99" Width="52" AnchorX="23" AnchorY="93" FrameX="356" FrameY="1321" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="99" Width="59" AnchorX="27" AnchorY="89" FrameX="410" FrameY="1323" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="97" Width="60" AnchorX="31" AnchorY="89" FrameX="475" FrameY="1328" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="92" Width="56" AnchorX="27" AnchorY="84" FrameX="534" FrameY="1332" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="93" Width="53" AnchorX="25" AnchorY="85" FrameX="591" FrameY="1332" Duration="0.075"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="98" Width="59" AnchorX="27" AnchorY="85" FrameX="645" FrameY="1331" Duration="0.075"/>
+  </Animation>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\nxc_bat_heihachi.PNG" Name="Attack">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="100" Width="95" AnchorX="54" AnchorY="84" FrameX="600" FrameY="996" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="86" Width="81" AnchorX="44" AnchorY="77" FrameX="693" FrameY="1005" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="94" Width="82" AnchorX="49" AnchorY="87" FrameX="772" FrameY="995" Duration="0.085"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="92" Width="68" AnchorX="40" AnchorY="86" FrameX="856" FrameY="996" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="95" Width="71" AnchorX="38" AnchorY="88" FrameX="924" FrameY="993" Duration="0.35"/>
+  </Animation>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\nxc_bat_heihachi.PNG" Name="Block">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="84" Width="112" AnchorX="59" AnchorY="75" FrameX="4" FrameY="89" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="95" Width="91" AnchorX="48" AnchorY="81" FrameX="119" FrameY="87" Duration="0.75"/>
+  </Animation>
+</Animations>
+

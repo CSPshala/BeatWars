@@ -15,10 +15,13 @@
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_FModManager.h"
+#include "Managers\CFXManager.h"
 #include "Managers\CBeatManager.h"
 #include "Managers\CAiManager.h"
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
+#include "Managers\CFXManager.h"
+#include "States\COptionsState.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -39,10 +42,14 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
 	SetTotalScore(0);
+	SetAttackModeTimer(0);
 	// Defaults to easy
 	SetPlayerDifficulty(EASY);
 	// Setting aiming to upwards
 	SetAimingDirection(UP);	
+
+	// Putting player in attack mode
+	SetAttackMode(true);
 
 	switch(m_nType)
 	{
@@ -67,14 +74,15 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		break;
 	}
 
-	// Event system register	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+	// Event system register		
 	m_IbwriteShit = false;
+
+	m_nCurrAnim = 0;
+	m_bAnimationsEmpty = false;
 }
 
 CPlayer::~CPlayer()
-{	
-	CEventSystem::GetInstance()->RegisterClient("player1button",this);
+{		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 }
 
@@ -89,6 +97,10 @@ void CPlayer::Input()
 
 void CPlayer::Update(float fElapsedTime)
 {
+	//UpdateAnimations
+	if( m_vecAnimations.size() > 0 )
+	m_vecAnimations[m_nCurrAnim]->Update(fElapsedTime);
+
 	// Just splitting up input for both players so this dosen't get all huge and gross
 	// (like your mom)
 	// Also comment out P2's handling for debugging, because right now P1 and P2 have
@@ -111,22 +123,42 @@ void CPlayer::Update(float fElapsedTime)
 			break;
 		}
 	}
+
+	// Attack mode cooldown
+	SetAttackModeTimer(GetAttackModeTimer() + fElapsedTime);
 }
 
 void CPlayer::Render()
 {
-	
+	//Render Animations
+	if( m_nType == OBJ_PLAYER1 )
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(200,200,-1.0);
+	}
+	else
+	{
+		if( m_vecAnimations.size() > 0 )
+			m_vecAnimations[m_nCurrAnim]->Render(500,200,1.0);
+
+	}
+
 	//D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
+
+
+
 	if (m_IbwriteShit == true)
 	{
 		CSGD_Direct3D::GetInstance()->DrawText("This is a test of the Ai hit",200,24,255,0,0);
 	}
 
-	
-	
+
+
+
+
 }
 
 RECT CPlayer::GetCollisionRect()
@@ -179,17 +211,8 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
-	if(pEvent->GetEventID() == "notecollision" && GetType() == OBJ_AI)
-	{
-		bool found = false;
-				
-		for(unsigned int i = 0; i < GetAIBeats().size(); ++i)
-			if(m_vAIBeats[i] == pEvent->GetParam())
-				found = true;
-		
-		if(!found)
-			m_vAIBeats.push_back((CBeat*)(pEvent->GetParam()));
-	}
+	
+	
 }
 
 ////////////////////////////////////////
@@ -213,7 +236,28 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(UP);
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIK_DOWN))
 		SetAimingDirection(DOWN);
-	
+
+	// Checking for Stance change
+	if(DI->KeyPressed(DIK_SPACE))
+	{
+ 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+			// Setting particle effect on hilt to show mode
+			if(GetAttackMode())
+			{
+				CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+				CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P1GUARD");
+			}
+		}
+	}
+
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
@@ -262,6 +306,27 @@ void CPlayer::P2InputHandling()
 	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetRStickDirDown(DIK_DOWN))
 		SetAimingDirection(DOWN);
 	
+	// Checking for Stance change
+	if(DI->KeyDown(DIK_SPACE))
+	{
+		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
+		{
+			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+			SetAttackModeTimer(0);
+
+			if(GetAttackMode())
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+				CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P2GUARD");
+			}
+		}
+	}
+
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		int nSongID = CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID();
@@ -292,56 +357,73 @@ void CPlayer::P2InputHandling()
 
 void CPlayer::AIHandling()
 {
+	// local variables for function
 	CBeatManager* AIbeatDir;
 	AIbeatDir = CBeatManager::GetInstance();
 	CSong* AiSong;
 	AiSong = AIbeatDir->GetCurrentlyPlayingSong();
-	CBeat* hitPlayer;
+	list<CBeat*>::iterator iter;
 	
-	if (AiSong->GetHittableBeatList().size() > 0)
+	// checking the random difficult
+	// that returns a bool to set the hit to true or false
+	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 	{
-		for (unsigned int i = 0; i < AiSong->GetHittableBeatList().size(); ++i)
+		m_IbwriteShit = true;	
+		CFXManager::GetInstance()->QueueParticle("P2_HIT");
+	}
+	else
+	{
+		m_IbwriteShit = false;				
+	}
+
+	for (iter = AiSong->GetActiveBeatList().begin(); iter != AiSong->GetActiveBeatList().end(); ++iter)
+	{
+
+		if ((*iter)->GetDirection() == LEFT && (*iter)->GetHasCollided() == m_IbwriteShit)
 		{
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFT)
-				SetAimingDirection(LEFT);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == UP)
-				SetAimingDirection(UP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == RIGHT)
-				SetAimingDirection(RIGHT);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection()  == LEFTUP)
-				SetAimingDirection(LEFTUP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTUP)
-				SetAimingDirection(RIGHTUP);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == DOWN)
-				SetAimingDirection(DOWN);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == LEFTDOWN)
-				SetAimingDirection(LEFTDOWN);
-			if ((AiSong->GetHittableBeatList())[i]->GetDirection() == RIGHTDOWN)
-				SetAimingDirection(RIGHTDOWN);
+			SetAimingDirection(LEFT);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
 		}
-
-		if(m_vAIBeats.size() != 0)
+		if ((*iter)->GetDirection()  == UP && (*iter)->GetHasCollided() == m_IbwriteShit)
 		{
-
-			if (CAiManager::GetInsatance()->RandomDifficult(2) == true)
-			{
-				m_IbwriteShit = true;
-
-				hitPlayer->SetPlayer2Hit(true);
-
-			}
-			else
-			{
-				m_IbwriteShit = false;
-				
-			}
-
-			m_vAIBeats.pop_back();
-
+			SetAimingDirection(UP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection()  == RIGHT && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHT);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection()  == LEFTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(LEFTUP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == RIGHTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHTUP);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == DOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(DOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == LEFTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(LEFTDOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
+		}
+		if ((*iter)->GetDirection() == RIGHTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
+		{
+			SetAimingDirection(RIGHTDOWN);
+			(*iter)->SetPlayer2Hit(m_IbwriteShit);
 		}
 	}
 	
 }
+
+
 
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
@@ -355,7 +437,7 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 	case LEFT:
 		SetCurrentRotation(270.0f);
 		break;
-		
+
 	case UP:
 		SetCurrentRotation(0.0f);
 		break;
@@ -390,6 +472,33 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 TBeatHit& CPlayer::GetMostRecentKeyPress()
 {	
 	return m_qKeyPresses.front();
+}
+
+void CPlayer::PlayAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Play();
+}
+void CPlayer::StopAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Stop();
+}
+void CPlayer::ResetAnimation()
+{
+	m_vecAnimations[m_nCurrAnim]->Reset();
+}
+
+void CPlayer::SetCurrAnimation(string szAnimName )
+{
+	std::vector<CAnimation*>::size_type i;
+	for(i = 0; i < m_vecAnimations.size(); ++i)
+	{
+		if( m_vecAnimations[i]->GetName() == szAnimName )
+		{
+			m_nCurrAnim = i;
+			m_vecAnimations[m_nCurrAnim]->Reset();
+			break;
+		}
+	}
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

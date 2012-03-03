@@ -105,10 +105,10 @@ void CBeat::Render()
 		{
 			// Drawing player1 notes if not already hit
 			if(!GetPlayer1Hit())
-				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY());
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY(),0.5f,0.5f);
 			// Drawing player2 notes if not already hit
 			if(!GetPlayer2Hit())
-				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400,GetPosY());
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400,GetPosY(),0.5f,0.5f);
 		}
 
 	// Drawing when player hits note
