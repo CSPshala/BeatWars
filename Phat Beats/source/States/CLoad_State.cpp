@@ -76,12 +76,14 @@ bool CLoad_State::Input(void)
 			break;
 		case LOADMENU_SLOTTWO:
 			{
-				m_nLoadFlag = true;				
+				m_nLoadFlag = true;			
+				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 			}
 			break;
 		case LOADMENU_SLOTTHREE:
 			{
-				m_nLoadFlag = true;				
+				m_nLoadFlag = true;		
+				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 			}
 			break;
 

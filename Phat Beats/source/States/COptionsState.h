@@ -9,7 +9,8 @@
 #include "../Managers/CAiManager.h"
 
 // JC - I cleaned up the enum a bit because stuff like lives isn't needed for now.
-enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_AILEVEL, OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED, OPTIONSMENU_EXIT, OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
+enum {OPTIONSMENU_SFXVOL, OPTIONSMENU_MUSICVOL, OPTIONSMENU_PAN, OPTIONSMENU_AILEVEL,
+	OPTIONSMENU_DIFFICULTY, OPTIONSMENU_WINDOWED,OPTIONSMENU_GAME, NUM_OPTIONSMENU_OPTIONS}; //OPTIONSMENU_LIVES,};
 class COptionsState : public IGameState
 {
 	private:
@@ -18,14 +19,18 @@ class COptionsState : public IGameState
 
 	int m_nSFX;
 	int m_nBGM;
-	
-	
+
+	int	  m_nAiLevel;
+
+	int   m_nBackgroundID;
+	int	  m_nGameImageID;
+	int   m_nOptionsID;
+
 	float m_nFXVolume;
 	float m_nMusicVolume;
 	float m_nMusicPan;
-	int	  m_nLives;
 	BeatDifficulty m_eDifficulty;  // Sets difficulty
-	int	  m_nAiLevel;
+	
 
 	COptionsState( void );
 	COptionsState( const COptionsState& );
