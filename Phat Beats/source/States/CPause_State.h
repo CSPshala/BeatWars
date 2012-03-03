@@ -21,7 +21,7 @@ using std::string;
 
 // Forward Declarations
 class CBitmapFont;
-enum {PAUSEMENU_RESET, PAUSEMENU_EXIT, PAUSEMENU_MAINMENU, PAUSEMENU_LOAD, PAUSEMENU_SAVE,
+enum {/*PAUSEMENU_RESET, */PAUSEMENU_EXIT, PAUSEMENU_MAINMENU, PAUSEMENU_LOAD, PAUSEMENU_SAVE,
 		 PAUSEMENU_OPTIONSTATE, NUM_PAUSEMENU_OPTIONS};
 class CPause_State : public IGameState
 {
@@ -33,7 +33,8 @@ public:
 	void Exit(void); // Leaves the Game State
 
 	static CPause_State* GetInstance();	
-
+	bool GetPauseState() {return m_IsbGameState;}
+	void SetPauseState(bool IsbGameState) {m_IsbGameState = IsbGameState;}
 private:
 	// Proper singleton
 	CPause_State(const CPause_State&);
@@ -57,6 +58,11 @@ private:
 	int m_nTitleID;
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
+	int m_nGameImageID;
+	int m_nPauseID;
+
+	// bool for knowing what state
+	bool m_IsbGameState;
 	
 };
 

@@ -63,8 +63,9 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	int m_nSlotNumber;
+	int m_nGameImageID;
+	int m_nSaveID;
 
-	
 	
 };
 
