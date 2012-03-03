@@ -17,6 +17,7 @@
 #include "CLoad_State.h"
 #include "CSave_State.h"
 #include "../../CLevelManager.h"
+#include "CLU_State.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -86,62 +87,91 @@ void CGameplay_State::Enter(void)
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
 		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+ /*
 
-	//	rLeftHandle.left = 20;
-	//	rLeftHandle.top = 10;
-	//	rLeftHandle.right = 67;
-	//	rLeftHandle.bottom = 27;
+		rLeftHandle.left = 20;
+		rLeftHandle.top = 10;
+		rLeftHandle.right = 67;
+		rLeftHandle.bottom = 27;
 
-	//	rRightHandle.left = 445;
-	//	rRightHandle.top = 12;
-	//	rRightHandle.right = 492;
-	//	rRightHandle.bottom = 23;
+		rRightHandle.left = 445;
+		rRightHandle.top = 12;
+		rRightHandle.right = 492;
+		rRightHandle.bottom = 23;
 
-	//	rLeftSaber.left = 20;
-	//	rLeftSaber.top = 349;
-	//	rLeftSaber.right = 227;
-	//	rLeftSaber.bottom = 381;
+		rLeftSaber.left = 20;
+		rLeftSaber.top = 349;
+		rLeftSaber.right = 227;
+		rLeftSaber.bottom = 381;
 
-	//	rRightSaber.left = 257;
-	//	rRightSaber.top = 348;
-	//	rRightSaber.right = 466;
-	//	rRightSaber.bottom = 382;
+		rRightSaber.left = 257;
+		rRightSaber.top = 348;
+		rRightSaber.right = 466;
+		rRightSaber.bottom = 382;
 
-	//	rRightPowerUpBar.left = 303;
-	//	rRightPowerUpBar.top = 107;
-	//	rRightPowerUpBar.right = 495;
-	//	rRightPowerUpBar.bottom = 141;
+		rRightPowerUpBar.left = 303;
+		rRightPowerUpBar.top = 107;
+		rRightPowerUpBar.right = 495;
+		rRightPowerUpBar.bottom = 141;
 
-	//	rLeftPowerUpBar.left = 22;
-	//	rLeftPowerUpBar.top = 107;
-	//	rLeftPowerUpBar.right = 214;
-	//	rLeftPowerUpBar.bottom = 140;
+		rLeftPowerUpBar.left = 22;
+		rLeftPowerUpBar.top = 107;
+		rLeftPowerUpBar.right = 214;
+		rLeftPowerUpBar.bottom = 140;
 
 
-	//	m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-	//	m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-	//	m_Player1->SetAnimationsIsEmpty(false);
-	//	m_Player2->SetAnimationsIsEmpty(false);
-	//	
-	//	BeatManager->Play("cantina");
-	//	m_bCheckAnimations = true;
-	//}
-	//else
-	//{
-	//	if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-	//	{
-	//		BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
-	//	}
-	//	else
-	//		BeatManager->Play("cantina");
+		m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player1->SetAnimationsIsEmpty(false);
+		m_Player2->SetAnimationsIsEmpty(false);
+		
+		BeatManager->Play("cantina");
+		m_bCheckAnimations = true;
+	}
+	else
+	{
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
 
-	//}
+	}
 
-	//m_bGameOver = false;
+	m_bGameOver = false;
+
+ */
 #pragma endregion
 	if(!GetPreviouslyPlaying()) {
 		//CBeatManager::GetInstance()->LoadSong("cantina.xml");
-		CLevelManager::GetInstance()->QueueSong("cantina");
+		/*
+		if(CLoad_State::GetInstance()->GetLoadFlag() == true)
+				{			
+					for (auto i = 0u; i < CLevelManager::GetInstance()->GetQueueString()->size(); ++i)
+					{
+						CLevelManager::GetInstance()->GetQueueString()->pop();
+					}
+					/ *
+					if (CSGD_FModManager::GetInstance()->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()));
+								{
+									CBeatManager::GetInstance()->UnloadSongs();
+								}* /
+					
+					CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+					CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+				}
+				else*/
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
+			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+		}
+		else
+			CLevelManager::GetInstance()->QueueSong("cantina");
+
 		//CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");

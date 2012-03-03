@@ -12,6 +12,7 @@
 #include "CGameplay_State.h"
 #include "../CGame.h"
 #include "../Managers/CBeatManager.h"
+#include "CLU_State.h"
 CLoad_State::CLoad_State()
 {
 	CBitmapFont* m_bMenu_Font = NULL;
@@ -114,19 +115,19 @@ void CLoad_State::Render(void)
 	{
 	case LOADMENU_SLOTONE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTONE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTONE * 40) );			
 		}
 		break;
 
 	case LOADMENU_SLOTTWO:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTWO * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTWO * 40) );			
 		}
 		break;
 
 	case LOADMENU_SLOTTHREE:
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTHREE * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 75, 140 + (LOADMENU_SLOTTHREE * 40) );			
 		}
 		break;
 
@@ -158,6 +159,7 @@ string CLoad_State::loadGame()
 			inFile>>m_szSongFileName;
 			inFile>>m_szSongName;
 			SetSongName(m_szSongName);
+			SetFileName(m_szSongFileName);
 		}
 		inFile.close();
 	}
