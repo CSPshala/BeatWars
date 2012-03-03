@@ -53,7 +53,7 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	// Init singletons:
 	m_pD3D->InitDirect3D(hWnd,nScreenWidth,nScreenHeight,bIsWindowed,false);
 	m_pTM->InitTextureManager(m_pD3D->GetDirect3DDevice(),m_pD3D->GetSprite());
-	m_pDI->InitDirectInput(hWnd,hInstance, DI_KEYBOARD| DI_MOUSE);
+	m_pDI->InitDirectInput(hWnd,hInstance, DI_KEYBOARD| DI_MOUSE | DI_JOYSTICKS);
 	m_pFM->InitFModManager(hWnd);
 
 	

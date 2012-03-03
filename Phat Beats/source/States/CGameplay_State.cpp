@@ -26,6 +26,10 @@ CGameplay_State::CGameplay_State()
 	// Start off defaulted in tutorial mode (make it so player can skip later)
 //	SetIsTutorial(true);
 
+	m_SongTransitionAlpha = 255;
+
+	m_bStartTransition = true;
+	
 	m_bPreviouslyPlaying = false;
 }
 
@@ -166,7 +170,7 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
 			BeatManager->Play("cantina");
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
@@ -262,6 +266,17 @@ void CGameplay_State::Update(void)
 
 #pragma endregion
 	CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+	if (m_bStartTransition)
+	{
+		m_SongTransitionAlpha -= 0.25f;
+		if (m_SongTransitionAlpha <= 1)
+		{
+			m_bStartTransition = false;
+			m_SongTransitionAlpha = 255;
+		}
+	}
+
+	
 }
 void CGameplay_State::Render(void)
 {
@@ -312,6 +327,18 @@ void CGameplay_State::Render(void)
 	//}
 #pragma endregion
 	CLevelManager::GetInstance()->Render();
+	//	if (dickhead == false)
+	//	{
+	//		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
+	//	}
+
+
+
+		if (m_bStartTransition)
+		{
+			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
+
+		}
 }
 
 void CGameplay_State::Exit(void)
@@ -357,4 +384,10 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 	}
 }
 
+void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
+{
+	int ImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/blackscreen.png");
+
+	CSGD_TextureManager::GetInstance()->Draw(ImageID, 0, 0, 1.0f, 1.0f, 0, 800, 600, 0, argbColor);
+}
 
