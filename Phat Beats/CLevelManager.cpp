@@ -87,7 +87,7 @@ const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	FxMan->QueueParticle("BACKGROUND");
 	BeatMan->Play(m_vSongs.front());
-	GetPlayer(PlayerOne)->SetCurrentHP(10);
+	GetPlayer(PlayerOne)->SetCurrentHP(100);
 }
 const void CLevelManager::LeaveLevel(void) {
 	FxMan->DequeueParticle("BACKGROUND");
