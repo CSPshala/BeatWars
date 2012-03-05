@@ -43,7 +43,7 @@ void CSave_State::Enter(void)
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nSaveID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/save.png");
 	m_nGameImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
-	m_nSaveImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/phatbeatsscreen1.png");
+	m_nSaveImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/phatbeatsscreen2.png");
 	
 	
 }
@@ -129,29 +129,45 @@ void CSave_State::Render(void)
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
-	RECT gSaveImage = {0,0,100,100};
+	RECT gSaveImage = {0,0,225,125};
 	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTONE)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,350,250,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,200,1.0f,1.0f,&gSaveImage);
+		CBitmapFont::GetInstance()->SetScale(1.5f);
+		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect("level one\n\nslot two\n\nslot three",
+			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+	}
+	else
+	{
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\nslot two\n\nslot three",
 			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+
 	}
-	else if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTWO)
+	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTWO)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,350,250,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,250,1.0f,1.0f,&gSaveImage);
+		CBitmapFont::GetInstance()->SetScale(1.5f);
+		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\nlevel two\n\nslot three",
+			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+	}
+	else
+	{
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
 			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+
 	}
-	else if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTHREE)
+	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTHREE)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,350,250,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,295,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
-		CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\n\n\nlevel three",
 			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	}
 	else
