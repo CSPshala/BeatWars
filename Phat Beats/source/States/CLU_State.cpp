@@ -7,6 +7,7 @@
 #include "../CGame.h"
 #include "../../CLevelManager.h"
 #include "CBitmapFont.h"
+#include "CGameplay_State.h"
 #include <sstream>
 
 // Proper singleton
@@ -112,10 +113,18 @@ void CLU_State::Update(void)
 
 			// TODO : Complete Animation
 			if(m_bAnimComplete)
-				CGame::GetInstance()->ChangeState(m_pNewState);
+			{
+				m_fGameTransitionAlpha += (175 * CGame::GetInstance()->GetTimer().GetDeltaTime());
+				if (m_fGameTransitionAlpha >= 255)
+				{
+					CGame::GetInstance()->ChangeState(m_pNewState);
+					m_fGameTransitionAlpha = 1;
+				}				
+			}
 		}
 		break;
 	};
+
 }
 void CLU_State::Render(void)
 {
@@ -130,6 +139,10 @@ void CLU_State::Render(void)
 		Dots << '.';
 
 	CBitmapFont::GetInstance()->PrintStrokedText(Dots.str(), 10, 10, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	if (m_bAnimComplete)
+	{
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));
+	}
 }
 void CLU_State::Exit(void)
 {

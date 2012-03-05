@@ -25,6 +25,7 @@ using namespace std;
 // Forward Declarations
 class CBitmapFont;
 enum {SAVEMENU_SLOTONE, SAVEMENU_SLOTTWO, SAVEMENU_SLOTTHREE, NUM_SAVEMENU_OPTIONS};
+static bool m_IsbSaveImage;
 class CSave_State : public IGameState
 {
 public:
@@ -33,7 +34,8 @@ public:
 	void Update(void); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State
-	
+	bool GetImageSave() {return m_IsbSaveImage;}
+	void SetImageSave(bool IsbImageSave) {m_IsbSaveImage = IsbImageSave;}
 	static CSave_State* GetInstance();	
 	void saveGame();
 private:
@@ -63,8 +65,13 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	int m_nSlotNumber;
+	int m_nGameImageID;
+	int m_nSaveID;
+	int m_nSaveImageID;
 
+	// bool variable for image save
 	
+
 	
 };
 

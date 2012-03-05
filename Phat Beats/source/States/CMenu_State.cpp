@@ -46,9 +46,9 @@ void CMenu_State::Enter(void)
 bool CMenu_State::Input(void)
 {
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
 		return false;
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP) )
 	{
 		m_nMenuSelection -= 1;
 		if( m_nMenuSelection == -1 )
@@ -58,7 +58,7 @@ bool CMenu_State::Input(void)
 
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN) )
 	{
 		m_nMenuSelection += 1;
 
@@ -68,7 +68,7 @@ bool CMenu_State::Input(void)
 		}
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) )
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) )
 	{
 		switch( m_nMenuSelection )
 		{
@@ -117,6 +117,7 @@ bool CMenu_State::Input(void)
 
 void CMenu_State::Update(void)
 {
+
 }
 
 void CMenu_State::Render(void)
@@ -198,12 +199,12 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
 	// Loading Effects
-	CLU->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-	CLU->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-	CLU->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-	CLU->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-	CLU->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-	CLU->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 
 	// Loading up BeatManager specific stuff
 	CLU->QueueLoadCommand("cantina.xml","",Song);

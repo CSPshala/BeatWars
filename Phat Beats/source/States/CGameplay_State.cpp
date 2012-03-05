@@ -17,6 +17,7 @@
 #include "CLoad_State.h"
 #include "CSave_State.h"
 #include "../../CLevelManager.h"
+#include "CLU_State.h"
 
 bool CGameplay_State::dickhead = false;
 CGameplay_State::CGameplay_State()
@@ -26,6 +27,10 @@ CGameplay_State::CGameplay_State()
 	// Start off defaulted in tutorial mode (make it so player can skip later)
 //	SetIsTutorial(true);
 
+	m_SongTransitionAlpha = 255;
+
+	m_bStartTransition = true;
+	
 	m_bPreviouslyPlaying = false;
 }
 
@@ -86,62 +91,91 @@ void CGameplay_State::Enter(void)
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
 		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+ /*
 
-	//	rLeftHandle.left = 20;
-	//	rLeftHandle.top = 10;
-	//	rLeftHandle.right = 67;
-	//	rLeftHandle.bottom = 27;
+		rLeftHandle.left = 20;
+		rLeftHandle.top = 10;
+		rLeftHandle.right = 67;
+		rLeftHandle.bottom = 27;
 
-	//	rRightHandle.left = 445;
-	//	rRightHandle.top = 12;
-	//	rRightHandle.right = 492;
-	//	rRightHandle.bottom = 23;
+		rRightHandle.left = 445;
+		rRightHandle.top = 12;
+		rRightHandle.right = 492;
+		rRightHandle.bottom = 23;
 
-	//	rLeftSaber.left = 20;
-	//	rLeftSaber.top = 349;
-	//	rLeftSaber.right = 227;
-	//	rLeftSaber.bottom = 381;
+		rLeftSaber.left = 20;
+		rLeftSaber.top = 349;
+		rLeftSaber.right = 227;
+		rLeftSaber.bottom = 381;
 
-	//	rRightSaber.left = 257;
-	//	rRightSaber.top = 348;
-	//	rRightSaber.right = 466;
-	//	rRightSaber.bottom = 382;
+		rRightSaber.left = 257;
+		rRightSaber.top = 348;
+		rRightSaber.right = 466;
+		rRightSaber.bottom = 382;
 
-	//	rRightPowerUpBar.left = 303;
-	//	rRightPowerUpBar.top = 107;
-	//	rRightPowerUpBar.right = 495;
-	//	rRightPowerUpBar.bottom = 141;
+		rRightPowerUpBar.left = 303;
+		rRightPowerUpBar.top = 107;
+		rRightPowerUpBar.right = 495;
+		rRightPowerUpBar.bottom = 141;
 
-	//	rLeftPowerUpBar.left = 22;
-	//	rLeftPowerUpBar.top = 107;
-	//	rLeftPowerUpBar.right = 214;
-	//	rLeftPowerUpBar.bottom = 140;
+		rLeftPowerUpBar.left = 22;
+		rLeftPowerUpBar.top = 107;
+		rLeftPowerUpBar.right = 214;
+		rLeftPowerUpBar.bottom = 140;
 
 
-	//	m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-	//	m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-	//	m_Player1->SetAnimationsIsEmpty(false);
-	//	m_Player2->SetAnimationsIsEmpty(false);
-	//	
-	//	BeatManager->Play("cantina");
-	//	m_bCheckAnimations = true;
-	//}
-	//else
-	//{
-	//	if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-	//	{
-	//		BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
-	//	}
-	//	else
-	//		BeatManager->Play("cantina");
+		m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
+		m_Player1->SetAnimationsIsEmpty(false);
+		m_Player2->SetAnimationsIsEmpty(false);
+		
+		BeatManager->Play("cantina");
+		m_bCheckAnimations = true;
+	}
+	else
+	{
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
+		}
+		else
+			BeatManager->Play("cantina");
 
-	//}
+	}
 
-	//m_bGameOver = false;
+	m_bGameOver = false;
+
+ */
 #pragma endregion
 	if(!GetPreviouslyPlaying()) {
 		//CBeatManager::GetInstance()->LoadSong("cantina.xml");
-		//CLevelManager::GetInstance()->QueueSong("cantina");
+		/*
+		if(CLoad_State::GetInstance()->GetLoadFlag() == true)
+				{			
+					for (auto i = 0u; i < CLevelManager::GetInstance()->GetQueueString()->size(); ++i)
+					{
+						CLevelManager::GetInstance()->GetQueueString()->pop();
+					}
+					/ *
+					if (CSGD_FModManager::GetInstance()->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()));
+								{
+									CBeatManager::GetInstance()->UnloadSongs();
+								}* /
+					
+					CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+					CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+				}
+				else*/
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
+			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+		}
+		else
+			CLevelManager::GetInstance()->QueueSong("cantina");
+
 		//CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
@@ -166,11 +200,11 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
 			BeatManager->Play("cantina");
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))
 		{
 			m_bPreviouslyPlaying = true;
 			BeatManager->Pause();
-			CSave_State::GetInstance()->saveGame();
+			
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
@@ -181,7 +215,10 @@ bool CGameplay_State::Input(void)
 			m_Player1->SetCurrentHP(100);
 			m_Player2->SetCurrentHP(100);
 		}
-
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
+		{
+			CSave_State::GetInstance()->saveGame();
+		}
 		if( m_bCheckAnimations) 
 		{
 
@@ -257,13 +294,20 @@ void CGameplay_State::Update(void)
 	//	// Updating beatmanager (handles current streak counting and player dmg)
 	//	BeatManager->Update();
 
-	//	if(m_Player1->GetCurrentHP() <= 0 || m_Player2->GetCurrentHP() <= 0)
-	//		m_bGameOver = true;
-	//}
 #pragma endregion
 	CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
-}
+	if (m_bStartTransition)
+	{
+		m_SongTransitionAlpha -= 0.25f;
+		if (m_SongTransitionAlpha <= 1)
+		{
+			m_bStartTransition = false;
+			m_SongTransitionAlpha = 255;
+		}
+	}
 
+	
+}
 void CGameplay_State::Render(void)
 {
 #pragma region OLD
@@ -313,6 +357,18 @@ void CGameplay_State::Render(void)
 	//}
 #pragma endregion
 	CLevelManager::GetInstance()->Render();
+	//	if (dickhead == false)
+	//	{
+	//		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
+	//	}
+
+
+
+		if (m_bStartTransition)
+		{
+			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
+
+		}
 }
 
 void CGameplay_State::Exit(void)
@@ -356,4 +412,10 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 	}
 }
 
+void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
+{
+	int ImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/blackscreen.png");
+
+	CSGD_TextureManager::GetInstance()->Draw(ImageID, 0, 0, 1.0f, 1.0f, 0, 800, 600, 0, argbColor);
+}
 

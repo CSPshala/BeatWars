@@ -50,6 +50,10 @@ class CLevelManager
 	int m_nTitleID;
 	int m_nHudID;
 
+	// Offset for Hud
+	int m_nRightOffset;
+	int m_nLeftOffset;
+
 	// Asset Data
 	RECT rectLeftHandle;
 	RECT rectRightHandle;
@@ -89,6 +93,9 @@ public:
 	const void Update(const float fElapsedTime);
 	const void Render(void);
 	const void Exit(void);
+
+	// Accessors
+	queue<string>* GetQueueString() {return &m_vSongs;}
 };
 
 #endif
