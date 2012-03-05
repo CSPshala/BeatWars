@@ -5,6 +5,7 @@
 #include "../Managers/CBeatManager.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
+#include "../../CLevelManager.h"
 #include "CBitmapFont.h"
 #include <sstream>
 
@@ -33,6 +34,7 @@ void CLU_State::Enter(void)
 	m_fAlive = 0.0f;
 	m_fDotTick = 0.0f;
 	m_cNumDots = 0;
+	CurrentState = Loading;
 }
 bool CLU_State::Input(void)
 {

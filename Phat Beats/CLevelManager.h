@@ -79,6 +79,10 @@ public:
 	CPlayer* GetPlayer(const PlayerIndex eIndex);
 	const void EnterLevel(void);
 	const void LeaveLevel(void);
+	const void EmptySongQueue(void) {
+		for(queue<string>::size_type i = 0; i < m_vSongs.size(); ++i)
+			m_vSongs.pop();
+	}
 
 	// Logic Methods
 	const void HandleLevelInput(void);

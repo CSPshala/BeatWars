@@ -141,7 +141,7 @@ void CGameplay_State::Enter(void)
 #pragma endregion
 	if(!GetPreviouslyPlaying()) {
 		//CBeatManager::GetInstance()->LoadSong("cantina.xml");
-		CLevelManager::GetInstance()->QueueSong("cantina");
+		//CLevelManager::GetInstance()->QueueSong("cantina");
 		//CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
@@ -353,8 +353,6 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 	case MSG_TEST:
 		dickhead = true;
 		break;
-
-
 	}
 }
 

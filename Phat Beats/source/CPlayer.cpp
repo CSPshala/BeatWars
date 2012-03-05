@@ -154,11 +154,6 @@ void CPlayer::Render()
 	{
 		CSGD_Direct3D::GetInstance()->DrawTextA("This is a test of the Ai hit",200,24,255,0,0);
 	}
-
-
-
-
-
 }
 
 RECT CPlayer::GetCollisionRect()

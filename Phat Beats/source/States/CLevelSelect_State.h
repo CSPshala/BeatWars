@@ -43,22 +43,23 @@ private:
 	//		Constructor
 	CLevelSelect_State();
 
+	const void LoadLevels(void);
+
+	struct LevelData {
+		string szMenuName;
+		string szFile;
+		string szSongName;
+		int szImage;
+	};
+
+	vector<LevelData*>& GetLevelData() {return m_vLevelData;}
+	vector<int>& GetPlaylist() {return m_vPlaylist;}
 
 	//*****MEMBERS*******//
-	vector<string> m_vMenu;
-	CBitmapFont* m_bMenu_Font;
-	int m_nMenuSelection;
-
-		// Asset IDs
-	int m_nBackgroundID;
-	int m_nCursorImageID;
-	int m_nFontID;
-	int m_nTitleID;
-	int m_nBackSoundID;
-	int m_nCursorSoundID;
-	
-	//Song for the current level
-	CSong* currentLevel;
+	vector<LevelData*> m_vLevelData;
+	vector<int> m_vPlaylist;
+	int nBgID;
+	char Selected;
 };
 
 #endif
