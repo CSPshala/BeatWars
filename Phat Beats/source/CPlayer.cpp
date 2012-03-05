@@ -366,59 +366,26 @@ void CPlayer::AIHandling()
 	
 	// checking the random difficult
 	// that returns a bool to set the hit to true or false
-	if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
-	{
-		m_IbwriteShit = true;	
-		CFXManager::GetInstance()->QueueParticle("P2_HIT");
-	}
-	else
-	{
-		m_IbwriteShit = false;				
-	}
+
 
 	for (iter = AiSong->GetActiveBeatList().begin(); iter != AiSong->GetActiveBeatList().end(); ++iter)
 	{
-
-		if ((*iter)->GetDirection() == LEFT && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
-			SetAimingDirection(LEFT);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection()  == UP && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
-			SetAimingDirection(UP);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection()  == RIGHT && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
-			SetAimingDirection(RIGHT);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection()  == LEFTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
+		if ((*iter)->GetDirection() == LEFT && (*iter)->GetHasCollided() == true)
+			SetAimingDirection(LEFT);		
+		if ((*iter)->GetDirection()  == UP && (*iter)->GetHasCollided() == true)
+			SetAimingDirection(UP);		
+		if ((*iter)->GetDirection()  == RIGHT && (*iter)->GetHasCollided() == true)
+			SetAimingDirection(RIGHT);		
+		if ((*iter)->GetDirection()  == LEFTUP && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(LEFTUP);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection() == RIGHTUP && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
+		if ((*iter)->GetDirection() == RIGHTUP && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(RIGHTUP);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection() == DOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
+		if ((*iter)->GetDirection() == DOWN && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(DOWN);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection() == LEFTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
+		if ((*iter)->GetDirection() == LEFTDOWN && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(LEFTDOWN);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
-		if ((*iter)->GetDirection() == RIGHTDOWN && (*iter)->GetHasCollided() == m_IbwriteShit)
-		{
+		if ((*iter)->GetDirection() == RIGHTDOWN && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(RIGHTDOWN);
-			(*iter)->SetPlayer2Hit(m_IbwriteShit);
-		}
 	}
 	
 }

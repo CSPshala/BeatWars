@@ -91,6 +91,7 @@ const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	FxMan->QueueParticle("BACKGROUND");
 	BeatMan->Play(m_vSongs.front());
+	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 	GetPlayer(PlayerOne)->SetCurrentHP(100);
 }
 const void CLevelManager::LeaveLevel(void) {
