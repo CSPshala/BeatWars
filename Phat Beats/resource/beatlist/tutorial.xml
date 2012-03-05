@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Song file="jeditheme.mp3" name="jeditheme" duration="365531">
+  <icons wkey="SkullNote.png" akey="ImpNote.png" skey="SunNote.png" dkey="RepNote.png" />
+  <Beat timeofbeat="8615" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="11910" direction="up" key="w" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="15710" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="19000" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="22700" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="26300" direction="up" key="w" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="29700" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="32694" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="36590" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+  <Beat timeofbeat="39690" direction="up" key="w" difficulty="easy" width="32" height="32" beatis="0" event="tutorialpause" />
+</Song>

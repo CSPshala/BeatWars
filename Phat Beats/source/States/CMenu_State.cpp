@@ -196,6 +196,9 @@ void CMenu_State::LoadGameplayStateAssets()
 	// Using defines from JCMacros.h
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
+	// Setting GameplayState to tutorial mode
+	CGameplay_State::GetInstance()->SetIsTutorial(true);
+
 	// Loading Effects
 	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
 	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
@@ -205,7 +208,7 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 
 	// Loading up BeatManager specific stuff
-	CLU->QueueLoadCommand("cantina.xml","",Song);
+	CLU->QueueLoadCommand("tutorial.xml","",Song);
 
 	GAME->ChangeState(CLU_State::GetInstance());
 }

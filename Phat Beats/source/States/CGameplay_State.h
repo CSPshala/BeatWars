@@ -21,6 +21,13 @@
 
 // Classes
 #include "../CPlayer.h"
+#include "CBitmapFont.h"
+
+// STL
+#include <vector>
+#include <string>
+using std::vector;
+using std::string;
 
 // Forward Declarations
 class Bitmap_Font;
@@ -40,6 +47,10 @@ public:
 	bool GetPreviouslyPlaying() {return m_bPreviouslyPlaying;}
 	void SetPreviouslyPlaying(bool prevplay) {m_bPreviouslyPlaying = prevplay;}
 	void DrawARGB(string filename, DWORD argbColor);
+
+	// Public Accessors
+	void		SetIsTutorial(bool bSet) {m_bTutorial = bSet;}
+
 private:
 	// Proper singleton
 	CGameplay_State(const CGameplay_State&);
@@ -59,16 +70,24 @@ private:
 	CBeatManager* BeatManager;
 	CAnimationManager AnimationManager;
 
-	static bool dickhead;
+	// Tutorial specific bool (used for pausing and displaying text)
+	bool m_bTutorial;
+	// Tutorial string counter
+	int m_nTutorialTextIndex;
+	// Vector containing tutorial strings
+	vector<string> m_vTutorialText;
+	// ID for tutorial box background
+	int m_nTutorialBoxID;
+	
 
 	//*************PRIVATE UTILITY FUNCTIONS****************//
 	void DrawTutorialText();
 
 	//*************PRIVATE ACCESSORS************************//
-//	bool		GetIsTutorial() {return m_bTutorial;}
+	bool		GetIsTutorial() {return m_bTutorial;}
 
 	//*************PRIVATE MUTATORS*************************//
-//	void		SetIsTutorial(bool bSet) {m_bTutorial = bSet;}
+	
 
 
 	
