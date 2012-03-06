@@ -198,17 +198,20 @@ void CGameplay_State::Enter(void)
 		if(GetIsTutorial())
 		{
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nPress esc at any time to skip tutorial");
-			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it");
-			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it");
-			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it");
-			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key with the beat to hit it");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nPress esc during any text box to exit.");
+			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
+			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
+			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
+			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key with the beat to hit it.");
 			m_vTutorialText.push_back("Next things are about to get hard.\nPress an arrow key (or numpad key)\nto aim at a note.\nHit the right key to hit it.");
-			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss!");
-			m_vTutorialText.push_back("Next up is health.  Hit 5 notes in a row.");
-			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");
+			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
+			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
+			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
+			m_vTutorialText.push_back("See that blue glow on your lightsaber at the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
+			m_vTutorialText.push_back("Press spacebar to change to attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
+			m_vTutorialText.push_back("Try to empty your opponent's life bar\nas much as possible. Whoever has the most\ntakedowns at the end of the song wins.");
 			m_vTutorialText.push_back("Now, finish the song or\nbeat your opponent by hitting notes.\nDon't worry your opponent is easy for now.");
-
+			
 			m_nTutorialBoxID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/tutorialbox.png");			
 		}
 
@@ -298,16 +301,17 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) 
-	{
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
-	}
-
+	
 	// Stopping regular play input when tutorial note is thrown
 	// (because we are in a tutorial and it's waiting for player to read something
 	if(!GetIsTutorial())
 	{
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) 
+		{
+			CLevelManager::GetInstance()->LeaveLevel();
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
+
 		CLevelManager::GetInstance()->HandleLevelInput();
 	}
 	else
@@ -321,6 +325,9 @@ bool CGameplay_State::Input(void)
 			// Unpausing song
 			BeatManager->Pause();
 		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+			CLevelManager::GetInstance()->SkipLevel();
 	}
 
 	return true;

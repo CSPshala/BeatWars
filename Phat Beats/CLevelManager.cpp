@@ -97,6 +97,20 @@ const void CLevelManager::LeaveLevel(void) {
 	ObjMan->RemoveObject(GetPlayer(PlayerOne));
 	ObjMan->RemoveObject(GetPlayer(PlayerTwo));
 }
+const void CLevelManager::SkipLevel(void)
+{
+	// Stopping currently playing song
+	BeatMan->Stop();
+	
+	// Popping off the song queue
+	m_vSongs.pop();
+
+	// Playing (if something to play), else exit
+	if(!m_vSongs.empty())	
+		BeatMan->Play(m_vSongs.front());
+	else
+		SetState(Exiting);
+}
 
 // Logic Methods
 const void CLevelManager::HandleLevelInput(void) {

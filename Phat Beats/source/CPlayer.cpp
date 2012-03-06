@@ -49,7 +49,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetAimingDirection(UP);	
 
 	// Putting player in attack mode
-	SetAttackMode(true);
+	SetAttackMode(false);
 
 	switch(m_nType)
 	{
