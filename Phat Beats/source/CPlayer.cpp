@@ -21,6 +21,7 @@
 #include "Managers\CEvent.h"
 #include "Managers\CEventSystem.h"
 #include "Managers\CFXManager.h"
+#include "Managers\CAnimationManager.h"
 #include "States\COptionsState.h"
 ////////////////////////////////////////
 //				MISC
@@ -50,7 +51,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	// Putting player in attack mode
 	SetAttackMode(true);
-
+	m_vecAnimations.clear();
+	
 	switch(m_nType)
 	{
 	case OBJ_PLAYER1:
@@ -84,6 +86,9 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 CPlayer::~CPlayer()
 {		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
+	
+	CAnimationManager AM;
+	AM.UnloadAnimations(m_vecAnimations);
 }
 
 ////////////////////////////////////////
@@ -134,12 +139,12 @@ void CPlayer::Render()
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(200,200,-1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(500,200,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(595,500,1.0);
 
 	}
 
@@ -461,6 +466,11 @@ void CPlayer::SetCurrAnimation(string szAnimName )
 			break;
 		}
 	}
+}
+
+void CPlayer::SetSingleAnimation(CAnimation* pAnim)
+{
+	m_vecAnimations.push_back(pAnim);
 }
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS

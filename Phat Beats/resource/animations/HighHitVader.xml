@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\sprites_vader_004.png" Name="High Hit">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="349" Width="171" AnchorX="45" AnchorY="337" FrameX="0" FrameY="0" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="348" Width="205" AnchorX="53" AnchorY="337" FrameX="178" FrameY="1" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="345" Width="202" AnchorX="50" AnchorY="334" FrameX="392" FrameY="4" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="347" Width="203" AnchorX="50" AnchorY="336" FrameX="603" FrameY="2" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="359" Width="386" AnchorX="299" AnchorY="351" FrameX="0" FrameY="358" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="279" Width="413" AnchorX="313" AnchorY="263" FrameX="392" FrameY="437" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="268" Width="307" AnchorX="246" AnchorY="249" FrameX="9" FrameY="724" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="260" Width="286" AnchorX="225" AnchorY="242" FrameX="325" FrameY="731" Duration="0.2"/>
+  </Animation>
+</Animations>
+
