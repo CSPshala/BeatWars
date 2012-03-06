@@ -55,6 +55,8 @@ class CLevelManager
 	// Offset for Hud
 	int m_nRightOffset;
 	int m_nLeftOffset;
+	int p2PrevHP;
+	int p1PrevHP;
 
 	// Asset Data
 	RECT rectLeftHandle;

@@ -569,7 +569,8 @@ void CBeatManager::EvaluatePlayerCombos()
 		{
 			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
-
+		SetP1CurrentCombo(0);
+		SetP2CurrentCombo(0);
 		SetNotesPassed(0);
 	}
 }
