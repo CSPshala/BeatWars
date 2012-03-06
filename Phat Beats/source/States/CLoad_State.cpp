@@ -171,16 +171,8 @@ void CLoad_State::Render(void)
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
 			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 
-	}
+	}	
 
-	
-	/*
-	CBitmapFont::GetInstance()->SetScale(1.5f);
-	RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("slot one\n\nslot two\n\nslot three",
-	&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
-	*/
-		
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	switch(m_nMenuSelection)
 	{

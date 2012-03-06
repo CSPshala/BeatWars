@@ -12,6 +12,7 @@
 #include "CGameplay_State.h"
 #include "COptionsState.h"
 #include "CPause_State.h"
+#include "CLevelSelect_State.h"
 
 CSave_State::CSave_State()
 {

@@ -25,7 +25,7 @@ using namespace std;
 // Forward Declarations
 class CBitmapFont;
 enum {SAVEMENU_SLOTONE, SAVEMENU_SLOTTWO, SAVEMENU_SLOTTHREE, NUM_SAVEMENU_OPTIONS};
-static bool m_IsbSaveImage;
+
 class CSave_State : public IGameState
 {
 public:
@@ -70,7 +70,7 @@ private:
 	int m_nSaveImageID;
 
 	// bool variable for image save
-	
+	bool m_IsbSaveImage;
 
 	
 };
