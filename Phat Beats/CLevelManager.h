@@ -34,6 +34,9 @@ class CLevelManager
 	// Data Members
 	std::vector<CPlayer*>	m_vPlayers;
 	queue<string>			m_vSongs;
+	float					m_fGameTransitionAlpha;
+	float					m_SongTransitionAlpha;
+	bool					m_bStartTransition;
 
 	// Easy Access
 	CBeatManager*			BeatMan;

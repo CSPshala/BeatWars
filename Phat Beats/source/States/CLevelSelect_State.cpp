@@ -34,10 +34,10 @@ void CLevelSelect_State::Enter(void) {
 }
 
 bool CLevelSelect_State::Input(void) {
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP)) {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0)) {
 		if(Selected != 0) {
 			if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
 				CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
@@ -45,7 +45,7 @@ bool CLevelSelect_State::Input(void) {
 			CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
 		}
 	}
-	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN)) {
+	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN)) {
 		if((unsigned)Selected < GetLevelData().size() - 1) {
 			if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
 				CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
@@ -54,7 +54,7 @@ bool CLevelSelect_State::Input(void) {
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0)) {
 		if(GetPlaylist().size() < 6) {
 			std::vector<int>::iterator i = GetPlaylist().begin();
 			bool bSafe = true;
@@ -70,7 +70,7 @@ bool CLevelSelect_State::Input(void) {
 				GetPlaylist().push_back((int)Selected);
 		}
 	}
-	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R)) {
+	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0)) {
 		std::vector<int>::iterator i = GetPlaylist().begin();
 
 		for(; i != GetPlaylist().end(); ++i) {
@@ -81,28 +81,30 @@ bool CLevelSelect_State::Input(void) {
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN)) {
-		CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
-		CLevelManager::GetInstance()->EmptySongQueue();
-		CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0)) {
+		if(GetPlaylist().size() > 0) {
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+			CLevelManager::GetInstance()->EmptySongQueue();
+			CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
 
-		for(std::vector<int>::size_type i = 0; i < GetPlaylist().size(); ++i) {
-			CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[i]]->szFile, "", Song);
-			CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[i]]->szSongName);
+			for(std::vector<int>::size_type i = 0; i < GetPlaylist().size(); ++i) {
+				CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[i]]->szFile, "", Song);
+				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[i]]->szSongName);
+			}
+
+			CFXManager::GetInstance()->UnloadAllFX();
+			CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+
+			CBeatManager::GetInstance()->Stop();
+			CBeatManager::GetInstance()->UnloadSongs();
+
+			CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 		}
-
-		CFXManager::GetInstance()->UnloadAllFX();
-		CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
-
-		CBeatManager::GetInstance()->Stop();
-		CBeatManager::GetInstance()->UnloadSongs();
-
-		CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 	}
 
 	return true;

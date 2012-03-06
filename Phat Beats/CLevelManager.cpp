@@ -27,13 +27,16 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
 	PlayerList().push_back(new CPlayer(OBJ_AI));
+	m_SongTransitionAlpha = 255;
+	m_bStartTransition = true;
+	
 
 	//Player 1 Animations
 	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
 	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
 	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
-	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
-	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLuke.xml","sprites_luke_004.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLuke.xml","sprites_luke_005.png"));
 	//Player 2 Animations
 	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
 	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
@@ -173,6 +176,7 @@ const void CLevelManager::HandlePlayingInput(void) {
 }
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) {
+
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
 
 		GetPlayer(PlayerOne)->SetCurrentHP(100);
@@ -209,12 +213,24 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 	BeatMan->Update();
 
 	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID())) {
-		m_vSongs.pop();
-		SetState(Pausing);
+		m_fGameTransitionAlpha += (175 * fElapsedTime);
+		BeatMan->Stop();
+		if (m_fGameTransitionAlpha >= 255)
+		{
+			m_vSongs.pop();
+			SetState(Pausing);
+			m_fGameTransitionAlpha = 1;
+		}	
 	}
 	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) {
-		m_vSongs.pop();
-		SetState(Pausing);
+		m_fGameTransitionAlpha += (175 * fElapsedTime);
+		BeatMan->Stop();
+		if (m_fGameTransitionAlpha >= 255)
+		{
+			m_vSongs.pop();
+			SetState(Pausing);
+			m_fGameTransitionAlpha = 1;
+		}
 	}
 
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
@@ -259,6 +275,16 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 }
 const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
 
+	if (m_bStartTransition)
+	{
+		m_SongTransitionAlpha -= 0.25f;
+		if (m_SongTransitionAlpha <= 1)
+		{
+			m_bStartTransition = false;
+			m_SongTransitionAlpha = 255;
+		}
+	}
+
 }
 const void CLevelManager::Render(void){
 	switch(GetState()) {
@@ -297,6 +323,17 @@ const void CLevelManager::RenderPlayingState(void) {
 	// Player 2
 	_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
 	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+
+	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()))
+	{
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));
+	}
+	else if ( GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0)
+	{
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));		
+	}
+
+
 }
 const void CLevelManager::RenderPausingState(void) {
 	static RECT rectLayout = {0, 0, 800, 600};
@@ -306,10 +343,29 @@ const void CLevelManager::RenderPausingState(void) {
 	pauseText << "round over\nnext song: ";
 
 	m_vSongs.empty() ? pauseText << "none\n" : pauseText << m_vSongs.front() << '\n';
-	pauseText << "press return to continue...";
+	pauseText << "press return to continue..." << "\n\n";
+	if (GetPlayer(PlayerOne)->GetCurrentHP() > GetPlayer(PlayerTwo)->GetCurrentHP())
+	{
+		pauseText << "Player1 Wins" << '\n';
+		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
+		pauseText << "Current Combo: " << GetPlayer(PlayerOne)->GetCurrentStreak() << '\n';
+	}
+	
+	if (GetPlayer(PlayerOne)->GetCurrentHP() < GetPlayer(PlayerTwo)->GetCurrentHP())
+	{
+		pauseText << "Player2 Wins" << '\n';
+		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
+		pauseText << "Current Combo: " << GetPlayer(PlayerTwo)->GetCurrentStreak() << '\n';
+	}
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	CBitmapFont::GetInstance()->PrintInRect(pauseText.str(), &rectLayout, 2, D3DCOLOR_XRGB(230, 230, 55));
+
+	if (m_bStartTransition)
+	{
+		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
+
+	}
 }
 const void CLevelManager::Exit(void) {
 	queue<string>::size_type i = 0;

@@ -145,12 +145,12 @@ void CPlayer::Render()
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(250,500,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(590,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(615,500,1.0);
 
 	}
 
@@ -226,25 +226,25 @@ void CPlayer::HandleEvent( CEvent* pEvent )
 ////////////////////////////////////////
 void CPlayer::P1InputHandling()
 {
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_UP))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIK_LEFT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIK_LEFT))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_UP))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIK_RIGHT) && DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIK_RIGHT))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIK_UP))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 0))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIK_DOWN))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
 		SetAimingDirection(DOWN);
 
 	// Checking for Stance change
-	if(DI->KeyPressed(DIK_SPACE))
+	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(4, 0))
 	{
  		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -271,22 +271,22 @@ void CPlayer::P1InputHandling()
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
 
-		if(DI->KeyPressed(DIK_W) || DI->JoystickGetLStickDirPressed(0))
+		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 0))
 		{		
 			cHitKey = 'w';
 			//m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
-		else if(DI->KeyPressed(DIK_A) || DI->JoystickGetLStickDirPressed(1))
+		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 0))
 		{
 			cHitKey = 'a';
 			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickGetLStickDirPressed(2))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 0))
 		{
 			cHitKey = 's';
 			//m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
-		else if(DI->KeyPressed(DIK_D) || DI->JoystickGetLStickDirPressed(3))
+		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 0))
 		{
 			cHitKey = 'd';
 			//m_qKeyPresses.push(TBeatHit('d',nTime));
@@ -299,25 +299,25 @@ void CPlayer::P1InputHandling()
 void CPlayer::P2InputHandling()
 {
 	// Don't ever have p2 input running same time as P1.  Control schemes are the same
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_UP))
+	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
 		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetRStickDirDown(DIK_LEFT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
 		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetRStickDirDown(DIK_LEFT))
+	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1))
 		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetRStickDirDown(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_UP))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
 		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetRStickDirPressed(DIK_RIGHT) && DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
 		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetRStickDirDown(DIK_RIGHT))
+	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1))
 		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetRStickDirDown(DIK_UP))
+	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 1))
 		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetRStickDirDown(DIK_DOWN))
+	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
 		SetAimingDirection(DOWN);
 	
 	// Checking for Stance change
-	if(DI->KeyDown(DIK_SPACE))
+	if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(4, 1))
 	{
 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -344,22 +344,22 @@ void CPlayer::P2InputHandling()
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
 
-		if(DI->KeyPressed(DIK_W) || DI->JoystickGetRStickDirPressed(0))
+		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 1))
 		{		
 			cHitKey = 'w';
 			//m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
-		else if(DI->KeyPressed(DIK_A) || DI->JoystickGetRStickDirPressed(1))
+		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 1))
 		{
 			cHitKey = 'a';
 			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickGetRStickDirPressed(2))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 1))
 		{
 			cHitKey = 's';
 			//m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
-		else if(DI->KeyPressed(DIK_D) || DI->JoystickGetRStickDirPressed(3))
+		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 1))
 		{
 			cHitKey = 'd';
 			//m_qKeyPresses.push(TBeatHit('d',nTime));

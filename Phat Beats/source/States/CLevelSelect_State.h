@@ -24,14 +24,6 @@ class Bitmap_Font;
 class CSong;
 class CLevelSelect_State : public IGameState
 {
-public:
-	void Enter(void); // Enters the Game State
-	bool Input(void); // Input
-	void Update(void); // Update
-	void Render(void); // Draw
-	void Exit(void); // Leaves the Game State
-
-	static CLevelSelect_State* GetInstance();	
 
 private:
 	// Proper singleton
@@ -53,7 +45,7 @@ private:
 		int nSoundSample;
 	};
 
-	vector<LevelData*>& GetLevelData() {return m_vLevelData;}
+	
 	vector<int>& GetPlaylist() {return m_vPlaylist;}
 
 	//*****MEMBERS*******//
@@ -61,6 +53,16 @@ private:
 	vector<int> m_vPlaylist;
 	int nBgID;
 	char Selected;
+public:
+	void Enter(void); // Enters the Game State
+	bool Input(void); // Input
+	void Update(void); // Update
+	void Render(void); // Draw
+	void Exit(void); // Leaves the Game State
+
+	static CLevelSelect_State* GetInstance();	
+	vector<LevelData*>& GetLevelData() {return m_vLevelData;}
+
 };
 
 #endif

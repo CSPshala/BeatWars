@@ -54,6 +54,7 @@ public:
 		list<CBeat*>&	GetActiveBeatList() {return m_vActiveBeats;}
 		vector<CBeat*>& GetHittableBeatList() {return m_vHittableBeats;}
 		string			GetSongName() {return m_szName;}
+		string			GetCurrentFileName() {return m_szFileName;}
 		unsigned int				GetCurrentSongTime() {return m_nCurrentSongTime;}
 		int				GetSongDuration() {return m_nSongDuration;}
 		int				GetSongID()	{return m_nSoundID;}
@@ -80,6 +81,7 @@ public:
 		void			SetCurrentBeatIndex(int nBeat) {m_nCurrentBeat = nBeat;}
 		void			SetNextBeatIndex(int nBeat) {m_nNextBeat = nBeat;}
 		void			SetCurrentlyPlayingSong(bool bPlay) {m_bAmIPlaying = bPlay;}
+		void			SetCurrentPlayingSongFileName(string szFileName) {m_szFileName = szFileName;}
 
 protected:
 		int m_nType;
@@ -95,7 +97,7 @@ private:
 		int				m_nSongDuration;
 		int				m_nCurrentBeat;
 		int				m_nNextBeat;
-
+		string			m_szFileName;
 		// Is this the current song that is playing?
 		bool			m_bAmIPlaying;
 

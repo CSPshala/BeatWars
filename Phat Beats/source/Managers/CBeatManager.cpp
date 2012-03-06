@@ -63,7 +63,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
 	szPath += szFileName;
-	SetFileName(szFileName);
+	theSong->SetCurrentPlayingSongFileName(szFileName);
 	if(doc.LoadFile(szPath.c_str()) == false)
 		return false;
 
@@ -488,7 +488,8 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							CFXManager::GetInstance()->QueueParticle("P1_HIT");
 
 							// Upping Player1's Current combo for damage
-							SetP1CurrentCombo(GetP1CurrentCombo() + 1);							
+							SetP1CurrentCombo(GetP1CurrentCombo() + 1);
+							SetNumberNotesHit(GetNumberNotesHit() + 1);
 						}						
 
 					}
@@ -604,14 +605,15 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
-			playerToDmg->SetCurrAnimation("High Hit");
-			//damageDealer->SetCurrAnimation("High Hit");
+			playerToDmg->SetCurrAnimation("High Block");
+			damageDealer->SetCurrAnimation("High Hit");
+
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
-			playerToDmg->SetCurrAnimation("High Block");
-			damageDealer->SetCurrAnimation("High Block");
+			playerToDmg->SetCurrAnimation("Low Block");
+			damageDealer->SetCurrAnimation("Low Hit");
 		}
 	}
 	else
@@ -619,14 +621,14 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
-			playerToDmg->SetCurrAnimation("Low Hit");
-			//damageDealer->SetCurrAnimation("Low Hit");
+			playerToDmg->SetCurrAnimation("High Block");
+			damageDealer->SetCurrAnimation("High Hit");
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
 			playerToDmg->SetCurrAnimation("Low Block");
-			damageDealer->SetCurrAnimation("Low Block");
+			damageDealer->SetCurrAnimation("Low Hit");
 		}
 	}
 }
