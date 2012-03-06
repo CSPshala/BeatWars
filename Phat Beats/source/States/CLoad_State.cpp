@@ -118,7 +118,7 @@ void CLoad_State::Render(void)
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
 	
-	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
+	//CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	 Draw everything now that is queued up
 	/*
 	CBitmapFont::GetInstance()->SetScale(3.5f);
 		RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};

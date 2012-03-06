@@ -41,131 +41,18 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
-#pragma region OLD
-	//BeatManager = CBeatManager::GetInstance();
 
-	//BeatManager->LoadSong("cantina.xml");
-	////BeatManager->LoadSong("noteeventtest.xml");
-	//CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
-	// m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
-	//m_nHudID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bag_HUD.png");
-
-	//if (m_bPreviouslyPlaying == false)
-	//{
-	//	BeatManager = CBeatManager::GetInstance();	
-	//	if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-	//	{
-	//		BeatManager->LoadSong(CLoad_State::GetInstance()->loadGame());
-	//	}
-	//	else
-	//		BeatManager->LoadSong("cantina.xml");	
-
-	//	//BeatManager->LoadSong("noteeventtest.xml");
-	//	CMessageSystem::GetInstance()->InitMessageSystem(CGameplay_State::MessageProc);
-
-	//	CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
-	//	CFXManager::GetInstance()->QueueParticle("BACKGROUND");
-	//	CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
-	//	CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
-
-	//	// Setting up Players
-	//	m_Player1 = new CPlayer(OBJ_PLAYER1);
-	//	m_Player2 = new CPlayer(OBJ_AI);
-	//	// Adding players to Object Manager
-	//	CObjectManager::GetInstance()->AddObject(m_Player1);
-	//	CObjectManager::GetInstance()->AddObject(m_Player2);
-	//	
-	//	if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-	//	{
-	//		BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
-	//	}
-	//	else
-	//		BeatManager->Play("cantina");
-	//	
-		// Moving Effects to their propper position
-	//	CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)m_Player1->GetCollisionRect().left, (float)m_Player1->GetCollisionRect().top));
-	//	CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)m_Player2->GetCollisionRect().left, (float)m_Player2->GetCollisionRect().top));
+	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
 
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
 		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
- /*
+ 
 
-		rLeftHandle.left = 20;
-		rLeftHandle.top = 10;
-		rLeftHandle.right = 67;
-		rLeftHandle.bottom = 27;
-
-		rRightHandle.left = 445;
-		rRightHandle.top = 12;
-		rRightHandle.right = 492;
-		rRightHandle.bottom = 23;
-
-		rLeftSaber.left = 20;
-		rLeftSaber.top = 349;
-		rLeftSaber.right = 227;
-		rLeftSaber.bottom = 381;
-
-		rRightSaber.left = 257;
-		rRightSaber.top = 348;
-		rRightSaber.right = 466;
-		rRightSaber.bottom = 382;
-
-		rRightPowerUpBar.left = 303;
-		rRightPowerUpBar.top = 107;
-		rRightPowerUpBar.right = 495;
-		rRightPowerUpBar.bottom = 141;
-
-		rLeftPowerUpBar.left = 22;
-		rLeftPowerUpBar.top = 107;
-		rLeftPowerUpBar.right = 214;
-		rLeftPowerUpBar.bottom = 140;
-
-
-		m_Player1->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-		m_Player2->SetAnimations( AnimationManager.LoadAnimation("NewAnim.xml","nxc_bat_heihachi.PNG") );
-		m_Player1->SetAnimationsIsEmpty(false);
-		m_Player2->SetAnimationsIsEmpty(false);
-		
-		BeatManager->Play("cantina");
-		m_bCheckAnimations = true;
-	}
-	else
-	{
-		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-		{
-			BeatManager->Play(CLoad_State::GetInstance()->GetSongName());
-		}
-		else
-			BeatManager->Play("cantina");
-
-	}
-
-	m_bGameOver = false;
-
- */
-#pragma endregion
 	if(!GetPreviouslyPlaying()) {
-		//CBeatManager::GetInstance()->LoadSong("cantina.xml");
-		/*
-		if(CLoad_State::GetInstance()->GetLoadFlag() == true)
-				{			
-					for (auto i = 0u; i < CLevelManager::GetInstance()->GetQueueString()->size(); ++i)
-					{
-						CLevelManager::GetInstance()->GetQueueString()->pop();
-					}
-					/ *
-					if (CSGD_FModManager::GetInstance()->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()));
-								{
-									CBeatManager::GetInstance()->UnloadSongs();
-								}* /
-					
-					CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
-					CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
-				}
-				else*/
+		
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
@@ -176,9 +63,7 @@ void CGameplay_State::Enter(void)
 		else
 			CLevelManager::GetInstance()->QueueSong("cantina");
 
-		//CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
-		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
-		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P2_HIT");
+		
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
