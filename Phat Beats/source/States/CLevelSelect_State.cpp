@@ -82,27 +82,29 @@ bool CLevelSelect_State::Input(void) {
 	}
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN)) {
-		CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
-		CLevelManager::GetInstance()->EmptySongQueue();
-		CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+		if(GetPlaylist().size() > 0) {
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+			CLevelManager::GetInstance()->EmptySongQueue();
+			CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
 
-		for(std::vector<int>::size_type i = 0; i < GetPlaylist().size(); ++i) {
-			CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[i]]->szFile, "", Song);
-			CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[i]]->szSongName);
+			for(std::vector<int>::size_type i = 0; i < GetPlaylist().size(); ++i) {
+				CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[i]]->szFile, "", Song);
+				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[i]]->szSongName);
+			}
+
+			CFXManager::GetInstance()->UnloadAllFX();
+			CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+
+			CBeatManager::GetInstance()->Stop();
+			CBeatManager::GetInstance()->UnloadSongs();
+
+			CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 		}
-
-		CFXManager::GetInstance()->UnloadAllFX();
-		CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-		CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
-
-		CBeatManager::GetInstance()->Stop();
-		CBeatManager::GetInstance()->UnloadSongs();
-
-		CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 	}
 
 	return true;
