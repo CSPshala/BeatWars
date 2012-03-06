@@ -466,14 +466,14 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 
 void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
-	if(aPlayer->GetPlayerHitQueue().size() > 0 && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
+	if(aPlayer->GetMostRecentKeyPress() != 'g' && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
 		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
 		{			
 			// Here we're looking at the current hittable beat, checking if the player is aiming at it,
 			// and if they hit the correct key or not
 			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
-				&& aPlayer->GetMostRecentKeyPress().cHitNote == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
+				&& aPlayer->GetMostRecentKeyPress() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
 			{			
 				switch(aPlayer->GetType())
 				{
@@ -513,17 +513,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 				case OBJ_AI:
 					{
-						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
-						{
-							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer2Hit(true);
-							// Player hit the note, handling all relevant info.
-							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-							CFXManager::GetInstance()->QueueParticle("P2_HIT");
-							
-							// Upping Player2's Current combo for damage
-							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
-						}
+						
 						
 					}
 					break;
@@ -542,7 +532,38 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 		}
 
 		// Clearing last keypress
-			aPlayer->GetPlayerHitQueue().pop();
+			//aPlayer->GetPlayerHitQueue().pop();
+	}
+
+	if(aPlayer->GetType() == OBJ_AI)
+	{
+		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
+		{  
+			bool found = false;
+
+			// Checking AI beat list to make sure we haven't hit it before
+			for(unsigned int x = 0; x < aPlayer->GetAIBeats().size(); ++x)
+			{
+				if((aPlayer->GetAIBeats())[x] == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i])
+					found = true;
+			}
+
+				if(!found)
+					if((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
+					{				 
+						// AI hit the note, handling all relevant info.
+						aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+						aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+						CFXManager::GetInstance()->QueueParticle("P2_HIT");
+							
+						// Upping Player2's Current combo for damage
+						SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+
+						(aPlayer->GetAIBeats()).push_back((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]);
+					}			
+					else
+						aPlayer->SetCurrentStreak(0);
+		}
 	}
 
 }

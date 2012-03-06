@@ -144,7 +144,7 @@ const void CLevelManager::SkipLevel(void)
 	m_vSongs.pop();
 
 	// Playing (if something to play), else exit
-	if(!m_vSongs.empty())	
+	if(!m_vSongs.empty())
 		SetState(Pausing);
 	else
 		SetState(Exiting);
@@ -169,6 +169,7 @@ const void CLevelManager::HandleLevelInput(void) {
 }
 const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerOne));
+	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) {

@@ -102,6 +102,8 @@ void CGameplay_State::Enter(void)
 			m_nTutorialBoxID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/tutorialbox.png");			
 		}
 
+		m_nTutorialTextIndex = 0;
+
 	}	
 	
 	CLevelManager::GetInstance()->EnterLevel();
@@ -126,13 +128,15 @@ bool CGameplay_State::Input(void)
 	// (because we are in a tutorial and it's waiting for player to read something
 	if(!GetIsTutorial())
 	{
+		CLevelManager::GetInstance()->HandleLevelInput();
+
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) 
 		{
 			CLevelManager::GetInstance()->LeaveLevel();
+			CLevelManager::GetInstance()->EmptySongQueue();
 			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 		}
-
-		CLevelManager::GetInstance()->HandleLevelInput();
+	
 	}
 	else
 	{

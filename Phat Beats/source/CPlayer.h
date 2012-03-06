@@ -66,9 +66,9 @@ public:
 	BeatDifficulty		GetPlayerDifficulty() {return m_eDifficulty;}
 	float				GetCurrentRotation() {return m_fRotation;}
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
-	vector<CBeat*>		GetAIBeats() {return m_vAIBeats;}
+	vector<CBeat*>&		GetAIBeats() {return m_vAIBeats;}
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
-	TBeatHit&			GetMostRecentKeyPress();
+	char			GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
 	bool				GetAttackMode() {return m_bAttackMode;}
 	float				GetAttackModeTimer() {return m_fAttackModeTimer;}
@@ -128,11 +128,14 @@ private:
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
 
-		// AI handling stuff
+		// AI check for already hit beats
 		vector<CBeat*> m_vAIBeats;
 		
 		// Player hit vector
 		queue<TBeatHit> m_qKeyPresses;
+
+		// Player hit key
+		char cHitKey;
 
 		// Asset IDs
 			// Images
