@@ -74,74 +74,7 @@ void CGameplay_State::Enter(void)
 
 bool CGameplay_State::Input(void)
 {
-#pragma region OLD
-/*
-	if(!BeatManager->IsPaused())
-	{
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
-			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
-
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_O))
-			BeatManager->Play("cantina");
-
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))
-		{
-			m_bPreviouslyPlaying = true;
-			BeatManager->Pause();
-			
-			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-		}
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R))
-		{
-			BeatManager->Reset();
-			m_bGameOver = false;
-
-			m_Player1->SetCurrentHP(100);
-			m_Player2->SetCurrentHP(100);
-		}
-		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
-		{
-			CSave_State::GetInstance()->saveGame();
-		}
-		if( m_bCheckAnimations) 
-		{
-
-			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B) )
-			{
-				m_Player1->SetCurrAnimation("Idle");
-				m_Player1->PlayAnimation();
-			}
-
-			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_N))
-			{
-				m_Player1->SetCurrAnimation("Attack");
-				m_Player1->PlayAnimation();
-			}
-
-			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_M))
-			{
-				m_Player1->SetCurrAnimation("Block");
-				m_Player1->PlayAnimation();
-			}
-
-			if( m_Player1->GetCurrAnim()->GetPlayedAlready() )
-			{
-				m_Player1->SetCurrAnimation("Idle");
-				m_Player1->PlayAnimation();
-			}
-
-		}
-
-		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_I))
-		{
-
-		}
-
-	}
-
-	return true;*/
-#pragma endregion
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) {
 		SetPreviouslyPlaying(true);
@@ -161,25 +94,6 @@ bool CGameplay_State::Input(void)
 
 void CGameplay_State::Update(void)
 {
-#pragma region OLD
-	//if(!BeatManager->IsPaused() && !m_bGameOver)
-	//{
-	//	// Updating Objects (if beatmanager isn't paused)
-	//	CFXManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
-	//	// Updating song
-	//	CObjectManager::GetInstance()->UpdateObjects(CGame::GetInstance()->GetTimer().GetDeltaTime());	
-	//	// Checking collisions
-	//	CObjectManager::GetInstance()->CheckCollisions(m_Player1);
-	//	CObjectManager::GetInstance()->CheckCollisions(m_Player2);
-
-	//	// Taking care of player input
-	//	BeatManager->CheckPlayerInput(m_Player1);
-	//	//BeatManager->CheckPlayerInput(m_Player2);
-
-	//	// Updating beatmanager (handles current streak counting and player dmg)
-	//	BeatManager->Update();
-
-#pragma endregion
 	CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	if (m_bStartTransition)
 	{
@@ -189,66 +103,12 @@ void CGameplay_State::Update(void)
 			m_bStartTransition = false;
 			m_SongTransitionAlpha = 255;
 		}
-	}
-
-	
+	}	
 }
 void CGameplay_State::Render(void)
 {
-#pragma region OLD
-	//if(m_bGameOver)
-	//{
-	//	CSGD_Direct3D::GetInstance()->DrawText("Game Over", 100, 100, 255, 40, 40);
-	//	if(m_Player1->GetCurrentHP()== 0)
-	//		CSGD_Direct3D::GetInstance()->DrawText("Player 2 Won!", 100, 120, 255, 40, 40);
-	//	else if(m_Player2->GetCurrentHP()== 0)
-	//		CSGD_Direct3D::GetInstance()->DrawText("Player 1 Won!", 100, 120, 255, 40, 40);
-
-	//	CSGD_Direct3D::GetInstance()->DrawText("Press 'R' to Restart or Escape to exit!", 100, 140, 255, 40, 40);
-	//}
-
-	//if(!BeatManager->IsPaused() && !m_bGameOver)
-	//{
-
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,10,1.0,1.0,&rLeftSaber);
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,513,10,1.0,1.0,&rRightSaber);
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,20,17,1.0,1.0,&rLeftHandle);
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,722,21,1.0,1.0,&rRightHandle);
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,59,45,1.0,1.0,&rLeftPowerUpBar);
-	//	CSGD_TextureManager::GetInstance()->Draw(m_nHudID,529,45,1.0,1.0,&rRightPowerUpBar);
-
-
-	//	// Drawing everything before this
-	//	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-	//	CFXManager::GetInstance()->Render();
-
-
-	//	// You know what's up
-	//	CObjectManager::GetInstance()->RenderObjects();
-
-	//	char p1hp[50];
-	//	char p2hp[50];
-				
-	//	_itoa_s(m_Player1->GetCurrentHP(),p1hp,10);
-	//	_itoa_s(m_Player2->GetCurrentHP(),p2hp,10);
-
-	//	CSGD_Direct3D::GetInstance()->DrawText(p1hp,0,0,255,0,0);
-	//	CSGD_Direct3D::GetInstance()->DrawText(p2hp,100,0,255,0,0);
-		
-	//	if (dickhead == false)
-	//	{
-	//		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
-	//	}
-	//}
-#pragma endregion
 	CLevelManager::GetInstance()->Render();
-	//	if (dickhead == false)
-	//	{
-	//		CSGD_Direct3D::GetInstance()->DrawTextA("this is a test",320,340,255,0,0);
-	//	}
-
-
-
+	
 		if (m_bStartTransition)
 		{
 			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
