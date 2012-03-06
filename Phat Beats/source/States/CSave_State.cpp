@@ -89,6 +89,7 @@ bool CSave_State::Input(void)
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
@@ -96,6 +97,8 @@ bool CSave_State::Input(void)
 				m_nSlotNumber = 2;
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
@@ -103,6 +106,8 @@ bool CSave_State::Input(void)
 				m_nSlotNumber = 3;
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 
