@@ -569,7 +569,8 @@ void CBeatManager::EvaluatePlayerCombos()
 		{
 			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
-
+		SetP1CurrentCombo(0);
+		SetP2CurrentCombo(0);
 		SetNotesPassed(0);
 	}
 }
@@ -580,16 +581,32 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 	if(playerToDmg->GetAttackMode())
 	{
 		if(damageDealer->GetAttackMode())
+		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
+			playerToDmg->SetCurrAnimation("High Hit");
+			//damageDealer->SetCurrAnimation("High Hit");
+		}
 		else
+		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
+			playerToDmg->SetCurrAnimation("High Block");
+			damageDealer->SetCurrAnimation("High Block");
+		}
 	}
 	else
 	{
 		if(damageDealer->GetAttackMode())
+		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
+			playerToDmg->SetCurrAnimation("Low Hit");
+			//damageDealer->SetCurrAnimation("Low Hit");
+		}
 		else
+		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
+			playerToDmg->SetCurrAnimation("Low Block");
+			damageDealer->SetCurrAnimation("Low Block");
+		}
 	}
 }
 ////////////////////////////////////////

@@ -64,7 +64,7 @@ private:
 	//*******MEMBERS**********//
 	Bitmap_Font* m_bMenu_Font;
 	bool m_bPreviouslyPlaying;
-	int m_SongTransitionAlpha;
+	float m_SongTransitionAlpha;
 	bool m_bStartTransition;
 	// Managers
 	CBeatManager* BeatManager;

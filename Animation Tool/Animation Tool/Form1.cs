@@ -740,19 +740,19 @@ namespace Animation_Tool
                         XAttribute xCollisionHeight = new XAttribute("CollisionHeight", lAnimations[i].lFrames[j].CollisionHeight);
                         xFrame.Add(xCollisionHeight);
 
-                        if (lAnimations[i].lFrames[j].TriggerEvent.ToString() != "" && lAnimations[i].lFrames[j].TriggerEvent != null)
-                        {
-                            XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
-                            xFrame.Add(xEvent);
-                        }
-                        else
-                        {
-                            string st = "";
-
-                            XAttribute xEvent = new XAttribute("Event", st);
-                            xFrame.Add(xEvent);
-
-                        }
+                        //if (lAnimations[i].lFrames[j].TriggerEvent.ToString() != "" && lAnimations[i].lFrames[j].TriggerEvent != null)
+                        //{
+                        //    XAttribute xEvent = new XAttribute("Event", lAnimations[i].lFrames[j].TriggerEvent);
+                        //    xFrame.Add(xEvent);
+                        //}
+                        //else
+                        //{
+                        //    string st = "";
+                        //
+                        //    XAttribute xEvent = new XAttribute("Event", st);
+                        //    xFrame.Add(xEvent);
+                        //
+                        //}
 
                         //draw height
                         XAttribute xDrawHeight = new XAttribute("Height", lAnimations[i].lFrames[j].DrawHeight);

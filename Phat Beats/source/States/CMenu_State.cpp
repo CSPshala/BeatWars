@@ -216,10 +216,12 @@ void CMenu_State::LoadGameplayStateAssets()
 	// Loading up BeatManager specific stuff
 	CLU->QueueLoadCommand("tutorial.xml","",Song);
 	CLU->QueueLoadCommand("cantina.xml","",Song);
+	CLU->QueueLoadCommand("DueloftheFates.xml","",Song);
 	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
+	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 
 	GAME->ChangeState(CLU_State::GetInstance());
