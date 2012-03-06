@@ -134,9 +134,9 @@ void CSave_State::Render(void)
 	{
 		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,200,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
-		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
-		CBitmapFont::GetInstance()->PrintStrokedTextInRect("level one\n\nslot two\n\nslot three",
-			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect("level one\n\n\n\n",
+			&rMenuOptions, ALIGN_LEFT,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	}
 	else
 	{
@@ -150,9 +150,9 @@ void CSave_State::Render(void)
 	{
 		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,250,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
-		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
-		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\nlevel two\n\nslot three",
-			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\nlevel two\n\n",
+			&rMenuOptions, ALIGN_LEFT,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	}
 	else
 	{
@@ -166,9 +166,9 @@ void CSave_State::Render(void)
 	{
 		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,295,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
-		RECT rMenuOptions = { 15, 250, CGame::GetInstance()->GetScreenWidth(), 450};
+		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\n\n\nlevel three",
-			&rMenuOptions, ALIGN_CENTER,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
+			&rMenuOptions, ALIGN_LEFT,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(225, 225, 225));
 	}
 	else
 	{
