@@ -100,6 +100,7 @@ public:
 	void				SetAttackMode(bool nMode) {m_bAttackMode = nMode;}
 	void				SetAttackModeTimer(float nTime) {m_fAttackModeTimer = nTime;}
 	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
+	void				SetSingleAnimation( CAnimation* pAnim );
 
 
 	
