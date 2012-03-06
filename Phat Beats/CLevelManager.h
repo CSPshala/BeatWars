@@ -9,6 +9,8 @@ using std::queue;
 #include <string>
 using std::string;
 
+#include "source/Managers/CAnimationManager.h"
+
 // Forward Declaration
 class CBeatManager;
 class CFXManager;
@@ -18,7 +20,6 @@ class CSGD_DirectInput;
 class CSGD_FModManager;
 class CSGD_TextureManager;
 class CPlayer;
-
 enum PlayerIndex : char {PlayerOne, PlayerTwo};
 
 class CLevelManager
@@ -42,6 +43,7 @@ class CLevelManager
 	CSGD_DirectInput*		InMan;
 	CSGD_FModManager*		FmMan;
 	CSGD_TextureManager*	TexMan;
+	CAnimationManager		AnMan;
 
 	// Asset IDs
 	int m_nBgID;

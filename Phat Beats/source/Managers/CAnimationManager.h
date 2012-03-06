@@ -21,6 +21,7 @@ class CAnimationManager
 	public:
 	
 		vector<CAnimation*> LoadAnimation(string szFileName, string szImageName);
+		CAnimation*	LoadSingleAnimation(string szFileName, string szImageName);
 		bool UnloadAnimations(vector<CAnimation*> vecAnim);
 			
 		CAnimationManager();

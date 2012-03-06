@@ -9,6 +9,7 @@
 #include "source/CPlayer.h"
 #include "source/States/CLoad_State.h"
 #include "source/States/CBitmapFont.h"
+#include "source/CAnimation.h"
 
 #include <sstream>
 
@@ -26,6 +27,19 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
 	PlayerList().push_back(new CPlayer(OBJ_AI));
+
+	//Player 1 Animations
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	//Player 2 Animations
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 
 
 	// Set Up Assets
@@ -174,7 +188,7 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 
 			float firstcalc = 207 * (p1PrevHP / 100.0f);
 
-			m_nLeftOffset = 207 - firstcalc;
+			m_nLeftOffset = int(207 - firstcalc);
 
 			rectRightSaber.right =  227 - m_nLeftOffset;
 		}
@@ -191,11 +205,27 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 
 			float firstcalc = 209 * (p2PrevHP / 100.0f);
 
-			m_nRightOffset = 209 - firstcalc;
+			m_nRightOffset = int(209 - firstcalc);
 
 			rectRightSaber.left =  257 + m_nRightOffset;
 		}
 	}
+
+	//if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
+	//{
+	//		GetPlayer(PlayerOne)->SetCurrAnimation("Idle");
+	//}
+	
+	if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
+	{
+		GetPlayer(PlayerOne)->SetCurrAnimation("Idle");
+	}
+
+	if( GetPlayer(PlayerTwo)->GetCurrAnim()->GetPlayedAlready() )
+	{
+		GetPlayer(PlayerTwo)->SetCurrAnimation("Idle");
+	}
+
 }
 const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
 
