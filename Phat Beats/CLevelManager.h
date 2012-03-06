@@ -58,6 +58,8 @@ class CLevelManager
 	// Offset for Hud
 	int m_nRightOffset;
 	int m_nLeftOffset;
+	int p2PrevHP;
+	int p1PrevHP;
 
 	// Asset Data
 	RECT rectLeftHandle;
@@ -92,6 +94,8 @@ public:
 		for(queue<string>::size_type i = 0; i < m_vSongs.size(); ++i)
 			m_vSongs.pop();
 	}
+
+	const void SkipLevel(void);
 
 	// Logic Methods
 	const void HandleLevelInput(void);

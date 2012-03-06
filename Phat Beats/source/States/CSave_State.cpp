@@ -59,7 +59,7 @@ bool CSave_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 	{
 		m_nMenuSelection -= 1;
 		if (m_nMenuSelection == -1)
@@ -68,7 +68,7 @@ bool CSave_State::Input(void)
 
 		}
 	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 	{
 		m_nMenuSelection += 1;
 
@@ -89,6 +89,7 @@ bool CSave_State::Input(void)
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 		case SAVEMENU_SLOTTWO:
@@ -96,6 +97,8 @@ bool CSave_State::Input(void)
 				m_nSlotNumber = 2;
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 		case SAVEMENU_SLOTTHREE:
@@ -103,6 +106,8 @@ bool CSave_State::Input(void)
 				m_nSlotNumber = 3;
 				saveGame();
 				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+				m_IsbSaveImage = true;
+				SetImageSave(m_IsbSaveImage);
 			}
 			break;
 

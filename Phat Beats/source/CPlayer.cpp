@@ -50,7 +50,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetAimingDirection(UP);	
 
 	// Putting player in attack mode
-	SetAttackMode(true);
+	SetAttackMode(false);
 	m_vecAnimations.clear();
 	
 	switch(m_nType)
@@ -144,7 +144,7 @@ void CPlayer::Render()
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(595,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(590,500,1.0);
 
 	}
 
@@ -238,7 +238,7 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(DOWN);
 
 	// Checking for Stance change
-	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickGetLStickDirPressed(4, 0))
+	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(4, 0))
 	{
  		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -307,7 +307,7 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(DOWN);
 	
 	// Checking for Stance change
-	if(DI->KeyDown(DIK_SPACE) || DI->JoystickGetRStickDirPressed(4, 1))
+	if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(4, 1))
 	{
 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{

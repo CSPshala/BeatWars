@@ -53,7 +53,7 @@ bool CLoad_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 	{
 		m_nMenuSelection -= 1;
 		if (m_nMenuSelection == -1)
@@ -62,7 +62,7 @@ bool CLoad_State::Input(void)
 
 		}
 	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 	{
 		m_nMenuSelection += 1;
 
@@ -73,7 +73,7 @@ bool CLoad_State::Input(void)
 
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 1) )
+	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 	{
 		switch( m_nMenuSelection )
 		{
@@ -118,7 +118,7 @@ void CLoad_State::Render(void)
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
 	
-	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
+	//CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	 Draw everything now that is queued up
 	/*
 	CBitmapFont::GetInstance()->SetScale(3.5f);
 		RECT rTitle = {0, 40, CGame::GetInstance()->GetScreenWidth(), 80};
