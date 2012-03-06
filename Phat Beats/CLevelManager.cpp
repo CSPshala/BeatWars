@@ -22,13 +22,14 @@ CLevelManager::CLevelManager(void) {
 	InMan	= CSGD_DirectInput::GetInstance();
 	FmMan	= CSGD_FModManager::GetInstance();
 	TexMan	= CSGD_TextureManager::GetInstance();
-	
+
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
 	PlayerList().push_back(new CPlayer(OBJ_AI));
 	m_SongTransitionAlpha = 255;
 	m_bStartTransition = true;
 	
+
 
 	// Set Up Assets
 	m_nBgID		= TexMan->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
@@ -48,6 +49,10 @@ CLevelManager::CLevelManager(void) {
 	rectRightSaber		= rRightSaber;
 	rectLeftPowerBar	= rLeftPowerBar;
 	rectRightPowerBar	= rRightPowerBar;
+
+	// Set up Offsets
+	m_nRightOffset = 0;
+	m_nLeftOffset = 0;
 }
 CLevelManager::~CLevelManager(void) {
 	std::vector<CPlayer*>::iterator i;
@@ -87,12 +92,10 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
-	FxMan->QueueParticle("BACKGROUND");
 	BeatMan->Play(m_vSongs.front());
-	GetPlayer(PlayerOne)->SetCurrentHP(100);
+	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
 const void CLevelManager::LeaveLevel(void) {
-	FxMan->DequeueParticle("BACKGROUND");
 	BeatMan->Pause();
 	ObjMan->RemoveObject(GetPlayer(PlayerOne));
 	ObjMan->RemoveObject(GetPlayer(PlayerTwo));
@@ -122,6 +125,14 @@ const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) {
 
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
+
+		GetPlayer(PlayerOne)->SetCurrentHP(100);
+		GetPlayer(PlayerTwo)->SetCurrentHP(100);
+
+		BeatMan->Stop();
+
+		if(!m_vSongs.empty())
+			BeatMan->Play(m_vSongs.front());
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -168,6 +179,39 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			m_fGameTransitionAlpha = 1;
 		}
 	}
+
+	static int p1PrevHP = 100;
+
+	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
+	{
+		if( GetPlayer(PlayerOne)->GetCurrentHP() < 100 )
+		{
+			p1PrevHP = GetPlayer(PlayerOne)->GetCurrentHP();
+
+			float firstcalc = 207 * (p1PrevHP / 100.0f);
+
+			m_nLeftOffset = 207 - firstcalc;
+
+			rectRightSaber.right =  227 - m_nLeftOffset;
+		}
+	}
+
+	static int p2PrevHP = 100;
+
+	if( GetPlayer(PlayerTwo)->GetCurrentHP() != p2PrevHP )
+	{
+
+		if( GetPlayer(PlayerTwo)->GetCurrentHP() < 100 )
+		{
+			p2PrevHP = GetPlayer(PlayerTwo)->GetCurrentHP();
+
+			float firstcalc = 209 * (p2PrevHP / 100.0f);
+
+			m_nRightOffset = 209 - firstcalc;
+
+			rectRightSaber.left =  257 + m_nRightOffset;
+		}
+	}
 }
 const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
 
@@ -196,7 +240,7 @@ const void CLevelManager::Render(void){
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
 	TexMan->DrawF(m_nHudID, 59.0f, 10.0f, 1.0f, 1.0f, &rectLeftSaber);
-	TexMan->DrawF(m_nHudID, 513.0f, 10.0f, 1.0f, 1.0f, &rectRightSaber);
+	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 10.0f, 1.0f, 1.0f, &rectRightSaber);
 	TexMan->DrawF(m_nHudID, 20.0f, 17.0f, 1.0f, 1.0f, &rectLeftHandle);
 	TexMan->DrawF(m_nHudID, 722.0f, 21.0f, 1.0f, 1.0f, &rectRightHandle);
 	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar);

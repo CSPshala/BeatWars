@@ -53,6 +53,10 @@ class CLevelManager
 	int m_nTitleID;
 	int m_nHudID;
 
+	// Offset for Hud
+	int m_nRightOffset;
+	int m_nLeftOffset;
+
 	// Asset Data
 	RECT rectLeftHandle;
 	RECT rectRightHandle;
@@ -82,12 +86,19 @@ public:
 	CPlayer* GetPlayer(const PlayerIndex eIndex);
 	const void EnterLevel(void);
 	const void LeaveLevel(void);
+	const void EmptySongQueue(void) {
+		for(queue<string>::size_type i = 0; i < m_vSongs.size(); ++i)
+			m_vSongs.pop();
+	}
 
 	// Logic Methods
 	const void HandleLevelInput(void);
 	const void Update(const float fElapsedTime);
 	const void Render(void);
 	const void Exit(void);
+
+	// Accessors
+	queue<string>* GetQueueString() {return &m_vSongs;}
 };
 
 #endif

@@ -25,9 +25,11 @@ CFX::~CFX()
 
 void CFX::Render()
 {
-	std::vector<CEmitter*>::iterator i;
-	for(i = m_listAliveEmitters.begin();i != m_listAliveEmitters.end();++i)
-		(*i)->Render();
+	if(m_listAliveEmitters.size() > 0) {
+		std::vector<CEmitter*>::iterator i;
+		for(i = m_listAliveEmitters.begin();i != m_listAliveEmitters.end();++i)
+			(*i)->Render();
+	}
 }
 void CFX::Update(float fElapsedTime)
 {
