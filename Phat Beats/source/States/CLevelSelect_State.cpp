@@ -29,6 +29,8 @@ void CLevelSelect_State::Enter(void) {
 	LoadLevels();
 	Selected = 0;
 	nBgID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+
+	CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
 }
 
 bool CLevelSelect_State::Input(void) {
@@ -36,12 +38,20 @@ bool CLevelSelect_State::Input(void) {
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP)) {
-		if(Selected != 0)
+		if(Selected != 0) {
+			if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
+				CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
 			--Selected;
+			CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
+		}
 	}
 	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN)) {
-		if((unsigned)Selected < GetLevelData().size() - 1)
+		if((unsigned)Selected < GetLevelData().size() - 1) {
+			if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
+				CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
 			++Selected;
+			CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
+		}
 	}
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) {
@@ -149,8 +159,13 @@ void CLevelSelect_State::Render(void) {
 }
 
 void CLevelSelect_State::Exit(void) {
+
+	if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
+		CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
+
 	std::vector<LevelData*>::size_type i = 0;
 	for(; i < GetLevelData().size(); ++i) {
+		CSGD_FModManager::GetInstance()->UnloadSound(GetLevelData()[i]->nSoundSample);
 		CSGD_TextureManager::GetInstance()->UnloadTexture(GetLevelData()[i]->szImage);
 		delete GetLevelData()[i];
 		GetLevelData()[i] = nullptr;
@@ -158,6 +173,8 @@ void CLevelSelect_State::Exit(void) {
 
 	GetLevelData().clear();
 	CSGD_TextureManager::GetInstance()->UnloadTexture(nBgID);
+
+
 }
 
 CLevelSelect_State* CLevelSelect_State::GetInstance() {
@@ -204,6 +221,10 @@ const void CLevelSelect_State::LoadLevels(void) {
 		stringHelper.str("");
 		stringHelper << "resource/beatlist/preview images/" << buffer << '\0';
 		pNewData->szImage = CSGD_TextureManager::GetInstance()->LoadTexture(stringHelper.str().c_str());
+
+		stringHelper.str("");
+		stringHelper << "resource/beatlist/preview sounds/" << pNewData->szSongName << ".mp3" << '\0';
+		pNewData->nSoundSample = CSGD_FModManager::GetInstance()->LoadSound(stringHelper.str().c_str());
 
 		GetLevelData().push_back(pNewData);
 	}

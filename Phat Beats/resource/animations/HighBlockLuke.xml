@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\sprites_luke_002.png" Name="High Block">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="305" Width="187" AnchorX="168" AnchorY="289" FrameX="6" FrameY="27" Duration="0.2" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="300" Width="213" AnchorX="141" AnchorY="277" FrameX="194" FrameY="31" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="329" Width="267" AnchorX="24" AnchorY="307" FrameX="411" FrameY="5" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="323" Width="272" AnchorX="22" AnchorY="305" FrameX="683" FrameY="7" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="336" Width="265" AnchorX="19" AnchorY="315" FrameX="5" FrameY="338" Duration="0.2" />
+  </Animation>
+</Animations>

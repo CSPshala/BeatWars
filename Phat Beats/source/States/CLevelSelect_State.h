@@ -50,6 +50,7 @@ private:
 		string szFile;
 		string szSongName;
 		int szImage;
+		int nSoundSample;
 	};
 
 	vector<LevelData*>& GetLevelData() {return m_vLevelData;}

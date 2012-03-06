@@ -9,6 +9,7 @@
 #include "source/CPlayer.h"
 #include "source/States/CLoad_State.h"
 #include "source/States/CBitmapFont.h"
+#include "source/CAnimation.h"
 
 #include <sstream>
 
@@ -26,6 +27,19 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
 	PlayerList().push_back(new CPlayer(OBJ_AI));
+
+	//Player 1 Animations
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	//Player 2 Animations
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 
 
 	// Set Up Assets
@@ -50,6 +64,8 @@ CLevelManager::CLevelManager(void) {
 	// Set up Offsets
 	m_nRightOffset = 0;
 	m_nLeftOffset = 0;
+	p1PrevHP = 100;
+	p2PrevHP = 100;
 }
 CLevelManager::~CLevelManager(void) {
 	std::vector<CPlayer*>::iterator i;
@@ -88,7 +104,29 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
+	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
+
+	//GetPlayer(PlayerTwo)->SetAttackMode(false);
+
+	p2PrevHP = 100;
+	p1PrevHP = 100;
+	RECT rLeftHandle = {20, 10, 67, 27};
+	RECT rRightHandle = {445, 12, 492, 23};
+	RECT rLeftSaber = {20, 349, 227, 381};
+	RECT rRightSaber = {257, 348, 466, 382};
+	RECT rLeftPowerBar = {22, 107, 214, 140};
+	RECT rRightPowerBar = {303, 107, 495, 141};
+	rectLeftHandle		= rLeftHandle;
+	rectRightHandle		= rRightHandle;
+	rectLeftSaber		= rLeftSaber;
+	rectRightSaber		= rRightSaber;
+	rectLeftPowerBar	= rLeftPowerBar;
+	rectRightPowerBar	= rRightPowerBar;
+	m_nRightOffset = 0;
+	m_nLeftOffset = 0;
+
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
@@ -164,8 +202,6 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		SetState(Pausing);
 	}
 
-	static int p1PrevHP = 100;
-
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
 	{
 		if( GetPlayer(PlayerOne)->GetCurrentHP() < 100 )
@@ -174,13 +210,11 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 
 			float firstcalc = 207 * (p1PrevHP / 100.0f);
 
-			m_nLeftOffset = 207 - firstcalc;
+			m_nLeftOffset = int(207 - firstcalc);
 
 			rectRightSaber.right =  227 - m_nLeftOffset;
 		}
 	}
-
-	static int p2PrevHP = 100;
 
 	if( GetPlayer(PlayerTwo)->GetCurrentHP() != p2PrevHP )
 	{
@@ -191,11 +225,22 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 
 			float firstcalc = 209 * (p2PrevHP / 100.0f);
 
-			m_nRightOffset = 209 - firstcalc;
+			m_nRightOffset = int(209 - firstcalc);
 
 			rectRightSaber.left =  257 + m_nRightOffset;
 		}
 	}
+		
+	if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
+	{
+		GetPlayer(PlayerOne)->SetCurrAnimation("Idle");
+	}
+
+	if( GetPlayer(PlayerTwo)->GetCurrAnim()->GetPlayedAlready() )
+	{
+		GetPlayer(PlayerTwo)->SetCurrAnimation("Idle");
+	}
+
 }
 const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
 

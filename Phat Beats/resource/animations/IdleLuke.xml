@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="1" File="C:\Users\Ralph\Desktop\sprites_luke_001.png" Name="Idle">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="311" Width="192" AnchorX="173" AnchorY="296" FrameX="0" FrameY="0" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="312" Width="185" AnchorX="166" AnchorY="296" FrameX="195" FrameY="0" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="311" Width="188" AnchorX="169" AnchorY="296" FrameX="380" FrameY="0" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="310" Width="182" AnchorX="162" AnchorY="295" FrameX="574" FrameY="1" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="312" Width="185" AnchorX="164" AnchorY="296" FrameX="758" FrameY="0" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="305" Width="188" AnchorX="168" AnchorY="287" FrameX="1" FrameY="323" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="307" Width="185" AnchorX="166" AnchorY="292" FrameX="190" FrameY="319" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="307" Width="191" AnchorX="169" AnchorY="290" FrameX="375" FrameY="320" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="310" Width="183" AnchorX="164" AnchorY="293" FrameX="568" FrameY="317" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="308" Width="189" AnchorX="169" AnchorY="292" FrameX="753" FrameY="318" Duration="0.1"/>
+  </Animation>
+</Animations>
