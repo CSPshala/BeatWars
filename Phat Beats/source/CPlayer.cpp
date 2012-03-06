@@ -139,12 +139,12 @@ void CPlayer::Render()
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(250,500,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(590,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(615,500,1.0);
 
 	}
 

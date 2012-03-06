@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_luke_004.png" Name="High Hit">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="308" Width="192" AnchorX="107" AnchorY="281" FrameX="0" FrameY="5" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="273" Width="240" AnchorX="121" AnchorY="251" FrameX="194" FrameY="39" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="273" Width="225" AnchorX="107" AnchorY="248" FrameX="435" FrameY="42" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="275" Width="194" AnchorX="76" AnchorY="253" FrameX="660" FrameY="37" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="346" Width="335" AnchorX="31" AnchorY="324" FrameX="1" FrameY="316" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="308" Width="350" AnchorX="26" AnchorY="286" FrameX="340" FrameY="354" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="249" Width="354" AnchorX="31" AnchorY="225" FrameX="1" FrameY="667" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="253" Width="344" AnchorX="31" AnchorY="221" FrameX="349" FrameY="671" Duration="0.2" />
+  </Animation>
+</Animations>
