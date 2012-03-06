@@ -17,6 +17,8 @@
 #include "Managers\CEventSystem.h"
 #include "States\CGameplay_State.h"
 #include "States\COptionsState.h"
+#include "Managers\CAiManager.h"
+#include "..\CLevelManager.h"
 
 ////////////////////////////////////////
 //				MISC
@@ -214,6 +216,9 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 
 		static int numHit = 0;
 
+		if(pPlayer->GetType() == OBJ_AI)
+			int derp = 1;
+
 		for(; i != m_vActiveBeats.end(); ++i)	
 		{
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
@@ -278,6 +283,22 @@ void CSong::Release()
 void CSong::HandleEvent(CEvent* pEvent)
 {
 
+}
+
+void CSong::CreateAIHits()
+{
+	for (int i = 0; i < m_vBeats.size(); ++i)
+	{
+		if (CAiManager::GetInsatance()->RandomDifficult(AI_INSANE) == true)
+		{
+			m_vBeats[i].SetPlayer2Hit(true);			
+		}
+		else
+		{
+			m_vBeats[i].SetPlayer2Hit(false);				
+		}
+	}
+	
 }
 
 ////////////////////////////////////////

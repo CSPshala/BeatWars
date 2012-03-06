@@ -47,6 +47,7 @@ public:
 		void Update(float fElapsedTime);
 		void ResetSong();
 		void HandleEvent(CEvent* pEvent);
+		void CreateAIHits();
 
 	/********** Public Accessors ************/
 		vector<CBeat>&	GetBeatList() {return m_vBeats;}
