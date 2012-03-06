@@ -1620,6 +1620,11 @@ namespace BeatMaker
                         scaleX = 0.5f;
                     if (TEXMAN.GetTextureHeight(KeyW) >= 20)
                         scaleY = 0.5f;
+
+                    if (TEXMAN.GetTextureWidth(KeyW) >= 50)
+                        scaleX = 0.25f;
+                    if (TEXMAN.GetTextureHeight(KeyW) >= 50)
+                        scaleY = 0.25f;
                 }
 
 
@@ -1840,10 +1845,15 @@ namespace BeatMaker
                         listBeats[i].TextureIndex = KeyW;
 
 
-                if (TEXMAN.GetTextureWidth(KeyW) >= 20) 
-                scaleX = 0.5f;
-                if (TEXMAN.GetTextureHeight(KeyW) >= 20) 
-                scaleY = 0.5f;
+                if (TEXMAN.GetTextureWidth(KeyW) >= 20)
+                    scaleX = 0.5f;
+                if (TEXMAN.GetTextureHeight(KeyW) >= 20)
+                    scaleY = 0.5f;
+
+                if (TEXMAN.GetTextureWidth(KeyW) >= 50)
+                    scaleX = 0.25f;
+                if (TEXMAN.GetTextureHeight(KeyW) >= 50)
+                    scaleY = 0.25f;
             }
         }
 
@@ -1873,10 +1883,15 @@ namespace BeatMaker
                     if (listBeats[i].KeyPress == 'a')
                         listBeats[i].TextureIndex = KeyA;
 
-                if (TEXMAN.GetTextureWidth(KeyA) >= 20)
+                if (TEXMAN.GetTextureWidth(KeyW) >= 20)
                     scaleX = 0.5f;
-                if (TEXMAN.GetTextureHeight(KeyA) >= 20)
+                if (TEXMAN.GetTextureHeight(KeyW) >= 20)
                     scaleY = 0.5f;
+
+                if (TEXMAN.GetTextureWidth(KeyW) >= 50)
+                    scaleX = 0.25f;
+                if (TEXMAN.GetTextureHeight(KeyW) >= 50)
+                    scaleY = 0.25f;
             }
         }
 
@@ -1906,10 +1921,15 @@ namespace BeatMaker
                     if (listBeats[i].KeyPress == 's')
                         listBeats[i].TextureIndex = KeyS;
 
-                if (TEXMAN.GetTextureWidth(KeyS) >= 20)
+                if (TEXMAN.GetTextureWidth(KeyW) >= 20)
                     scaleX = 0.5f;
-                if (TEXMAN.GetTextureHeight(KeyS) >= 20)
+                if (TEXMAN.GetTextureHeight(KeyW) >= 20)
                     scaleY = 0.5f;
+
+                if (TEXMAN.GetTextureWidth(KeyW) >= 50)
+                    scaleX = 0.25f;
+                if (TEXMAN.GetTextureHeight(KeyW) >= 50)
+                    scaleY = 0.25f;
             }
         }
 
@@ -1939,10 +1959,15 @@ namespace BeatMaker
                     if(listBeats[i].KeyPress == 'd')
                         listBeats[i].TextureIndex = KeyD;
 
-                if (TEXMAN.GetTextureWidth(KeyD) >= 20)
+                if (TEXMAN.GetTextureWidth(KeyW) >= 20)
                     scaleX = 0.5f;
-                if (TEXMAN.GetTextureHeight(KeyD) >= 20)
+                if (TEXMAN.GetTextureHeight(KeyW) >= 20)
                     scaleY = 0.5f;
+
+                if (TEXMAN.GetTextureWidth(KeyW) >= 50)
+                    scaleX = 0.25f;
+                if (TEXMAN.GetTextureHeight(KeyW) >= 50)
+                    scaleY = 0.25f;
             }
         }
 

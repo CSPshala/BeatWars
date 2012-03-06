@@ -89,12 +89,10 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
-	FxMan->QueueParticle("BACKGROUND");
 	BeatMan->Play(m_vSongs.front());
-	GetPlayer(PlayerOne)->SetCurrentHP(100);
+	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
 const void CLevelManager::LeaveLevel(void) {
-	FxMan->DequeueParticle("BACKGROUND");
 	BeatMan->Pause();
 	ObjMan->RemoveObject(GetPlayer(PlayerOne));
 	ObjMan->RemoveObject(GetPlayer(PlayerTwo));
@@ -123,6 +121,14 @@ const void CLevelManager::HandlePlayingInput(void) {
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) {
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
+
+		GetPlayer(PlayerOne)->SetCurrentHP(100);
+		GetPlayer(PlayerTwo)->SetCurrentHP(100);
+
+		BeatMan->Stop();
+
+		if(!m_vSongs.empty())
+			BeatMan->Play(m_vSongs.front());
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){

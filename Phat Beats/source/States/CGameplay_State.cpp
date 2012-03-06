@@ -409,8 +409,6 @@ void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 	case MSG_TEST:
 		dickhead = true;
 		break;
-
-
 	}
 }
 

@@ -14,6 +14,7 @@
 #include "CLevelSelect_State.h"
 #include "CLU_State.h"
 #include "CLoad_State.h"
+#include "../../CLevelManager.h"
 #include "../JCMacros.h"
 
 CMenu_State::CMenu_State()
@@ -193,6 +194,7 @@ CMenu_State* CMenu_State::GetInstance()
 
 void CMenu_State::LoadGameplayStateAssets()
 {
+	CFXManager::GetInstance()->UnloadAllFX();
 	// Using defines from JCMacros.h
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
@@ -206,6 +208,10 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 	CLU->QueueLoadCommand("cantina.xml","",Song);
+	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
+
+	CLevelManager::GetInstance()->QueueSong("cantina");
+	CLevelManager::GetInstance()->QueueSong("Avicii");
 
 	GAME->ChangeState(CLU_State::GetInstance());
 }
