@@ -194,7 +194,11 @@ CMenu_State* CMenu_State::GetInstance()
 
 void CMenu_State::LoadGameplayStateAssets()
 {
+	// Cleaning crap out (if there's anything)
 	CFXManager::GetInstance()->UnloadAllFX();
+	CLevelManager::GetInstance()->EmptySongQueue();
+	BEATMAN->UnloadSongs();	
+
 	// Using defines from JCMacros.h
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
@@ -211,8 +215,10 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 	CLU->QueueLoadCommand("tutorial.xml","",Song);
+	CLU->QueueLoadCommand("cantina.xml","",Song);
 	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
 
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 

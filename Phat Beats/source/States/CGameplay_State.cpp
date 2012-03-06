@@ -182,8 +182,8 @@ void CGameplay_State::Enter(void)
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
-		else
-			CLevelManager::GetInstance()->QueueSong("jeditheme");
+	/*	else
+			CLevelManager::GetInstance()->QueueSong("jeditheme");*/
 
 		//CFXManager::GetInstance()->LoadFX("GameBG.xml", "BACKGROUND");
 		//CFXManager::GetInstance()->LoadFX("Hit.xml", "P1_HIT");
