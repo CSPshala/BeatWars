@@ -92,6 +92,8 @@ public:
 			m_vSongs.pop();
 	}
 
+	const void SkipLevel(void);
+
 	// Logic Methods
 	const void HandleLevelInput(void);
 	const void Update(const float fElapsedTime);

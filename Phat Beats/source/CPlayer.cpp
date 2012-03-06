@@ -50,7 +50,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetAimingDirection(UP);	
 
 	// Putting player in attack mode
-	SetAttackMode(true);
+	SetAttackMode(false);
 	m_vecAnimations.clear();
 	
 	switch(m_nType)

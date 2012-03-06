@@ -19,7 +19,7 @@
 #include "../../CLevelManager.h"
 #include "CLU_State.h"
 
-bool CGameplay_State::dickhead = false;
+
 CGameplay_State::CGameplay_State()
 {
 	m_bMenu_Font = NULL;
@@ -32,6 +32,14 @@ CGameplay_State::CGameplay_State()
 	m_bStartTransition = true;
 	
 	m_bPreviouslyPlaying = false;
+
+	// Setting tutorial bool (note events will throw this in tutorial track)
+	SetIsTutorial(false);
+
+	// Setting text index
+	m_nTutorialTextIndex = 0;
+	// Setting tut box
+	m_nTutorialBoxID = -1;
 }
 
 CGameplay_State::~CGameplay_State()
@@ -41,14 +49,16 @@ CGameplay_State::~CGameplay_State()
 
 void CGameplay_State::Enter(void)
 {
-
+	BeatManager = CBeatManager::GetInstance();
 	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
+		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
+		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
 
 		// Queueing effects to display		
-		CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-		CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+		CFXManager::GetInstance()->QueueParticle("P1GUARD");
+		CFXManager::GetInstance()->QueueParticle("P2GUARD");
  
 
 	if(!GetPreviouslyPlaying()) {
@@ -60,55 +70,129 @@ void CGameplay_State::Enter(void)
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
-		else
-			CLevelManager::GetInstance()->QueueSong("cantina");
+	/*	else
+			CLevelManager::GetInstance()->QueueSong("jeditheme");*/
 
 		
 
-		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
-		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
-	}
+		
 
+		// Registering events for tutorial
+		CEventSystem::GetInstance()->RegisterClient("tutorialpause",this); // Pauses tutorial so player can read intro text
+
+		if(GetIsTutorial())
+		{
+			// If we're in tutorial, setting tutorial strings for player output
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
+			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
+			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
+			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
+			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key with the beat to hit it.");
+			m_vTutorialText.push_back("Next things are about to get hard.\nPress an arrow key (or numpad key)\nto aim at a note.\nHit the right key to hit it.");
+			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
+			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
+			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
+			m_vTutorialText.push_back("See that blue glow on your lightsaber at the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
+			m_vTutorialText.push_back("Press spacebar to change to attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
+			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad to aim at them.");
+			m_vTutorialText.push_back("Try to empty your opponent's life bar\nas much as possible. Whoever has the most\ntakedowns at the end of the song wins.");
+			m_vTutorialText.push_back("Now, practice by hitting notes\nbeat your opponent up by hitting notes.\nDon't worry your opponent is easy for now.");
+			m_vTutorialText.push_back("Great job.\nNow lets head to your first song.");
+			
+			m_nTutorialBoxID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/tutorialbox.png");			
+		}
+
+	}	
+	
 	CLevelManager::GetInstance()->EnterLevel();
+
+	if(GetIsTutorial())
+		BeatManager->Pause();
 }
 
 bool CGameplay_State::Input(void)
 {
 
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P)) 
+	{
 		SetPreviouslyPlaying(true);
 		CLevelManager::GetInstance()->LeaveLevel();
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) {
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
-	}
+	
+	// Stopping regular play input when tutorial note is thrown
+	// (because we are in a tutorial and it's waiting for player to read something
+	if(!GetIsTutorial())
+	{
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) 
+		{
+			CLevelManager::GetInstance()->LeaveLevel();
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
 
-	CLevelManager::GetInstance()->HandleLevelInput();
+		CLevelManager::GetInstance()->HandleLevelInput();
+	}
+	else
+	{
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+		{
+			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+			{
+				SetIsTutorial(false);
+
+				++m_nTutorialTextIndex;
+
+				// Unpausing song
+				BeatManager->Pause();
+			}
+			else
+			{
+				SetIsTutorial(false);
+				CLevelManager::GetInstance()->SkipLevel();
+			}
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+		{
+			SetIsTutorial(false);
+			CLevelManager::GetInstance()->SkipLevel();
+		}
+	}
 
 	return true;
 }
 
 void CGameplay_State::Update(void)
 {
-	CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
-	if (m_bStartTransition)
+
+	// Skpping update if is tutorial
+	if(!GetIsTutorial())
 	{
-		m_SongTransitionAlpha -= 0.25f;
-		if (m_SongTransitionAlpha <= 1)
+		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+		if (m_bStartTransition)
 		{
-			m_bStartTransition = false;
-			m_SongTransitionAlpha = 255;
+			m_SongTransitionAlpha -= 0.25f;
+			if (m_SongTransitionAlpha <= 1)
+			{
+				m_bStartTransition = false;
+				m_SongTransitionAlpha = 255;
+			}
 		}
-	}	
+	}
+
+
+	
 }
 void CGameplay_State::Render(void)
 {
 	CLevelManager::GetInstance()->Render();
-	
+
+	// Only draws tutorial text if we're in tutorial
+	DrawTutorialText();
+
+
 		if (m_bStartTransition)
 		{
 			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
@@ -132,6 +216,9 @@ void CGameplay_State::Exit(void)
 		CFXManager::GetInstance()->UnloadFX("P2GUARD");
 		CFXManager::GetInstance()->UnloadFX("P1_HIT");
 		CFXManager::GetInstance()->UnloadFX("P2_HIT");
+
+		// Cleaning up tutorial event
+		CEventSystem::GetInstance()->UnregisterClient("tutorialpause",this);
 	}
 }
 
@@ -144,17 +231,16 @@ CGameplay_State* CGameplay_State::GetInstance()
 
 void CGameplay_State::HandleEvent( CEvent* pEvent )
 {
-
+	if(pEvent->GetEventID() == "tutorialpause")
+	{		
+		SetIsTutorial(true);
+		BeatManager->Pause();
+	}
 }
 
 void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 {
-	switch (pMsg->GetMsgID())
-	{
-	case MSG_TEST:
-		dickhead = true;
-		break;
-	}
+	
 }
 
 void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
@@ -162,5 +248,17 @@ void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
 	int ImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/blackscreen.png");
 
 	CSGD_TextureManager::GetInstance()->Draw(ImageID, 0, 0, 1.0f, 1.0f, 0, 800, 600, 0, argbColor);
+}
+
+void CGameplay_State::DrawTutorialText()
+{
+	if(GetIsTutorial())
+	{
+		RECT tRect = {200,400,600,600};
+
+		CSGD_TextureManager::GetInstance()->Draw(m_nTutorialBoxID,90,450,2.5f,0.8f);
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect(m_vTutorialText[m_nTutorialTextIndex],&tRect,
+														2,D3DCOLOR_XRGB(0,0,0),D3DCOLOR_XRGB(255,255,255));
+	}
 }
 

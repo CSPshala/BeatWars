@@ -44,10 +44,7 @@ void CMenu_State::Enter(void)
 }
 
 bool CMenu_State::Input(void)
-{
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6))
-		return false;
+{		
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP) )
 	{
 		m_nMenuSelection -= 1;
@@ -194,9 +191,16 @@ CMenu_State* CMenu_State::GetInstance()
 
 void CMenu_State::LoadGameplayStateAssets()
 {
+	// Cleaning crap out (if there's anything)
 	CFXManager::GetInstance()->UnloadAllFX();
+	CLevelManager::GetInstance()->EmptySongQueue();
+	BEATMAN->UnloadSongs();	
+
 	// Using defines from JCMacros.h
 	CLU->SetNewState(CGameplay_State::GetInstance());
+
+	// Setting GameplayState to tutorial mode
+	CGameplay_State::GetInstance()->SetIsTutorial(true);
 
 	// Loading Effects
 	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
@@ -207,12 +211,12 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 
 	// Loading up BeatManager specific stuff
-	
+	CLU->QueueLoadCommand("tutorial.xml","",Song);
 	CLU->QueueLoadCommand("cantina.xml","",Song);
 	CLU->QueueLoadCommand("DueloftheFates.xml","",Song);
 	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
 
-	
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("Avicii");

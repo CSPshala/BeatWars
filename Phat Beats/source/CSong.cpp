@@ -234,10 +234,10 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 					{
 						m_vHittableBeats.push_back(*i);
 						// Sending note event (only once)
-						CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));							
-					}				
+						CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));
+					}					
+										
 
-									
 					if( numHit > 5 )					
 					{
 						CEventSystem::GetInstance()->SendEvent("comboend");
