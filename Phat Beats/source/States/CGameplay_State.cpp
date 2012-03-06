@@ -114,13 +114,7 @@ void CGameplay_State::Enter(void)
 
 bool CGameplay_State::Input(void)
 {
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
-	{
-		SetPreviouslyPlaying(true);
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-	}
+	
 
 	if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
@@ -135,11 +129,11 @@ bool CGameplay_State::Input(void)
 	{
 		CLevelManager::GetInstance()->HandleLevelInput();
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE)) 
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
 		{
-			CLevelManager::GetInstance()->LeaveLevel();
-			CLevelManager::GetInstance()->EmptySongQueue();
-			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+			SetPreviouslyPlaying(true);
+			CLevelManager::GetInstance()->LeaveLevel();			
+			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 	
 	}
