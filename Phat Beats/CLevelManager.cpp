@@ -313,7 +313,20 @@ const void CLevelManager::RenderPausingState(void) {
 	pauseText << "round over\nnext song: ";
 
 	m_vSongs.empty() ? pauseText << "none\n" : pauseText << m_vSongs.front() << '\n';
-	pauseText << "press return to continue..." << '/n';
+	pauseText << "press return to continue..." << "\n\n";
+	if (GetPlayer(PlayerOne)->GetCurrentHP() > GetPlayer(PlayerTwo)->GetCurrentHP())
+	{
+		pauseText << "Player1 Wins" << '\n';
+		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
+		pauseText << "Current Combo: " << GetPlayer(PlayerOne)->GetCurrentStreak() << '\n';
+	}
+	
+	if (GetPlayer(PlayerOne)->GetCurrentHP() < GetPlayer(PlayerTwo)->GetCurrentHP())
+	{
+		pauseText << "Player2 Wins" << '\n';
+		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
+		pauseText << "Current Combo: " << GetPlayer(PlayerTwo)->GetCurrentStreak() << '\n';
+	}
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	CBitmapFont::GetInstance()->PrintInRect(pauseText.str(), &rectLayout, 2, D3DCOLOR_XRGB(230, 230, 55));

@@ -488,7 +488,8 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 							CFXManager::GetInstance()->QueueParticle("P1_HIT");
 
 							// Upping Player1's Current combo for damage
-							SetP1CurrentCombo(GetP1CurrentCombo() + 1);							
+							SetP1CurrentCombo(GetP1CurrentCombo() + 1);
+							SetNumberNotesHit(GetNumberNotesHit() + 1);
 						}						
 
 					}
