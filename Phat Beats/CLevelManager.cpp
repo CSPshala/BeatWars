@@ -107,7 +107,7 @@ const void CLevelManager::SkipLevel(void)
 
 	// Playing (if something to play), else exit
 	if(!m_vSongs.empty())	
-		BeatMan->Play(m_vSongs.front());
+		SetState(Pausing);
 	else
 		SetState(Exiting);
 }
