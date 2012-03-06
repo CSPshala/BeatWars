@@ -235,6 +235,13 @@ bool CGameplay_State::Input(void)
 		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 	}
 
+	if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+	{
+		SetPreviouslyPlaying(true);
+		CLevelManager::GetInstance()->LeaveLevel();
+		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+	}
+
 	CLevelManager::GetInstance()->HandleLevelInput();
 
 	return true;
@@ -273,9 +280,7 @@ void CGameplay_State::Update(void)
 			m_bStartTransition = false;
 			m_SongTransitionAlpha = 255;
 		}
-	}
-
-	
+	}	
 }
 
 void CGameplay_State::Render(void)
@@ -328,13 +333,10 @@ void CGameplay_State::Render(void)
 #pragma endregion
 	CLevelManager::GetInstance()->Render();
 
-
-
-		if (m_bStartTransition)
-		{
-			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
-
-		}
+	if (m_bStartTransition)
+	{
+		DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
+	}
 }
 
 void CGameplay_State::Exit(void)
