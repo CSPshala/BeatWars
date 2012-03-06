@@ -63,7 +63,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	// Adding path to filename for beat lists
 	string szPath = "resource/beatlist/";
 	szPath += szFileName;
-	SetFileName(szFileName);
+	theSong->SetCurrentPlayingSongFileName(szFileName);
 	if(doc.LoadFile(szPath.c_str()) == false)
 		return false;
 

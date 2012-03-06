@@ -138,7 +138,7 @@ void CSave_State::Render(void)
 	RECT gSaveImage = {0,0,225,125};
 	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTONE)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,200,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,50,160,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("level one\n\n\n\n",
@@ -154,7 +154,7 @@ void CSave_State::Render(void)
 	}
 	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTWO)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,250,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,50,220,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\nlevel two\n\n",
@@ -170,7 +170,7 @@ void CSave_State::Render(void)
 	}
 	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTTHREE)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,300,295,1.0f,1.0f,&gSaveImage);
+		CSGD_TextureManager::GetInstance()->Draw(m_nSaveImageID,50,275,1.0f,1.0f,&gSaveImage);
 		CBitmapFont::GetInstance()->SetScale(1.5f);
 		RECT rMenuOptions = { 25, 295, CGame::GetInstance()->GetScreenWidth()-500, 450};
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect("\n\n\n\nlevel three",
@@ -238,7 +238,7 @@ void CSave_State::saveGame()
 		{
 			outFile<<m_nSlotNumber;
 			outFile<<"\n";
-			outFile<<CBeatManager::GetInstance()->GetFileName()<<"\n";
+			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetCurrentFileName()<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
 		}
 		outFile.close();
