@@ -64,6 +64,8 @@ CLevelManager::CLevelManager(void) {
 	// Set up Offsets
 	m_nRightOffset = 0;
 	m_nLeftOffset = 0;
+	p1PrevHP = 100;
+	p2PrevHP = 100;
 }
 CLevelManager::~CLevelManager(void) {
 	std::vector<CPlayer*>::iterator i;
@@ -102,7 +104,29 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
+	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
+
+	//GetPlayer(PlayerTwo)->SetAttackMode(false);
+
+	p2PrevHP = 100;
+	p1PrevHP = 100;
+	RECT rLeftHandle = {20, 10, 67, 27};
+	RECT rRightHandle = {445, 12, 492, 23};
+	RECT rLeftSaber = {20, 349, 227, 381};
+	RECT rRightSaber = {257, 348, 466, 382};
+	RECT rLeftPowerBar = {22, 107, 214, 140};
+	RECT rRightPowerBar = {303, 107, 495, 141};
+	rectLeftHandle		= rLeftHandle;
+	rectRightHandle		= rRightHandle;
+	rectLeftSaber		= rLeftSaber;
+	rectRightSaber		= rRightSaber;
+	rectLeftPowerBar	= rLeftPowerBar;
+	rectRightPowerBar	= rRightPowerBar;
+	m_nRightOffset = 0;
+	m_nLeftOffset = 0;
+
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
@@ -178,8 +202,6 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		SetState(Pausing);
 	}
 
-	static int p1PrevHP = 100;
-
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
 	{
 		if( GetPlayer(PlayerOne)->GetCurrentHP() < 100 )
@@ -193,8 +215,6 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			rectRightSaber.right =  227 - m_nLeftOffset;
 		}
 	}
-
-	static int p2PrevHP = 100;
 
 	if( GetPlayer(PlayerTwo)->GetCurrentHP() != p2PrevHP )
 	{
@@ -210,12 +230,7 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			rectRightSaber.left =  257 + m_nRightOffset;
 		}
 	}
-
-	//if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
-	//{
-	//		GetPlayer(PlayerOne)->SetCurrAnimation("Idle");
-	//}
-	
+		
 	if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
 	{
 		GetPlayer(PlayerOne)->SetCurrAnimation("Idle");
