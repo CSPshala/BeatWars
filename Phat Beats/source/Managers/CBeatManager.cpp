@@ -585,10 +585,12 @@ void CBeatManager::EvaluatePlayerCombos()
 	{
 		if(GetP1CurrentCombo() > GetP2CurrentCombo())
 		{
+			CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetCurrentPowerup( CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCurrentPowerup() + 10);
 			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerTwo), CLevelManager::GetInstance()->GetPlayer(PlayerOne));
 		}
 		else if(GetP2CurrentCombo() > GetP1CurrentCombo())
 		{
+			CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentPowerup( CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() + 10);
 			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
 		SetP1CurrentCombo(0);

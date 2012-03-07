@@ -82,6 +82,8 @@ public:
 
 							return 0;
 						}
+	int					GetCurrentPowerup() { return m_nCurrentPowerup; }
+	int					GetMaxPowerup() { return m_nMaxPowerup; }
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
@@ -101,6 +103,8 @@ public:
 	void				SetAttackModeTimer(float nTime) {m_fAttackModeTimer = nTime;}
 	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
 	void				SetSingleAnimation( CAnimation* pAnim );
+	void				SetCurrentPowerup(int nCurrentPowerup) { m_nCurrentPowerup = nCurrentPowerup; }
+	void				SetMaxPowerup(int nMaxPowerup) { m_nMaxPowerup = nMaxPowerup; }
 
 
 	
@@ -150,7 +154,9 @@ private:
 			vector<CAnimation*> m_vecAnimations;
 			int m_nCurrAnim;
 			bool m_bAnimationsEmpty;
-
+		//Power Up stats
+			int m_nMaxPowerup;
+			int m_nCurrentPowerup;
 
 
 	/********** Private Accessors ************/
