@@ -37,8 +37,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	SetMaxHP(100);
 	SetCurrentHP(GetMaxHP());
-	SetCurrentPower(0);
-	SetMaxPower(100);
+	SetCurrentPowerup(0);
+	SetMaxPowerup(140);
 	SetTotalBeatsHit(0);
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
