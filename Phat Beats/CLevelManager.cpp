@@ -151,6 +151,9 @@ const void CLevelManager::SkipLevel(void)
 		SetState(Pausing);
 	else
 		SetState(Exiting);
+
+	// Flushing player two AI hits (dosen't matter if he's not AI)
+	GetPlayer(PlayerTwo)->GetAIBeats().clear();
 }
 
 // Logic Methods
@@ -182,10 +185,15 @@ const void CLevelManager::HandlePausingInput(void) {
 		GetPlayer(PlayerOne)->SetCurrentHP(100);
 		GetPlayer(PlayerTwo)->SetCurrentHP(100);
 
+		// Flushing player two AI hits (dosen't matter if he's not AI)
+		GetPlayer(PlayerTwo)->GetAIBeats().clear();		
+
 		BeatMan->Stop();
 
 		if(!m_vSongs.empty())
 			BeatMan->Play(m_vSongs.front());
+
+		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
