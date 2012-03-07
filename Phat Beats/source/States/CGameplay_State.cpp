@@ -56,6 +56,10 @@ void CGameplay_State::Enter(void)
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
 
+		CFXManager::GetInstance()->MoveEffectTo("P1_GUARD",D3DXVECTOR2(400.0f, 300.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P1_PBAR",D3DXVECTOR2(32.0f, 32.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P2_PBAR",D3DXVECTOR2(600.0f, 32.0f));
+
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1GUARD");
 		CFXManager::GetInstance()->QueueParticle("P2GUARD");
@@ -223,6 +227,8 @@ void CGameplay_State::Exit(void)
 		CFXManager::GetInstance()->UnloadFX("P2GUARD");
 		CFXManager::GetInstance()->UnloadFX("P1_HIT");
 		CFXManager::GetInstance()->UnloadFX("P2_HIT");
+		CFXManager::GetInstance()->UnloadFX("P1_PBAR");
+		CFXManager::GetInstance()->UnloadFX("P2_PBAR");
 
 		// Cleaning up tutorial event
 		CEventSystem::GetInstance()->UnregisterClient("tutorialpause",this);

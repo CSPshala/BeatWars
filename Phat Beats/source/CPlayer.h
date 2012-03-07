@@ -58,6 +58,7 @@ public:
 	int					GetCurrentHP() {return m_nHP;}
 	int					GetMaxHP() {return m_nMaxHP;}
 	int					GetCurrentPower() {return m_nPower;}
+	int					GetCurrentPowerup(void) { return m_nCurrentPowerup; }
 	int					GetMaxPower() {return m_nMaxPower;}
 	int					GetTotalBeatsHit() {return m_nBeatsHitTotal;}
 	int					GetCurrentStreak() {return m_nCurrentStreak;}
@@ -82,7 +83,6 @@ public:
 
 							return 0;
 						}
-	int					GetCurrentPowerup() { return m_nCurrentPowerup; }
 	int					GetMaxPowerup() { return m_nMaxPowerup; }
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}

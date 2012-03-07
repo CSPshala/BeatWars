@@ -581,6 +581,8 @@ CBeatManager* CBeatManager::GetInstance()
 ////////////////////////////////////////
 void CBeatManager::EvaluatePlayerCombos()
 {
+	static bool P1Power = false, P2Power = false;
+
 	if(GetNotesPassed() >= GetComboThreshold())
 	{
 		if(GetP1CurrentCombo() > GetP2CurrentCombo())
@@ -593,9 +595,34 @@ void CBeatManager::EvaluatePlayerCombos()
 			CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentPowerup( CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() + 10);
 			DealDamageToPlayer(CLevelManager::GetInstance()->GetPlayer(PlayerOne), CLevelManager::GetInstance()->GetPlayer(PlayerTwo));
 		}
+
 		SetP1CurrentCombo(0);
 		SetP2CurrentCombo(0);
 		SetNotesPassed(0);
+	}
+
+	int x = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCurrentPowerup();
+
+	if(x >= 140 && P1Power == false)
+	{
+		CFXManager::GetInstance()->QueueParticle("P1_PBAR");
+		P1Power = true;
+	}
+	else if(CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCurrentPowerup() < 140 && P1Power == true)
+	{
+		CFXManager::GetInstance()->DequeueParticle("P1_BAR");
+		P1Power = false;
+	}
+
+	if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() >= 140 && P2Power == false)
+	{
+		CFXManager::GetInstance()->QueueParticle("P2_PBAR");
+		P2Power = true;
+	}
+	else if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() < 140 && P2Power == true)
+	{
+		CFXManager::GetInstance()->DequeueParticle("P2_BAR");
+		P2Power = false;
 	}
 }
 
