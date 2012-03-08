@@ -96,6 +96,7 @@ const void CFX::MoveEffect(const D3DXVECTOR2 tNewPos)
 
 	for(i = m_listAliveEmitters.begin(); i != m_listAliveEmitters.end(); ++i)
 	{
+		rectNew = (*i)->GetRange();
 		vGravDiff = (*i)->GetGravityPosition();
 
 		nWidth = (*i)->GetRange().right - (*i)->GetRange().left;
@@ -112,6 +113,7 @@ const void CFX::MoveEffect(const D3DXVECTOR2 tNewPos)
 
 	for(i = m_listDeadEmitters.begin(); i != m_listDeadEmitters.end(); ++i)
 	{
+		rectNew = (*i)->GetRange();
 		vGravDiff = (*i)->GetGravityPosition() - tNewPos;
 
 		nWidth = rectNew.right - rectNew.left;

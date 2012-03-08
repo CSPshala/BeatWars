@@ -34,6 +34,9 @@ class CLevelManager
 	// Data Members
 	std::vector<CPlayer*>	m_vPlayers;
 	queue<string>			m_vSongs;
+	float					m_fGameTransitionAlpha;
+	float					m_SongTransitionAlpha;
+	bool					m_bStartTransition;
 
 	// Easy Access
 	CBeatManager*			BeatMan;
@@ -54,9 +57,11 @@ class CLevelManager
 
 	// Offset for Hud
 	int m_nRightOffset;
-	int m_nLeftOffset;
+	int m_nRightPowerOffset;
 	int p2PrevHP;
 	int p1PrevHP;
+	int p2PrevPowerup;
+	int p1PrevPowerup;
 
 	// Asset Data
 	RECT rectLeftHandle;
@@ -65,6 +70,8 @@ class CLevelManager
 	RECT rectRightSaber;
 	RECT rectLeftPowerBar;
 	RECT rectRightPowerBar;
+	RECT rectLeftPowerup;
+	RECT rectRightPowerup;
 	
 	// Private Methods
 	const LevelState GetState(void){return m_eCurrentState;}

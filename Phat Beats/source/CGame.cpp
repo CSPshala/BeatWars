@@ -23,6 +23,9 @@ CGame::CGame()
 	m_pMS	= NULL;
 	m_pOM	= NULL;
 	m_pFM	= NULL;
+
+	SetCharacterSelection(true);
+	SetCharacterSelection2(false);
 }
 
 CGame::~CGame()

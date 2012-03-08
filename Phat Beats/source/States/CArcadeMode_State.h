@@ -14,13 +14,19 @@ using std::string;
 #include "IGameState.h"
 #include "../CGame.h"
 #include "CGameplay_State.h"
+#include "../Globals.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "../../CLevelManager.h"
 
 
 // Forward Declarations
 class Bitmap_Font;
+
+enum echaracters{LUKE_SKYWALKER, DARTH_VADER, NUM_CHARACTERS};
+enum eplayer{PLAYER_ONE, PLAYER_TWO, AI, NUM_PLAYERS};
+
 
 class CArcadeMode_State : public IGameState
 {
@@ -48,6 +54,8 @@ private:
 	vector<string> m_vMenu;
 	Bitmap_Font* m_bMenu_Font;
 	int m_nMenuSelection;
+	int m_nCharacterSelection;
+	CAnimationManager		AnMan;
 
 		// Asset IDs
 	int m_nBackgroundID;

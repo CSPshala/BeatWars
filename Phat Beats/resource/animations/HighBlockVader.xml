@@ -5,7 +5,8 @@
     <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="338" Width="283" AnchorX="226" AnchorY="318" FrameX="308" FrameY="4" Duration="0.1"/>
     <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="341" Width="275" AnchorX="208" AnchorY="316" FrameX="596" FrameY="6" Duration="0.1"/>
     <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="346" Width="259" AnchorX="191" AnchorY="325" FrameX="4" FrameY="345" Duration="0.1"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="257" AnchorX="188" AnchorY="319" FrameX="265" FrameY="351" Duration="0.2"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="257" AnchorX="188" AnchorY="319" FrameX="265" FrameY="351" Duration="0.5"/>
   </Animation>
 </Animations>
+
 

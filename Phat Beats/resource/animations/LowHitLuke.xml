@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\sprites_luke_005.png" Name="Low Hit">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="303" Width="185" AnchorX="96" AnchorY="277" FrameX="0" FrameY="9" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="256" Width="187" AnchorX="34" AnchorY="236" FrameX="186" FrameY="56" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="254" Width="195" AnchorX="42" AnchorY="234" FrameX="372" FrameY="58" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="257" Width="196" AnchorX="40" AnchorY="237" FrameX="568" FrameY="55" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="262" Width="373" AnchorX="97" AnchorY="231" FrameX="1" FrameY="315" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="251" Width="345" AnchorX="42" AnchorY="218" FrameX="371" FrameY="328" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="246" Width="338" AnchorX="32" AnchorY="222" FrameX="0" FrameY="579" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="244" Width="348" AnchorX="42" AnchorY="219" FrameX="337" FrameY="582" Duration="0.2"/>
+  </Animation>
+</Animations>

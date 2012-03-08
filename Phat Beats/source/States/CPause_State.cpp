@@ -13,6 +13,7 @@
 #include "CSave_State.h"
 #include "COptionsState.h"
 #include "CBitmapFont.h"
+#include "../../CLevelManager.h"
 CPause_State::CPause_State()
 {
 	CBitmapFont* m_bMenu_Font = NULL;
@@ -49,7 +50,7 @@ bool CPause_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 	{
 		m_nMenuSelection -= 1;
 		if (m_nMenuSelection == -1)
@@ -58,7 +59,7 @@ bool CPause_State::Input(void)
 
 		}
 	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN) )
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 	{
 		m_nMenuSelection += 1;
 
@@ -82,6 +83,7 @@ bool CPause_State::Input(void)
 			{
 				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
 				CGameplay_State::GetInstance()->Exit();
+				CLevelManager::GetInstance()->EmptySongQueue();
 				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
 			}
 			break;

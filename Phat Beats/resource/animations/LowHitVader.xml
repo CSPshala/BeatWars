@@ -2,13 +2,14 @@
 <Animations>
   <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\sprites_vader_005.png" Name="Low Hit">
     <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="348" Width="173" AnchorX="46" AnchorY="337" FrameX="1" FrameY="1" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="346" Width="205" AnchorX="53" AnchorY="337" FrameX="180" FrameY="1" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="351" Width="204" AnchorX="53" AnchorY="337" FrameX="391" FrameY="2" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="348" Width="205" AnchorX="54" AnchorY="337" FrameX="601" FrameY="1" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="315" Width="280" AnchorX="23" AnchorY="294" FrameX="0" FrameY="356" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="297" Width="392" AnchorX="232" AnchorY="281" FrameX="278" FrameY="370" Duration="0.15"/>
-    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="312" AnchorX="157" AnchorY="260" FrameX="677" FrameY="391" Duration="0.15"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="346" Width="205" AnchorX="53" AnchorY="337" FrameX="180" FrameY="1" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="351" Width="204" AnchorX="53" AnchorY="337" FrameX="391" FrameY="2" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="348" Width="205" AnchorX="54" AnchorY="337" FrameX="601" FrameY="1" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="315" Width="280" AnchorX="23" AnchorY="294" FrameX="0" FrameY="356" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="297" Width="392" AnchorX="232" AnchorY="281" FrameX="278" FrameY="370" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="312" AnchorX="157" AnchorY="260" FrameX="677" FrameY="391" Duration="0.1"/>
     <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="323" Width="208" AnchorX="99" AnchorY="247" FrameX="0" FrameY="677" Duration="0.2"/>
   </Animation>
 </Animations>
+
 
