@@ -43,6 +43,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
 	SetTotalScore(0);
+	SetTakeDown(0);
 	SetAttackModeTimer(0);
 	// Defaults to easy
 	SetPlayerDifficulty(EASY);

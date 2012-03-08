@@ -64,6 +64,7 @@ public:
 	int					GetCurrentStreak() {return m_nCurrentStreak;}
 	int					GetCurrentScore() {return m_nCurrentScore;}
 	int					GetTotalScore() {return m_nTotalScore;}
+	int					GetCurrentTakeDown() {return m_nTakeDown;}
 	BeatDifficulty		GetPlayerDifficulty() {return m_eDifficulty;}
 	float				GetCurrentRotation() {return m_fRotation;}
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
@@ -105,7 +106,7 @@ public:
 	void				SetSingleAnimation( CAnimation* pAnim );
 	void				SetCurrentPowerup(int nCurrentPowerup) { m_nCurrentPowerup = nCurrentPowerup; }
 	void				SetMaxPowerup(int nMaxPowerup) { m_nMaxPowerup = nMaxPowerup; }
-
+	void				SetTakeDown(int nTakeDown) {m_nTakeDown = nTakeDown;}
 
 	
 private:
@@ -158,7 +159,8 @@ private:
 			int m_nMaxPowerup;
 			int m_nCurrentPowerup;
 
-
+		// Player take down count
+			int m_nTakeDown;
 	/********** Private Accessors ************/
 			int GetBeatConeID() {return m_nBeatConeID;}
 			int GetBeatSuccessID() {return m_nBeatSuccessID;}
