@@ -291,6 +291,10 @@ void CPlayer::P1InputHandling()
 			cHitKey = 'd';
 			//m_qKeyPresses.push(TBeatHit('d',nTime));
 		}
+		else if(DI->KeyPressed(DIK_Q) && GetCurrentPowerup() == GetMaxPowerup())
+		{
+			cHitKey = 'q';
+		}
 	}
 
 	DI->ClearInput();
@@ -364,6 +368,7 @@ void CPlayer::P2InputHandling()
 			cHitKey = 'd';
 			//m_qKeyPresses.push(TBeatHit('d',nTime));
 		}
+		
 	}
 
 	DI->ClearInput();

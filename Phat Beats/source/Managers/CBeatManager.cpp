@@ -72,264 +72,264 @@ bool CBeatManager::LoadSong(string szFileName)
 	if(!pRoot)
 		return false;
 
-//**************LOADING SONG SPECIFICS********************//
+	//**************LOADING SONG SPECIFICS********************//
 	// Getting song's filename to load
 	if(pRoot->Attribute("name") == NULL)
 		return false;
 
 
 	//**************PATH AND LOADING SONG SOUND**********//
-		// Char pointer for reading text
-		const char* txtAttrb = NULL;
-		txtAttrb = pRoot->Attribute("file");
+	// Char pointer for reading text
+	const char* txtAttrb = NULL;
+	txtAttrb = pRoot->Attribute("file");
 
-		char buffer[128] = {0};
-		strcpy_s(buffer,_countof(buffer),txtAttrb);
+	char buffer[128] = {0};
+	strcpy_s(buffer,_countof(buffer),txtAttrb);
 
-		string szSongPath = "resource/Sound/";
-		szSongPath += buffer;
+	string szSongPath = "resource/Sound/";
+	szSongPath += buffer;
 
-		// Loading song and setting SongID.
-		theSong->SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str()));
-		
+	// Loading song and setting SongID.
+	theSong->SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str()));
+
 	//*************SETTING SONG NAME********************//
-		const char* txtName = NULL;
-		txtName = pRoot->Attribute("name");
+	const char* txtName = NULL;
+	txtName = pRoot->Attribute("name");
 
-		if(txtName == NULL)
-			return false;
+	if(txtName == NULL)
+		return false;
 
-		strcpy_s(buffer,_countof(buffer),txtName);
+	strcpy_s(buffer,_countof(buffer),txtName);
 
-		theSong->SetSongName(buffer);
+	theSong->SetSongName(buffer);
 
 	//*************SETTING DURATION********************//
-		if(pRoot->Attribute("duration") == NULL)
+	if(pRoot->Attribute("duration") == NULL)
+		return false;
+
+	int nDuration;
+
+	pRoot->Attribute("duration",&nDuration);
+
+	theSong->SetSongDuration(nDuration);
+
+	//***************END OF SONG SPECIFICS********************//
+
+	//*********SETTING ICON PATHS*********************//
+	TiXmlElement* pIcons = pRoot->FirstChildElement("icons");
+
+	string szIconPath = "resource/graphics/";
+	string szWKey;
+	string szAKey;
+	string szSKey;
+	string szDKey;
+
+	//******WKEY*********//
+	const char* txtIcon = NULL;
+	txtIcon = pIcons->Attribute("wkey");
+
+	if(txtIcon == NULL)
+		return false;
+
+	strcpy_s(buffer,_countof(buffer),txtIcon);
+
+	szWKey = szIconPath + buffer;
+
+	//******AKEY*********//
+	txtIcon = NULL;
+	txtIcon = pIcons->Attribute("akey");
+
+	if(txtIcon == NULL)
+		return false;
+
+	strcpy_s(buffer,_countof(buffer),txtIcon);
+
+	szAKey = szIconPath + buffer;
+
+	//******SKEY*********//
+	txtIcon = NULL;
+	txtIcon = pIcons->Attribute("skey");
+
+	if(txtIcon == NULL)
+		return false;
+
+	strcpy_s(buffer,_countof(buffer),txtIcon);
+
+	szSKey = szIconPath + buffer;
+
+	//******DKEY*********//
+	txtIcon = NULL;
+	txtIcon = pIcons->Attribute("dkey");
+
+	if(txtIcon == NULL)
+		return false;
+
+	strcpy_s(buffer,_countof(buffer),txtIcon);
+
+	szDKey = szIconPath + buffer;
+
+	//*********LOADING NOTE GRAPHICS*************//
+	// Pre-loading textures for notes
+	int nImpNote = CSGD_TextureManager::GetInstance()->LoadTexture(szAKey.c_str());
+	int nRepNote = CSGD_TextureManager::GetInstance()->LoadTexture(szDKey.c_str());
+	int nSkullNote = CSGD_TextureManager::GetInstance()->LoadTexture(szWKey.c_str());
+	int nSunNote = CSGD_TextureManager::GetInstance()->LoadTexture(szSKey.c_str());
+
+	//***************BEGIN BEAT SETTING***********************//
+	TiXmlElement* pBeat = pRoot->FirstChildElement("Beat");
+
+
+
+	while(pBeat)
+	{
+		CBeat theBeat;
+
+		//****************CHECKING FOR NOTE COMPLETENESS**********//
+		if(pBeat->Attribute("beatis") == NULL)
 			return false;
 
-		int nDuration;
+		int nBeatIs = 0;
 
-		pRoot->Attribute("duration",&nDuration);
+		pBeat->Attribute("beatis",&nBeatIs);
 
-		theSong->SetSongDuration(nDuration);
-
-//***************END OF SONG SPECIFICS********************//
-
-		//*********SETTING ICON PATHS*********************//
-		TiXmlElement* pIcons = pRoot->FirstChildElement("icons");
-
-		string szIconPath = "resource/graphics/";
-		string szWKey;
-		string szAKey;
-		string szSKey;
-		string szDKey;
-
-		//******WKEY*********//
-		const char* txtIcon = NULL;
-		txtIcon = pIcons->Attribute("wkey");
-
-		if(txtIcon == NULL)
-			return false;
-
-		strcpy_s(buffer,_countof(buffer),txtIcon);
-
-		szWKey = szIconPath + buffer;
-
-		//******AKEY*********//
-		txtIcon = NULL;
-		txtIcon = pIcons->Attribute("akey");
-
-		if(txtIcon == NULL)
-			return false;
-
-		strcpy_s(buffer,_countof(buffer),txtIcon);
-
-		szAKey = szIconPath + buffer;
-
-		//******SKEY*********//
-		txtIcon = NULL;
-		txtIcon = pIcons->Attribute("skey");
-
-		if(txtIcon == NULL)
-			return false;
-
-		strcpy_s(buffer,_countof(buffer),txtIcon);
-
-		szSKey = szIconPath + buffer;
-		
-		//******DKEY*********//
-		txtIcon = NULL;
-		txtIcon = pIcons->Attribute("dkey");
-
-		if(txtIcon == NULL)
-			return false;
-
-		strcpy_s(buffer,_countof(buffer),txtIcon);
-
-		szDKey = szIconPath + buffer;
-
-		//*********LOADING NOTE GRAPHICS*************//
-		// Pre-loading textures for notes
-		int nImpNote = CSGD_TextureManager::GetInstance()->LoadTexture(szAKey.c_str());
-		int nRepNote = CSGD_TextureManager::GetInstance()->LoadTexture(szDKey.c_str());
-		int nSkullNote = CSGD_TextureManager::GetInstance()->LoadTexture(szWKey.c_str());
-		int nSunNote = CSGD_TextureManager::GetInstance()->LoadTexture(szSKey.c_str());
-
-//***************BEGIN BEAT SETTING***********************//
-		TiXmlElement* pBeat = pRoot->FirstChildElement("Beat");
-
-		
-
-		while(pBeat)
+		// Ignoring non-complete note sets
+		if(nBeatIs != 0)
 		{
-			CBeat theBeat;
-
-			//****************CHECKING FOR NOTE COMPLETENESS**********//
-			if(pBeat->Attribute("beatis") == NULL)
-				return false;
-
-			int nBeatIs = 0;
-
-			pBeat->Attribute("beatis",&nBeatIs);
-
-			// Ignoring non-complete note sets
-			if(nBeatIs != 0)
-			{
-				pBeat = pBeat->NextSiblingElement("Beat");
-				continue;
-			}
-			
-
-			//****************GETTING BEAT HIT TIME***************//
-			if(pBeat->Attribute("timeofbeat") == NULL)
-				return false;
-
-			int nBeatTime = 0;
-
-			pBeat->Attribute("timeofbeat",&nBeatTime);
-
-			theBeat.SetTimeOfBeat(nBeatTime);
-
-			//********HEIGHT AND WIDTH ARENT IN ORDER W/ XML FILE B/C I NEED THEM FOR POSITION*******//
-			//******************SETTING NOTE WIDTH***************//
-			if(pBeat->Attribute("width") == NULL)
-				return false;
-
-			int nWidth = 0;
-
-			pBeat->Attribute("width",&nWidth);
-
-			theBeat.SetWidth(nWidth);
-
-			//******************SETTING NOTE HEIGHT**************//
-			if(pBeat->Attribute("height") == NULL)
-				return false;
-
-			int nHeight = 0;
-
-			pBeat->Attribute("height",&nHeight);
-
-			theBeat.SetHeight(nHeight);
-
-			//*****************GETTING DIRECTION OF NOTE**********//
-			if(pBeat->Attribute("direction") == NULL)
-				return false;
-
-			const char* txtDirection = NULL;
-
-			txtDirection = pBeat->Attribute("direction");
-			strcpy_s(buffer,_countof(buffer),txtDirection);
-
-			string szDirection = buffer;
-
-			if(szDirection == "left")
-				theBeat.SetDirection(LEFT);
-			else if(szDirection == "up")
-				theBeat.SetDirection(UP);
-			else if(szDirection == "right")
-				theBeat.SetDirection(RIGHT);
-			else if(szDirection == "down")
-				theBeat.SetDirection(DOWN);
-			else if(szDirection == "leftup")
-				theBeat.SetDirection(LEFTUP);
-			else if(szDirection == "rightup")
-				theBeat.SetDirection(RIGHTUP);
-			else if(szDirection == "rightdown")
-				theBeat.SetDirection(RIGHTDOWN);
-			else if(szDirection == "leftdown")
-				theBeat.SetDirection(LEFTDOWN);
-
-			//******************GETTING KEYPRESS OF NOTE***********//
-			if(pBeat->Attribute("key") == NULL)
-				return false;
-
-			const char* txtKey = NULL;
-
-			txtKey = pBeat->Attribute("key");
-
-			theBeat.SetKeyToPress(*txtKey);
-
-			//******************SETTING IMAGE OF NOTE*************//
-		
-			if(*txtKey == 'w')
-				theBeat.SetImageID(nSkullNote);
-			else if(*txtKey == 'd')
-				theBeat.SetImageID(nRepNote);
-			else if(*txtKey == 'a')
-				theBeat.SetImageID(nImpNote);
-			else if(*txtKey == 's')
-				theBeat.SetImageID(nSunNote);
-
-			//*****************SETTING NOTE DIFFICULTY************//
-			if(pBeat->Attribute("difficulty") == NULL)
-				return false;
-
-			const char* txtDifficulty = NULL;
-			txtDifficulty = pBeat->Attribute("difficulty");
-			strcpy_s(buffer,_countof(buffer),txtDifficulty);
-
-			string szDiff = buffer;
-
-			if(szDiff == "easy")
-				theBeat.SetDifficulty(EASY);
-			else if(szDiff == "normal")
-				theBeat.SetDifficulty(NORMAL);
-			else if(szDiff == "hard")
-				theBeat.SetDifficulty(HARD);
-
-			
-
-			//******************GETTING NOTE EVENT***************//
-			if(pBeat->Attribute("event") == NULL)
-				return false;
-
-			const char* txtEvent = NULL;
-			txtEvent = pBeat->Attribute("event");
-			strcpy_s(buffer,_countof(buffer),txtEvent);
-
-			string szEvent = buffer;
-
-			theBeat.SetEvent(szEvent);
-
-			//******************MOVING ON TO NEXT NOTE***********//
-			
-			// Adding beat to Song List
-			theSong->GetBeatList().push_back(theBeat);
 			pBeat = pBeat->NextSiblingElement("Beat");
+			continue;
 		}
 
-		//***************ADDING SONG TO SONG LIST****************//
-		// Releasing initial ref to song
 
-		// Adding song to Object Manager
-			CObjectManager::GetInstance()->AddObject(theSong);
+		//****************GETTING BEAT HIT TIME***************//
+		if(pBeat->Attribute("timeofbeat") == NULL)
+			return false;
 
-			// Releasing initial ref to the song
-			theSong->Release();
+		int nBeatTime = 0;
 
-			// Adding song pointer to song list (just to keep track of what songs we have)
-			GetSongList().push_back(theSong);			
-		
+		pBeat->Attribute("timeofbeat",&nBeatTime);
+
+		theBeat.SetTimeOfBeat(nBeatTime);
+
+		//********HEIGHT AND WIDTH ARENT IN ORDER W/ XML FILE B/C I NEED THEM FOR POSITION*******//
+		//******************SETTING NOTE WIDTH***************//
+		if(pBeat->Attribute("width") == NULL)
+			return false;
+
+		int nWidth = 0;
+
+		pBeat->Attribute("width",&nWidth);
+
+		theBeat.SetWidth(nWidth);
+
+		//******************SETTING NOTE HEIGHT**************//
+		if(pBeat->Attribute("height") == NULL)
+			return false;
+
+		int nHeight = 0;
+
+		pBeat->Attribute("height",&nHeight);
+
+		theBeat.SetHeight(nHeight);
+
+		//*****************GETTING DIRECTION OF NOTE**********//
+		if(pBeat->Attribute("direction") == NULL)
+			return false;
+
+		const char* txtDirection = NULL;
+
+		txtDirection = pBeat->Attribute("direction");
+		strcpy_s(buffer,_countof(buffer),txtDirection);
+
+		string szDirection = buffer;
+
+		if(szDirection == "left")
+			theBeat.SetDirection(LEFT);
+		else if(szDirection == "up")
+			theBeat.SetDirection(UP);
+		else if(szDirection == "right")
+			theBeat.SetDirection(RIGHT);
+		else if(szDirection == "down")
+			theBeat.SetDirection(DOWN);
+		else if(szDirection == "leftup")
+			theBeat.SetDirection(LEFTUP);
+		else if(szDirection == "rightup")
+			theBeat.SetDirection(RIGHTUP);
+		else if(szDirection == "rightdown")
+			theBeat.SetDirection(RIGHTDOWN);
+		else if(szDirection == "leftdown")
+			theBeat.SetDirection(LEFTDOWN);
+
+		//******************GETTING KEYPRESS OF NOTE***********//
+		if(pBeat->Attribute("key") == NULL)
+			return false;
+
+		const char* txtKey = NULL;
+
+		txtKey = pBeat->Attribute("key");
+
+		theBeat.SetKeyToPress(*txtKey);
+
+		//******************SETTING IMAGE OF NOTE*************//
+
+		if(*txtKey == 'w')
+			theBeat.SetImageID(nSkullNote);
+		else if(*txtKey == 'd')
+			theBeat.SetImageID(nRepNote);
+		else if(*txtKey == 'a')
+			theBeat.SetImageID(nImpNote);
+		else if(*txtKey == 's')
+			theBeat.SetImageID(nSunNote);
+
+		//*****************SETTING NOTE DIFFICULTY************//
+		if(pBeat->Attribute("difficulty") == NULL)
+			return false;
+
+		const char* txtDifficulty = NULL;
+		txtDifficulty = pBeat->Attribute("difficulty");
+		strcpy_s(buffer,_countof(buffer),txtDifficulty);
+
+		string szDiff = buffer;
+
+		if(szDiff == "easy")
+			theBeat.SetDifficulty(EASY);
+		else if(szDiff == "normal")
+			theBeat.SetDifficulty(NORMAL);
+		else if(szDiff == "hard")
+			theBeat.SetDifficulty(HARD);
+
+
+
+		//******************GETTING NOTE EVENT***************//
+		if(pBeat->Attribute("event") == NULL)
+			return false;
+
+		const char* txtEvent = NULL;
+		txtEvent = pBeat->Attribute("event");
+		strcpy_s(buffer,_countof(buffer),txtEvent);
+
+		string szEvent = buffer;
+
+		theBeat.SetEvent(szEvent);
+
+		//******************MOVING ON TO NEXT NOTE***********//
+
+		// Adding beat to Song List
+		theSong->GetBeatList().push_back(theBeat);
+		pBeat = pBeat->NextSiblingElement("Beat");
+	}
+
+	//***************ADDING SONG TO SONG LIST****************//
+	// Releasing initial ref to song
+
+	// Adding song to Object Manager
+	CObjectManager::GetInstance()->AddObject(theSong);
+
+	// Releasing initial ref to the song
+	theSong->Release();
+
+	// Adding song pointer to song list (just to keep track of what songs we have)
+	GetSongList().push_back(theSong);			
+
 	return true;
 }
 
@@ -339,7 +339,7 @@ bool CBeatManager::UnloadSongs()
 
 	//for(unsigned int i = 0; i < GetSongList().size(); ++i)
 	//	m_vSongs[i]->Release();
-	
+
 	GetSongList().clear();
 	GetSongBackground().clear();
 	SetNumberNotesHit(0);
@@ -378,7 +378,7 @@ void CBeatManager::Pause()
 	if(FMODMAN->IsSoundPlaying(GetCurrentlyPlayingSong()->GetSongID()))
 	{
 		FMOD::Channel* derp = FMODMAN->GetLatestChannel(GetCurrentlyPlayingSong()->GetSongID());
-				derp->setPaused(IsPaused());
+		derp->setPaused(IsPaused());
 	}
 }
 
@@ -386,7 +386,7 @@ void CBeatManager::Stop()
 {
 	SetPause(true);
 
-	
+
 	// Stopping currently playing song
 	if(m_nCurrentlyPlayingSongIndex != -1)
 	{
@@ -394,7 +394,7 @@ void CBeatManager::Stop()
 		{
 			FMODMAN->StopSound(GetCurrentlyPlayingSong()->GetSongID());
 		}
-	
+
 		m_vSongs[m_nCurrentlyPlayingSongIndex]->ResetSong();
 	}
 }
@@ -413,7 +413,7 @@ void CBeatManager::Update()
 
 void CBeatManager::Render()
 {	
-	
+
 }
 
 void CBeatManager::HandleEvent( CEvent* pEvent )
@@ -431,7 +431,7 @@ void CBeatManager::HandleEvent( CEvent* pEvent )
 		return;
 	}
 
-	
+
 }
 
 string CBeatManager::GetCurrentlyPlayingSongName()
@@ -468,105 +468,122 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
 	if(aPlayer->GetMostRecentKeyPress() != 'g' && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
 	{
-		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
-		{			
-			// Here we're looking at the current hittable beat, checking if the player is aiming at it,
-			// and if they hit the correct key or not
-			if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
-				&& aPlayer->GetMostRecentKeyPress() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
+		if(aPlayer->GetMostRecentKeyPress() == 'q')
+		{
+			if( aPlayer->GetCurrentHP() != aPlayer->GetMaxHP() )
+			{
+				aPlayer->SetCurrentHP( aPlayer->GetCurrentHP() + 10);
+
+				if( aPlayer->GetCurrentHP() > aPlayer->GetMaxHP() )
+					aPlayer->SetCurrentHP(aPlayer->GetMaxHP());
+
+				aPlayer->SetCurrentPowerup(0);
+			}
+		}
+		else
+		{
+			for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
 			{			
-				switch(aPlayer->GetType())
-				{
-				case OBJ_PLAYER1:
-					{					
-						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer1Hit())
-						{
-							(GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
-							// Player hit the note, handling all relevant info.
-							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
-							CFXManager::GetInstance()->QueueParticle("P1_HIT");
-
-							// Upping Player1's Current combo for damage
-							SetP1CurrentCombo(GetP1CurrentCombo() + 1);
-							SetNumberNotesHit(GetNumberNotesHit() + 1);
-						}						
-
-					}
-					break;
-				
-				case OBJ_PLAYER2:
+				// Here we're looking at the current hittable beat, checking if the player is aiming at it,
+				// and if they hit the correct key or not
+				if(aPlayer->GetAimingDirection() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetDirection()
+					&& aPlayer->GetMostRecentKeyPress() == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetKeyToPress())
+				{			
+					switch(aPlayer->GetType())
 					{
-						if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
-						{
-							 (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer2Hit(true);
-							// Player hit the note, handling all relevant info.
-							aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-							aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-							CFXManager::GetInstance()->QueueParticle("P2_HIT");
+					case OBJ_PLAYER1:
+						{					
+							if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer1Hit())
+							{
+								(GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer1Hit(true);
+								// Player hit the note, handling all relevant info.
+								aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+								aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+								CFXManager::GetInstance()->QueueParticle("P1_HIT");
 
-							// Upping Player2's Current combo for damage
-							SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+								// Upping Player1's Current combo for damage
+								SetP1CurrentCombo(GetP1CurrentCombo() + 1);
+								SetNumberNotesHit(GetNumberNotesHit() + 1);
+							}						
+
 						}
-						
-					}
-					break;
+						break;
 
-				case OBJ_AI:
-					{
-						
-						
+					case OBJ_PLAYER2:
+						{
+							if(! (GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
+							{
+								(GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->SetPlayer2Hit(true);
+								// Player hit the note, handling all relevant info.
+								aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+								aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+								CFXManager::GetInstance()->QueueParticle("P2_HIT");
+
+								// Upping Player2's Current combo for damage
+								SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+							}
+
+						}
+						break;
+
+					case OBJ_AI:
+						{
+
+
+						}
+						break;
 					}
-					break;
+				}
+				else
+				{
+					if(aPlayer->GetType() == OBJ_PLAYER1)
+						SetP1CurrentCombo(0);
+					else if(aPlayer->GetType() == OBJ_PLAYER2 || aPlayer->GetType() == OBJ_AI)
+						SetP2CurrentCombo(0);
+
+					aPlayer->SetCurrentStreak(0);			
+				}
+
+
+
+				// Clearing last keypress
+				//aPlayer->GetPlayerHitQueue().pop();
+
+
+				if(aPlayer->GetType() == OBJ_AI)
+				{
+					for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
+					{  
+						bool found = false;
+
+						// Checking AI beat list to make sure we haven't hit it before
+						for(unsigned int x = 0; x < aPlayer->GetAIBeats().size(); ++x)
+						{
+							if((aPlayer->GetAIBeats())[x] == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i])
+								found = true;
+						}
+
+						if(!found)
+							if((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
+							{				 
+								// AI hit the note, handling all relevant info.
+								aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+								aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+								CFXManager::GetInstance()->QueueParticle("P2_HIT");
+
+								// Upping Player2's Current combo for damage
+								SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+
+								(aPlayer->GetAIBeats()).push_back((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]);
+							}			
+							else
+								aPlayer->SetCurrentStreak(0);
+					}
 				}
 			}
-			else
-			{
-				if(aPlayer->GetType() == OBJ_PLAYER1)
-					SetP1CurrentCombo(0);
-				else if(aPlayer->GetType() == OBJ_PLAYER2 || aPlayer->GetType() == OBJ_AI)
-					SetP2CurrentCombo(0);
-
-				aPlayer->SetCurrentStreak(0);			
-			}
-			
 		}
 
-		// Clearing last keypress
-			//aPlayer->GetPlayerHitQueue().pop();
 	}
-
-	if(aPlayer->GetType() == OBJ_AI)
-	{
-		for(unsigned int i = 0; i < GetCurrentlyPlayingSong()->GetHittableBeatList().size(); ++i)
-		{  
-			bool found = false;
-
-			// Checking AI beat list to make sure we haven't hit it before
-			for(unsigned int x = 0; x < aPlayer->GetAIBeats().size(); ++x)
-			{
-				if((aPlayer->GetAIBeats())[x] == (GetCurrentlyPlayingSong()->GetHittableBeatList())[i])
-					found = true;
-			}
-
-				if(!found)
-					if((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]->GetPlayer2Hit())
-					{				 
-						// AI hit the note, handling all relevant info.
-						aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-						aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-						CFXManager::GetInstance()->QueueParticle("P2_HIT");
-							
-						// Upping Player2's Current combo for damage
-						SetP2CurrentCombo(GetP2CurrentCombo() + 1);
-
-						(aPlayer->GetAIBeats()).push_back((GetCurrentlyPlayingSong()->GetHittableBeatList())[i]);
-					}			
-					else
-						aPlayer->SetCurrentStreak(0);
-		}
-	}
-
 }
 
 CBeatManager* CBeatManager::GetInstance()

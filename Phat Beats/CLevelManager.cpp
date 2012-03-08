@@ -113,14 +113,12 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
-	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP()-10);
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
-
-	//GetPlayer(PlayerTwo)->SetAttackMode(false);
-
+	GetPlayer(PlayerOne)->SetCurrentPowerup(130);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
+	
 	p2PrevHP = 101;
 	p1PrevHP = 101;
 	RECT rLeftHandle = {20, 10, 67, 27};
@@ -143,10 +141,6 @@ const void CLevelManager::EnterLevel(void) {
 	m_nRightPowerOffset = 0;
 	p2PrevPowerup = -1;
 	p1PrevPowerup = -1;
-	
-	GetPlayer(PlayerOne)->SetCurrentPower(0);
-	GetPlayer(PlayerTwo)->SetCurrentPower(0);
-
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
