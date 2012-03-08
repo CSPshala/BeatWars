@@ -83,6 +83,8 @@ private:
 		vector<int> m_nvImageID;
 		int m_nNumHit;
 		bool m_bPause;
+		int m_nSFX;
+		int m_nDamageSFX;
 		// Used for setting song
 		string szCurrentlyPlayingSong;
 		// Index into vector of songs to play song

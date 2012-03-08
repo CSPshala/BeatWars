@@ -51,6 +51,8 @@ private:
 	float m_nFXVolume;
 	float m_nMusicVolume;
 	float m_nMusicPan;
+	bool Player1selection;
+	bool Player2selection;
 
 	// Proper Singleton
 	// Trilogy of Evil:
@@ -99,11 +101,16 @@ public:
 	float GetMusicVolume() const		{ return m_nMusicVolume; }
 	float GetSFXVolume() const			{ return m_nFXVolume; }
 	float GetPanVolume() const			{ return m_nMusicPan; }
+	bool GetCharacterSelection() {return Player1selection;}
+	bool GetCharacterSelection2() {return Player2selection;}
 	
 	// Mutators
 	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
 	void SetSFXVolume(float val)		{ m_nFXVolume = val; }
 	void SetPanVolume(float val)		{ m_nMusicPan = val; }
+	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
+	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
+
 };
 
 
