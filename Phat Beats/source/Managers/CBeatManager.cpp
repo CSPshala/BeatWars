@@ -42,6 +42,8 @@ CBeatManager::CBeatManager()
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
 	SetComboThreshold(COMBODAMAGETHRESHOLD);
+	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
+	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/SGD_hurt.wav");
 }
 
 CBeatManager::~CBeatManager()
@@ -585,6 +587,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
 			playerToDmg->SetCurrAnimation("High Hit");
+			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
 			//damageDealer->SetCurrAnimation("High Hit");
 		}
 		else
@@ -592,6 +595,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
 			playerToDmg->SetCurrAnimation("High Block");
 			damageDealer->SetCurrAnimation("High Block");
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 		}
 	}
 	else
@@ -600,6 +604,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
 			playerToDmg->SetCurrAnimation("Low Hit");
+			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
 			//damageDealer->SetCurrAnimation("Low Hit");
 		}
 		else
@@ -607,6 +612,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
 			playerToDmg->SetCurrAnimation("Low Block");
 			damageDealer->SetCurrAnimation("Low Block");
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 		}
 	}
 }

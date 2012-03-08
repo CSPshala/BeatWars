@@ -32,17 +32,44 @@ CLevelManager::CLevelManager(void) {
 	
 
 	//Player 1 Animations
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	if (CGame::GetInstance()->GetCharacterSelection() == true)
+	{
+
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection() == false)
+	{
+
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection2() == true)
+	{
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection2() == false)
+	{
+
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
+	}
 	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
 	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
 	//Player 2 Animations
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 
 
 	// Set Up Assets
