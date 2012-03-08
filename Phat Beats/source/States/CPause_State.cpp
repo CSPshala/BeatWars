@@ -13,6 +13,7 @@
 #include "CSave_State.h"
 #include "COptionsState.h"
 #include "CBitmapFont.h"
+#include "../../CLevelManager.h"
 CPause_State::CPause_State()
 {
 	CBitmapFont* m_bMenu_Font = NULL;
@@ -82,6 +83,7 @@ bool CPause_State::Input(void)
 			{
 				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
 				CGameplay_State::GetInstance()->Exit();
+				CLevelManager::GetInstance()->EmptySongQueue();
 				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
 			}
 			break;

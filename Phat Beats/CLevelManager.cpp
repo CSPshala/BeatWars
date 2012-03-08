@@ -67,8 +67,8 @@ CLevelManager::CLevelManager(void) {
 		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
 		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 	}
-	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
-	//GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation(
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLuke.xml","sprites_luke_004.png"));
+	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLuke.xml","sprites_luke_005.png"));
 	//Player 2 Animations
 
 
@@ -90,10 +90,16 @@ CLevelManager::CLevelManager(void) {
 	rectRightSaber		= rRightSaber;
 	rectLeftPowerBar	= rLeftPowerBar;
 	rectRightPowerBar	= rRightPowerBar;
+	
+	RECT LeftPowerup	= {64,157,203,171};
+	RECT RightPowerup	= {64,157,203,171}; 
+
+	rectLeftPowerup		= LeftPowerup;
+	rectRightPowerup	= RightPowerup;
 
 	// Set up Offsets
 	m_nRightOffset = 0;
-	m_nLeftOffset = 0;
+	m_nRightPowerOffset = 0;
 	p1PrevHP = 100;
 	p2PrevHP = 100;
 }
@@ -134,29 +140,34 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
-	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP()-10);
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-
-	//GetPlayer(PlayerTwo)->SetAttackMode(false);
-
-	p2PrevHP = 100;
-	p1PrevHP = 100;
+	GetPlayer(PlayerOne)->SetCurrentPowerup(130);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
+	
+	p2PrevHP = 101;
+	p1PrevHP = 101;
 	RECT rLeftHandle = {20, 10, 67, 27};
 	RECT rRightHandle = {445, 12, 492, 23};
 	RECT rLeftSaber = {20, 349, 227, 381};
 	RECT rRightSaber = {257, 348, 466, 382};
 	RECT rLeftPowerBar = {22, 107, 214, 140};
 	RECT rRightPowerBar = {303, 107, 495, 141};
+	RECT LeftPowerup	= {64,157,203,171};
+	RECT RightPowerup	= {64,157,203,171}; 
 	rectLeftHandle		= rLeftHandle;
 	rectRightHandle		= rRightHandle;
 	rectLeftSaber		= rLeftSaber;
 	rectRightSaber		= rRightSaber;
 	rectLeftPowerBar	= rLeftPowerBar;
 	rectRightPowerBar	= rRightPowerBar;
+	rectLeftPowerup		= LeftPowerup;
+	rectRightPowerup	= RightPowerup;
 	m_nRightOffset = 0;
-	m_nLeftOffset = 0;
-
+	m_nRightPowerOffset = 0;
+	p2PrevPowerup = -1;
+	p1PrevPowerup = -1;
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
@@ -174,10 +185,13 @@ const void CLevelManager::SkipLevel(void)
 	m_vSongs.pop();
 
 	// Playing (if something to play), else exit
-	if(!m_vSongs.empty())	
+	if(!m_vSongs.empty())
 		SetState(Pausing);
 	else
 		SetState(Exiting);
+
+	// Flushing player two AI hits (dosen't matter if he's not AI)
+	GetPlayer(PlayerTwo)->GetAIBeats().clear();
 }
 
 // Logic Methods
@@ -199,6 +213,7 @@ const void CLevelManager::HandleLevelInput(void) {
 }
 const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerOne));
+	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) {
@@ -208,10 +223,15 @@ const void CLevelManager::HandlePausingInput(void) {
 		GetPlayer(PlayerOne)->SetCurrentHP(100);
 		GetPlayer(PlayerTwo)->SetCurrentHP(100);
 
+		// Flushing player two AI hits (dosen't matter if he's not AI)
+		GetPlayer(PlayerTwo)->GetAIBeats().clear();		
+
 		BeatMan->Stop();
 
 		if(!m_vSongs.empty())
 			BeatMan->Play(m_vSongs.front());
+
+		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -261,22 +281,22 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
 	{
-		if( GetPlayer(PlayerOne)->GetCurrentHP() < 100 )
+		if( GetPlayer(PlayerOne)->GetCurrentHP() <= 100 )
 		{
 			p1PrevHP = GetPlayer(PlayerOne)->GetCurrentHP();
 
 			float firstcalc = 207 * (p1PrevHP / 100.0f);
 
-			m_nLeftOffset = int(207 - firstcalc);
+			int m_nLeftOffset = int(207 - firstcalc);
 
-			rectRightSaber.right =  227 - m_nLeftOffset;
+			rectLeftSaber.right =  227 - m_nLeftOffset;
 		}
 	}
 
 	if( GetPlayer(PlayerTwo)->GetCurrentHP() != p2PrevHP )
 	{
 
-		if( GetPlayer(PlayerTwo)->GetCurrentHP() < 100 )
+		if( GetPlayer(PlayerTwo)->GetCurrentHP() <= 100 )
 		{
 			p2PrevHP = GetPlayer(PlayerTwo)->GetCurrentHP();
 
@@ -287,6 +307,22 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			rectRightSaber.left =  257 + m_nRightOffset;
 		}
 	}
+
+	if( GetPlayer(PlayerOne)->GetCurrentPowerup() != p1PrevPowerup )
+	{
+		p1PrevPowerup = GetPlayer(PlayerOne)->GetCurrentPowerup();
+		rectLeftPowerup.right = rectLeftPowerup.left + GetPlayer(PlayerOne)->GetCurrentPowerup();
+	}
+	
+	if( GetPlayer(PlayerTwo)->GetCurrentPowerup() != p2PrevPowerup )
+	{
+		p2PrevPowerup = GetPlayer(PlayerTwo)->GetCurrentPowerup();
+		
+		m_nRightPowerOffset = int(140 - p2PrevPowerup);
+
+		rectRightPowerup.left = 64 + m_nRightPowerOffset;
+	}
+
 		
 	if( GetPlayer(PlayerOne)->GetCurrAnim()->GetPlayedAlready() )
 	{
@@ -297,6 +333,17 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 	{
 		GetPlayer(PlayerTwo)->SetCurrAnimation("Idle");
 	}
+
+	if( GetPlayer(PlayerOne)->GetCurrentPowerup() > GetPlayer(PlayerOne)->GetMaxPowerup())
+	{
+		GetPlayer(PlayerOne)->SetCurrentPowerup(GetPlayer(PlayerOne)->GetMaxPowerup()); 
+	}
+
+	if(GetPlayer(PlayerTwo)->GetCurrentPowerup() > GetPlayer(PlayerTwo)->GetMaxPowerup())
+	{
+		GetPlayer(PlayerTwo)->SetCurrentPowerup(GetPlayer(PlayerTwo)->GetMaxPowerup()); 
+	}
+
 
 }
 const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
@@ -325,12 +372,18 @@ const void CLevelManager::Render(void){
 }
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
+
+	TexMan->DrawF(m_nHudID, 70.0f, 55.0f, 1.0f, 1.0f, &rectLeftPowerup);
+	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 55.0f, 1.0f, 1.0f, &rectRightPowerup);
+
 	TexMan->DrawF(m_nHudID, 59.0f, 10.0f, 1.0f, 1.0f, &rectLeftSaber);
 	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 10.0f, 1.0f, 1.0f, &rectRightSaber);
+
 	TexMan->DrawF(m_nHudID, 20.0f, 17.0f, 1.0f, 1.0f, &rectLeftHandle);
 	TexMan->DrawF(m_nHudID, 722.0f, 21.0f, 1.0f, 1.0f, &rectRightHandle);
-	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar);
-	TexMan->DrawF(m_nHudID, 529.0f, 45.0f, 1.0f, 1.0f, &rectRightPowerBar);
+
+	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 529.0f, 45.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
 	// Draw Particles
 	FxMan->Render();

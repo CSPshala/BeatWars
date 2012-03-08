@@ -58,6 +58,7 @@ public:
 	int					GetCurrentHP() {return m_nHP;}
 	int					GetMaxHP() {return m_nMaxHP;}
 	int					GetCurrentPower() {return m_nPower;}
+	int					GetCurrentPowerup(void) { return m_nCurrentPowerup; }
 	int					GetMaxPower() {return m_nMaxPower;}
 	int					GetTotalBeatsHit() {return m_nBeatsHitTotal;}
 	int					GetCurrentStreak() {return m_nCurrentStreak;}
@@ -66,9 +67,9 @@ public:
 	BeatDifficulty		GetPlayerDifficulty() {return m_eDifficulty;}
 	float				GetCurrentRotation() {return m_fRotation;}
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
-	vector<CBeat*>		GetAIBeats() {return m_vAIBeats;}
+	vector<CBeat*>&		GetAIBeats() {return m_vAIBeats;}
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
-	TBeatHit&			GetMostRecentKeyPress();
+	char			GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
 	bool				GetAttackMode() {return m_bAttackMode;}
 	float				GetAttackModeTimer() {return m_fAttackModeTimer;}
@@ -82,6 +83,7 @@ public:
 
 							return 0;
 						}
+	int					GetMaxPowerup() { return m_nMaxPowerup; }
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
@@ -101,6 +103,8 @@ public:
 	void				SetAttackModeTimer(float nTime) {m_fAttackModeTimer = nTime;}
 	void				SetAnimationsIsEmpty(bool bEmpty) { m_bAnimationsEmpty = bEmpty; }
 	void				SetSingleAnimation( CAnimation* pAnim );
+	void				SetCurrentPowerup(int nCurrentPowerup) { m_nCurrentPowerup = nCurrentPowerup; }
+	void				SetMaxPowerup(int nMaxPowerup) { m_nMaxPowerup = nMaxPowerup; }
 
 
 	
@@ -128,11 +132,14 @@ private:
 		// Beat Specifics
 		BeatDirection m_eAimingDirection; // Current direction player is aiming (enum from CBeat.h)
 
-		// AI handling stuff
+		// AI check for already hit beats
 		vector<CBeat*> m_vAIBeats;
 		
 		// Player hit vector
 		queue<TBeatHit> m_qKeyPresses;
+
+		// Player hit key
+		char cHitKey;
 
 		// Asset IDs
 			// Images
@@ -147,7 +154,9 @@ private:
 			vector<CAnimation*> m_vecAnimations;
 			int m_nCurrAnim;
 			bool m_bAnimationsEmpty;
-
+		//Power Up stats
+			int m_nMaxPowerup;
+			int m_nCurrentPowerup;
 
 
 	/********** Private Accessors ************/

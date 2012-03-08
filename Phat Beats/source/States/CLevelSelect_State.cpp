@@ -99,6 +99,8 @@ bool CLevelSelect_State::Input(void) {
 			CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
 			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
 			CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+			CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
 			CBeatManager::GetInstance()->Stop();
 			CBeatManager::GetInstance()->UnloadSongs();

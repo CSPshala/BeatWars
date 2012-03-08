@@ -37,8 +37,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	SetMaxHP(100);
 	SetCurrentHP(GetMaxHP());
-	SetCurrentPower(0);
-	SetMaxPower(100);
+	SetCurrentPowerup(0);
+	SetMaxPowerup(140);
 	SetTotalBeatsHit(0);
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
@@ -52,6 +52,9 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	// Putting player in attack mode
 	SetAttackMode(false);
 	m_vecAnimations.clear();
+
+	// Setting player hit key to random letter
+	cHitKey = 'g';
 	
 	switch(m_nType)
 	{
@@ -102,6 +105,9 @@ void CPlayer::Input()
 
 void CPlayer::Update(float fElapsedTime)
 {
+	// flushing last hit key
+	cHitKey = 'g';
+
 	//UpdateAnimations
 	if( m_vecAnimations.size() > 0 )
 	m_vecAnimations[m_nCurrAnim]->Update(fElapsedTime);
@@ -139,12 +145,12 @@ void CPlayer::Render()
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(250,500,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(590,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(615,500,1.0);
 
 	}
 
@@ -190,7 +196,7 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 			if(GetType() == OBJ_PLAYER2 || GetType() == OBJ_AI)
 			{
 				beatCollisionRect.left += 400;
-				beatCollisionRect.right += 400;
+				beatCollisionRect.right += 400;				
 			}
 
 			if(IntersectRect(&rTemp,&GetCollisionRect(),&beatCollisionRect))
@@ -266,20 +272,28 @@ void CPlayer::P1InputHandling()
 
 
 		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 0))
-		{			
-			m_qKeyPresses.push(TBeatHit('w',nTime));
+		{		
+			cHitKey = 'w';
+			//m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
 		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 0))
 		{
-			m_qKeyPresses.push(TBeatHit('a',nTime));
+			cHitKey = 'a';
+			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
 		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 0))
 		{
-			m_qKeyPresses.push(TBeatHit('s',nTime));
+			cHitKey = 's';
+			//m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
 		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 0))
 		{
-			m_qKeyPresses.push(TBeatHit('d',nTime));
+			cHitKey = 'd';
+			//m_qKeyPresses.push(TBeatHit('d',nTime));
+		}
+		else if(DI->KeyPressed(DIK_Q) && GetCurrentPowerup() == GetMaxPowerup())
+		{
+			cHitKey = 'q';
 		}
 	}
 
@@ -335,21 +349,26 @@ void CPlayer::P2InputHandling()
 
 
 		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 1))
-		{			
-			m_qKeyPresses.push(TBeatHit('w',nTime));
+		{		
+			cHitKey = 'w';
+			//m_qKeyPresses.push(TBeatHit('w',nTime));
 		}
 		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 1))
 		{
-			m_qKeyPresses.push(TBeatHit('a',nTime));
+			cHitKey = 'a';
+			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
 		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 1))
 		{
-			m_qKeyPresses.push(TBeatHit('s',nTime));
+			cHitKey = 's';
+			//m_qKeyPresses.push(TBeatHit('s',nTime));
 		}
 		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 1))
 		{
-			m_qKeyPresses.push(TBeatHit('d',nTime));
+			cHitKey = 'd';
+			//m_qKeyPresses.push(TBeatHit('d',nTime));
 		}
+		
 	}
 
 	DI->ClearInput();
@@ -436,9 +455,9 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 	}
 }
 
-TBeatHit& CPlayer::GetMostRecentKeyPress()
+char CPlayer::GetMostRecentKeyPress()
 {	
-	return m_qKeyPresses.front();
+	return cHitKey;
 }
 
 void CPlayer::PlayAnimation()

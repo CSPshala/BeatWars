@@ -223,6 +223,8 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
 	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
 	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+	CLU->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
 	// Loading up BeatManager specific stuff
 
