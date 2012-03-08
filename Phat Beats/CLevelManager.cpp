@@ -216,15 +216,9 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN)) {
-
+	if(InMan->KeyPressed(DIK_RETURN)) 
+	{
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
-
-		GetPlayer(PlayerOne)->SetCurrentHP(100);
-		GetPlayer(PlayerTwo)->SetCurrentHP(100);
-
-		// Flushing player two AI hits (dosen't matter if he's not AI)
-		GetPlayer(PlayerTwo)->GetAIBeats().clear();		
 
 		BeatMan->Stop();
 

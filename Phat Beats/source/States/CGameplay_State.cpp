@@ -51,6 +51,19 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 	
+
+	if(!GetPreviouslyPlaying()) 
+	{
+		
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
+			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+		}
+
+	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
@@ -62,22 +75,7 @@ void CGameplay_State::Enter(void)
 
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1GUARD");
-		CFXManager::GetInstance()->QueueParticle("P2GUARD");
- 
-
-	if(!GetPreviouslyPlaying()) {
-		
-		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-		{
-			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
-			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
-			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
-			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
-		}
-	/*	else
-			CLevelManager::GetInstance()->QueueSong("jeditheme");*/
-
-		
+		CFXManager::GetInstance()->QueueParticle("P2GUARD");	
 
 		
 
@@ -108,8 +106,9 @@ void CGameplay_State::Enter(void)
 
 		m_nTutorialTextIndex = 0;
 
+		
 	}	
-	
+
 	CLevelManager::GetInstance()->EnterLevel();
 
 	if(GetIsTutorial())
