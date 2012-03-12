@@ -140,11 +140,11 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
-	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP()-10);
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(130);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
+	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
 	
 	p2PrevHP = 101;
 	p1PrevHP = 101;

@@ -150,7 +150,7 @@ void CPlayer::Render()
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(615,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(615,500,-1.0);
 
 	}
 
