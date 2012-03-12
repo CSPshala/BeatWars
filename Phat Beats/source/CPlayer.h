@@ -56,14 +56,13 @@ public:
 	void ResetAnimation();
 	/********** Public Accessors ************/
 	int					GetCurrentHP() {return m_nHP;}
-	int					GetMaxHP() {return m_nMaxHP;}
-	int					GetCurrentPower() {return m_nPower;}
+	int					GetMaxHP() {return m_nMaxHP;}	
 	int					GetCurrentPowerup(void) { return m_nCurrentPowerup; }
-	int					GetMaxPower() {return m_nMaxPower;}
 	int					GetTotalBeatsHit() {return m_nBeatsHitTotal;}
 	int					GetCurrentStreak() {return m_nCurrentStreak;}
 	int					GetCurrentScore() {return m_nCurrentScore;}
 	int					GetTotalScore() {return m_nTotalScore;}
+	int					GetCurrentTakeDown() {return m_nTakeDown;}
 	BeatDifficulty		GetPlayerDifficulty() {return m_eDifficulty;}
 	float				GetCurrentRotation() {return m_fRotation;}
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
@@ -87,8 +86,6 @@ public:
 	/********** Public Mutators  ************/	
 	void				SetCurrentHP(int nHP) {m_nHP = nHP;}
 	void				SetMaxHP(int nMaxHP) {m_nMaxHP = nMaxHP;}
-	void				SetCurrentPower(int nPower) {m_nPower = nPower;}
-	void				SetMaxPower(int nMaxPower) {m_nMaxPower = nMaxPower;}
 	void				SetTotalBeatsHit(int nBeatsHitTotal) {m_nBeatsHitTotal = nBeatsHitTotal;}
 	void				SetCurrentStreak(int nCurrentStreak) {m_nCurrentStreak = nCurrentStreak;}
 	void				SetCurrentScore(int nCurrentScore) {m_nCurrentScore = nCurrentScore;}
@@ -105,7 +102,7 @@ public:
 	void				SetSingleAnimation( CAnimation* pAnim );
 	void				SetCurrentPowerup(int nCurrentPowerup) { m_nCurrentPowerup = nCurrentPowerup; }
 	void				SetMaxPowerup(int nMaxPowerup) { m_nMaxPowerup = nMaxPowerup; }
-
+	void				SetTakeDown(int nTakeDown) {m_nTakeDown = nTakeDown;}
 
 	
 private:
@@ -113,8 +110,6 @@ private:
 		// Player Attributes
 		int m_nHP; // Current HP
 		int m_nMaxHP; // Maximum HP
-		int m_nPower; // Current Power
-		int m_nMaxPower; // Maximum Power
 		int m_nBeatsHitTotal; // Total Beats hit in song
 		int m_nCurrentStreak; // Current Beat hit streak
 		int m_nCurrentScore; // Current Level score (if we implement it)
@@ -158,7 +153,8 @@ private:
 			int m_nMaxPowerup;
 			int m_nCurrentPowerup;
 
-
+		// Player take down count
+			int m_nTakeDown;
 	/********** Private Accessors ************/
 			int GetBeatConeID() {return m_nBeatConeID;}
 			int GetBeatSuccessID() {return m_nBeatSuccessID;}

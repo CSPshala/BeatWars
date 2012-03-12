@@ -216,15 +216,9 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN)) {
-
+	if(InMan->KeyPressed(DIK_RETURN)) 
+	{
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
-
-		GetPlayer(PlayerOne)->SetCurrentHP(100);
-		GetPlayer(PlayerTwo)->SetCurrentHP(100);
-
-		// Flushing player two AI hits (dosen't matter if he's not AI)
-		GetPlayer(PlayerTwo)->GetAIBeats().clear();		
 
 		BeatMan->Stop();
 
@@ -269,14 +263,26 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		}	
 	}
 	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) {
-		m_fGameTransitionAlpha += (175 * fElapsedTime);
-		BeatMan->Stop();
+		//m_fGameTransitionAlpha += (175 * fElapsedTime);
+		//BeatMan->Stop();
+		/*
 		if (m_fGameTransitionAlpha >= 255)
+				{
+					m_vSongs.pop();
+					SetState(Pausing);
+					m_fGameTransitionAlpha = 1;
+				}*/
+		if (GetPlayer(PlayerOne)->GetCurrentHP() <= 0)
 		{
-			m_vSongs.pop();
-			SetState(Pausing);
-			m_fGameTransitionAlpha = 1;
+			GetPlayer(PlayerOne)->SetCurrentHP(100);
+			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
 		}
+		else
+		{
+			GetPlayer(PlayerTwo)->SetCurrentHP(100);
+			GetPlayer(PlayerOne)->SetTakeDown(GetPlayer(PlayerOne)->GetCurrentTakeDown()+1);
+		}
+		
 	}
 
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
@@ -428,6 +434,7 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Player1 Wins" << '\n';
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerOne)->GetCurrentStreak() << '\n';
+		pauseText << "Current TakeDowns: " << GetPlayer(PlayerOne)->GetCurrentTakeDown() << '\n';
 	}
 	
 	if (GetPlayer(PlayerOne)->GetCurrentHP() < GetPlayer(PlayerTwo)->GetCurrentHP())
@@ -435,6 +442,7 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Player2 Wins" << '\n';
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerTwo)->GetCurrentStreak() << '\n';
+		pauseText << "Current TakeDowns: " << GetPlayer(PlayerTwo)->GetCurrentTakeDown() << '\n';
 	}
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
