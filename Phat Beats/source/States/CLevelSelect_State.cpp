@@ -34,7 +34,7 @@ void CLevelSelect_State::Enter(void) {
 }
 
 bool CLevelSelect_State::Input(void) {
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0)) {
@@ -45,7 +45,7 @@ bool CLevelSelect_State::Input(void) {
 			CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
 		}
 	}
-	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN)) {
+	else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0)) {
 		if((unsigned)Selected < GetLevelData().size() - 1) {
 			if(CSGD_FModManager::GetInstance()->IsSoundPlaying(GetLevelData()[Selected]->nSoundSample))
 				CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);

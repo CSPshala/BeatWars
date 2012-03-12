@@ -244,7 +244,7 @@ void CPlayer::P1InputHandling()
 		SetAimingDirection(DOWN);
 
 	// Checking for Stance change
-	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(4, 0))
+	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(5, 0))
 	{
  		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -281,7 +281,7 @@ void CPlayer::P1InputHandling()
 			cHitKey = 'a';
 			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 0))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 0))
 		{
 			cHitKey = 's';
 			//m_qKeyPresses.push(TBeatHit('s',nTime));
@@ -321,7 +321,7 @@ void CPlayer::P2InputHandling()
 		SetAimingDirection(DOWN);
 	
 	// Checking for Stance change
-	if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(4, 1))
+	if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(5, 1))
 	{
 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 		{
@@ -358,7 +358,7 @@ void CPlayer::P2InputHandling()
 			cHitKey = 'a';
 			//m_qKeyPresses.push(TBeatHit('a',nTime));
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(3, 1))
+		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 1))
 		{
 			cHitKey = 's';
 			//m_qKeyPresses.push(TBeatHit('s',nTime));

@@ -35,7 +35,7 @@ void CArcadeMode_State::Enter(void)
 bool CArcadeMode_State::Input(void)
 {
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6, 1))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6, 1))
 		return false;
 
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) )
@@ -93,7 +93,7 @@ bool CArcadeMode_State::Input(void)
 		CGame::GetInstance()->SetCharacterSelection2(false);
 	}
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
 	{
 		CMenu_State::GetInstance()->LoadGameplayStateAssets();
 	}

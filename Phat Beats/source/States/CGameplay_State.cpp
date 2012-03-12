@@ -143,7 +143,7 @@ bool CGameplay_State::Input(void)
 	}
 	else
 	{
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 		{
 			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
 			{
@@ -161,7 +161,7 @@ bool CGameplay_State::Input(void)
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 0))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 		{
 			SetIsTutorial(false);
 			CLevelManager::GetInstance()->SkipLevel();
