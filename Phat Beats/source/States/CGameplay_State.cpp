@@ -84,6 +84,7 @@ void CGameplay_State::Enter(void)
 
 		if(GetIsTutorial())
 		{
+			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
 			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
@@ -94,9 +95,9 @@ void CGameplay_State::Enter(void)
 			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
 			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
 			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
-			m_vTutorialText.push_back("See that blue glow on your lightsaber at the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
+			m_vTutorialText.push_back("See that blue glow on your lightsaber\nat the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
 			m_vTutorialText.push_back("Press spacebar to change to attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
-			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad to aim at them.");
+			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad\nto aim at them.");
 			m_vTutorialText.push_back("Try to empty your opponent's life bar\nas much as possible. Whoever has the most\ntakedowns at the end of the song wins.");
 			m_vTutorialText.push_back("Now, practice by hitting notes\nbeat your opponent up by hitting notes.\nDon't worry your opponent is easy for now.");
 			m_vTutorialText.push_back("Great job.\nNow lets head to your first song.");
