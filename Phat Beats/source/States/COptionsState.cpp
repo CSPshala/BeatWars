@@ -136,7 +136,7 @@ bool COptionsState::Input(void)
 			{
 				SetAILevel(((int)GetAILevel() + 1));
 
-				if(GetAILevel() > AI_HARD)
+				if(GetAILevel() > AI_INSANE)
 					SetAILevel(AI_EASY);
 			}
 			break;
@@ -222,7 +222,7 @@ bool COptionsState::Input(void)
 			{
 				SetAILevel(((int)GetAILevel() + 1));
 
-				if(GetAILevel() > AI_HARD)
+				if(GetAILevel() > AI_INSANE)
 					SetAILevel(AI_EASY);
 			}
 			break;
@@ -321,6 +321,10 @@ void COptionsState::Render(void)
 
 	case AI_HARD:
 		sprintf_s( buffer,"hard");
+		break;
+
+	case AI_INSANE:
+		sprintf_s( buffer,"insane");
 		break;
 	}
 	// print out the level for the Ai	
