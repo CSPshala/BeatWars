@@ -51,6 +51,19 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 	
+
+	if(!GetPreviouslyPlaying()) 
+	{
+		
+		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
+		{
+			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
+			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
+			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+		}
+
+	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P2GUARD",D3DXVECTOR2((float)700,(float)12));
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
@@ -62,22 +75,7 @@ void CGameplay_State::Enter(void)
 
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1GUARD");
-		CFXManager::GetInstance()->QueueParticle("P2GUARD");
- 
-
-	if(!GetPreviouslyPlaying()) {
-		
-		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
-		{
-			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
-			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
-			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
-			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
-		}
-	/*	else
-			CLevelManager::GetInstance()->QueueSong("jeditheme");*/
-
-		
+		CFXManager::GetInstance()->QueueParticle("P2GUARD");	
 
 		
 
@@ -86,6 +84,7 @@ void CGameplay_State::Enter(void)
 
 		if(GetIsTutorial())
 		{
+			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
 			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
@@ -96,9 +95,9 @@ void CGameplay_State::Enter(void)
 			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
 			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
 			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
-			m_vTutorialText.push_back("See that blue glow on your lightsaber at the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
+			m_vTutorialText.push_back("See that blue glow on your lightsaber\nat the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
 			m_vTutorialText.push_back("Press spacebar to change to attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
-			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad to aim at them.");
+			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad\nto aim at them.");
 			m_vTutorialText.push_back("Try to empty your opponent's life bar\nas much as possible. Whoever has the most\ntakedowns at the end of the song wins.");
 			m_vTutorialText.push_back("Now, practice by hitting notes\nbeat your opponent up by hitting notes.\nDon't worry your opponent is easy for now.");
 			m_vTutorialText.push_back("Great job.\nNow lets head to your first song.");
@@ -108,8 +107,9 @@ void CGameplay_State::Enter(void)
 
 		m_nTutorialTextIndex = 0;
 
+		
 	}	
-	
+
 	CLevelManager::GetInstance()->EnterLevel();
 
 	if(GetIsTutorial())

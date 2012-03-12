@@ -540,17 +540,18 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 				{
 					if(aPlayer->GetType() == OBJ_PLAYER1)
 						SetP1CurrentCombo(0);
-					else if(aPlayer->GetType() == OBJ_PLAYER2 || aPlayer->GetType() == OBJ_AI)
+					else if(aPlayer->GetType() == OBJ_PLAYER2 )
 						SetP2CurrentCombo(0);
 
 					aPlayer->SetCurrentStreak(0);			
 				}
 
-
+			}
+		}
 
 				// Clearing last keypress
 				//aPlayer->GetPlayerHitQueue().pop();
-
+	}
 
 				if(aPlayer->GetType() == OBJ_AI)
 				{
@@ -582,10 +583,10 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 								aPlayer->SetCurrentStreak(0);
 					}
 				}
-			}
-		}
+			
+		
 
-	}
+	
 }
 
 CBeatManager* CBeatManager::GetInstance()

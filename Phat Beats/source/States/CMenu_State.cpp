@@ -231,12 +231,14 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("tutorial.xml","",Song);
 	CLU->QueueLoadCommand("cantina.xml","",Song);
 	CLU->QueueLoadCommand("DueloftheFates.xml","",Song);
+	CLU->QueueLoadCommand("darksidedub.xml","",Song);
 	CLU->QueueLoadCommand("ImperialMarch.xml","",Song);
 	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
+	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
 	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 
