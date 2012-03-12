@@ -43,6 +43,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
 	SetTotalScore(0);
+	SetTakeDown(0);
 	SetAttackModeTimer(0);
 	// Defaults to easy
 	SetPlayerDifficulty(EASY);
@@ -136,7 +137,30 @@ void CPlayer::Update(float fElapsedTime)
 	}
 
 	// Attack mode cooldown
-	SetAttackModeTimer(GetAttackModeTimer() + fElapsedTime);
+	if(GetAttackMode())
+	{
+		SetAttackModeTimer(GetAttackModeTimer() + fElapsedTime);
+
+		if(GetAttackModeTimer() >= 20.0f)
+		{
+			SetAttackMode(false);		// Taking us outta attack mode and resetting timer
+			SetAttackModeTimer(0.0f);
+
+
+			// Changing particle effect on hilt back to defense blue
+			if(GetType() == OBJ_PLAYER1)
+			{
+				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P1GUARD");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P2GUARD");
+			}
+		}
+	}
+
 }
 
 void CPlayer::Render()
@@ -246,7 +270,7 @@ void CPlayer::P1InputHandling()
 	// Checking for Stance change
 	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(4, 0))
 	{
- 		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
+ 		if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
 		{
 			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
 			SetAttackModeTimer(0);
@@ -261,6 +285,8 @@ void CPlayer::P1InputHandling()
 				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
 				CFXManager::GetInstance()->QueueParticle("P1GUARD");
 			}
+
+			SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
 		}
 	}
 
@@ -405,6 +431,26 @@ void CPlayer::AIHandling()
 			SetAimingDirection(LEFTDOWN);
 		if ((*iter)->GetDirection() == RIGHTDOWN && (*iter)->GetHasCollided() == true)
 			SetAimingDirection(RIGHTDOWN);
+	}
+
+	// AI now will activate attack mode when power bar is maxed
+	if(GetCurrentPowerup() >= GetMaxPowerup()) // AI now switches stances on full power bar (in lieu of specials for now)
+	{
+		SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+		SetAttackModeTimer(0);
+		// Setting particle effect on hilt to show mode
+		if(GetAttackMode())
+		{
+			CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+			CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+		}
+		else
+		{
+			CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+			CFXManager::GetInstance()->QueueParticle("P2GUARD");
+		}
+
+		SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
 	}
 	
 }
