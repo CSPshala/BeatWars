@@ -30,6 +30,8 @@ void CCredit_State::Enter( void )
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/jeditheme.mp3");
 
+	m_vNames.push_back("executive producer");
+	m_vNames.push_back("john o'leske");
 	m_vNames.push_back("programmers");
 	m_vNames.push_back("arron kleker");
 	m_vNames.push_back("jeremy desha");
@@ -38,6 +40,7 @@ void CCredit_State::Enter( void )
 	m_vNames.push_back("ralph concepcion");
 	m_vNames.push_back("aps");
 	m_vNames.push_back("sean hathaway");
+	m_vNames.push_back("rob martinez");
 	m_vNames.push_back("shawn paris");
 	m_vNames.push_back("logo model and texture");
 	m_vNames.push_back("jacob browder");
@@ -47,6 +50,7 @@ void CCredit_State::Enter( void )
 	m_vNames.push_back("matthew ullrey");
 	m_vNames.push_back("animation and game artist");
 	m_vNames.push_back("chris jahosky");
+	m_vNames.push_back("maher sagrillo");
 	m_vNames.push_back("wapper technology");
 	m_vNames.push_back("dave brown");
 	m_vNames.push_back("particle effects");
@@ -79,6 +83,14 @@ void CCredit_State::Render( void )
 
 void CCredit_State::Exit( void )
 {
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBackgroundID);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLogo);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nSoundID);
 
+	for (int i = 0; i < m_vNames.size(); ++i)
+	{
+		m_vNames[i].clear();
+	}
+	
 }
 
