@@ -17,6 +17,7 @@
 #include "CLoad_State.h"
 #include "../../CLevelManager.h"
 #include "../JCMacros.h"
+#include "CCredit_State.h"
 
 CMenu_State::CMenu_State()
 {
@@ -91,7 +92,7 @@ bool CMenu_State::Input(void)
 			break;		
 		case MAINMENU_CREDITS:
 			{
-				//CGame::GetInstance()->ChangeState()
+				CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 			}
 			break;
 		case MAINMENU_LEVEL:

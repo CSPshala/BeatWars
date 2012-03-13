@@ -240,6 +240,8 @@ void CSave_State::saveGame()
 			outFile<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetCurrentFileName()<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
+			outFile<<COptionsState::GetInstance()->GetFXVol();
+			outFile<<COptionsState::GetInstance()->GetMusicVol();
 		}
 		outFile.close();
 	}
