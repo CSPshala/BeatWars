@@ -32,6 +32,7 @@ void CCredit_State::Enter( void )
 {
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+
 	//m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/jeditheme.mp3");
 
 	HRESULT HR = CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->CreateTexture(512, 1024, 0, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &m_RtText, NULL);
@@ -155,6 +156,14 @@ void CCredit_State::Exit( void )
 	{
 		m_TexCredits->Release();
 		m_TexCredits = nullptr;
+	}
+
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBackgroundID);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLogo);
+
+	for (int i = 0; i < m_vNames.size(); ++i)
+	{
+		m_vNames[i].clear();
 	}
 }
 

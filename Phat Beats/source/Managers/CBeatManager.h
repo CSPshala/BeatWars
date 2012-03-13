@@ -52,11 +52,15 @@ public:
 		bool				IsPaused() {return m_bPause;}
 		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
 		string GetFileName() {return m_szFileName;}
+		int GetFXSound() {return m_nDamageSFX;}
+		int GetSoundFX() {return m_nSFX;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
 		void SetFileName(string szFileName) {m_szFileName = szFileName;}
+		void SetFXSound(int nDamageSFX){m_nDamageSFX = nDamageSFX;}
+		void SetSoundFX(int nSFX){m_nSFX = nSFX;}
 	/********** Singleton Pointer *************/
 			
 		

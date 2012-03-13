@@ -10,9 +10,10 @@
 #include "source/States/CLoad_State.h"
 #include "source/States/CBitmapFont.h"
 #include "source/CAnimation.h"
+#include "source/States/COptionsState.h"
 
 #include <sstream>
-
+#define MAX_TAKEDOWNS 2
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access
@@ -168,6 +169,11 @@ const void CLevelManager::EnterLevel(void) {
 	p1PrevPowerup = -1;
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+	/*
+	CSGD_FModManager::GetInstance()->SetVolume(BeatMan->GetCurrentlyPlayingSong()->GetSongID()
+	,COptionsState::GetInstance()->GetMusicVol());
+	*/
+
 }
 const void CLevelManager::LeaveLevel(void) {
 	BeatMan->Pause();
@@ -224,6 +230,7 @@ const void CLevelManager::HandlePausingInput(void) {
 			BeatMan->Play(m_vSongs.front());
 
 		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -250,7 +257,10 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 	ObjMan->CheckCollisions(GetPlayer(PlayerTwo));
 	BeatMan->Update();
 
-	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID())) {
+	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()) || 
+		GetPlayer(PlayerOne)->GetCurrentTakeDown() == MAX_TAKEDOWNS || 
+		GetPlayer(PlayerTwo)->GetCurrentTakeDown() == MAX_TAKEDOWNS) 
+	{
 		m_fGameTransitionAlpha += (175 * fElapsedTime);
 		BeatMan->Stop();
 		if (m_fGameTransitionAlpha >= 255)
@@ -258,9 +268,12 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			m_vSongs.pop();
 			SetState(Pausing);
 			m_fGameTransitionAlpha = 1;
+			GetPlayer(PlayerOne)->SetTakeDown(0);
+			GetPlayer(PlayerTwo)->SetTakeDown(0);
 		}	
 	}
-	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) {
+	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) 
+	{
 		//m_fGameTransitionAlpha += (175 * fElapsedTime);
 		//BeatMan->Stop();
 		/*

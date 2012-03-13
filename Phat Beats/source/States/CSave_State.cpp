@@ -240,11 +240,35 @@ void CSave_State::saveGame()
 			outFile<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetCurrentFileName()<<"\n";
 			outFile<<CBeatManager::GetInstance()->GetCurrentlyPlayingSongName();
-			outFile<<COptionsState::GetInstance()->GetFXVol();
-			outFile<<COptionsState::GetInstance()->GetMusicVol();
+			
 		}
 		outFile.close();
 	}
-	
+
+
+}
+
+void CSave_State::saveConfig()
+{
+
+	ofstream out("resource/saves/gameconfig.ass");
+
+	m_nFXVolume = COptionsState::GetInstance()->GetFXVol();
+	m_nMusicVolume = COptionsState::GetInstance()->GetMusicVol();
+	Ailevel = COptionsState::GetInstance()->GetAILevel();
+	playerDiff = COptionsState::GetInstance()->GetDifficulty();
+	if (out.is_open())
+	{
+		if (out.good())
+		{
+			out<<m_nFXVolume<<'\n';
+			out<<m_nMusicVolume<<'\n';
+			out<<Ailevel<<'\n';
+			out<<playerDiff;
+
+		}
+		out.close();
+	}
+
 
 }

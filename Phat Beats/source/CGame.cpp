@@ -85,8 +85,8 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 
 	//setting volume val
 	m_nFXVolume = 1.0f;
-	m_nMusicVolume = 0.50f;
-	m_nMusicPan = 0.0f;
+	m_nMusicVolume = 1.0f;
+	m_nMusicPan = 0.5f;
 	
 	
 }

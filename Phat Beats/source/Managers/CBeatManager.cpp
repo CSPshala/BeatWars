@@ -44,6 +44,8 @@ CBeatManager::CBeatManager()
 	SetComboThreshold(COMBODAMAGETHRESHOLD);
 	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
 	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/SGD_hurt.wav");
+	SetFXSound(m_nSFX);
+	SetSoundFX(m_nDamageSFX);
 }
 
 CBeatManager::~CBeatManager()

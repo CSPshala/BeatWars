@@ -8,11 +8,11 @@
 #include "../Globals.h"
 #include "CGameplay_State.h"
 #include "CPause_State.h"
+#include "CLoad_State.h"
+#include "CSave_State.h"
 
 COptionsState::COptionsState( void )
 {
-	SetDifficulty(HARD);
-	SetAILevel(AI_HARD);
 
 }
 COptionsState::~COptionsState(void)
@@ -27,6 +27,11 @@ COptionsState* COptionsState::GetInstance( void )
 }
 void COptionsState::Enter(void)
 {
+
+	CLoad_State::GetInstance()->loadGameSetting();
+	SetDifficulty(CLoad_State::GetInstance()->GetPlayerDiff());
+	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
+
 	// assign values to the local variables
 	m_nMenuSelection = 0;
 	m_nSFX = -1;
@@ -38,6 +43,9 @@ void COptionsState::Enter(void)
 	CGame::GetInstance()->GetMusicVolume();
 	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
 
+	m_nMusicVolume = CLoad_State::GetInstance()->GetMusicVolume();
+	m_nFXVolume = CLoad_State::GetInstance()->GetFXVolume();
+
 	//setting the images in the texture manager
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png" );	
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
@@ -45,11 +53,14 @@ void COptionsState::Enter(void)
 	m_nOptionsID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/options.png");
 	//TODO:
 	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
-	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/cantina.mp3", FMOD_LOOP_NORMAL);
+	m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/cantina.mp3", FMOD_LOOP_NORMAL);
 
 	// setting the volume for background music
 	CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
 	CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
+
+	// music sound
+	CSGD_FModManager::GetInstance()->PlaySoundA(m_nBGM);
 
 }
 bool COptionsState::Input(void)
@@ -84,6 +95,7 @@ bool COptionsState::Input(void)
 		{
 		case OPTIONSMENU_SFXVOL:
 			m_nFXVolume -= 0.001f;
+			SetFXVol(m_nFXVolume);
 			if( m_nFXVolume <= 0.0f )
 			{
 				m_nFXVolume = 0.0f;
@@ -93,6 +105,7 @@ bool COptionsState::Input(void)
 			break;
 		case OPTIONSMENU_MUSICVOL:			
 			m_nMusicVolume -= 0.001f;
+			SetMusicVol(m_nMusicVolume);
 			if( m_nMusicVolume <= 0.0f )
 			{
 				m_nMusicVolume = 0.0f;
@@ -172,6 +185,7 @@ bool COptionsState::Input(void)
 		case OPTIONSMENU_SFXVOL:
 			{			
 				m_nFXVolume += 0.001f;
+				SetFXVol(m_nFXVolume);
 				if( m_nFXVolume >= 1.0f )
 				{
 					m_nFXVolume = 1.0f;
@@ -182,6 +196,7 @@ bool COptionsState::Input(void)
 		case OPTIONSMENU_MUSICVOL:
 
 			m_nMusicVolume += 0.001f;
+			SetMusicVol(m_nMusicVolume);
 			if( m_nMusicVolume >= 1.0f )
 			{
 				m_nMusicVolume = 1.0f;
@@ -407,6 +422,7 @@ void COptionsState::Render(void)
 
 void COptionsState::Exit(void)
 {
+	CSave_State::GetInstance()->saveConfig();
 	//TODO:
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nGameImageID);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nCursorID);
