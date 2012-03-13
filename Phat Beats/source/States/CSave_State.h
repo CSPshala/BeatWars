@@ -76,6 +76,10 @@ private:
 	float m_nFXVolume;
 	float m_nMusicVolume;
 
+	// saving level difficulty
+	int Ailevel;
+	int playerDiff;
+
 	
 };
 

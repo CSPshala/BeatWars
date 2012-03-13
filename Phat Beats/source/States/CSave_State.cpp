@@ -249,12 +249,16 @@ void CSave_State::saveGame()
 
 	m_nFXVolume = COptionsState::GetInstance()->GetFXVol();
 	m_nMusicVolume = COptionsState::GetInstance()->GetMusicVol();
+	Ailevel = COptionsState::GetInstance()->GetAILevel();
+	playerDiff = COptionsState::GetInstance()->GetDifficulty();
 	if (out.is_open())
 	{
 		if (out.good())
 		{
 		    out<<m_nFXVolume<<'\n';
-			out<<m_nMusicVolume;
+			out<<m_nMusicVolume<<'\n';
+			out<<Ailevel<<'\n';
+			out<<playerDiff;
 
 		}
 		out.close();

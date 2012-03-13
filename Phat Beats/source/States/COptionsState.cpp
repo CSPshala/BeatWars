@@ -8,12 +8,14 @@
 #include "../Globals.h"
 #include "CGameplay_State.h"
 #include "CPause_State.h"
+#include "CLoad_State.h"
 
 COptionsState::COptionsState( void )
 {
-	SetDifficulty(HARD);
-	SetAILevel(AI_HARD);
 
+	CLoad_State::GetInstance()->loadGameSetting();
+	SetDifficulty(HARD);
+	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
 }
 COptionsState::~COptionsState(void)
 {
@@ -37,6 +39,9 @@ void COptionsState::Enter(void)
 	CGame::GetInstance()->GetSFXVolume();
 	CGame::GetInstance()->GetMusicVolume();
 	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
+
+	m_nMusicVolume = CLoad_State::GetInstance()->GetMusicVolume();
+	m_nFXVolume = CLoad_State::GetInstance()->GetFXVolume();
 
 	//setting the images in the texture manager
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png" );	

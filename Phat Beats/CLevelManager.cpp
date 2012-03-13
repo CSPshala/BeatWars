@@ -270,6 +270,8 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			m_vSongs.pop();
 			SetState(Pausing);
 			m_fGameTransitionAlpha = 1;
+			GetPlayer(PlayerOne)->SetTakeDown(0);
+			GetPlayer(PlayerTwo)->SetTakeDown(0);
 		}	
 	}
 	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) 

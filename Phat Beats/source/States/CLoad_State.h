@@ -34,16 +34,24 @@ public:
 	void Exit(void); // Leaves the Game State
 	string loadGame();
 	static CLoad_State* GetInstance();	
-
+	void loadGameSetting();
 	// Accessors
 	int GetSlotNumber() {return m_nSlotNumber;}
 	string GetFileName() {return m_szSongFileName;}
 	bool GetLoadFlag() {return m_nLoadFlag;}
 	string GetSongName() {return m_szSongName;}
+	float GetFXVolume() {return m_fFxVolume;}
+	float GetMusicVolume() {return m_fMusicVolume;}
+	int GetAILevel() {return m_nAiLevel;}
+	int GetPlayerDiff() {return m_nPlayerDiff;}
 	// Mutators
 	void SetFileName(string szFileName) {m_szSongFileName = szFileName;}
 	void SetSlotNumber(int nSlotNumber) {m_nSlotNumber = nSlotNumber;}
 	void SetSongName(string szSongName) {m_szSongName = szSongName;}
+	void SetFXVolume(float fFxVolume) {m_fFxVolume = fFxVolume;}
+	void SetMusicVolume(float fMusicVolume) {m_fMusicVolume = fMusicVolume;}
+	void SetAILevel(int nAiLevel) {m_nAiLevel = nAiLevel;}
+	void SetPlayerDiff(int nPlayerDiff) {m_nPlayerDiff = nPlayerDiff;}
 private:
 	// Proper singleton
 	CLoad_State(const CLoad_State&);
@@ -74,7 +82,13 @@ private:
 	int m_nGameImageID;
 	int m_nLoadID;
 	int m_nLoadImageID;
-	
+	// loading volume
+	float m_fFxVolume;
+	float m_fMusicVolume;
+
+	// loading difficulty ai and player
+	int m_nAiLevel;
+	int m_nPlayerDiff;
 };
 
 #endif

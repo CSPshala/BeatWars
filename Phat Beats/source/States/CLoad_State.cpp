@@ -229,5 +229,28 @@ string CLoad_State::loadGame()
 		}
 		inFile.close();
 	}
+
+
 	return GetFileName();
+}
+
+void CLoad_State::loadGameSetting()
+{
+	ifstream in("resource/saves/gameconfig.ass");
+
+	if (in.is_open())
+	{
+		if (in.good())
+		{
+			in>>m_fFxVolume;
+			in>>m_fMusicVolume;
+			in>>m_nAiLevel;
+			in>>m_nPlayerDiff;
+			SetAILevel(m_nAiLevel);
+			SetPlayerDiff(m_nPlayerDiff);
+			SetFXVolume(m_fFxVolume);
+			SetMusicVolume(m_fMusicVolume);
+		}
+		in.close();
+	}
 }
