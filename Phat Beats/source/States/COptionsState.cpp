@@ -13,6 +13,7 @@ COptionsState::COptionsState( void )
 {
 	SetDifficulty(HARD);
 	SetAILevel(AI_HARD);
+
 }
 COptionsState::~COptionsState(void)
 {
