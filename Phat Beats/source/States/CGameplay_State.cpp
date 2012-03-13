@@ -57,7 +57,7 @@ void CGameplay_State::Enter(void)
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
-			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CBeatManager::GetInstance()->LoadSongBIN(CLoad_State::GetInstance()->loadGame());
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
