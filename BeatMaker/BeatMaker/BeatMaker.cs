@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 
 using SGP;
@@ -1434,91 +1435,197 @@ namespace BeatMaker
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "XML Files | *.xml;*.XML";
+            dlg.Filter = "All Files(*.*)|*.*|Beat File(*.beat)|*.beat|XML File(*.xml)|*.xml";
             dlg.Title = "Save Active Beat List";
-            dlg.FilterIndex = 2;
+            dlg.FilterIndex = 3;
             dlg.DefaultExt = "xml";
             dlg.AddExtension = true;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                XElement xRoot = new XElement("Song");
+               var extension = Path.GetExtension(dlg.FileName);
 
-                if(szSongName == "")
+                // Switching save functions based on file extension
+
+               switch (extension.ToLower())
+               {
+                   case ".xml":
+                       SaveXML(dlg);
+                       break;
+
+                   case ".beat":
+                       SaveBIN(dlg);
+                       break;
+
+                   default:
+                       throw new ArgumentOutOfRangeException(extension);  
+               }
+            }
+        }
+
+        private void SaveXML(SaveFileDialog dlg)
+        {
+            XElement xRoot = new XElement("Song");
+
+            if (szSongName == "")
+                if (System.Windows.Forms.MessageBox.Show("The song currently has no title.  Please set.") == DialogResult.OK)
+                {
+                    setSongTitleToolStripMenuItem_Click(null, null);
+                }
+
+            // Setting song attributes
+            XAttribute xFile = new XAttribute("file", szSongFileName);
+            XAttribute xSongName = new XAttribute("name", szSongName);
+            XAttribute xDuration = new XAttribute("duration", nLengthMS);
+
+            // Adding attributes to song element
+            xRoot.Add(xFile);
+            xRoot.Add(xSongName);
+            xRoot.Add(xDuration);
+
+            // Adding icon file names
+            XElement xIconFileNames = new XElement("icons");
+
+            XAttribute wKeyFile = new XAttribute("wkey", szWKeyImage);
+            xIconFileNames.Add(wKeyFile);
+
+            XAttribute aKeyFile = new XAttribute("akey", szAKeyImage);
+            xIconFileNames.Add(aKeyFile);
+
+            XAttribute sKeyFile = new XAttribute("skey", szSKeyImage);
+            xIconFileNames.Add(sKeyFile);
+
+            XAttribute dKeyFile = new XAttribute("dkey", szDKeyImage);
+            xIconFileNames.Add(dKeyFile);
+
+            xRoot.Add(xIconFileNames);
+
+            for (int i = 0; i < listBeats.Count; ++i)
+            {
+                // Killing double notes
+                if (i != 0)
+                    if (listBeats[i].TimeOfBeat == listBeats[i - 1].TimeOfBeat)
+                        continue;
+
+                XElement xBeat = new XElement("Beat");
+
+                // Getting and adding all beat stats
+                XAttribute xTimeofbeat = new XAttribute("timeofbeat", listBeats[i].TimeOfBeat);
+                xBeat.Add(xTimeofbeat);
+
+                XAttribute xDirection = new XAttribute("direction", listBeats[i].Direction);
+                xBeat.Add(xDirection);
+
+                XAttribute xKey = new XAttribute("key", listBeats[i].KeyPress);
+                xBeat.Add(xKey);
+
+                XAttribute xDifficulty = new XAttribute("difficulty", listBeats[i].Difficulty);
+                xBeat.Add(xDifficulty);
+
+                XAttribute xWidth = new XAttribute("width", listBeats[i].Width);
+                xBeat.Add(xWidth);
+
+                XAttribute xHeight = new XAttribute("height", listBeats[i].Height);
+                xBeat.Add(xHeight);
+
+                XAttribute xBeatIs = new XAttribute("beatis", (int)listBeats[i].Completion);
+                xBeat.Add(xBeatIs);
+
+                XAttribute xEvent = new XAttribute("event", listBeats[i].Event);
+                xBeat.Add(xEvent);
+
+                // Adding beat to Song
+                xRoot.Add(xBeat);
+            }
+
+
+
+
+            // We've gotten all the beats, and now saving to the file path specified
+            xRoot.Save(dlg.FileName);
+
+
+            // Cleaning up b/c of all the news and I'm anal like that
+            GC.Collect();
+        }
+
+        private void SaveBIN(SaveFileDialog saveDlg)
+        {
+            using (BinaryWriter binWrite = new BinaryWriter(File.Open(saveDlg.FileName, FileMode.Create)))
+            {
+                if (szSongName == "")
                     if (System.Windows.Forms.MessageBox.Show("The song currently has no title.  Please set.") == DialogResult.OK)
                     {
                         setSongTitleToolStripMenuItem_Click(null, null);
                     }
 
-                // Setting song attributes
-                XAttribute xFile = new XAttribute("file",szSongFileName);
-                XAttribute xSongName = new XAttribute("name", szSongName);
-                XAttribute xDuration = new XAttribute("duration", nLengthMS);
 
-                // Adding attributes to song element
-                xRoot.Add(xFile);
-                xRoot.Add(xSongName);
-                xRoot.Add(xDuration);
+                // Writing filename using char arrray b/c bin writer throws crap in there
+                // paranoid FStream compatible stuff
+                binWrite.Write(szSongFileName.Length);
+                // Char Array
+                binWrite.Write(szSongFileName.ToCharArray());
+               
+                //Song name
+                binWrite.Write(szSongName.Length);
+                binWrite.Write(szSongName.ToCharArray());
 
-                // Adding icon file names
-                XElement xIconFileNames = new XElement("icons");
+                // Duration
+                binWrite.Write(nLengthMS);
 
-                XAttribute wKeyFile = new XAttribute("wkey",szWKeyImage);
-                xIconFileNames.Add(wKeyFile);
+                // Icon File Names
+                    //W Key
+                    binWrite.Write(szWKeyImage.Length);
+                    binWrite.Write(szWKeyImage.ToCharArray());
+                    //A Key
+                    binWrite.Write(szAKeyImage.Length);
+                    binWrite.Write(szAKeyImage.ToCharArray());
+                    //S Key
+                    binWrite.Write(szSKeyImage.Length);
+                    binWrite.Write(szSKeyImage.ToCharArray());
+                    //D Key
+                    binWrite.Write(szDKeyImage.Length);
+                    binWrite.Write(szDKeyImage.ToCharArray());
 
-                XAttribute aKeyFile = new XAttribute("akey", szAKeyImage);
-                xIconFileNames.Add(aKeyFile);
+                // How many beats there are in the list
+                binWrite.Write(listBeats.Count);                
 
-                XAttribute sKeyFile = new XAttribute("skey", szSKeyImage);
-                xIconFileNames.Add(sKeyFile);
-
-                XAttribute dKeyFile = new XAttribute("dkey", szDKeyImage);
-                xIconFileNames.Add(dKeyFile);
-
-                xRoot.Add(xIconFileNames);
-
+                // Writing out beats
                 for (int i = 0; i < listBeats.Count; ++i)
                 {
-                    XElement xBeat = new XElement("Beat");
+                    // Killing double notes
+                    if (i != 0)
+                        if (listBeats[i].TimeOfBeat == listBeats[i - 1].TimeOfBeat)
+                            continue;
 
-                    // Getting and adding all beat stats
-                    XAttribute xTimeofbeat = new XAttribute("timeofbeat",listBeats[i].TimeOfBeat);
-                    xBeat.Add(xTimeofbeat);
+                    // Writing beat time
+                    binWrite.Write(listBeats[i].TimeOfBeat);
+                    // Direction
+                    if (listBeats[i].Direction == "x")
+                        binWrite.Write(1);                   
+                    else
+                        binWrite.Write(listBeats[i].Direction.Length);
 
-                    XAttribute xDirection = new XAttribute("direction", listBeats[i].Direction);
-                    xBeat.Add(xDirection);
-
-                    XAttribute xKey = new XAttribute("key", listBeats[i].KeyPress);
-                    xBeat.Add(xKey);
-                    
-                    XAttribute xDifficulty = new XAttribute("difficulty", listBeats[i].Difficulty);
-                    xBeat.Add(xDifficulty);
-
-                    XAttribute xWidth = new XAttribute("width", listBeats[i].Width);
-                    xBeat.Add(xWidth);
-
-                    XAttribute xHeight = new XAttribute("height", listBeats[i].Height);
-                    xBeat.Add(xHeight);
-
-                    XAttribute xBeatIs = new XAttribute("beatis", (int)listBeats[i].Completion);
-                    xBeat.Add(xBeatIs);
-
-                    XAttribute xEvent = new XAttribute("event", listBeats[i].Event);
-                    xBeat.Add(xEvent);
-
-                    // Adding beat to Song
-                    xRoot.Add(xBeat);
+                    binWrite.Write(listBeats[i].Direction.ToCharArray());
+                    // Key
+                    binWrite.Write(listBeats[i].KeyPress);
+                    // Difficulty
+                    binWrite.Write(listBeats[i].Difficulty.Length);
+                    binWrite.Write(listBeats[i].Difficulty.ToCharArray());
+                    // Width
+                    binWrite.Write(listBeats[i].Width);
+                    // Height
+                    binWrite.Write(listBeats[i].Height);
+                    // Beat Type (complete or not)
+                    binWrite.Write((int)listBeats[i].Completion);
+                    // Event
+                    binWrite.Write(listBeats[i].Event.Length);
+                    binWrite.Write(listBeats[i].Event.ToCharArray());
                 }
 
 
-
-
-                // We've gotten all the beats, and now saving to the file path specified
-                xRoot.Save(dlg.FileName);
-
-
-                // Cleaning up b/c of all the news and I'm anal like that
-                GC.Collect();
+                // Dundee
+              
             }
         }
 
@@ -2320,7 +2427,8 @@ namespace BeatMaker
 
             for (int i = 0; i < SelectedBeats.Count; ++i)
                 listBeats[SelectedBeats[i]].Difficulty = szDifficulty;
-        }     
-        
+        }
+
+       
     }
 }

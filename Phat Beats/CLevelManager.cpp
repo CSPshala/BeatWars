@@ -223,9 +223,11 @@ const void CLevelManager::HandlePausingInput(void) {
 		BeatMan->Stop();
 
 		if(!m_vSongs.empty())
+		{
 			BeatMan->Play(m_vSongs.front());
-
-		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+		}
+		
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){

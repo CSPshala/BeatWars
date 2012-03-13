@@ -99,6 +99,10 @@
             this.loadSImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PlayControlPanel = new System.Windows.Forms.Panel();
+            this.PlaySpeedLabel = new System.Windows.Forms.Label();
+            this.PlaySpeedThirdButton = new System.Windows.Forms.Button();
+            this.PlaySpeedHalfButton = new System.Windows.Forms.Button();
+            this.PlaySpeed1xButton = new System.Windows.Forms.Button();
             this.RewindButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
@@ -115,10 +119,6 @@
             this.TimeCurrentLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LengthLabel = new System.Windows.Forms.Label();
-            this.PlaySpeed1xButton = new System.Windows.Forms.Button();
-            this.PlaySpeedHalfButton = new System.Windows.Forms.Button();
-            this.PlaySpeedThirdButton = new System.Windows.Forms.Button();
-            this.PlaySpeedLabel = new System.Windows.Forms.Label();
             this.BeatMakerMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -173,7 +173,7 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -183,7 +183,7 @@
             this.beatListxmlToolStripMenuItem,
             this.musicTrackToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "&Open";
             // 
             // beatListxmlToolStripMenuItem
@@ -203,14 +203,14 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -226,7 +226,7 @@
             // setSongTitleToolStripMenuItem
             // 
             this.setSongTitleToolStripMenuItem.Name = "setSongTitleToolStripMenuItem";
-            this.setSongTitleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.setSongTitleToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.setSongTitleToolStripMenuItem.Text = "&Set Song Title";
             this.setSongTitleToolStripMenuItem.Click += new System.EventHandler(this.setSongTitleToolStripMenuItem_Click);
             // 
@@ -237,27 +237,27 @@
             this.HalfSpeedMenuItem,
             this.ThirdSpeedMenuItem});
             this.musicSpeedToolStripMenuItem.Name = "musicSpeedToolStripMenuItem";
-            this.musicSpeedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.musicSpeedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.musicSpeedToolStripMenuItem.Text = "Music Speed";
             // 
             // NormalSpeedMenuItem
             // 
             this.NormalSpeedMenuItem.Name = "NormalSpeedMenuItem";
-            this.NormalSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NormalSpeedMenuItem.Size = new System.Drawing.Size(91, 22);
             this.NormalSpeedMenuItem.Text = "1x";
             this.NormalSpeedMenuItem.Click += new System.EventHandler(this.NormalSpeedMenuItem_Click);
             // 
             // HalfSpeedMenuItem
             // 
             this.HalfSpeedMenuItem.Name = "HalfSpeedMenuItem";
-            this.HalfSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.HalfSpeedMenuItem.Size = new System.Drawing.Size(91, 22);
             this.HalfSpeedMenuItem.Text = "1/2";
             this.HalfSpeedMenuItem.Click += new System.EventHandler(this.HalfSpeedMenuItem_Click);
             // 
             // ThirdSpeedMenuItem
             // 
             this.ThirdSpeedMenuItem.Name = "ThirdSpeedMenuItem";
-            this.ThirdSpeedMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ThirdSpeedMenuItem.Size = new System.Drawing.Size(91, 22);
             this.ThirdSpeedMenuItem.Text = "1/3";
             this.ThirdSpeedMenuItem.Click += new System.EventHandler(this.ThirdSpeedMenuItem_Click);
             // 
@@ -895,6 +895,46 @@
             this.PlayControlPanel.Size = new System.Drawing.Size(200, 100);
             this.PlayControlPanel.TabIndex = 6;
             // 
+            // PlaySpeedLabel
+            // 
+            this.PlaySpeedLabel.AutoSize = true;
+            this.PlaySpeedLabel.Location = new System.Drawing.Point(68, 48);
+            this.PlaySpeedLabel.Name = "PlaySpeedLabel";
+            this.PlaySpeedLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PlaySpeedLabel.Size = new System.Drawing.Size(61, 13);
+            this.PlaySpeedLabel.TabIndex = 9;
+            this.PlaySpeedLabel.Text = "Play Speed";
+            // 
+            // PlaySpeedThirdButton
+            // 
+            this.PlaySpeedThirdButton.Location = new System.Drawing.Point(119, 65);
+            this.PlaySpeedThirdButton.Name = "PlaySpeedThirdButton";
+            this.PlaySpeedThirdButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeedThirdButton.TabIndex = 8;
+            this.PlaySpeedThirdButton.Text = "1/3";
+            this.PlaySpeedThirdButton.UseVisualStyleBackColor = true;
+            this.PlaySpeedThirdButton.Click += new System.EventHandler(this.PlaySpeedThirdButton_Click);
+            // 
+            // PlaySpeedHalfButton
+            // 
+            this.PlaySpeedHalfButton.Location = new System.Drawing.Point(81, 65);
+            this.PlaySpeedHalfButton.Name = "PlaySpeedHalfButton";
+            this.PlaySpeedHalfButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeedHalfButton.TabIndex = 7;
+            this.PlaySpeedHalfButton.Text = "1/2";
+            this.PlaySpeedHalfButton.UseVisualStyleBackColor = true;
+            this.PlaySpeedHalfButton.Click += new System.EventHandler(this.PlaySpeedHalfButton_Click);
+            // 
+            // PlaySpeed1xButton
+            // 
+            this.PlaySpeed1xButton.Location = new System.Drawing.Point(42, 65);
+            this.PlaySpeed1xButton.Name = "PlaySpeed1xButton";
+            this.PlaySpeed1xButton.Size = new System.Drawing.Size(33, 32);
+            this.PlaySpeed1xButton.TabIndex = 6;
+            this.PlaySpeed1xButton.Text = "1x";
+            this.PlaySpeed1xButton.UseVisualStyleBackColor = true;
+            this.PlaySpeed1xButton.Click += new System.EventHandler(this.PlaySpeed1xButton_Click);
+            // 
             // RewindButton
             // 
             this.RewindButton.BackgroundImage = global::BeatMaker.Properties.Resources.rewind32;
@@ -1061,46 +1101,6 @@
             this.LengthLabel.Size = new System.Drawing.Size(71, 13);
             this.LengthLabel.TabIndex = 0;
             this.LengthLabel.Text = "Song Length:";
-            // 
-            // PlaySpeed1xButton
-            // 
-            this.PlaySpeed1xButton.Location = new System.Drawing.Point(42, 65);
-            this.PlaySpeed1xButton.Name = "PlaySpeed1xButton";
-            this.PlaySpeed1xButton.Size = new System.Drawing.Size(33, 32);
-            this.PlaySpeed1xButton.TabIndex = 6;
-            this.PlaySpeed1xButton.Text = "1x";
-            this.PlaySpeed1xButton.UseVisualStyleBackColor = true;
-            this.PlaySpeed1xButton.Click += new System.EventHandler(this.PlaySpeed1xButton_Click);
-            // 
-            // PlaySpeedHalfButton
-            // 
-            this.PlaySpeedHalfButton.Location = new System.Drawing.Point(81, 65);
-            this.PlaySpeedHalfButton.Name = "PlaySpeedHalfButton";
-            this.PlaySpeedHalfButton.Size = new System.Drawing.Size(33, 32);
-            this.PlaySpeedHalfButton.TabIndex = 7;
-            this.PlaySpeedHalfButton.Text = "1/2";
-            this.PlaySpeedHalfButton.UseVisualStyleBackColor = true;
-            this.PlaySpeedHalfButton.Click += new System.EventHandler(this.PlaySpeedHalfButton_Click);
-            // 
-            // PlaySpeedThirdButton
-            // 
-            this.PlaySpeedThirdButton.Location = new System.Drawing.Point(119, 65);
-            this.PlaySpeedThirdButton.Name = "PlaySpeedThirdButton";
-            this.PlaySpeedThirdButton.Size = new System.Drawing.Size(33, 32);
-            this.PlaySpeedThirdButton.TabIndex = 8;
-            this.PlaySpeedThirdButton.Text = "1/3";
-            this.PlaySpeedThirdButton.UseVisualStyleBackColor = true;
-            this.PlaySpeedThirdButton.Click += new System.EventHandler(this.PlaySpeedThirdButton_Click);
-            // 
-            // PlaySpeedLabel
-            // 
-            this.PlaySpeedLabel.AutoSize = true;
-            this.PlaySpeedLabel.Location = new System.Drawing.Point(68, 48);
-            this.PlaySpeedLabel.Name = "PlaySpeedLabel";
-            this.PlaySpeedLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.PlaySpeedLabel.Size = new System.Drawing.Size(61, 13);
-            this.PlaySpeedLabel.TabIndex = 9;
-            this.PlaySpeedLabel.Text = "Play Speed";
             // 
             // BeatMaker
             // 
