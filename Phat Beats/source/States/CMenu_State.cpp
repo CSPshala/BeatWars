@@ -107,6 +107,11 @@ bool CMenu_State::Input(void)
 			}
 			break;
 
+		case MAINMENU_TUTORIAL:
+			{
+				
+			}
+			break;
 
 		case MAINMENU_EXIT:
 			{
@@ -180,6 +185,13 @@ void CMenu_State::Render(void)
 		}
 		break;
 
+	case MAINMENU_TUTORIAL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_TUTORIAL));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 768, topSelection  + (spacing * MAINMENU_TUTORIAL), -1.0f);
+		}
+		break;
+
 	case MAINMENU_EXIT:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_EXIT));
@@ -189,7 +201,7 @@ void CMenu_State::Render(void)
 	}
 	
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nhow to play\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 }
 

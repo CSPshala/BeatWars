@@ -45,11 +45,14 @@ void COptionsState::Enter(void)
 	m_nOptionsID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/options.png");
 	//TODO:
 	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
-	//m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/cantina.mp3", FMOD_LOOP_NORMAL);
+	m_nBGM = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/cantina.mp3", FMOD_LOOP_NORMAL);
 
 	// setting the volume for background music
 	CSGD_FModManager::GetInstance()->SetVolume(m_nBGM,CGame::GetInstance()->GetMusicVolume());
 	CSGD_FModManager::GetInstance()->SetPan(m_nBGM,CGame::GetInstance()->GetPanVolume());
+
+	// music sound
+	CSGD_FModManager::GetInstance()->PlaySoundA(m_nBGM);
 
 }
 bool COptionsState::Input(void)
@@ -84,6 +87,7 @@ bool COptionsState::Input(void)
 		{
 		case OPTIONSMENU_SFXVOL:
 			m_nFXVolume -= 0.001f;
+			SetFXVol(m_nFXVolume);
 			if( m_nFXVolume <= 0.0f )
 			{
 				m_nFXVolume = 0.0f;
@@ -93,6 +97,7 @@ bool COptionsState::Input(void)
 			break;
 		case OPTIONSMENU_MUSICVOL:			
 			m_nMusicVolume -= 0.001f;
+			SetMusicVol(m_nMusicVolume);
 			if( m_nMusicVolume <= 0.0f )
 			{
 				m_nMusicVolume = 0.0f;
@@ -172,6 +177,7 @@ bool COptionsState::Input(void)
 		case OPTIONSMENU_SFXVOL:
 			{			
 				m_nFXVolume += 0.001f;
+				SetFXVol(m_nFXVolume);
 				if( m_nFXVolume >= 1.0f )
 				{
 					m_nFXVolume = 1.0f;
@@ -182,6 +188,7 @@ bool COptionsState::Input(void)
 		case OPTIONSMENU_MUSICVOL:
 
 			m_nMusicVolume += 0.001f;
+			SetMusicVol(m_nMusicVolume);
 			if( m_nMusicVolume >= 1.0f )
 			{
 				m_nMusicVolume = 1.0f;

@@ -57,5 +57,5 @@ public:
 	float GetFXVol() {return m_nFXVolume;}
 	void SetFXVol(float nFXVolume) {m_nFXVolume = nFXVolume;}
 	float GetMusicVol() {return m_nMusicVolume;}
-	float SetMusicVol(float nMusicVolume) {m_nMusicVolume = nMusicVolume;}
+	void SetMusicVol(float nMusicVolume) {m_nMusicVolume = nMusicVolume;}
 };
