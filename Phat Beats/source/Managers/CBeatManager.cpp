@@ -92,7 +92,7 @@ bool CBeatManager::LoadSong(string szFileName)
 	szSongPath += buffer;
 
 	// Loading song and setting SongID.
-	theSong->SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str()));
+	theSong->SetSongID(CSGD_FModManager::GetInstance()->LoadSound(szSongPath.c_str(),FMOD_CREATESTREAM));
 
 	//*************SETTING SONG NAME********************//
 	const char* txtName = NULL;
