@@ -379,17 +379,17 @@ const void CLevelManager::Render(void){
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
 
-	TexMan->DrawF(m_nHudID, 70.0f, 55.0f, 1.0f, 1.0f, &rectLeftPowerup);
-	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 55.0f, 1.0f, 1.0f, &rectRightPowerup);
+	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
+	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 10.0f, 1.0f, 1.0f, &rectLeftSaber);
-	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 10.0f, 1.0f, 1.0f, &rectRightSaber);
+	TexMan->DrawF(m_nHudID, 59.0f, 30.0f, 1.0f, 1.0f, &rectLeftSaber);
+	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 30.0f, 1.0f, 1.0f, &rectRightSaber);
 
-	TexMan->DrawF(m_nHudID, 20.0f, 17.0f, 1.0f, 1.0f, &rectLeftHandle);
-	TexMan->DrawF(m_nHudID, 722.0f, 21.0f, 1.0f, 1.0f, &rectRightHandle);
+	TexMan->DrawF(m_nHudID, 20.0f, 37.0f, 1.0f, 1.0f, &rectLeftHandle);
+	TexMan->DrawF(m_nHudID, 722.0f, 41.0f, 1.0f, 1.0f, &rectRightHandle);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
-	TexMan->DrawF(m_nHudID, 529.0f, 45.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
 	// Draw Particles
 	FxMan->Render();
