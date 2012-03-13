@@ -21,6 +21,7 @@ using std::queue;
 #include "CBeat.h"
 #include "IBaseInterface.h"
 #include "Managers/IListener.h"
+#include "Managers/CXBOXManager.h"
 #include "CAnimation.h"
 ////////////////////////////////////////
 //		   FORWARD DECLARATIONS
@@ -118,6 +119,8 @@ private:
 		int m_nAILevel; // setting the ai level from option state
 		// Aim Specific stuff
 		float m_fRotation; // Rotation of cone (in degrees)
+		CXBOXController* Player1;
+		CXBOXController* Player2;
 		
 		// Attack mode bool.  If false = Defense mode
 		bool m_bAttackMode;

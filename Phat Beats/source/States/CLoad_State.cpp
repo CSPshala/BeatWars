@@ -44,60 +44,124 @@ void CLoad_State::Enter(void)
 	m_nLoadID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/load.png");
 	m_nGameImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nLoadImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/phatbeatsscreen2.png");
+	m_nTitleID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/Back.png");
 }
 
 bool CLoad_State::Input(void)
 {
-
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
-		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
-
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
+#pragma region KEYBOARD
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		m_nMenuSelection -= 1;
-		if (m_nMenuSelection == -1)
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
+			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
-			m_nMenuSelection = NUM_LOADMENU_OPTIONS - 1;
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
+			{
+				m_nMenuSelection = NUM_LOADMENU_OPTIONS - 1;
+			}
+		}
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection == NUM_LOADMENU_OPTIONS )
+			{
+				m_nMenuSelection = 0;
+			}
 
 		}
-	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
-	{
-		m_nMenuSelection += 1;
 
-		if( m_nMenuSelection == NUM_LOADMENU_OPTIONS )
+		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 		{
-			m_nMenuSelection = 0;
+			switch( m_nMenuSelection )
+			{
+			case LOADMENU_SLOTONE:
+				{
+					m_nLoadFlag = true;
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case LOADMENU_SLOTTWO:
+				{
+					m_nLoadFlag = true;			
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case LOADMENU_SLOTTHREE:
+				{
+					m_nLoadFlag = true;		
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+
+			}
 		}
 
 	}
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
+
+#pragma endregion
+
+#pragma region XBOX
+
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		switch( m_nMenuSelection )
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
-		case LOADMENU_SLOTONE:
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
 			{
-				m_nLoadFlag = true;
-				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				m_nMenuSelection = NUM_LOADMENU_OPTIONS - 1;
+
 			}
-			break;
-		case LOADMENU_SLOTTWO:
+		}
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection == NUM_LOADMENU_OPTIONS )
 			{
-				m_nLoadFlag = true;			
-				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				m_nMenuSelection = 0;
 			}
-			break;
-		case LOADMENU_SLOTTHREE:
-			{
-				m_nLoadFlag = true;		
-				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
-			}
-			break;
 
 		}
+
+		if( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			switch( m_nMenuSelection )
+			{
+			case LOADMENU_SLOTONE:
+				{
+					m_nLoadFlag = true;
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case LOADMENU_SLOTTWO:
+				{
+					m_nLoadFlag = true;			
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case LOADMENU_SLOTTHREE:
+				{
+					m_nLoadFlag = true;		
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+
+			}
+		}
 	}
+
+#pragma endregion
+
+
 	return true;
 }
 
@@ -117,6 +181,9 @@ void CLoad_State::Render(void)
 	RECT gImage = {0,350,290,550};
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
+	CBitmapFont::GetInstance()->PrintText("Back", 100, 500, D3DCOLOR_XRGB(255, 255, 255));
+
+	CSGD_TextureManager::GetInstance()->Draw(m_nTitleID, 10, 500, 1.0f, 1.0f);
 	
 	//CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	 Draw everything now that is queued up
 	/*

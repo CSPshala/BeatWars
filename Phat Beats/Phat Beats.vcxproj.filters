@@ -133,6 +133,9 @@
     <ClCompile Include="CLevelManager.cpp">
       <Filter>Game Management\Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Managers\CXBOXManager.cpp">
+      <Filter>Game Management\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h">
@@ -275,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="source\States\CSave_State.h">
       <Filter>Game States\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Managers\CXBOXManager.h">
+      <Filter>Game Management\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -46,66 +46,140 @@ void CPause_State::Enter(void)
 
 bool CPause_State::Input(void)
 {
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
-		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
-
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+#pragma region KEYBOARD
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		m_nMenuSelection -= 1;
-		if (m_nMenuSelection == -1)
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
+			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 		{
-			m_nMenuSelection = NUM_PAUSEMENU_OPTIONS - 1;
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
+			{
+				m_nMenuSelection = NUM_PAUSEMENU_OPTIONS - 1;
+
+			}
+		}
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
+			{
+				m_nMenuSelection = PAUSEMENU_EXIT;
+			}
 
 		}
-	}
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
-	{
-		m_nMenuSelection += 1;
 
-		if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
+		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) )
 		{
-			m_nMenuSelection = PAUSEMENU_EXIT;
-		}
-
-	}
-
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) )
-	{
-		switch( m_nMenuSelection )
-		{
-		case PAUSEMENU_EXIT:
+			switch( m_nMenuSelection )
 			{
-				CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+			case PAUSEMENU_EXIT:
+				{
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case PAUSEMENU_MAINMENU:
+				{
+					CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+					CGameplay_State::GetInstance()->Exit();
+					CLevelManager::GetInstance()->EmptySongQueue();
+					CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_LOAD:
+				{
+					CGame::GetInstance()->ChangeState( CLoad_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_SAVE:
+				{
+					CGame::GetInstance()->ChangeState(CSave_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_OPTIONSTATE:
+				{
+					CGame::GetInstance()->ChangeState(COptionsState::GetInstance() );
+					m_IsbGameState = true;
+					SetPauseState(m_IsbGameState);
+				}
+				break;
 			}
-			break;
-		case PAUSEMENU_MAINMENU:
-			{
-				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
-				CGameplay_State::GetInstance()->Exit();
-				CLevelManager::GetInstance()->EmptySongQueue();
-				CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
-			}
-			break;
-		case PAUSEMENU_LOAD:
-			{
-				CGame::GetInstance()->ChangeState( CLoad_State::GetInstance() );
-			}
-			break;
-		case PAUSEMENU_SAVE:
-			{
-				CGame::GetInstance()->ChangeState(CSave_State::GetInstance() );
-			}
-			break;
-		case PAUSEMENU_OPTIONSTATE:
-			{
-				CGame::GetInstance()->ChangeState(COptionsState::GetInstance() );
-				m_IsbGameState = true;
-				SetPauseState(m_IsbGameState);
-			}
-			break;
 		}
 	}
+
+#pragma endregion
+
+#pragma region XBOX
+
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
+	{
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+		{
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
+			{
+				m_nMenuSelection = NUM_PAUSEMENU_OPTIONS - 1;
+
+			}
+		}
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
+			{
+				m_nMenuSelection = PAUSEMENU_EXIT;
+			}
+
+		}
+
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			switch( m_nMenuSelection )
+			{
+			case PAUSEMENU_EXIT:
+				{
+					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+				}
+				break;
+			case PAUSEMENU_MAINMENU:
+				{
+					CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+					CGameplay_State::GetInstance()->Exit();
+					CLevelManager::GetInstance()->EmptySongQueue();
+					CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_LOAD:
+				{
+					CGame::GetInstance()->ChangeState( CLoad_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_SAVE:
+				{
+					CGame::GetInstance()->ChangeState(CSave_State::GetInstance() );
+				}
+				break;
+			case PAUSEMENU_OPTIONSTATE:
+				{
+					CGame::GetInstance()->ChangeState(COptionsState::GetInstance() );
+					m_IsbGameState = true;
+					SetPauseState(m_IsbGameState);
+				}
+				break;
+			}
+		}
+	}
+
+#pragma endregion
+
 	return true;
 }
 

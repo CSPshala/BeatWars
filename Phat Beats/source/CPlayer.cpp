@@ -64,6 +64,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		SetPosX(200.0f - 64.0f);  // Offsetting to get the base of the cone right on point
 		SetPosY(300.0f - 128.0f);
 		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxJedi.png");
+		Player1 = new CXBOXController(1);
 		break;
 
 	case OBJ_PLAYER2:
@@ -71,6 +72,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 		SetPosX(600.0f - 64.0f); // Ditto
 		SetPosY(300.0f - 128.0f);
 		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxSith.png");
+		Player2 = new CXBOXController(2);
 		break;
 	case OBJ_AI:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
@@ -91,6 +93,9 @@ CPlayer::~CPlayer()
 {		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 	
+	delete Player1;
+	delete Player2;
+
 	CAnimationManager AM;
 	AM.UnloadAnimations(m_vecAnimations);
 }
@@ -250,43 +255,89 @@ void CPlayer::HandleEvent( CEvent* pEvent )
 ////////////////////////////////////////
 void CPlayer::P1InputHandling()
 {
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
-		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
-		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
-		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
-		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
-		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
-		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 0))
-		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
-		SetAimingDirection(DOWN);
-
-	// Checking for Stance change
-	if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(5, 0))
+	if (!Player1->IsConnected())
 	{
- 		if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
-		{
-			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
-			SetAttackModeTimer(0);
-			// Setting particle effect on hilt to show mode
-			if(GetAttackMode())
-			{
-				CFXManager::GetInstance()->DequeueParticle("P1GUARD");
-				CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-			}
-			else
-			{
-				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-				CFXManager::GetInstance()->QueueParticle("P1GUARD");
-			}
+		if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(LEFTUP);
+		else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(LEFTDOWN);
+		else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+			SetAimingDirection(LEFT);
+		else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(RIGHTUP);
+		else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(RIGHTDOWN);
+		else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
+			SetAimingDirection(RIGHT);
+		else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(UP);
+		else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(DOWN);
 
-			SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+		// Checking for Stance change
+		if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(2, 0))
+		{
+			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
+			{
+				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackModeTimer(0);
+				// Setting particle effect on hilt to show mode
+				if(GetAttackMode())
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P1GUARD");
+				}
+
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+			}
+		}
+	}
+
+	if (Player1->IsConnected())
+	{
+
+		if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(LEFTUP);
+		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(LEFTDOWN);
+		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+			SetAimingDirection(LEFT);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(RIGHTUP);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(RIGHTDOWN);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
+			SetAimingDirection(RIGHT);
+		else if(DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(UP);
+		else if(DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(DOWN);
+
+		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
+			{
+				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackModeTimer(0);
+				// Setting particle effect on hilt to show mode
+				if(GetAttackMode())
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P1GUARD");
+				}
+
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+			}
 		}
 	}
 
@@ -296,31 +347,51 @@ void CPlayer::P1InputHandling()
 		unsigned int nTime;
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
+		if (Player1->IsConnected())
+		{
+			if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				cHitKey = 'w';
+			}
+			else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+			{
+				cHitKey = 'a';
+			}
+			else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+			{
+				cHitKey = 's';
+			}
+			else if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+			{
+				cHitKey = 'd';
+			}
+		}
 
-		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 0))
-		{		
-			cHitKey = 'w';
-			//m_qKeyPresses.push(TBeatHit('w',nTime));
-		}
-		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 0))
+		if (!Player1->IsConnected())
 		{
-			cHitKey = 'a';
-			//m_qKeyPresses.push(TBeatHit('a',nTime));
+			if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(3, 0))
+			{		
+				cHitKey = 'w';
+				//m_qKeyPresses.push(TBeatHit('w',nTime));
+			}
+			else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 0))
+			{
+				cHitKey = 'a';
+				//m_qKeyPresses.push(TBeatHit('a',nTime));
+			}
+			else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 0))
+			{
+				cHitKey = 's';
+				//m_qKeyPresses.push(TBeatHit('s',nTime));
+			}
+			else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(1, 0))
+			{
+				cHitKey = 'd';
+				//m_qKeyPresses.push(TBeatHit('d',nTime));
+			}
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 0))
-		{
-			cHitKey = 's';
-			//m_qKeyPresses.push(TBeatHit('s',nTime));
-		}
-		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 0))
-		{
-			cHitKey = 'd';
-			//m_qKeyPresses.push(TBeatHit('d',nTime));
-		}
-		else if(DI->KeyPressed(DIK_Q) && GetCurrentPowerup() == GetMaxPowerup())
-		{
-			cHitKey = 'q';
-		}
+		
+
 	}
 
 	DI->ClearInput();
@@ -329,43 +400,92 @@ void CPlayer::P1InputHandling()
 void CPlayer::P2InputHandling()
 {
 	// Don't ever have p2 input running same time as P1.  Control schemes are the same
-	if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
-		SetAimingDirection(LEFTUP);
-	else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
-		SetAimingDirection(LEFTDOWN);
-	else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1))
-		SetAimingDirection(LEFT);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
-		SetAimingDirection(RIGHTUP);
-	else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
-		SetAimingDirection(RIGHTDOWN);
-	else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1))
-		SetAimingDirection(RIGHT);
-	else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 1))
-		SetAimingDirection(UP);
-	else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
-		SetAimingDirection(DOWN);
-	
-	// Checking for Stance change
-	if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(5, 1))
+	if (!Player2->IsConnected())
 	{
-		if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
-		{
-			SetAttackMode(!GetAttackMode()); // Toggling attack/defense
-			SetAttackModeTimer(0);
+		if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD7) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
+			SetAimingDirection(LEFTUP);
+		else if((DI->KeyDown(DIK_LEFT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD1) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
+			SetAimingDirection(LEFTDOWN);
+		else if(DI->KeyDown(DIK_LEFT) || DI->KeyDown(DIK_NUMPAD4) || DI->JoystickGetLStickDirDown(DIR_LEFT, 1))
+			SetAimingDirection(LEFT);
+		else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_UP)) || DI->KeyDown(DIK_NUMPAD9) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_UP, 1))
+			SetAimingDirection(RIGHTUP);
+		else if((DI->KeyDown(DIK_RIGHT) && DI->KeyDown(DIK_DOWN)) || DI->KeyDown(DIK_NUMPAD3) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1) && DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
+			SetAimingDirection(RIGHTDOWN);
+		else if(DI->KeyDown(DIK_RIGHT) || DI->KeyDown(DIK_NUMPAD6) || DI->JoystickGetLStickDirDown(DIR_RIGHT, 1))
+			SetAimingDirection(RIGHT);
+		else if(DI->KeyDown(DIK_UP) || DI->KeyDown(DIK_NUMPAD8) || DI->JoystickGetLStickDirDown(DIR_UP, 1))
+			SetAimingDirection(UP);
+		else if(DI->KeyDown(DIK_DOWN) || DI->KeyDown(DIK_NUMPAD2) || DI->JoystickGetLStickDirDown(DIR_DOWN, 1))
+			SetAimingDirection(DOWN);
 
-			if(GetAttackMode())
+		// Checking for Stance change
+		if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(2, 1))
+		{
+			if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
 			{
-				CFXManager::GetInstance()->DequeueParticle("P2GUARD");
-				CFXManager::GetInstance()->QueueParticle("P2ATTACK");
-			}
-			else
-			{
-				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
-				CFXManager::GetInstance()->QueueParticle("P2GUARD");
+				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackModeTimer(0);
+
+				if(GetAttackMode())
+				{
+					CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+					CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P2GUARD");
+				}
 			}
 		}
 	}
+
+	if (Player2->IsConnected())
+	{
+
+		if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(LEFTUP);
+		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(LEFTDOWN);
+		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+			SetAimingDirection(LEFT);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(RIGHTUP);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(RIGHTDOWN);
+		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
+			SetAimingDirection(RIGHT);
+		else if(DI->JoystickGetLStickDirDown(DIR_UP, 0))
+			SetAimingDirection(UP);
+		else if(DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+			SetAimingDirection(DOWN);
+
+		if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+		{
+			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
+			{
+				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackModeTimer(0);
+				// Setting particle effect on hilt to show mode
+				if(GetAttackMode())
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
+				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P1GUARD");
+				}
+
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+			}
+		}
+	}
+
+
+
 
 	if(FMODMAN->IsSoundPlaying(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -373,28 +493,49 @@ void CPlayer::P2InputHandling()
 		unsigned int nTime;
 		FMODMAN->GetLatestChannel(nSongID)->getPosition(&nTime,FMOD_TIMEUNIT_MS);
 
+		if (Player2->IsConnected())
+		{
+			if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				cHitKey = 'w';
+			}
+			else if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B)
+			{
+				cHitKey = 'a';
+			}
+			else if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+			{
+				cHitKey = 's';
+			}
+			else if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_X)
+			{
+				cHitKey = 'd';
+			}
+		}
 
-		if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(1, 1))
-		{		
-			cHitKey = 'w';
-			//m_qKeyPresses.push(TBeatHit('w',nTime));
-		}
-		else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 1))
+		if (!Player2->IsConnected())
 		{
-			cHitKey = 'a';
-			//m_qKeyPresses.push(TBeatHit('a',nTime));
+			if(DI->KeyPressed(DIK_W) || DI->JoystickButtonPressed(3, 1))
+			{		
+				cHitKey = 'w';
+				//m_qKeyPresses.push(TBeatHit('w',nTime));
+			}
+			else if(DI->KeyPressed(DIK_A) || DI->JoystickButtonPressed(0, 1))
+			{
+				cHitKey = 'a';
+				//m_qKeyPresses.push(TBeatHit('a',nTime));
+			}
+			else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 1))
+			{
+				cHitKey = 's';
+				//m_qKeyPresses.push(TBeatHit('s',nTime));
+			}
+			else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(1, 1))
+			{
+				cHitKey = 'd';
+				//m_qKeyPresses.push(TBeatHit('d',nTime));
+			}
 		}
-		else if(DI->KeyPressed(DIK_S) || DI->JoystickButtonPressed(4, 1))
-		{
-			cHitKey = 's';
-			//m_qKeyPresses.push(TBeatHit('s',nTime));
-		}
-		else if(DI->KeyPressed(DIK_D) || DI->JoystickButtonPressed(2, 1))
-		{
-			cHitKey = 'd';
-			//m_qKeyPresses.push(TBeatHit('d',nTime));
-		}
-		
 	}
 
 	DI->ClearInput();

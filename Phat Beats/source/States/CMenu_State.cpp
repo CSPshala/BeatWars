@@ -31,7 +31,6 @@ CMenu_State::CMenu_State()
 
 CMenu_State::~CMenu_State()
 {
-
 }
 
 void CMenu_State::Enter(void)
@@ -46,73 +45,149 @@ void CMenu_State::Enter(void)
 
 bool CMenu_State::Input(void)
 {
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1) )
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		m_nMenuSelection -= 1;
-		if( m_nMenuSelection == -1 )
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1) )
 		{
-			m_nMenuSelection = MAINMENU_EXIT;
+			m_nMenuSelection -= 1;
+			if( m_nMenuSelection == -1 )
+			{
+				m_nMenuSelection = MAINMENU_EXIT;
+			}
+
 		}
 
-	}
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
-	{
-		m_nMenuSelection += 1;
-
-		if( m_nMenuSelection == NUM_MAINMENU_OPTIONS )
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 		{
-			m_nMenuSelection = 0;
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection == NUM_MAINMENU_OPTIONS )
+			{
+				m_nMenuSelection = 0;
+			}
+		}
+
+		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 1) )
+		{
+			switch( m_nMenuSelection )
+			{
+			case MAINMENU_NEWGAME:
+				{
+					// Private function that wraps up CLU load calls to 
+					// keep this area clean
+					LoadGameplayStateAssets();
+				}
+				break;
+
+			case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
+				{
+					CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
+				}
+				break;
+
+			case MAINMENU_OPTIONS:
+				{
+					CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
+				}
+				break;		
+			case MAINMENU_CREDITS:
+				{
+					//CGame::GetInstance()->ChangeState()
+				}
+				break;
+			case MAINMENU_LEVEL:
+				{
+					CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
+				}
+				break;
+
+			case MAINMENU_ARCADE:
+				{
+					CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
+				}
+				break;
+
+
+			case MAINMENU_EXIT:
+				{
+					return false;
+				}
+				break;
+
+			}
 		}
 	}
-
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 1) )
+	
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		switch( m_nMenuSelection )
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1) )
 		{
-		case MAINMENU_NEWGAME:
+			m_nMenuSelection -= 1;
+			if( m_nMenuSelection == -1 )
 			{
-				// Private function that wraps up CLU load calls to 
-				// keep this area clean
-				LoadGameplayStateAssets();
+				m_nMenuSelection = MAINMENU_EXIT;
 			}
-			break;
 
-		case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
-			{
-				CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
-			}
-			break;
+		}
 
-		case MAINMENU_OPTIONS:
-			{
-				CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
-			}
-			break;		
-		case MAINMENU_CREDITS:
-			{
-				//CGame::GetInstance()->ChangeState()
-			}
-			break;
-		case MAINMENU_LEVEL:
-			{
-				CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
-			}
-			break;
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
 
-		case MAINMENU_ARCADE:
+			if( m_nMenuSelection == NUM_MAINMENU_OPTIONS )
 			{
-				CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
+				m_nMenuSelection = 0;
 			}
-			break;
+		}
 
-
-		case MAINMENU_EXIT:
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			switch( m_nMenuSelection )
 			{
-				return false;
-			}
-			break;
+			case MAINMENU_NEWGAME:
+				{
+					// Private function that wraps up CLU load calls to 
+					// keep this area clean
+					LoadGameplayStateAssets();
+				}
+				break;
 
+			case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
+				{
+					CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
+				}
+				break;
+
+			case MAINMENU_OPTIONS:
+				{
+					CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
+				}
+				break;		
+			case MAINMENU_CREDITS:
+				{
+					//CGame::GetInstance()->ChangeState()
+				}
+				break;
+			case MAINMENU_LEVEL:
+				{
+					CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
+				}
+				break;
+
+			case MAINMENU_ARCADE:
+				{
+					CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
+				}
+				break;
+
+
+			case MAINMENU_EXIT:
+				{
+					return false;
+				}
+				break;
+
+			}
 		}
 	}
 

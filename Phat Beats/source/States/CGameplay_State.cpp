@@ -161,7 +161,7 @@ bool CGameplay_State::Input(void)
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
 		{
 			SetIsTutorial(false);
 			CLevelManager::GetInstance()->SkipLevel();

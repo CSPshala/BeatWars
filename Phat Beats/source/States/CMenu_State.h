@@ -16,6 +16,7 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "..\Managers\CXBOXManager.h"
 #include "../Timer.h"
 
 // Forward Declarations
@@ -61,6 +62,7 @@ private:
 	
 	Timer GameTimer;
 	int m_nTile;
+
 
 	//*********PRIVATE UTILITY FUNCTIONS*************//
 
