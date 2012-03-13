@@ -20,7 +20,7 @@ using std::string;
 
 // Forward Declarations
 
-enum {MAINMENU_NEWGAME, MAINMENU_LOAD, MAINMENU_OPTIONS,  MAINMENU_CREDITS, MAINMENU_LEVEL, MAINMENU_EXIT, NUM_MAINMENU_OPTIONS};
+enum {MAINMENU_NEWGAME, MAINMENU_LOAD, MAINMENU_OPTIONS,  MAINMENU_CREDITS, MAINMENU_LEVEL, MAINMENU_ARCADE, MAINMENU_EXIT, NUM_MAINMENU_OPTIONS};
 
 class CMenu_State : public IGameState
 {
@@ -32,6 +32,9 @@ public:
 	void Exit(void); // Leaves the Game State
 
 	static CMenu_State* GetInstance();	
+
+	void LoadGameplayStateAssets();
+
 
 private:
 	// Proper singleton
@@ -60,7 +63,6 @@ private:
 	int m_nTile;
 
 	//*********PRIVATE UTILITY FUNCTIONS*************//
-	void LoadGameplayStateAssets();
 
 };
 

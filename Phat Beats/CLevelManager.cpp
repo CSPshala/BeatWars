@@ -32,17 +32,44 @@ CLevelManager::CLevelManager(void) {
 	
 
 	//Player 1 Animations
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	if (CGame::GetInstance()->GetCharacterSelection() == true)
+	{
+
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection() == false)
+	{
+
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection2() == true)
+	{
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+	}
+
+	if (CGame::GetInstance()->GetCharacterSelection2() == false)
+	{
+
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
+	}
 	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLuke.xml","sprites_luke_004.png"));
 	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLuke.xml","sprites_luke_005.png"));
 	//Player 2 Animations
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
-	GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 
 
 	// Set Up Assets
@@ -116,10 +143,6 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(120);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(120);
-
-	//GetPlayer(PlayerTwo)->SetAttackMode(false);
 
 	p2PrevHP = 101;
 	p1PrevHP = 101;
@@ -143,10 +166,6 @@ const void CLevelManager::EnterLevel(void) {
 	m_nRightPowerOffset = 0;
 	p2PrevPowerup = -1;
 	p1PrevPowerup = -1;
-	
-	GetPlayer(PlayerOne)->SetCurrentPower(0);
-	GetPlayer(PlayerTwo)->SetCurrentPower(0);
-
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 }
@@ -195,15 +214,9 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN)) {
-
+	if(InMan->KeyPressed(DIK_RETURN)) 
+	{
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
-
-		GetPlayer(PlayerOne)->SetCurrentHP(100);
-		GetPlayer(PlayerTwo)->SetCurrentHP(100);
-
-		// Flushing player two AI hits (dosen't matter if he's not AI)
-		GetPlayer(PlayerTwo)->GetAIBeats().clear();		
 
 		BeatMan->Stop();
 
@@ -248,14 +261,26 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		}	
 	}
 	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) {
-		m_fGameTransitionAlpha += (175 * fElapsedTime);
-		BeatMan->Stop();
+		//m_fGameTransitionAlpha += (175 * fElapsedTime);
+		//BeatMan->Stop();
+		/*
 		if (m_fGameTransitionAlpha >= 255)
+				{
+					m_vSongs.pop();
+					SetState(Pausing);
+					m_fGameTransitionAlpha = 1;
+				}*/
+		if (GetPlayer(PlayerOne)->GetCurrentHP() <= 0)
 		{
-			m_vSongs.pop();
-			SetState(Pausing);
-			m_fGameTransitionAlpha = 1;
+			GetPlayer(PlayerOne)->SetCurrentHP(100);
+			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
 		}
+		else
+		{
+			GetPlayer(PlayerTwo)->SetCurrentHP(100);
+			GetPlayer(PlayerOne)->SetTakeDown(GetPlayer(PlayerOne)->GetCurrentTakeDown()+1);
+		}
+		
 	}
 
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
@@ -352,17 +377,17 @@ const void CLevelManager::Render(void){
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
 
-	TexMan->DrawF(m_nHudID, 70.0f, 55.0f, 1.0f, 1.0f, &rectLeftPowerup);
-	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 55.0f, 1.0f, 1.0f, &rectRightPowerup);
+	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
+	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 10.0f, 1.0f, 1.0f, &rectLeftSaber);
-	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 10.0f, 1.0f, 1.0f, &rectRightSaber);
+	TexMan->DrawF(m_nHudID, 59.0f, 30.0f, 1.0f, 1.0f, &rectLeftSaber);
+	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 30.0f, 1.0f, 1.0f, &rectRightSaber);
 
-	TexMan->DrawF(m_nHudID, 20.0f, 17.0f, 1.0f, 1.0f, &rectLeftHandle);
-	TexMan->DrawF(m_nHudID, 722.0f, 21.0f, 1.0f, 1.0f, &rectRightHandle);
+	TexMan->DrawF(m_nHudID, 20.0f, 37.0f, 1.0f, 1.0f, &rectLeftHandle);
+	TexMan->DrawF(m_nHudID, 722.0f, 41.0f, 1.0f, 1.0f, &rectRightHandle);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
-	TexMan->DrawF(m_nHudID, 529.0f, 45.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
 	// Draw Particles
 	FxMan->Render();
@@ -407,6 +432,7 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Player1 Wins" << '\n';
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerOne)->GetCurrentStreak() << '\n';
+		pauseText << "Current TakeDowns: " << GetPlayer(PlayerOne)->GetCurrentTakeDown() << '\n';
 	}
 	
 	if (GetPlayer(PlayerOne)->GetCurrentHP() < GetPlayer(PlayerTwo)->GetCurrentHP())
@@ -414,6 +440,7 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Player2 Wins" << '\n';
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerTwo)->GetCurrentStreak() << '\n';
+		pauseText << "Current TakeDowns: " << GetPlayer(PlayerTwo)->GetCurrentTakeDown() << '\n';
 	}
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
