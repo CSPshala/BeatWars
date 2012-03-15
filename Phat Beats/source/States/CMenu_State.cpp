@@ -246,11 +246,9 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
 	CLU->QueueLoadCommand("darksidedub.beat","",Song);
 	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
-	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);
-	CLU->QueueLoadCommand("OldRepublic.xml","",Song);
+	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
-	CLevelManager::GetInstance()->QueueSong("jeditheme");
-	CLevelManager::GetInstance()->QueueSong("OldRepublic");
+	CLevelManager::GetInstance()->QueueSong("jeditheme");	
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");

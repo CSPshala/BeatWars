@@ -144,8 +144,8 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
+	GetPlayer(PlayerOne)->SetCurrentPowerup(0);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
 	
 	p2PrevHP = 101;
 	p1PrevHP = 101;
