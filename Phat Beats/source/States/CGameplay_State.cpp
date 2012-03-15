@@ -122,22 +122,9 @@ void CGameplay_State::Enter(void)
 
 bool CGameplay_State::Input(void)
 {
-	
-
-	if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		SetPreviouslyPlaying(true);
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-	}
-	
-	// Stopping regular play input when tutorial note is thrown
-	// (because we are in a tutorial and it's waiting for player to read something
-	if(!GetIsTutorial())
-	{
-		CLevelManager::GetInstance()->HandleLevelInput();
-
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
+		if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 		{
 			SetPreviouslyPlaying(true);
 			CLevelManager::GetInstance()->LeaveLevel();
@@ -149,28 +136,97 @@ bool CGameplay_State::Input(void)
 	{
 		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 		{
-			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+			CLevelManager::GetInstance()->HandleLevelInput();
+
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
 			{
-				SetIsTutorial(false);
-
-				++m_nTutorialTextIndex;
-
-				// Unpausing song
-				BeatManager->Pause();
+				SetPreviouslyPlaying(true);
+				CLevelManager::GetInstance()->LeaveLevel();			
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
-			else
+
+		}
+		else
+		{
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
+			{
+				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				{
+					SetIsTutorial(false);
+
+					++m_nTutorialTextIndex;
+
+					// Unpausing song
+					BeatManager->Pause();
+				}
+				else
+				{
+					SetIsTutorial(false);
+					CLevelManager::GetInstance()->SkipLevel();
+				}
+			}
+
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
 			{
 				SetIsTutorial(false);
 				CLevelManager::GetInstance()->SkipLevel();
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+	}
+
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
+	{
+		if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
 		{
-			SetIsTutorial(false);
-			CLevelManager::GetInstance()->SkipLevel();
+			SetPreviouslyPlaying(true);
+			CLevelManager::GetInstance()->LeaveLevel();
+			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+		}
+
+		// Stopping regular play input when tutorial note is thrown
+		// (because we are in a tutorial and it's waiting for player to read something
+		if(!GetIsTutorial())
+		{
+			CLevelManager::GetInstance()->HandleLevelInput();
+
+			if( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START ) 
+			{
+				SetPreviouslyPlaying(true);
+				CLevelManager::GetInstance()->LeaveLevel();			
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+			}
+
+		}
+		else
+		{
+			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				{
+					SetIsTutorial(false);
+
+					++m_nTutorialTextIndex;
+
+					// Unpausing song
+					BeatManager->Pause();
+				}
+				else
+				{
+					SetIsTutorial(false);
+					CLevelManager::GetInstance()->SkipLevel();
+				}
+			}
+
+			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+			{
+				SetIsTutorial(false);
+				CLevelManager::GetInstance()->SkipLevel();
+			}
 		}
 	}
+
+
 
 
 

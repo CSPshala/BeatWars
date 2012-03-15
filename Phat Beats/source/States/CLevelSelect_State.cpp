@@ -157,7 +157,7 @@ bool CLevelSelect_State::Input(void) {
 					GetPlaylist().push_back((int)Selected);
 			}
 		}
-		else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_R) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0)) {
+		else if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) {
 			std::vector<int>::iterator i = GetPlaylist().begin();
 
 			for(; i != GetPlaylist().end(); ++i) {
@@ -168,7 +168,7 @@ bool CLevelSelect_State::Input(void) {
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0)) {
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START) {
 			if(GetPlaylist().size() > 0) {
 				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 				CLevelManager::GetInstance()->EmptySongQueue();

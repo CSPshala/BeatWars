@@ -31,7 +31,7 @@ CGame::CGame()
 
 CGame::~CGame()
 {
-
+	delete PlayerControl;
 }
 
 CGame* CGame::GetInstance()
