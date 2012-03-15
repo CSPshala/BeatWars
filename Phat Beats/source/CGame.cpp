@@ -10,6 +10,7 @@
 #include <ctime>
 #include "States/CBitmapFont.h"
 #include "Managers/CFXManager.h"
+#include "Managers\CBeatManager.h"
 #include <iostream>
 using std::cout;
 
@@ -162,6 +163,7 @@ void CGame::Render()
 void CGame::Shutdown()
 {
 	CFXManager::GetInstance()->UnloadAllFX();
+	CBeatManager::GetInstance()->UnloadSongs();
 	if (m_pOM)
 	{
 		m_pOM->RemoveAllObjects();

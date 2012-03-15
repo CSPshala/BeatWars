@@ -115,7 +115,6 @@ bool CMenu_State::Input(void)
 
 		case MAINMENU_EXIT:
 			{
-
 				return false;
 			}
 			break;

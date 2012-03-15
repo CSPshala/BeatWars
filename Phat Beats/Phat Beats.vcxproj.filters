@@ -285,14 +285,11 @@
     <ClInclude Include="source\States\CCredit_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="source\StringHelper.h">
+<ClInclude Include="source\StringHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="resource1.h" />
->>>>>>> 01385a7b212179d4c97c701a8af2e234922bdd7e
-  </ItemGroup>
+	<ClInclude Include="resource1.h" />
+</ItemGroup>
   <ItemGroup>
     <Filter Include="Game Management">
       <UniqueIdentifier>{a10bde4a-cef1-4c46-8ddf-5cb0ef234bbb}</UniqueIdentifier>
