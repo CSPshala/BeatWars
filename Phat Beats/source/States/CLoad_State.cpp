@@ -161,6 +161,8 @@ bool CLoad_State::Input(void)
 
 #pragma endregion
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
 
 	return true;
 }

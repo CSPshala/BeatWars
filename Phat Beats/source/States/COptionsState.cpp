@@ -65,7 +65,11 @@ void COptionsState::Enter(void)
 }
 bool COptionsState::Input(void)
 {
+
 #pragma region KEYBOARD
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
 
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
