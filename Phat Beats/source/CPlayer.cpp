@@ -420,21 +420,20 @@ void CPlayer::P2InputHandling()
 			SetAttackMode(true); // Toggling attack/defense
 			SetAttackModeTimer(0);
 
-				if(GetAttackMode())
-				{
-					CFXManager::GetInstance()->DequeueParticle("P2GUARD");
-					CFXManager::GetInstance()->QueueParticle("P2ATTACK");
-				}
-				else
-				{
-					CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
-					CFXManager::GetInstance()->QueueParticle("P2GUARD");
-				}
+			if(GetAttackMode())
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+				CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+			}
+			else
+			{
+				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+				CFXManager::GetInstance()->QueueParticle("P2GUARD");
 			}
 		}
 	}
 
-	if (Player2->IsConnected())
+	if(Player2->IsConnected())
 	{
 
 		if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
