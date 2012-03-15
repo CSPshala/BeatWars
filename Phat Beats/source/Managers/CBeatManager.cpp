@@ -852,27 +852,27 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 										aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
 										CFXManager::GetInstance()->QueueParticle("P1_HIT");
-								if (aPlayer->GetCurrentStreak() >= 25)
-								{
-									aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
-								}
-								else if (aPlayer->GetCurrentStreak() >= 100)
-								{
-									aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
-								}
-								else if (aPlayer->GetCurrentStreak() >= 200)
-								{
-									aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
-								}
-								else
-									aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+										if (aPlayer->GetCurrentStreak() >= 25)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
+										}
+										else if (aPlayer->GetCurrentStreak() >= 100)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+										}
+										else if (aPlayer->GetCurrentStreak() >= 200)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+										}
+										else
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
 
 										// Upping Player1's Current combo for damage
 										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
 										SetNumberNotesHit(GetNumberNotesHit() + 1);
-							}						
-										aPlayer->SetMostRecentKeyPress('g');
 									}						
+									aPlayer->SetMostRecentKeyPress('g');
+
 
 								}
 								break;
@@ -915,9 +915,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 				//}
 			}
-				
-	}
-
+}
 
 
 	if(aPlayer->GetType() == OBJ_AI)
@@ -953,12 +951,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 					aPlayer->SetCurrentStreak(0);
 		}
 	}
-			
-		
-
-	
 }
-
 CBeatManager* CBeatManager::GetInstance()
 {
 	// Lazy instantiation
