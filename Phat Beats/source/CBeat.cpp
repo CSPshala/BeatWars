@@ -92,6 +92,7 @@ void CBeat::Update(float fElapsedTime)
 	}
 		
 
+
 }
 
 void CBeat::Render()
@@ -105,10 +106,10 @@ void CBeat::Render()
 		{
 			// Drawing player1 notes if not already hit
 			if(!GetPlayer1Hit())
-				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX(),GetPosY(),0.5f,0.5f);
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() - 16,GetPosY() - 16,0.5f,0.5f);
 			// Drawing player2 notes if not already hit. And if hasn't collided (for AI)
 			if(!GetPlayer2Hit() || !GetHasCollided())
-				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400,GetPosY(),0.5f,0.5f);
+				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400 -16,GetPosY() - 16,0.5f,0.5f);
 		}
 
 	// Drawing when player hits note
@@ -121,10 +122,10 @@ RECT CBeat::GetCollisionRect()
 {
 
 	RECT rTemp;
-	rTemp.left = (LONG)GetPosX();
-	rTemp.top = (LONG)GetPosY();
-	rTemp.right = (LONG)GetPosX() + GetWidth();
-	rTemp.bottom = (LONG)GetPosY() + GetHeight();
+	rTemp.left = (LONG)GetPosX() - 16;
+	rTemp.top = (LONG)GetPosY() - 16;
+	rTemp.right = rTemp.left + GetWidth();
+	rTemp.bottom = rTemp.top + GetHeight();
 
 	return rTemp;
 
