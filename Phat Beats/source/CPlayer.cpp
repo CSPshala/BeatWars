@@ -50,6 +50,9 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	// Setting aiming to upwards
 	SetAimingDirection(UP);	
 
+	Player1 = NULL;
+	Player2 = NULL;
+
 	// Putting player in attack mode
 	SetAttackMode(false);
 	m_vecAnimations.clear();
@@ -93,7 +96,11 @@ CPlayer::~CPlayer()
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
 	
 	delete Player1;
-	delete Player2;
+	if (Player2 != NULL)
+	{
+		delete Player2;
+
+	}
 
 	CAnimationManager AM;
 	AM.UnloadAnimations(m_vecAnimations);

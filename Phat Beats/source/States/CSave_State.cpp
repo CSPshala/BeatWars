@@ -60,7 +60,7 @@ bool CSave_State::Input(void)
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
-			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
@@ -126,7 +126,7 @@ bool CSave_State::Input(void)
 	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
-			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
