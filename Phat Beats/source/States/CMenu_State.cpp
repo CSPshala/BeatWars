@@ -167,7 +167,6 @@ bool CMenu_State::Input(void)
 						CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
 					}
 					break;
-
 				case MAINMENU_OPTIONS:
 					{
 						CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
@@ -314,19 +313,19 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 
-	CLU->QueueLoadCommand("tutorial.beat","",Song);
-	CLU->QueueLoadCommand("cantina.beat","",Song);
-	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
+	//CLU->QueueLoadCommand("tutorial.beat","",Song);
 	CLU->QueueLoadCommand("darksidedub.beat","",Song);
-	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
-	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
+	CLU->QueueLoadCommand("cantina.beat","",Song);
+	//CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
+	//CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
+	//CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
-	CLevelManager::GetInstance()->QueueSong("jeditheme");
-	CLevelManager::GetInstance()->QueueSong("cantina");
-	CLevelManager::GetInstance()->QueueSong("dualofthefates");
+	//CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
-	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
-	CLevelManager::GetInstance()->QueueSong("Avicii");
+	CLevelManager::GetInstance()->QueueSong("cantina");
+	//CLevelManager::GetInstance()->QueueSong("dualofthefates");
+	//CLevelManager::GetInstance()->QueueSong("ImperialMarch");
+	//CLevelManager::GetInstance()->QueueSong("Avicii");
 	//CLevelManager::GetInstance()->QueueSong("OldRepublic");
 
 

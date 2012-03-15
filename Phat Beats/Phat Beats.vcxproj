@@ -119,6 +119,7 @@
     <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\StringHelper.cpp" />
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\XML\tinystr.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\StringHelper.h" />
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\XML\tinystr.h" />
     <ClInclude Include="source\XML\tinyxml.h" />

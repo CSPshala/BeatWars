@@ -30,7 +30,8 @@ void CLevelSelect_State::Enter(void) {
 	Selected = 0;
 	nBgID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 
-	CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
+	if(GetLevelData().size() > 0)
+		CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
 }
 
 bool CLevelSelect_State::Input(void) {
@@ -201,6 +202,9 @@ bool CLevelSelect_State::Input(void) {
 #pragma endregion
 
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
 	return true;
 }
 
@@ -297,7 +301,7 @@ const void CLevelSelect_State::LoadLevels(void) {
 		// Get the Menu Name for Displaying
 		in.getline(buffer, 128, '\t');
 		pNewData->szMenuName = buffer;
-
+		
 		// Get the File
  		in.ignore(INT_MAX, '[');
 		in.getline(buffer, 128, ',');
@@ -308,22 +312,29 @@ const void CLevelSelect_State::LoadLevels(void) {
 		in.getline(buffer, 128, ',');
 		pNewData->szSongName = buffer;
 
-		// Get The Image File
-		in.ignore(INT_MAX, ' ');
-		in.getline(buffer, 128, ']');
+		if(!StrHlp::FileSearch("resource/Levels.txt", pNewData->szSongName.c_str()) &&  pNewData->szSongName != "")
+		{
+			in.ignore(INT_MAX, '\n');
+			delete pNewData;
+		}
+		else
+		{
+			// Get The Image File
+			in.ignore(INT_MAX, ' ');
+			in.getline(buffer, 128, ']');
 
-		in.ignore(INT_MAX, '\n');
+			in.ignore(INT_MAX, '\n');
 
-		stringHelper.str("");
-		stringHelper << "resource/beatlist/preview images/" << buffer << '\0';
-		pNewData->szImage = CSGD_TextureManager::GetInstance()->LoadTexture(stringHelper.str().c_str());
+			stringHelper.str("");
+			stringHelper << "resource/beatlist/preview images/" << buffer << '\0';
+			pNewData->szImage = CSGD_TextureManager::GetInstance()->LoadTexture(stringHelper.str().c_str());
 
-		stringHelper.str("");
-		stringHelper << "resource/beatlist/preview sounds/" << pNewData->szSongName << ".mp3" << '\0';
-		pNewData->nSoundSample = CSGD_FModManager::GetInstance()->LoadSound(stringHelper.str().c_str(),FMOD_CREATESTREAM);
+			stringHelper.str("");
+			stringHelper << "resource/beatlist/preview sounds/" << pNewData->szSongName << ".mp3" << '\0';
+			pNewData->nSoundSample = CSGD_FModManager::GetInstance()->LoadSound(stringHelper.str().c_str());
 
-		GetLevelData().push_back(pNewData);
+			GetLevelData().push_back(pNewData);
+		}
 	}
-
 	in.close();
 }
