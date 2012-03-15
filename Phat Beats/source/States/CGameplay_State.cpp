@@ -90,7 +90,7 @@ void CGameplay_State::Enter(void)
 		{
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit ESC when any info box is showing\nto skip tutorial.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
 			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
 			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
@@ -147,7 +147,7 @@ bool CGameplay_State::Input(void)
 	}
 	else
 	{
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
+		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
 		{
 			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
 			{
