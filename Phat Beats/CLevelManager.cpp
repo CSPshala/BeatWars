@@ -235,7 +235,7 @@ const void CLevelManager::HandlePausingInput(void) {
 			{
 				std::fstream F("resource/Levels.txt", std::ios::app);
 				std::stringstream S;
-				S << BeatMan->GetCurrentlyPlayingSong()->GetSongName();
+			S << '\n' << BeatMan->GetCurrentlyPlayingSong()->GetSongName();
 				F.write(S.str().c_str(), S.str().length());
 				F.close();
 			}
