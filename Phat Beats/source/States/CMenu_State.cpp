@@ -316,16 +316,14 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 
-	CLU->QueueLoadCommand("tutorial.xml","",Song);
-	CLU->QueueLoadCommand("cantina.xml","",Song);
-	CLU->QueueLoadCommand("DueloftheFates.xml","",Song);
-	CLU->QueueLoadCommand("darksidedub.xml","",Song);
-	CLU->QueueLoadCommand("ImperialMarch.xml","",Song);
-	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
-	CLU->QueueLoadCommand("OldRepublic.xml","",Song);
+	CLU->QueueLoadCommand("tutorial.beat","",Song);
+	CLU->QueueLoadCommand("cantina.beat","",Song);
+	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
+	CLU->QueueLoadCommand("darksidedub.beat","",Song);
+	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
+	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
-	CLevelManager::GetInstance()->QueueSong("jeditheme");
-	CLevelManager::GetInstance()->QueueSong("OldRepublic");
+	CLevelManager::GetInstance()->QueueSong("jeditheme");	
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");

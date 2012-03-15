@@ -144,8 +144,8 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
+	GetPlayer(PlayerOne)->SetCurrentPowerup(0);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
 	
 	p2PrevHP = 101;
 	p1PrevHP = 101;
@@ -229,9 +229,11 @@ const void CLevelManager::HandlePausingInput(void) {
 		BeatMan->Stop();
 
 		if(!m_vSongs.empty())
+		{
 			BeatMan->Play(m_vSongs.front());
-
-		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+		}
+		
 
 	}
 }

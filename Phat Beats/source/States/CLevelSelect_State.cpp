@@ -320,7 +320,7 @@ const void CLevelSelect_State::LoadLevels(void) {
 
 		stringHelper.str("");
 		stringHelper << "resource/beatlist/preview sounds/" << pNewData->szSongName << ".mp3" << '\0';
-		pNewData->nSoundSample = CSGD_FModManager::GetInstance()->LoadSound(stringHelper.str().c_str());
+		pNewData->nSoundSample = CSGD_FModManager::GetInstance()->LoadSound(stringHelper.str().c_str(),FMOD_CREATESTREAM);
 
 		GetLevelData().push_back(pNewData);
 	}

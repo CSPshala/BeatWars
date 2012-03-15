@@ -88,7 +88,6 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	m_nCurrAnim = 0;
 	m_bAnimationsEmpty = false;
 }
-
 CPlayer::~CPlayer()
 {		
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nHitBoxImage);
@@ -99,7 +98,6 @@ CPlayer::~CPlayer()
 	CAnimationManager AM;
 	AM.UnloadAnimations(m_vecAnimations);
 }
-
 ////////////////////////////////////////
 //		PUBLIC UTILITY FUNCTIONS
 ////////////////////////////////////////
@@ -108,7 +106,6 @@ void CPlayer::Input()
 	//*******DONT USE THIS*********//
 	// INPUT IS BEING HANDLED IN THE UPDATE//
 }
-
 void CPlayer::Update(float fElapsedTime)
 {
 	// flushing last hit key
@@ -167,7 +164,6 @@ void CPlayer::Update(float fElapsedTime)
 	}
 
 }
-
 void CPlayer::Render()
 {
 	//Render Animations
@@ -183,7 +179,7 @@ void CPlayer::Render()
 
 	}
 
-	//D3D->DrawRect(GetCollisionRect(),100,100,100);
+	D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
@@ -195,7 +191,6 @@ void CPlayer::Render()
 		CSGD_Direct3D::GetInstance()->DrawText("This is a test of the Ai hit",200,24,255,0,0);
 	}
 }
-
 RECT CPlayer::GetCollisionRect()
 {
 	RECT tRect;
@@ -206,7 +201,6 @@ RECT CPlayer::GetCollisionRect()
 
 	return tRect;
 }
-
 bool CPlayer::CheckCollision(IBaseInterface* pBase)
 {
 	switch(pBase->GetType())
@@ -243,13 +237,11 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 		break;
 	}
 }
-
 void CPlayer::HandleEvent( CEvent* pEvent )
 {
 	
 	
 }
-
 ////////////////////////////////////////
 //		PRIVATE UTILITY FUNCTIONS
 ////////////////////////////////////////
@@ -278,6 +270,10 @@ void CPlayer::P1InputHandling()
 		if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(2, 0))
 		{
 			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
+			SetAttackMode(true); // Toggling attack/defense
+			SetAttackModeTimer(0);
+			// Setting particle effect on hilt to show mode
+			if(GetAttackMode())
 			{
 				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
 				SetAttackModeTimer(0);
@@ -396,7 +392,6 @@ void CPlayer::P1InputHandling()
 
 	DI->ClearInput();
 }
-
 void CPlayer::P2InputHandling()
 {
 	// Don't ever have p2 input running same time as P1.  Control schemes are the same
@@ -422,10 +417,8 @@ void CPlayer::P2InputHandling()
 		// Checking for Stance change
 		if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(2, 1))
 		{
-			if(GetAttackModeTimer() >= 10) // Checking timer so player can't insta-change stances
-			{
-				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
-				SetAttackModeTimer(0);
+			SetAttackMode(true); // Toggling attack/defense
+			SetAttackModeTimer(0);
 
 				if(GetAttackMode())
 				{
@@ -540,7 +533,6 @@ void CPlayer::P2InputHandling()
 
 	DI->ClearInput();
 }
-
 void CPlayer::AIHandling()
 {
 	// local variables for function
@@ -577,7 +569,7 @@ void CPlayer::AIHandling()
 	// AI now will activate attack mode when power bar is maxed
 	if(GetCurrentPowerup() >= GetMaxPowerup()) // AI now switches stances on full power bar (in lieu of specials for now)
 	{
-		SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+		SetAttackMode(true); // Toggling attack/defense
 		SetAttackModeTimer(0);
 		// Setting particle effect on hilt to show mode
 		if(GetAttackMode())
@@ -595,9 +587,6 @@ void CPlayer::AIHandling()
 	}
 	
 }
-
-
-
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
 ////////////////////////////////////////
@@ -641,12 +630,10 @@ void CPlayer::SetAimingDirection(BeatDirection eAimingDirection)
 
 	}
 }
-
 char CPlayer::GetMostRecentKeyPress()
 {	
 	return cHitKey;
 }
-
 void CPlayer::PlayAnimation()
 {
 	m_vecAnimations[m_nCurrAnim]->Play();
@@ -659,7 +646,6 @@ void CPlayer::ResetAnimation()
 {
 	m_vecAnimations[m_nCurrAnim]->Reset();
 }
-
 void CPlayer::SetCurrAnimation(string szAnimName )
 {
 	std::vector<CAnimation*>::size_type i;
@@ -673,7 +659,6 @@ void CPlayer::SetCurrAnimation(string szAnimName )
 		}
 	}
 }
-
 void CPlayer::SetSingleAnimation(CAnimation* pAnim)
 {
 	m_vecAnimations.push_back(pAnim);

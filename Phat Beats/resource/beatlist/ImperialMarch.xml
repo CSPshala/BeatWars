@@ -1,462 +1,462 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Song file="Star Wars - Imperial March (TA DA DUBSTEP remix).mp3" name="ImperialMarch" duration="216600">
-  <icons wkey="SkullNote.png" akey="ImpNote.png" skey="SunNote.png" dkey="RepNote.png" />
-  <Beat timeofbeat="1404" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="1840" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="2181" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="2309" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="2437" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="2800" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="2949" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="3523" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4056" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4184" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4568" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4589" direction="leftdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4952" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="4995" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="5229" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="6232" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="6296" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="6701" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="6744" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="7149" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="7235" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="7448" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="8408" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="8643" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="8877" direction="leftup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="9283" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="9325" direction="leftup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="9450" direction="leftup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="9539" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="10584" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="10989" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="11032" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="11437" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="11523" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="11693" direction="right" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13016" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13037" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13208" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13528" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13613" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="13741" direction="right" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="15761" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="16038" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="16251" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="16486" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="16742" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="16955" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="17147" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="17382" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="17595" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="17787" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="18043" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="18278" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="18470" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="18769" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="18982" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="19238" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="19494" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="19707" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="19921" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="20155" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="20369" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="20582" direction="rightdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="20774" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="20987" direction="rightdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="21201" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="21435" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="21670" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="21862" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="22139" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="22353" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="22609" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="22758" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="23014" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="23206" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="23419" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="23654" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="23889" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="24102" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="24315" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="24529" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="24785" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="24998" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26090" direction="leftup" key="x" difficulty="normal" width="32" height="32" beatis="1" event="none" />
-  <Beat timeofbeat="26120" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26129" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26149" direction="leftup" key="x" difficulty="normal" width="32" height="32" beatis="1" event="none" />
-  <Beat timeofbeat="26342" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26555" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26747" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="26961" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="27174" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="27387" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="27601" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="27835" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="28049" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="29553" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="29915" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="30193" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="30513" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="30961" direction="rightup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="31174" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="31430" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="31771" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="31942" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="32689" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="32758" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="33100" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="33505" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="33889" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="34188" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="34401" direction="down" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="34572" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="34892" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="35254" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="36108" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="36534" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="36897" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="37324" direction="leftup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="37665" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="37878" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="38220" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="38540" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="39500" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="39884" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="40289" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="40758" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="41100" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="41292" direction="up" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="41612" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="41910" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="42145" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="43206" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="43398" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="43654" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="43974" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="44315" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="44593" direction="rightdown" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="44785" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="45105" direction="rightdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="45446" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="45638" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="46321" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="46705" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="47153" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="47601" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="47985" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="48198" direction="right" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="48518" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="48817" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="49009" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="49798" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="50225" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="50630" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="51057" direction="leftdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="51590" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="51803" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="52145" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="52401" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="53190" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="53617" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="54065" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="54513" direction="left" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="54854" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="55025" direction="left" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="55345" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="55707" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="55899" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="56682" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="57728" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="58837" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="60458" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="62058" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="63893" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="65045" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="65920" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="66794" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="67640" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="68003" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="68472" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="68877" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="69112" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="69347" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="69560" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="69816" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="70029" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="70648" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="70904" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="71437" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="71949" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="72205" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="72419" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="72632" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="72845" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="73549" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="73784" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="74019" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="74253" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="74445" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="74637" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="75299" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="75533" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="75747" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="75960" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="76152" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="76365" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="77091" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="77325" direction="left" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="77539" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="77731" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="77944" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="78157" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="78755" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="78947" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="79160" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="79373" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="79587" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="79800" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="80618" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="80981" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="81386" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="81770" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="82325" direction="down" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="82645" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="83114" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="83968" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="84458" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="85013" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="85717" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="86016" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="86378" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="86848" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="87402" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="87680" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="88149" direction="up" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="89066" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="89322" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="89749" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="90346" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="90880" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="91264" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="91648" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="92096" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="92608" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="93056" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="93440" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="93845" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="94336" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="94698" direction="left" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="95061" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="95445" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="95978" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="96234" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="96768" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="97728" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="98154" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="98517" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="99434" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="99690" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="100202" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="100522" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="101290" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="101610" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="102037" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="102890" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="103424" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="103744" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="104000" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="104597" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="104981" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="105344" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="105856" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="106325" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="106560" direction="right" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="106858" direction="right" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="107456" direction="rightup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="108010" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="108458" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="108800" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="111530" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="111978" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="112512" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="112981" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="113408" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="113898" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="114304" direction="leftdown" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="114730" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="115178" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="115648" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="116416" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="116885" direction="up" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="117333" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="117717" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="118656" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="119104" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="119488" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="120448" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="120810" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="121194" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="122496" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="122965" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="123328" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="123776" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="125141" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="125525" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="125952" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="126336" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="127253" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="127616" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="128042" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="128960" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="129365" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="129749" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="130112" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="131007" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="131456" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="131882" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="132288" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="133141" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="133546" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="133952" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="134442" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="134912" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="135829" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="136256" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="136640" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="136981" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="137941" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="138389" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="138730" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="139178" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="139584" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="140458" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="140864" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="141312" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="142208" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="142570" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="143146" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="143914" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="144298" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="144768" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="145621" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="146026" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="146560" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="147392" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="147754" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="148202" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="149077" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="149888" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="150762" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="152490" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="154368" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="154773" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="155242" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="155861" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="156245" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="156693" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="157610" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="158016" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="158442" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="159381" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="159722" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="160213" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="161066" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="161472" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="161898" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="162794" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="163200" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="163626" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="164608" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="164949" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="165376" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="166357" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="167637" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="168512" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="168810" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="169642" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="170005" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="170410" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="171306" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="171712" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="172224" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="173077" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="173376" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="173781" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="174805" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="175168" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="175658" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="176512" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="176874" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="177301" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="178197" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="178624" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="179050" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="179434" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="179840" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="180266" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="180629" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="181013" direction="rightup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="182528" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="182912" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="183296" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="183722" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="184128" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="184981" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="185386" direction="leftdown" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="185834" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="186240" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="186794" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="187178" direction="left" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="187562" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="187968" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="188757" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="189226" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="189589" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="190016" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="190485" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="190954" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="191402" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="191872" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="192277" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="192682" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="193088" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="193536" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="193984" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="194496" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="194880" direction="up" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="195669" direction="right" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="196138" direction="right" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="196544" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="197077" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="197504" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="197888" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="198250" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="198784" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="199168" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="199530" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="199978" direction="leftup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="200341" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="200810" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="201216" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="201600" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="202048" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="202474" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="202965" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="203392" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="203818" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="204245" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="204693" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="205141" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="205632" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="206016" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="206421" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="206848" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="207274" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="207701" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="208106" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
-  <Beat timeofbeat="208512" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none" />
+<Song file="Star Wars - Imperial March (TA DA DUBSTEP remix).ogg" name="ImperialMarch" duration="216600">
+  <icons wkey="SkullNote.png" akey="ImpNote.png" skey="SunNote.png" dkey="RepNote.png"/>
+  <Beat timeofbeat="1404" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="1840" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="2181" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="2309" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="2437" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="2800" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="2949" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="3523" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4056" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4184" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4568" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4589" direction="leftdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4952" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="4995" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="5229" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="6232" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="6296" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="6701" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="6744" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="7149" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="7235" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="7448" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="8408" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="8643" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="8877" direction="leftup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="9283" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="9325" direction="leftup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="9450" direction="leftup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="9539" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="10584" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="10989" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="11032" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="11437" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="11523" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="11693" direction="right" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13016" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13037" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13208" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13528" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13613" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="13741" direction="right" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="15761" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="16038" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="16251" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="16486" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="16742" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="16955" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="17147" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="17382" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="17595" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="17787" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="18043" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="18278" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="18470" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="18769" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="18982" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="19238" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="19494" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="19707" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="19921" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="20155" direction="rightdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="20369" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="20582" direction="rightdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="20774" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="20987" direction="rightdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="21201" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="21435" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="21670" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="21862" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="22139" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="22353" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="22609" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="22758" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="23014" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="23206" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="23419" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="23654" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="23889" direction="down" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="24102" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="24315" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="24529" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="24785" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="24998" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26090" direction="leftup" key="x" difficulty="normal" width="32" height="32" beatis="1" event="none"/>
+  <Beat timeofbeat="26120" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26129" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26149" direction="leftup" key="x" difficulty="normal" width="32" height="32" beatis="1" event="none"/>
+  <Beat timeofbeat="26342" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26555" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26747" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="26961" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="27174" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="27387" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="27601" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="27835" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="28049" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="29553" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="29915" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="30193" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="30513" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="30961" direction="rightup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="31174" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="31430" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="31771" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="31942" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="32689" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="32758" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="33100" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="33505" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="33889" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="34188" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="34401" direction="down" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="34572" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="34892" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="35254" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="36108" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="36534" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="36897" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="37324" direction="leftup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="37665" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="37878" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="38220" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="38540" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="39500" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="39884" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="40289" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="40758" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="41100" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="41292" direction="up" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="41612" direction="up" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="41910" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="42145" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="43206" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="43398" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="43654" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="43974" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="44315" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="44593" direction="rightdown" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="44785" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="45105" direction="rightdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="45446" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="45638" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="46321" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="46705" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="47153" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="47601" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="47985" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="48198" direction="right" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="48518" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="48817" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="49009" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="49798" direction="leftdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="50225" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="50630" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="51057" direction="leftdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="51590" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="51803" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="52145" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="52401" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="53190" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="53617" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="54065" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="54513" direction="left" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="54854" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="55025" direction="left" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="55345" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="55707" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="55899" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="56682" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="57728" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="58837" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="60458" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="62058" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="63893" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="65045" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="65920" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="66794" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="67640" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="68003" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="68472" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="68877" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="69112" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="69347" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="69560" direction="rightdown" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="69816" direction="rightdown" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="70029" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="70648" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="70904" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="71437" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="71949" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="72205" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="72419" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="72632" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="72845" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="73549" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="73784" direction="down" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="74019" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="74253" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="74445" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="74637" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="75299" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="75533" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="75747" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="75960" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="76152" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="76365" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="77091" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="77325" direction="left" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="77539" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="77731" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="77944" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="78157" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="78755" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="78947" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="79160" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="79373" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="79587" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="79800" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="80618" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="80981" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="81386" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="81770" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="82325" direction="down" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="82645" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="83114" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="83968" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="84458" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="85013" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="85717" direction="rightup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="86016" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="86378" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="86848" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="87402" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="87680" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="88149" direction="up" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="89066" direction="left" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="89322" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="89749" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="90346" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="90880" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="91264" direction="down" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="91648" direction="down" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="92096" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="92608" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="93056" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="93440" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="93845" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="94336" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="94698" direction="left" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="95061" direction="left" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="95445" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="95978" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="96234" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="96768" direction="left" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="97728" direction="rightup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="98154" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="98517" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="99434" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="99690" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="100202" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="100522" direction="up" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="101290" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="101610" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="102037" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="102890" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="103424" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="103744" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="104000" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="104597" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="104981" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="105344" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="105856" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="106325" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="106560" direction="right" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="106858" direction="right" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="107456" direction="rightup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="108010" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="108458" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="108800" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="111530" direction="leftdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="111978" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="112512" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="112981" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="113408" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="113898" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="114304" direction="leftdown" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="114730" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="115178" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="115648" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="116416" direction="up" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="116885" direction="up" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="117333" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="117717" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="118656" direction="right" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="119104" direction="right" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="119488" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="120448" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="120810" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="121194" direction="leftup" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="122496" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="122965" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="123328" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="123776" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="125141" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="125525" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="125952" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="126336" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="127253" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="127616" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="128042" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="128960" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="129365" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="129749" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="130112" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="131007" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="131456" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="131882" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="132288" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="133141" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="133546" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="133952" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="134442" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="134912" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="135829" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="136256" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="136640" direction="right" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="136981" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="137941" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="138389" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="138730" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="139178" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="139584" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="140458" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="140864" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="141312" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="142208" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="142570" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="143146" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="143914" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="144298" direction="leftup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="144768" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="145621" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="146026" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="146560" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="147392" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="147754" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="148202" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="149077" direction="rightdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="149888" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="150762" direction="leftup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="152490" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="154368" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="154773" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="155242" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="155861" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="156245" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="156693" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="157610" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="158016" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="158442" direction="right" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="159381" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="159722" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="160213" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="161066" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="161472" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="161898" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="162794" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="163200" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="163626" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="164608" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="164949" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="165376" direction="leftup" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="166357" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="167637" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="168512" direction="right" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="168810" direction="left" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="169642" direction="rightup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="170005" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="170410" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="171306" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="171712" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="172224" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="173077" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="173376" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="173781" direction="up" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="174805" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="175168" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="175658" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="176512" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="176874" direction="right" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="177301" direction="right" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="178197" direction="rightup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="178624" direction="rightup" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="179050" direction="rightup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="179434" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="179840" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="180266" direction="rightup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="180629" direction="rightup" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="181013" direction="rightup" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="182528" direction="down" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="182912" direction="down" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="183296" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="183722" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="184128" direction="down" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="184981" direction="leftdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="185386" direction="leftdown" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="185834" direction="leftdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="186240" direction="leftdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="186794" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="187178" direction="left" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="187562" direction="left" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="187968" direction="left" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="188757" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="189226" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="189589" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="190016" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="190485" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="190954" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="191402" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="191872" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="192277" direction="up" key="a" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="192682" direction="up" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="193088" direction="up" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="193536" direction="up" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="193984" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="194496" direction="up" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="194880" direction="up" key="w" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="195669" direction="right" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="196138" direction="right" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="196544" direction="right" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="197077" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="197504" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="197888" direction="rightup" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="198250" direction="rightup" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="198784" direction="leftup" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="199168" direction="leftup" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="199530" direction="leftup" key="s" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="199978" direction="leftup" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="200341" direction="leftup" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="200810" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="201216" direction="down" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="201600" direction="down" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="202048" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="202474" direction="down" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="202965" direction="leftdown" key="d" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="203392" direction="leftdown" key="w" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="203818" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="204245" direction="leftdown" key="d" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="204693" direction="leftdown" key="d" difficulty="hard" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="205141" direction="rightdown" key="w" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="205632" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="206016" direction="rightdown" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="206421" direction="rightdown" key="s" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="206848" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="207274" direction="rightdown" key="s" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="207701" direction="left" key="a" difficulty="easy" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="208106" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
+  <Beat timeofbeat="208512" direction="left" key="a" difficulty="normal" width="32" height="32" beatis="0" event="none"/>
 </Song>
