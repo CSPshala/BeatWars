@@ -50,6 +50,9 @@ bool CPause_State::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 		CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 	{
 		m_nMenuSelection -= 1;

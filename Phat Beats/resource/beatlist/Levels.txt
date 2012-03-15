@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 Cantina Remix	[cantina.xml, cantina, luke.jpg]
 Dual of the Fates	[DueloftheFates.xml, dualofthefates, test.png]
 Dark Side Dub	[darksidedub.xml, DarkSideDub, VaderZombie.jpg]
 Avicii Test	[noteeventtest.xml, Avicii, test.png]
-Old Republic	[OldRepublic.xml,OldRepublic,OldRepublic.jpg]
+Old Republic	[OldRepublic.xml, OldRepublic, OldRepublic.jpg]
+=======
+Cantina Remix	[cantina.beat, cantina, luke.jpg]
+Dual of the Fates	[DueloftheFates.beat, dualofthefates, test.png]
+Dark Side Dub	[darksidedub.beat, DarkSideDub, VaderZombie.jpg]
+Avicii Test	[noteeventtest.beat, Avicii, test.png]
+Old Republic	[OldRepublic.beat,OldRepublic,OldRepublic.jpg]
+>>>>>>> 01385a7b212179d4c97c701a8af2e234922bdd7e

@@ -57,7 +57,7 @@ void CGameplay_State::Enter(void)
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
-			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CBeatManager::GetInstance()->LoadSongBIN(CLoad_State::GetInstance()->loadGame());
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
@@ -74,8 +74,8 @@ void CGameplay_State::Enter(void)
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
 
 		CFXManager::GetInstance()->MoveEffectTo("P1_GUARD",D3DXVECTOR2(400.0f, 300.0f));
-		CFXManager::GetInstance()->MoveEffectTo("P1_PBAR",D3DXVECTOR2(32.0f, 32.0f));
-		CFXManager::GetInstance()->MoveEffectTo("P2_PBAR",D3DXVECTOR2(600.0f, 32.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P1_PBAR",D3DXVECTOR2(32.0f, 62.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P2_PBAR",D3DXVECTOR2(600.0f, 62.0f));
 
 		// Queueing effects to display		
 		CFXManager::GetInstance()->QueueParticle("P1GUARD");
@@ -90,7 +90,7 @@ void CGameplay_State::Enter(void)
 		{
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit ESC when any info box is showing\nto skip tutorial.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
 			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
 			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
@@ -147,7 +147,7 @@ bool CGameplay_State::Input(void)
 	}
 	else
 	{
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
+		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
 		{
 			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
 			{
@@ -172,6 +172,8 @@ bool CGameplay_State::Input(void)
 		}
 	}
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
 
 
 	CLevelManager::GetInstance()->HandleLevelInput();
@@ -186,18 +188,17 @@ void CGameplay_State::Update(void)
 	if(!GetIsTutorial())
 	{
 		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
-		if (m_bStartTransition)
-		{
-			m_SongTransitionAlpha -= 0.25f;
-			if (m_SongTransitionAlpha <= 1)
-			{
-				m_bStartTransition = false;
-				m_SongTransitionAlpha = 255;
-			}
-		}
 	}
 
-
+	if (m_bStartTransition)
+	{
+		m_SongTransitionAlpha -= 0.25f;
+		if (m_SongTransitionAlpha <= 1)
+		{
+			m_bStartTransition = false;
+			m_SongTransitionAlpha = 255;
+		}
+	}
 	
 }
 void CGameplay_State::Render(void)

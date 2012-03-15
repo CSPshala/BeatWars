@@ -11,6 +11,8 @@
 #include "source/States/CBitmapFont.h"
 #include "source/CAnimation.h"
 #include "source/States/COptionsState.h"
+#include "source\StringHelper.h"
+#include <fstream>
 
 #include <sstream>
 #define MAX_TAKEDOWNS 2
@@ -144,7 +146,9 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-
+	GetPlayer(PlayerOne)->SetCurrentPowerup(0);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
+	
 	p2PrevHP = 101;
 	p1PrevHP = 101;
 	RECT rLeftHandle = {20, 10, 67, 27};
@@ -173,6 +177,8 @@ const void CLevelManager::EnterLevel(void) {
 	CSGD_FModManager::GetInstance()->SetVolume(BeatMan->GetCurrentlyPlayingSong()->GetSongID()
 	,COptionsState::GetInstance()->GetMusicVol());
 	*/
+
+
 
 }
 const void CLevelManager::LeaveLevel(void) {
@@ -222,15 +228,31 @@ const void CLevelManager::HandlePlayingInput(void) {
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) 
 	{
+		// Add Song to unlock list
+		if(BeatMan->GetCurrentlyPlayingSong()->GetSongName() != "jeditheme")
+		{
+			if(!StrHlp::FileSearch("resource/Levels.txt", BeatMan->GetCurrentlyPlayingSong()->GetSongName().c_str()))
+			{
+				std::fstream F("resource/Levels.txt", std::ios::app);
+				std::stringstream S;
+				S << BeatMan->GetCurrentlyPlayingSong()->GetSongName();
+				F.write(S.str().c_str(), S.str().length());
+				F.close();
+			}
+		}
+
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
 
 		BeatMan->Stop();
 
 		if(!m_vSongs.empty())
+		{
 			BeatMan->Play(m_vSongs.front());
+			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+		}
+		
 
-		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
-
+		
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -389,7 +411,6 @@ const void CLevelManager::Render(void){
 }
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
-
 	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
 	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
 
@@ -412,11 +433,11 @@ const void CLevelManager::RenderPlayingState(void) {
 	static char szHpBuffer[8];
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 
-	// Player 1
+	//// Player 1
 	_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
 	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
-
-	// Player 2
+	//
+	//// Player 2
 	_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
 	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
@@ -466,6 +487,9 @@ const void CLevelManager::RenderPausingState(void) {
 	}
 }
 const void CLevelManager::Exit(void) {
+
+	//TexMan->UnloadTexture(m_nBackgroundID);
+
 	queue<string>::size_type i = 0;
 	for(; i < m_vSongs.size(); ++i)
 		m_vSongs.pop();

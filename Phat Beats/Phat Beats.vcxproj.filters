@@ -136,6 +136,9 @@
     <ClCompile Include="source\States\CCredit_State.cpp">
       <Filter>Game States\Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\StringHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h">
@@ -282,6 +285,13 @@
     <ClInclude Include="source\States\CCredit_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="source\StringHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+=======
+    <ClInclude Include="resource1.h" />
+>>>>>>> 01385a7b212179d4c97c701a8af2e234922bdd7e
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Management">
@@ -323,5 +333,11 @@
     <Filter Include="Game Management\Source">
       <UniqueIdentifier>{b9adc522-d5a1-452a-837c-19f384fa3556}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Phat Beats1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\graphics\Icon.ico" />
   </ItemGroup>
 </Project>

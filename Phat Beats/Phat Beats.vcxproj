@@ -117,6 +117,7 @@
     <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\StringHelper.cpp" />
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\XML\tinystr.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="CLevelManager.h" />
     <ClInclude Include="ColorF.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="source\CAnimation.h" />
     <ClInclude Include="source\CBase.h" />
     <ClInclude Include="source\CBeat.h" />
@@ -171,9 +173,16 @@
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\StringHelper.h" />
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\XML\tinystr.h" />
     <ClInclude Include="source\XML\tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Phat Beats1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\graphics\Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

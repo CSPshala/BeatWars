@@ -68,7 +68,7 @@ public:
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
 	vector<CBeat*>&		GetAIBeats() {return m_vAIBeats;}
 	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
-	char			GetMostRecentKeyPress();
+	char				GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
 	bool				GetAttackMode() {return m_bAttackMode;}
 	float				GetAttackModeTimer() {return m_fAttackModeTimer;}
@@ -103,6 +103,7 @@ public:
 	void				SetCurrentPowerup(int nCurrentPowerup) { m_nCurrentPowerup = nCurrentPowerup; }
 	void				SetMaxPowerup(int nMaxPowerup) { m_nMaxPowerup = nMaxPowerup; }
 	void				SetTakeDown(int nTakeDown) {m_nTakeDown = nTakeDown;}
+	void				SetMostRecentKeyPress(char Key) {cHitKey = Key;}
 
 	
 private:

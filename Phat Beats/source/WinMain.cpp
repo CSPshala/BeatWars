@@ -14,6 +14,7 @@
 #include <windows.h>	//	Needed for Windows Applications.
 
 #include "CGame.h"		// Game class
+#include "../resource1.h"
 
 #include <dbghelp.h>	//	Used for Dump File
 #pragma comment(lib, "dbghelp.lib")
@@ -181,7 +182,7 @@ BOOL RegisterWindowClass(HINSTANCE hInstance)
 	winClassEx.cbClsExtra		= 0;
 	winClassEx.cbWndExtra		= 0;
 	winClassEx.hInstance		= hInstance;
-	winClassEx.hIcon			= LoadIcon(NULL, IDI_APPLICATION);
+	winClassEx.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	winClassEx.hIconSm			= NULL;
 	winClassEx.hCursor			= LoadCursor(NULL, IDC_ARROW);
 	winClassEx.hbrBackground	= (HBRUSH)GetStockObject(BLACK_BRUSH);
