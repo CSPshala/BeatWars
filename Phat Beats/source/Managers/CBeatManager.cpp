@@ -649,6 +649,8 @@ bool CBeatManager::LoadSongBIN(string szFileName)
 			// Adding to OM
 			CObjectManager::GetInstance()->AddObject(theSong);
 
+			theSong->Release();
+
 			// Adding song to song list
 			GetSongList().push_back(theSong);
 
