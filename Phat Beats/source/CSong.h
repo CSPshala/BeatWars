@@ -52,7 +52,7 @@ public:
 	/********** Public Accessors ************/
 		vector<CBeat>&	GetBeatList() {return m_vBeats;}
 		list<CBeat*>&	GetActiveBeatList() {return m_vActiveBeats;}
-		vector<CBeat*>& GetHittableBeatList() {return m_vHittableBeats;}
+		list<CBeat*>& GetHittableBeatList() {return m_vHittableBeats;}
 		string			GetSongName() {return m_szName;}
 		string			GetCurrentFileName() {return m_szFileName;}
 		unsigned int				GetCurrentSongTime() {return m_nCurrentSongTime;}
@@ -91,7 +91,7 @@ private:
 	/********** Private Members ************/	
 		vector<CBeat>	m_vBeats;
 		list<CBeat*>	m_vActiveBeats; // Active Beats manages which beats are currently visible on screen
-		vector<CBeat*>	m_vHittableBeats; // Hittable beats holds which beats are able to currently be hit
+		list<CBeat*>	m_vHittableBeats; // Hittable beats holds which beats are able to currently be hit
 		string			m_szName;
 		unsigned int	m_nCurrentSongTime;
 		int				m_nSongDuration;

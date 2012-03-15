@@ -39,6 +39,15 @@ private:
 	
 	// vector for the names resposible
 	vector<string> m_vNames;
+	IDirect3DTexture9* m_RtText;
+	LPDIRECT3DTEXTURE9 m_TexCredits;
+	LPDIRECT3DTEXTURE9 LoadTexture(const char* szFileName, DWORD dwColorkey = 0);
+	
+	struct CUSTOMVERTEX {FLOAT X, Y, Z; DWORD COLOR; FLOAT U, V;};
+
+	IDirect3DVertexBuffer9  *quadbuff;
+	IDirect3DVertexDeclaration9 *cubedecl;
+	IDirect3DIndexBuffer9* IndexBuffer;
 
 public:
 	static CCredit_State* GetInstance();

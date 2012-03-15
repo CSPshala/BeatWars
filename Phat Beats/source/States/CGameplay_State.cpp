@@ -51,17 +51,21 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 	
-
 	if(!GetPreviouslyPlaying()) 
 	{
 		
 		if (CLoad_State::GetInstance()->GetLoadFlag() == true)
 		{
 			CLU_State::GetInstance()->QueueLoadCommand(CLoad_State::GetInstance()->GetFileName(),"",Song);
-			CBeatManager::GetInstance()->LoadSong(CLoad_State::GetInstance()->loadGame());
+			CBeatManager::GetInstance()->LoadSongBIN(CLoad_State::GetInstance()->loadGame());
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
+
+		/*
+		CSGD_FModManager::GetInstance()->SetVolume(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()
+		,COptionsState::GetInstance()->GetMusicVol());
+		*/
 
 	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));
@@ -86,7 +90,7 @@ void CGameplay_State::Enter(void)
 		{
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit ESC when any info box is showing\nto skip tutorial.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
 			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
 			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
@@ -136,14 +140,14 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
 		{
 			SetPreviouslyPlaying(true);
-			CLevelManager::GetInstance()->LeaveLevel();			
+			CLevelManager::GetInstance()->LeaveLevel();
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 	
 	}
 	else
 	{
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
+		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
 		{
 			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
 			{

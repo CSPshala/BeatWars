@@ -80,7 +80,7 @@ void CLU_State::Update(void)
 
 				case Song:
 					{
-						CBeatManager::GetInstance()->LoadSong(Commands.front()->AssetFile);
+						CBeatManager::GetInstance()->LoadSongBIN(Commands.front()->AssetFile);
 					}
 					break;
 				};

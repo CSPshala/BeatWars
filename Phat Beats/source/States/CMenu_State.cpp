@@ -107,9 +107,15 @@ bool CMenu_State::Input(void)
 			}
 			break;
 
+		case MAINMENU_TUTORIAL:
+			{
+				loadTutorial();
+			}
+			break;
 
 		case MAINMENU_EXIT:
 			{
+
 				return false;
 			}
 			break;
@@ -180,6 +186,13 @@ void CMenu_State::Render(void)
 		}
 		break;
 
+	case MAINMENU_TUTORIAL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_TUTORIAL));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 768, topSelection  + (spacing * MAINMENU_TUTORIAL), -1.0f);
+		}
+		break;
+
 	case MAINMENU_EXIT:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_EXIT));
@@ -189,7 +202,7 @@ void CMenu_State::Render(void)
 	}
 	
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nhow to play\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 }
 
@@ -229,13 +242,12 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 
-	CLU->QueueLoadCommand("tutorial.xml","",Song);
-	CLU->QueueLoadCommand("cantina.xml","",Song);
-	CLU->QueueLoadCommand("DueloftheFates.xml","",Song);
-	CLU->QueueLoadCommand("darksidedub.xml","",Song);
-	CLU->QueueLoadCommand("ImperialMarch.xml","",Song);
-	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
-	//CLU->QueueLoadCommand("OldRepublic.xml","",Song);
+	CLU->QueueLoadCommand("tutorial.beat","",Song);
+	CLU->QueueLoadCommand("cantina.beat","",Song);
+	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
+	CLU->QueueLoadCommand("darksidedub.beat","",Song);
+	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
+	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
@@ -245,6 +257,38 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 	//CLevelManager::GetInstance()->QueueSong("OldRepublic");
 
+
+	GAME->ChangeState(CLU_State::GetInstance());
+}
+
+void CMenu_State::loadTutorial()
+{
+	// Cleaning crap out (if there's anything)
+	CFXManager::GetInstance()->UnloadAllFX();
+	CLevelManager::GetInstance()->EmptySongQueue();
+	BEATMAN->UnloadSongs();	
+
+	// Using defines from JCMacros.h
+	CLU->SetNewState(CGameplay_State::GetInstance());
+
+	// Setting GameplayState to tutorial mode
+	CGameplay_State::GetInstance()->SetIsTutorial(true);
+
+	// Loading Effects
+	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+	CLU->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
+
+	// Loading up BeatManager specific stuff
+
+	CLU->QueueLoadCommand("tutorial.xml","",Song);
+
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 
 	GAME->ChangeState(CLU_State::GetInstance());
 }

@@ -13,8 +13,10 @@
 ////////////////////////////////////////
 #include <string>
 #include <vector>
+#include <queue>
 using std::vector;
 using std::string;
+using std::queue;
 
 #include "../CSong.h"  
 #include "IListener.h"
@@ -32,7 +34,10 @@ class CBeatManager: public IListener
 public:
 		
 	/********** Public Utility Functions ************/
-		bool LoadSong(string szFileName);
+		bool LoadSongXML(string szFileName);
+		bool LoadSongBIN(string szFileName);
+		void DelayLoadSongBIN(string szFileName);
+		void LoadDelayedSongNow(); // Loads next delayed song on 
 		bool UnloadSongs();
 		void Play(string szSongName = "");
 		void Pause();
@@ -52,11 +57,15 @@ public:
 		bool				IsPaused() {return m_bPause;}
 		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
 		string GetFileName() {return m_szFileName;}
+		int GetFXSound() {return m_nDamageSFX;}
+		int GetSoundFX() {return m_nSFX;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
 		void SetFileName(string szFileName) {m_szFileName = szFileName;}
+		void SetFXSound(int nDamageSFX){m_nDamageSFX = nDamageSFX;}
+		void SetSoundFX(int nSFX){m_nSFX = nSFX;}
 	/********** Singleton Pointer *************/
 			
 		
@@ -91,6 +100,7 @@ private:
 		int	 m_nCurrentlyPlayingSongIndex;
 		bool fuckyou;
 		string m_szFileName;
+		queue<string> m_qDelayLoad;
 
 		
 

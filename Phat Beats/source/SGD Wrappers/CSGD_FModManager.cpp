@@ -10,6 +10,7 @@
 //______________________________________________________________________________
 
 #include "CSGD_FModManager.h"
+#include "../../FModSDK/inc/fmod.h"
 #include <assert.h>
 
 CSGD_FModManager CSGD_FModManager::m_pInstance;	//	initialization of single class instance 
@@ -121,16 +122,33 @@ int CSGD_FModManager::LoadSound(const char *szFilename, FMOD_MODE unMode )
 		//	set flags to the sound
 		newSound.unSoundFormat |= unMode;
 
-		// FMOD_DEFAULT uses the defaults.  These are the same as FMOD_LOOP_OFF | FMOD_2D | FMOD_HARDWARE
-		if( ( result = m_pSystem->createSound( newSound.filename, newSound.unSoundFormat, 0, &newSound.fmSound ) ) != FMOD_OK )
+		if(unMode == FMOD_CREATESTREAM)
 		{
-			FMODERR( result );
+			// If it's a stream we're gonna do that
+			if( ( result = m_pSystem->createStream( newSound.filename, newSound.unSoundFormat, 0, &newSound.fmSound ) ) != FMOD_OK )
+			{
+				FMODERR( result );
+			}
+
+			//	push new allocated sound onto vector
+			m_SoundList.push_back( newSound );
+
+			return (int)m_SoundList.size() - 1;
 		}
+		else
+		{
 
-		//	push new allocated sound onto vector
-		m_SoundList.push_back( newSound );
+			// FMOD_DEFAULT uses the defaults.  These are the same as FMOD_LOOP_OFF | FMOD_2D | FMOD_HARDWARE
+			if( ( result = m_pSystem->createSound( newSound.filename, newSound.unSoundFormat, 0, &newSound.fmSound ) ) != FMOD_OK )
+			{
+				FMODERR( result );
+			}
 
-		return (int)m_SoundList.size() - 1;
+			//	push new allocated sound onto vector
+			m_SoundList.push_back( newSound );
+
+			return (int)m_SoundList.size() - 1;
+		}
 
 	}
 	else
