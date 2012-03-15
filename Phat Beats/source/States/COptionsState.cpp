@@ -65,6 +65,9 @@ void COptionsState::Enter(void)
 }
 bool COptionsState::Input(void)
 {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
 	// If you're at the top and press up, cycle the cursor to the bottom selection
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP))
 	{

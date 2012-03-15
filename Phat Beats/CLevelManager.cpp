@@ -11,6 +11,8 @@
 #include "source/States/CBitmapFont.h"
 #include "source/CAnimation.h"
 #include "source/States/COptionsState.h"
+#include "source\StringHelper.h"
+#include <fstream>
 
 #include <sstream>
 #define MAX_TAKEDOWNS 2
@@ -174,6 +176,8 @@ const void CLevelManager::EnterLevel(void) {
 	,COptionsState::GetInstance()->GetMusicVol());
 	*/
 
+
+
 }
 const void CLevelManager::LeaveLevel(void) {
 	BeatMan->Pause();
@@ -222,6 +226,19 @@ const void CLevelManager::HandlePlayingInput(void) {
 const void CLevelManager::HandlePausingInput(void) {
 	if(InMan->KeyPressed(DIK_RETURN)) 
 	{
+		// Add Song to unlock list
+		if(BeatMan->GetCurrentlyPlayingSong()->GetSongName() != "jeditheme")
+		{
+			if(!StrHlp::FileSearch("resource/Levels.txt", BeatMan->GetCurrentlyPlayingSong()->GetSongName().c_str()))
+			{
+				std::fstream F("resource/Levels.txt", std::ios::app);
+				std::stringstream S;
+				S << BeatMan->GetCurrentlyPlayingSong()->GetSongName();
+				F.write(S.str().c_str(), S.str().length());
+				F.close();
+			}
+		}
+
 		m_vSongs.empty() ? SetState(Exiting) : SetState(Playing);
 
 		BeatMan->Stop();
@@ -231,6 +248,7 @@ const void CLevelManager::HandlePausingInput(void) {
 
 		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 
+		
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){

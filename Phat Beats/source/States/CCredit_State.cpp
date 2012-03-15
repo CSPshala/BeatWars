@@ -67,6 +67,9 @@ void CCredit_State::Enter( void )
 
 bool CCredit_State::Input( void )
 {
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
 	return true;
 }
 

@@ -73,6 +73,9 @@ bool CLoad_State::Input(void)
 
 	}
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
 	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 	{
 		switch( m_nMenuSelection )

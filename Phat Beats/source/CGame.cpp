@@ -202,10 +202,21 @@ void CGame::Shutdown()
 void CGame::ChangeState(IGameState* pNewState)
 {
 	if(m_pCurState)
+	{
 		m_pCurState->Exit();
+		m_qStateHistory.push(m_pCurState);
+	}
 
 	m_pCurState = pNewState;
 
 	if(m_pCurState)
 		m_pCurState->Enter();
+}
+void CGame::GoBack(void)
+{
+	if(m_qStateHistory.size() > 0)
+	{
+		ChangeState(m_qStateHistory.front());
+		m_qStateHistory.pop();
+	}
 }

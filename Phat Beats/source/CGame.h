@@ -23,6 +23,7 @@
 #include "Managers/CMessageSystem.h"
 #include "Managers/CObjectManager.h"
 #include <string>
+#include <queue>
 using std::string;
 class CBitmapFont;
 
@@ -45,6 +46,7 @@ private:
 	// Asset IDs:
 	//int						m_nImageID;
 	//int						m_nSoundID;
+	std::queue<IGameState*> m_qStateHistory;
 
 
 	// Volume 
@@ -110,7 +112,7 @@ public:
 	void SetPanVolume(float val)		{ m_nMusicPan = val; }
 	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
 	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
-
+	void GoBack(void);
 };
 
 
