@@ -304,21 +304,21 @@ void CPlayer::P1InputHandling()
 	if (Player1->IsConnected())
 	{
 
-		if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		if(Player1->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player1->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFTUP);
-		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player1->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  && Player1->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFTDOWN);
-		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+		else if(Player1->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFT);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		else if(Player1->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player1->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHTUP);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player1->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player1->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHTDOWN);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
+		else if(Player1->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHT);
-		else if(DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		else if(Player1->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(UP);
-		else if(DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player1->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(DOWN);
 
 		if (Player1->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
@@ -443,21 +443,21 @@ void CPlayer::P2InputHandling()
 	if(Player2->IsConnected())
 	{
 
-		if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		if(Player2->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player2->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFTUP);
-		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player2->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE  && Player2->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFTDOWN);
-		else if(DI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+		else if(Player2->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(LEFT);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		else if(Player2->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player2->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHTUP);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0) && DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player2->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && Player2->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHTDOWN);
-		else if(DI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
+		else if(Player2->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(RIGHT);
-		else if(DI->JoystickGetLStickDirDown(DIR_UP, 0))
+		else if(Player2->GetState().Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(UP);
-		else if(DI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		else if(Player2->GetState().Gamepad.sThumbLY < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 			SetAimingDirection(DOWN);
 
 		if (Player2->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
