@@ -870,6 +870,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										// Upping Player1's Current combo for damage
 										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
 										SetNumberNotesHit(GetNumberNotesHit() + 1);
+										
 									}						
 									aPlayer->SetMostRecentKeyPress('g');
 

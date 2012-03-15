@@ -42,7 +42,7 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	SetTotalBeatsHit(0);
 	SetCurrentStreak(0);
 	SetCurrentScore(0);
-	SetTotalScore(GetCurrentScore()+9000);
+	SetTotalScore(0);
 	SetTakeDown(0);
 	SetAttackModeTimer(0);
 	// Defaults to easy

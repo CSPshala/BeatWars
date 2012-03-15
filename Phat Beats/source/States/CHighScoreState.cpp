@@ -18,7 +18,7 @@ void CHighScoreState::Enter( void )
 	int selectedSpot = 0;
 	//aPlayer->SetTotalScore(1000);
 
-	CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(9000);
+	//CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(9000);
 
 	LoadXMLFile("resource/HighScores.xml");
 	buffers = "";
