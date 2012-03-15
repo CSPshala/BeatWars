@@ -273,30 +273,23 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			m_vSongs.pop();
 			SetState(Pausing);
 			m_fGameTransitionAlpha = 1;
-			GetPlayer(PlayerOne)->SetTakeDown(0);
-			GetPlayer(PlayerTwo)->SetTakeDown(0);
+			
 		}	
 	}
 	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) 
 	{
-		//m_fGameTransitionAlpha += (175 * fElapsedTime);
-		//BeatMan->Stop();
-		/*
-		if (m_fGameTransitionAlpha >= 255)
-				{
-					m_vSongs.pop();
-					SetState(Pausing);
-					m_fGameTransitionAlpha = 1;
-				}*/
+		
 		if (GetPlayer(PlayerOne)->GetCurrentHP() <= 0)
 		{
 			GetPlayer(PlayerOne)->SetCurrentHP(100);
 			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
+			GetPlayer(PlayerOne)->SetTotalScore(GetPlayer(PlayerOne)->GetCurrentScore());
 		}
 		else
 		{
 			GetPlayer(PlayerTwo)->SetCurrentHP(100);
-			GetPlayer(PlayerOne)->SetTakeDown(GetPlayer(PlayerOne)->GetCurrentTakeDown()+1);
+			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
+			GetPlayer(PlayerTwo)->SetTotalScore(GetPlayer(PlayerTwo)->GetCurrentScore());
 		}
 		
 	}
