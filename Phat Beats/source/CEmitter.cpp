@@ -166,6 +166,7 @@ void CEmitter::Render()
 
 	for(i = m_ListAliveParticles.begin(); i != m_ListAliveParticles.end(); ++i)
 		(*i)->Render(m_vTextureList);
+
 }
 
 const void CEmitter::SetMaxParticles(const short nNewMaxParticles)

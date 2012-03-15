@@ -285,9 +285,13 @@
     <ClInclude Include="source\States\CCredit_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="source\States\CHighScoreState.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="resource1.h" />
+>>>>>>> 4e45943143485c05667334165e4018f0e8157bc2
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Management">
@@ -329,5 +333,11 @@
     <Filter Include="Game Management\Source">
       <UniqueIdentifier>{b9adc522-d5a1-452a-837c-19f384fa3556}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Phat Beats1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\graphics\Icon.ico" />
   </ItemGroup>
 </Project>

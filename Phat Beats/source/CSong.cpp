@@ -226,13 +226,14 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				{
 					bool found = false;
 
-					for(unsigned int y = 0; y < m_vHittableBeats.size(); ++y)
-						if(m_vHittableBeats[y] == (*i))
+					list<CBeat*>::iterator y = m_vHittableBeats.begin();
+					for(; y != m_vHittableBeats.end(); ++y)
+						if((*y) == (*i))
 							found = true;
 
 					if(!found)
 					{
-						m_vHittableBeats.push_back(*i);
+						m_vHittableBeats.push_back(*i);						
 						// Sending note event (only once)
 						CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));
 					}					
@@ -248,10 +249,15 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				// so this means it's past the point where player can hit
 				else if((*i)->GetHasCollided() == true)
 				{
-					// Removing it from valid hittable beats
-					for(unsigned int x = 0; x < m_vHittableBeats.size(); ++x)
-						if(m_vHittableBeats[x] == (*i))
-							m_vHittableBeats.erase(m_vHittableBeats.begin() + x);
+					list<CBeat*>::iterator y = m_vHittableBeats.begin();
+					for(; y != m_vHittableBeats.end(); ++y)
+					{
+						if((*y) == (*i))
+							y = m_vHittableBeats.erase(y);
+
+						if(y == m_vHittableBeats.end())
+							break;
+					}
 
 					
 					ES->SendEvent("notepassed",NULL);
