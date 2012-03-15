@@ -81,6 +81,12 @@ bool CMenu_State::Input(void)
 				}
 				break;
 
+			case MAINMENU_HIGHSCORE:
+				{
+					CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+				}
+				break;
+
 			case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
 				{
 					CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
@@ -103,12 +109,12 @@ bool CMenu_State::Input(void)
 				}
 				break;
 
+
 			case MAINMENU_EXIT:
 				{
 					return false;
 				}
 				break;
-
 			}
 		}
 	}
@@ -142,51 +148,48 @@ bool CMenu_State::Input(void)
 		{
 			switch( m_nMenuSelection )
 			{
-			case MAINMENU_NEWGAME:
-				{
-					// Private function that wraps up CLU load calls to 
-					// keep this area clean
-					LoadGameplayStateAssets();
-				}
-				break;
+				case MAINMENU_NEWGAME:
+					{
+						// Private function that wraps up CLU load calls to 
+						// keep this area clean
+						LoadGameplayStateAssets();
+					}
+					break;
 
-		case MAINMENU_HIGHSCORE:
-			{
-				CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
-			}
-			break;
+				case MAINMENU_HIGHSCORE:
+					{
+						CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+					}
+					break;
 
-		case MAINMENU_EXIT:
-			{
-			case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
-				{
-					CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
-				}
-				break;
+				case MAINMENU_LOAD:	// GOES TO THE SKILLS TEST FOR NOW
+					{
+						CGame::GetInstance()->ChangeState(CLoad_State::GetInstance());
+					}
+					break;
 
-			case MAINMENU_OPTIONS:
-				{
-					CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
-				}
-				break;		
-			case MAINMENU_CREDITS:
-				{
-					CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
-				}
-				break;
-			case MAINMENU_LEVEL:
-				{
-					CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
-				}
-				break;
+				case MAINMENU_OPTIONS:
+					{
+						CGame::GetInstance()->ChangeState(COptionsState::GetInstance());
+					}
+					break;		
+				case MAINMENU_CREDITS:
+					{
+						CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
+					}
+					break;
+				case MAINMENU_LEVEL:
+					{
+						CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
+					}
+					break;
 
 
-			case MAINMENU_EXIT:
-				{
-					return false;
-				}
-				break;
-
+				case MAINMENU_EXIT:
+					{
+						return false;
+					}
+					break;
 			}
 		}
 	}
