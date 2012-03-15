@@ -17,6 +17,7 @@
 #include "CLoad_State.h"
 #include "../../CLevelManager.h"
 #include "../JCMacros.h"
+#include "CCredit_State.h"
 
 CMenu_State::CMenu_State()
 {
@@ -45,6 +46,7 @@ void CMenu_State::Enter(void)
 
 bool CMenu_State::Input(void)
 {
+#pragma region KEYBOARD
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1) )
@@ -92,7 +94,7 @@ bool CMenu_State::Input(void)
 				break;		
 			case MAINMENU_CREDITS:
 				{
-					//CGame::GetInstance()->ChangeState()
+					CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 				}
 				break;
 			case MAINMENU_LEVEL:
@@ -117,7 +119,10 @@ bool CMenu_State::Input(void)
 			}
 		}
 	}
-	
+#pragma endregion
+
+
+#pragma region XBOX
 	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1) )
@@ -165,7 +170,7 @@ bool CMenu_State::Input(void)
 				break;		
 			case MAINMENU_CREDITS:
 				{
-					//CGame::GetInstance()->ChangeState()
+					CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 				}
 				break;
 			case MAINMENU_LEVEL:
@@ -190,7 +195,8 @@ bool CMenu_State::Input(void)
 			}
 		}
 	}
-
+	
+#pragma endregion
 	return true;
 }
 
@@ -254,6 +260,13 @@ void CMenu_State::Render(void)
 		}
 		break;
 
+	case MAINMENU_TUTORIAL:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_TUTORIAL));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 768, topSelection  + (spacing * MAINMENU_TUTORIAL), -1.0f);
+		}
+		break;
+
 	case MAINMENU_EXIT:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_EXIT));
@@ -263,7 +276,7 @@ void CMenu_State::Render(void)
 	}
 	
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nhow to play\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 }
 
@@ -309,14 +322,48 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("darksidedub.xml","",Song);
 	CLU->QueueLoadCommand("ImperialMarch.xml","",Song);
 	CLU->QueueLoadCommand("noteeventtest.xml", "", Song);
+	CLU->QueueLoadCommand("OldRepublic.xml","",Song);
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
+	CLevelManager::GetInstance()->QueueSong("OldRepublic");
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
 	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 
+
+	GAME->ChangeState(CLU_State::GetInstance());
+}
+
+void CMenu_State::loadTutorial()
+{
+	// Cleaning crap out (if there's anything)
+	CFXManager::GetInstance()->UnloadAllFX();
+	CLevelManager::GetInstance()->EmptySongQueue();
+	BEATMAN->UnloadSongs();	
+
+	// Using defines from JCMacros.h
+	CLU->SetNewState(CGameplay_State::GetInstance());
+
+	// Setting GameplayState to tutorial mode
+	CGameplay_State::GetInstance()->SetIsTutorial(true);
+
+	// Loading Effects
+	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+	CLU->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
+
+	// Loading up BeatManager specific stuff
+
+	CLU->QueueLoadCommand("tutorial.xml","",Song);
+
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 
 	GAME->ChangeState(CLU_State::GetInstance());
 }

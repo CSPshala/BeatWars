@@ -53,7 +53,7 @@ bool CLoad_State::Input(void)
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
-			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
@@ -110,7 +110,7 @@ bool CLoad_State::Input(void)
 	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
 		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
-			CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 
 		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
@@ -296,5 +296,30 @@ string CLoad_State::loadGame()
 		}
 		inFile.close();
 	}
+
+
 	return GetFileName();
+}
+
+void CLoad_State::loadGameSetting()
+{
+	int diff = -1;
+	ifstream in("resource/saves/gameconfig.ass");
+
+	if (in.is_open())
+	{
+		if (in.good())
+		{
+			in>>m_fFxVolume;
+			in>>m_fMusicVolume;
+			in>>m_nAiLevel;
+			in>>diff;
+			m_nPlayerDiff = BeatDifficulty(diff);
+			SetAILevel(m_nAiLevel);
+			SetPlayerDiff(m_nPlayerDiff);
+			SetFXVolume(m_fFxVolume);
+			SetMusicVolume(m_fMusicVolume);
+		}
+		in.close();
+	}
 }

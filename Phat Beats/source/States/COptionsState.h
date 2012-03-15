@@ -46,8 +46,16 @@ public:
 	void Render(void);
 	void Exit(void);
 
+	// game difficulty setters and getter
 	void SetDifficulty(BeatDifficulty eDiff) {m_eDifficulty = eDiff;}
 	BeatDifficulty GetDifficulty() {return m_eDifficulty;}
+	// AI level setters and getter
 	int GetAILevel() {return m_nAiLevel;}
 	void SetAILevel(int nAILevel) {m_nAiLevel = nAILevel;}
+
+	// volume setter and getter for saving and loading
+	float GetFXVol() {return m_nFXVolume;}
+	void SetFXVol(float nFXVolume) {m_nFXVolume = nFXVolume;}
+	float GetMusicVol() {return m_nMusicVolume;}
+	void SetMusicVol(float nMusicVolume) {m_nMusicVolume = nMusicVolume;}
 };

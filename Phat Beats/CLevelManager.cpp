@@ -10,9 +10,10 @@
 #include "source/States/CLoad_State.h"
 #include "source/States/CBitmapFont.h"
 #include "source/CAnimation.h"
+#include "source/States/COptionsState.h"
 
 #include <sstream>
-
+#define MAX_TAKEDOWNS 2
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access
@@ -140,11 +141,11 @@ CPlayer* CLevelManager::GetPlayer(const PlayerIndex eIndex) {
 }
 const void CLevelManager::EnterLevel(void) {
 	ObjMan->AddObject(GetPlayer(PlayerOne));
-	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP()-10);
+	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(130);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
+	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
+	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
 	
 	p2PrevHP = 101;
 	p1PrevHP = 101;
@@ -170,6 +171,11 @@ const void CLevelManager::EnterLevel(void) {
 	p1PrevPowerup = -1;
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+	/*
+	CSGD_FModManager::GetInstance()->SetVolume(BeatMan->GetCurrentlyPlayingSong()->GetSongID()
+	,COptionsState::GetInstance()->GetMusicVol());
+	*/
+
 }
 const void CLevelManager::LeaveLevel(void) {
 	BeatMan->Pause();
@@ -226,6 +232,7 @@ const void CLevelManager::HandlePausingInput(void) {
 			BeatMan->Play(m_vSongs.front());
 
 		BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -252,7 +259,10 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 	ObjMan->CheckCollisions(GetPlayer(PlayerTwo));
 	BeatMan->Update();
 
-	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID())) {
+	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()) || 
+		GetPlayer(PlayerOne)->GetCurrentTakeDown() == MAX_TAKEDOWNS || 
+		GetPlayer(PlayerTwo)->GetCurrentTakeDown() == MAX_TAKEDOWNS) 
+	{
 		m_fGameTransitionAlpha += (175 * fElapsedTime);
 		BeatMan->Stop();
 		if (m_fGameTransitionAlpha >= 255)
@@ -260,9 +270,12 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 			m_vSongs.pop();
 			SetState(Pausing);
 			m_fGameTransitionAlpha = 1;
+			GetPlayer(PlayerOne)->SetTakeDown(0);
+			GetPlayer(PlayerTwo)->SetTakeDown(0);
 		}	
 	}
-	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) {
+	else if(GetPlayer(PlayerOne)->GetCurrentHP() <= 0 || GetPlayer(PlayerTwo)->GetCurrentHP() <= 0) 
+	{
 		//m_fGameTransitionAlpha += (175 * fElapsedTime);
 		//BeatMan->Stop();
 		/*
@@ -379,17 +392,17 @@ const void CLevelManager::Render(void){
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
 
-	TexMan->DrawF(m_nHudID, 70.0f, 55.0f, 1.0f, 1.0f, &rectLeftPowerup);
-	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 55.0f, 1.0f, 1.0f, &rectRightPowerup);
+	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
+	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 10.0f, 1.0f, 1.0f, &rectLeftSaber);
-	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 10.0f, 1.0f, 1.0f, &rectRightSaber);
+	TexMan->DrawF(m_nHudID, 59.0f, 30.0f, 1.0f, 1.0f, &rectLeftSaber);
+	TexMan->DrawF(m_nHudID, 513.0f + m_nRightOffset, 30.0f, 1.0f, 1.0f, &rectRightSaber);
 
-	TexMan->DrawF(m_nHudID, 20.0f, 17.0f, 1.0f, 1.0f, &rectLeftHandle);
-	TexMan->DrawF(m_nHudID, 722.0f, 21.0f, 1.0f, 1.0f, &rectRightHandle);
+	TexMan->DrawF(m_nHudID, 20.0f, 37.0f, 1.0f, 1.0f, &rectLeftHandle);
+	TexMan->DrawF(m_nHudID, 722.0f, 41.0f, 1.0f, 1.0f, &rectRightHandle);
 
-	TexMan->DrawF(m_nHudID, 59.0f, 45.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
-	TexMan->DrawF(m_nHudID, 529.0f, 45.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
 	// Draw Particles
 	FxMan->Render();

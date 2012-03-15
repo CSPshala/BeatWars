@@ -109,6 +109,7 @@
     <ClCompile Include="source\States\CArcadeMode_State.cpp" />
     <ClCompile Include="source\States\CBitmapFont.cpp" />
     <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
+    <ClCompile Include="source\States\CCredit_State.cpp" />
     <ClCompile Include="source\States\CGameplay_State.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="source\States\CArcadeMode_State.h" />
     <ClInclude Include="source\States\CBitmapFont.h" />
     <ClInclude Include="source\States\CCharacterSelect_State.h" />
+    <ClInclude Include="source\States\CCredit_State.h" />
     <ClInclude Include="source\States\CGameplay_State.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />

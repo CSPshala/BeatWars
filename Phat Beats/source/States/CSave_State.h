@@ -38,6 +38,7 @@ public:
 	void SetImageSave(bool IsbImageSave) {m_IsbSaveImage = IsbImageSave;}
 	static CSave_State* GetInstance();	
 	void saveGame();
+	void saveConfig();
 private:
 	
 
@@ -71,6 +72,14 @@ private:
 
 	// bool variable for image save
 	bool m_IsbSaveImage;
+
+	// saving volume config
+	float m_nFXVolume;
+	float m_nMusicVolume;
+
+	// saving level difficulty
+	int Ailevel;
+	int playerDiff;
 
 	
 };

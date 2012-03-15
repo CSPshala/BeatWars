@@ -51,7 +51,6 @@ void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
 	
-
 	if(!GetPreviouslyPlaying()) 
 	{
 		
@@ -62,6 +61,11 @@ void CGameplay_State::Enter(void)
 			CLevelManager::GetInstance()->QueueSong(CLoad_State::GetInstance()->GetSongName());
 			CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
 		}
+
+		/*
+		CSGD_FModManager::GetInstance()->SetVolume(CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetSongID()
+		,COptionsState::GetInstance()->GetMusicVol());
+		*/
 
 	
 		CFXManager::GetInstance()->MoveEffectTo("P2ATTACK",D3DXVECTOR2((float)700,(float)12));

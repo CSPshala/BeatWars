@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////
 
 #include "CArcadeMode_State.h"
+#include "CLevelSelect_State.h"
 
 CArcadeMode_State::CArcadeMode_State()
 {
@@ -34,7 +35,6 @@ void CArcadeMode_State::Enter(void)
 
 bool CArcadeMode_State::Input(void)
 {
-
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6, 1))
 		return false;
 
@@ -95,7 +95,7 @@ bool CArcadeMode_State::Input(void)
 
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
 	{
-		CMenu_State::GetInstance()->LoadGameplayStateAssets();
+		CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
 	}
 
 	return true;
