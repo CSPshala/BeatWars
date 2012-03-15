@@ -140,7 +140,7 @@ bool CGameplay_State::Input(void)
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
 		{
 			SetPreviouslyPlaying(true);
-			CLevelManager::GetInstance()->LeaveLevel();			
+			CLevelManager::GetInstance()->LeaveLevel();
 			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 		}
 	

@@ -1,5 +1,6 @@
 Cantina Remix	[cantina.beat, cantina, luke.jpg]
-Dual of the Fates	[DueloftheFates.beat, dualofthefates, test.png]
+Duel of the Fates	[DueloftheFates.beat, dualofthefates, test.png]
+
 Dark Side Dub	[darksidedub.beat, DarkSideDub, VaderZombie.jpg]
+
 Avicii Test	[noteeventtest.beat, Avicii, test.png]
-Old Republic	[OldRepublic.beat, OldRepublic, OldRepublic.jpg]
