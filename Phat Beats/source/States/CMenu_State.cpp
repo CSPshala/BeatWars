@@ -109,12 +109,13 @@ bool CMenu_State::Input(void)
 
 		case MAINMENU_TUTORIAL:
 			{
-				
+				loadTutorial();
 			}
 			break;
 
 		case MAINMENU_EXIT:
 			{
+
 				return false;
 			}
 			break;
@@ -255,6 +256,38 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
 
+
+	GAME->ChangeState(CLU_State::GetInstance());
+}
+
+void CMenu_State::loadTutorial()
+{
+	// Cleaning crap out (if there's anything)
+	CFXManager::GetInstance()->UnloadAllFX();
+	CLevelManager::GetInstance()->EmptySongQueue();
+	BEATMAN->UnloadSongs();	
+
+	// Using defines from JCMacros.h
+	CLU->SetNewState(CGameplay_State::GetInstance());
+
+	// Setting GameplayState to tutorial mode
+	CGameplay_State::GetInstance()->SetIsTutorial(true);
+
+	// Loading Effects
+	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
+	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+	CLU->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
+
+	// Loading up BeatManager specific stuff
+
+	CLU->QueueLoadCommand("tutorial.xml","",Song);
+
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 
 	GAME->ChangeState(CLU_State::GetInstance());
 }

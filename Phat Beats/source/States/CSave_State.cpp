@@ -245,6 +245,12 @@ void CSave_State::saveGame()
 		outFile.close();
 	}
 
+
+}
+
+void CSave_State::saveConfig()
+{
+
 	ofstream out("resource/saves/gameconfig.ass");
 
 	m_nFXVolume = COptionsState::GetInstance()->GetFXVol();
@@ -255,7 +261,7 @@ void CSave_State::saveGame()
 	{
 		if (out.good())
 		{
-		    out<<m_nFXVolume<<'\n';
+			out<<m_nFXVolume<<'\n';
 			out<<m_nMusicVolume<<'\n';
 			out<<Ailevel<<'\n';
 			out<<playerDiff;
@@ -264,6 +270,5 @@ void CSave_State::saveGame()
 		out.close();
 	}
 
-	
 
 }

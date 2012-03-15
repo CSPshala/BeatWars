@@ -13,7 +13,7 @@
 #include "source/States/COptionsState.h"
 
 #include <sstream>
-#define MAX_TAKEDOWNS 5
+#define MAX_TAKEDOWNS 2
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access

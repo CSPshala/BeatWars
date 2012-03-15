@@ -236,6 +236,7 @@ string CLoad_State::loadGame()
 
 void CLoad_State::loadGameSetting()
 {
+	int diff = -1;
 	ifstream in("resource/saves/gameconfig.ass");
 
 	if (in.is_open())
@@ -245,7 +246,8 @@ void CLoad_State::loadGameSetting()
 			in>>m_fFxVolume;
 			in>>m_fMusicVolume;
 			in>>m_nAiLevel;
-			in>>m_nPlayerDiff;
+			in>>diff;
+			m_nPlayerDiff = BeatDifficulty(diff);
 			SetAILevel(m_nAiLevel);
 			SetPlayerDiff(m_nPlayerDiff);
 			SetFXVolume(m_fFxVolume);
