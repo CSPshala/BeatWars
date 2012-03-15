@@ -393,7 +393,6 @@ const void CLevelManager::Render(void){
 }
 const void CLevelManager::RenderPlayingState(void) {
 	// Draw HUD
-
 	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
 	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
 
@@ -416,11 +415,11 @@ const void CLevelManager::RenderPlayingState(void) {
 	static char szHpBuffer[8];
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 
-	// Player 1
+	//// Player 1
 	_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
 	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
-
-	// Player 2
+	//
+	//// Player 2
 	_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
 	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
@@ -470,6 +469,9 @@ const void CLevelManager::RenderPausingState(void) {
 	}
 }
 const void CLevelManager::Exit(void) {
+
+	//TexMan->UnloadTexture(m_nBackgroundID);
+
 	queue<string>::size_type i = 0;
 	for(; i < m_vSongs.size(); ++i)
 		m_vSongs.pop();

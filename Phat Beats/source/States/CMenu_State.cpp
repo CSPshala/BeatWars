@@ -323,12 +323,13 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
 	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
-	CLevelManager::GetInstance()->QueueSong("jeditheme");	
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("cantina");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
 	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
+	//CLevelManager::GetInstance()->QueueSong("OldRepublic");
 
 
 	GAME->ChangeState(CLU_State::GetInstance());
