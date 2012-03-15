@@ -92,6 +92,7 @@ void CBeat::Update(float fElapsedTime)
 	}
 		
 
+
 }
 
 void CBeat::Render()

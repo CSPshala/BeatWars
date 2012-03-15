@@ -165,6 +165,7 @@ void CPlayer::Update(float fElapsedTime)
 
 void CPlayer::Render()
 {
+
 	//Render Animations
 	if( m_nType == OBJ_PLAYER1 )
 	{
@@ -182,7 +183,6 @@ void CPlayer::Render()
 	// Rendering cone
 	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
-
 
 
 	if (m_IbwriteShit == true)

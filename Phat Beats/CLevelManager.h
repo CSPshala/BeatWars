@@ -54,6 +54,7 @@ class CLevelManager
 	int m_nFontID;
 	int m_nTitleID;
 	int m_nHudID;
+	int m_nBackgroundID;
 
 	// Offset for Hud
 	int m_nRightOffset;
