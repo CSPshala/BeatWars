@@ -38,6 +38,7 @@ public:
 	void SetImageSave(bool IsbImageSave) {m_IsbSaveImage = IsbImageSave;}
 	static CSave_State* GetInstance();	
 	void saveGame();
+	void saveConfig();
 private:
 	
 

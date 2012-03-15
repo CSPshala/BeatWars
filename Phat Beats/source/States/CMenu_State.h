@@ -35,6 +35,7 @@ public:
 
 	void LoadGameplayStateAssets();
 
+	void loadTutorial();
 
 private:
 	// Proper singleton

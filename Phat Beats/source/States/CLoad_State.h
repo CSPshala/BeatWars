@@ -17,6 +17,8 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "../CBeat.h"
+
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -43,7 +45,7 @@ public:
 	float GetFXVolume() {return m_fFxVolume;}
 	float GetMusicVolume() {return m_fMusicVolume;}
 	int GetAILevel() {return m_nAiLevel;}
-	int GetPlayerDiff() {return m_nPlayerDiff;}
+	BeatDifficulty GetPlayerDiff() {return m_nPlayerDiff;}
 	// Mutators
 	void SetFileName(string szFileName) {m_szSongFileName = szFileName;}
 	void SetSlotNumber(int nSlotNumber) {m_nSlotNumber = nSlotNumber;}
@@ -51,7 +53,7 @@ public:
 	void SetFXVolume(float fFxVolume) {m_fFxVolume = fFxVolume;}
 	void SetMusicVolume(float fMusicVolume) {m_fMusicVolume = fMusicVolume;}
 	void SetAILevel(int nAiLevel) {m_nAiLevel = nAiLevel;}
-	void SetPlayerDiff(int nPlayerDiff) {m_nPlayerDiff = nPlayerDiff;}
+	void SetPlayerDiff(BeatDifficulty nPlayerDiff) {m_nPlayerDiff = nPlayerDiff;}
 private:
 	// Proper singleton
 	CLoad_State(const CLoad_State&);
@@ -88,7 +90,7 @@ private:
 
 	// loading difficulty ai and player
 	int m_nAiLevel;
-	int m_nPlayerDiff;
+	BeatDifficulty m_nPlayerDiff;
 };
 
 #endif

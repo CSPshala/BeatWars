@@ -9,13 +9,11 @@
 #include "CGameplay_State.h"
 #include "CPause_State.h"
 #include "CLoad_State.h"
+#include "CSave_State.h"
 
 COptionsState::COptionsState( void )
 {
 
-	CLoad_State::GetInstance()->loadGameSetting();
-	SetDifficulty(HARD);
-	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
 }
 COptionsState::~COptionsState(void)
 {
@@ -29,6 +27,11 @@ COptionsState* COptionsState::GetInstance( void )
 }
 void COptionsState::Enter(void)
 {
+
+	CLoad_State::GetInstance()->loadGameSetting();
+	SetDifficulty(CLoad_State::GetInstance()->GetPlayerDiff());
+	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
+
 	// assign values to the local variables
 	m_nMenuSelection = 0;
 	m_nSFX = -1;
@@ -419,6 +422,7 @@ void COptionsState::Render(void)
 
 void COptionsState::Exit(void)
 {
+	CSave_State::GetInstance()->saveConfig();
 	//TODO:
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nGameImageID);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nCursorID);

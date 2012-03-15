@@ -13,7 +13,7 @@
 #include "source/States/COptionsState.h"
 
 #include <sstream>
-#define MAX_TAKEDOWNS 5
+#define MAX_TAKEDOWNS 2
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access
@@ -144,9 +144,7 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
-	GetPlayer(PlayerTwo)->SetCurrentPowerup(140);
-	
+
 	p2PrevHP = 101;
 	p1PrevHP = 101;
 	RECT rLeftHandle = {20, 10, 67, 27};
