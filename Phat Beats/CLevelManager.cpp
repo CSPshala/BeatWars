@@ -176,6 +176,7 @@ const void CLevelManager::EnterLevel(void) {
 	,COptionsState::GetInstance()->GetMusicVol());
 	*/
 
+	SetState(Playing);
 }
 const void CLevelManager::LeaveLevel(void) {
 	BeatMan->Pause();
