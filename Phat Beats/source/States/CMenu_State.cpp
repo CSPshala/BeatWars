@@ -18,7 +18,7 @@
 #include "../../CLevelManager.h"
 #include "../JCMacros.h"
 #include "CCredit_State.h"
-
+#include "CHighScoreState.h"
 CMenu_State::CMenu_State()
 {
 	// Asset IDs
@@ -63,7 +63,7 @@ bool CMenu_State::Input(void)
 
 		if( m_nMenuSelection == NUM_MAINMENU_OPTIONS )
 		{
-			m_nMenuSelection = 0;
+			m_nMenuSelection = MAINMENU_NEWGAME;
 		}
 	}
 
@@ -110,6 +110,12 @@ bool CMenu_State::Input(void)
 		case MAINMENU_TUTORIAL:
 			{
 				loadTutorial();
+			}
+			break;
+
+		case MAINMENU_HIGHSCORE:
+			{
+				CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
 			}
 			break;
 
@@ -193,6 +199,13 @@ void CMenu_State::Render(void)
 		}
 		break;
 
+	case MAINMENU_HIGHSCORE:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_HIGHSCORE));
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 768, topSelection  + (spacing * MAINMENU_HIGHSCORE), -1.0f);
+		}
+		break;
+
 	case MAINMENU_EXIT:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 32, topSelection  + (spacing * MAINMENU_EXIT));
@@ -202,7 +215,7 @@ void CMenu_State::Render(void)
 	}
 	
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nhow to play\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nlevel select\narcade mode\nhow to play\nhigh scores\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 }
 

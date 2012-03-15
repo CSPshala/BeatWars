@@ -110,6 +110,7 @@
     <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
     <ClCompile Include="source\States\CCredit_State.cpp" />
     <ClCompile Include="source\States\CGameplay_State.cpp" />
+    <ClCompile Include="source\States\CHighScoreState.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
     <ClCompile Include="source\States\CLU_State.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="source\States\CCharacterSelect_State.h" />
     <ClInclude Include="source\States\CCredit_State.h" />
     <ClInclude Include="source\States\CGameplay_State.h" />
+    <ClInclude Include="source\States\CHighScoreState.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />
     <ClInclude Include="source\States\CLU_State.h" />
