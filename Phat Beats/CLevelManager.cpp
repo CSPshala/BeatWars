@@ -11,7 +11,8 @@
 #include "source/States/CBitmapFont.h"
 #include "source/CAnimation.h"
 #include "source/States/COptionsState.h"
-#include "source\StringHelper.h"
+#include "source/States/CLevelSelect_State.h"
+#include "source/StringHelper.h"
 #include <fstream>
 
 #include <sstream>
@@ -29,7 +30,13 @@ CLevelManager::CLevelManager(void) {
 
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
-	PlayerList().push_back(new CPlayer(OBJ_AI));
+	if (CLevelSelect_State::GetInstance()->GetVsMode() == true)
+	{
+		PlayerList().push_back(new CPlayer(OBJ_PLAYER2));
+	}
+	else
+		PlayerList().push_back(new CPlayer(OBJ_AI));
+
 	m_SongTransitionAlpha = 255;
 	m_bStartTransition = true;
 	
@@ -105,6 +112,8 @@ CLevelManager::CLevelManager(void) {
 	m_nRightPowerOffset = 0;
 	p1PrevHP = 100;
 	p2PrevHP = 100;
+
+	m_bCheck = true;
 }
 CLevelManager::~CLevelManager(void) {
 	std::vector<CPlayer*>::iterator i;
@@ -177,7 +186,7 @@ const void CLevelManager::EnterLevel(void) {
 	CSGD_FModManager::GetInstance()->SetVolume(BeatMan->GetCurrentlyPlayingSong()->GetSongID()
 	,COptionsState::GetInstance()->GetMusicVol());
 	*/
-
+	m_bCheck = true;
 	SetState(Playing);
 }
 const void CLevelManager::LeaveLevel(void) {
@@ -225,7 +234,7 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN)) 
+	if(InMan->KeyPressed(DIK_RETURN) || InMan->JoystickGetLStickDirPressed(0, 0)) 
 	{
 		// Add Song to unlock list
 		if(BeatMan->GetCurrentlyPlayingSong()->GetSongName() != "jeditheme")
@@ -249,12 +258,19 @@ const void CLevelManager::HandlePausingInput(void) {
 			BeatMan->Play(m_vSongs.front());
 			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 		}
-		
+
+	
+		GetPlayer(PlayerOne)->SetTotalScore(GetPlayer(PlayerOne)->GetTotalScore() + GetPlayer(PlayerOne)->GetCurrentScore());
+		GetPlayer(PlayerTwo)->SetTotalScore(GetPlayer(PlayerTwo)->GetTotalScore() + GetPlayer(PlayerTwo)->GetCurrentScore());
 
 		
+
+		GetPlayer(PlayerOne)->SetCurrentScore(0);
+		GetPlayer(PlayerTwo)->SetCurrentScore(0);
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
+
 	switch(GetState()) {
 	case Playing:
 		UpdatePlayingState(fElapsedTime);
@@ -278,6 +294,8 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 	ObjMan->CheckCollisions(GetPlayer(PlayerTwo));
 	BeatMan->Update();
 
+	m_bCheck = true;
+
 	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()) || 
 		GetPlayer(PlayerOne)->GetCurrentTakeDown() == MAX_TAKEDOWNS || 
 		GetPlayer(PlayerTwo)->GetCurrentTakeDown() == MAX_TAKEDOWNS) 
@@ -299,17 +317,22 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		{
 			GetPlayer(PlayerOne)->SetCurrentHP(100);
 			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
-			GetPlayer(PlayerOne)->SetTotalScore(GetPlayer(PlayerOne)->GetCurrentScore());
+			
 		}
 		else
 		{
 			GetPlayer(PlayerTwo)->SetCurrentHP(100);
 			GetPlayer(PlayerTwo)->SetTakeDown(GetPlayer(PlayerTwo)->GetCurrentTakeDown()+1);
-			GetPlayer(PlayerTwo)->SetTotalScore(GetPlayer(PlayerTwo)->GetCurrentScore());
+			
 		}
 		
 	}
+	
 
+	
+		
+	
+	
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
 	{
 		if( GetPlayer(PlayerOne)->GetCurrentHP() <= 100 )
@@ -389,6 +412,7 @@ const void CLevelManager::UpdatePausingState(const float fElapsedTime) {
 		}
 	}
 
+
 }
 const void CLevelManager::Render(void){
 	switch(GetState()) {
@@ -459,6 +483,8 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerOne)->GetCurrentStreak() << '\n';
 		pauseText << "Current TakeDowns: " << GetPlayer(PlayerOne)->GetCurrentTakeDown() << '\n';
+		pauseText << "Current Score:" << GetPlayer(PlayerOne)->GetCurrentScore()<<'\n';
+		pauseText << "Total Score:" << GetPlayer(PlayerOne)->GetTotalScore();
 	}
 	
 	if (GetPlayer(PlayerOne)->GetCurrentHP() < GetPlayer(PlayerTwo)->GetCurrentHP())
@@ -467,6 +493,8 @@ const void CLevelManager::RenderPausingState(void) {
 		pauseText << "Notes Hit: " << BeatMan->GetNumberNotesHit() << '\n';
 		pauseText << "Current Combo: " << GetPlayer(PlayerTwo)->GetCurrentStreak() << '\n';
 		pauseText << "Current TakeDowns: " << GetPlayer(PlayerTwo)->GetCurrentTakeDown() << '\n';
+		pauseText << "Current Score:" << GetPlayer(PlayerTwo)->GetCurrentScore()<<'\n';
+		pauseText << "Total Score:" << GetPlayer(PlayerOne)->GetTotalScore();
 	}
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);

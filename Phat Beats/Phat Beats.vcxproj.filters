@@ -133,14 +133,12 @@
     <ClCompile Include="CLevelManager.cpp">
       <Filter>Game Management\Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Managers\CXBOXManager.cpp">
+      <Filter>Game Management\Source</Filter>
+    </ClCompile>
     <ClCompile Include="source\States\CCredit_State.cpp">
       <Filter>Game States\Source</Filter>
     </ClCompile>
-<ClCompile Include="source\StringHelper.cpp">
-      <Filter>Source Files</Filter>
-<ClCompile Include="source\States\CHighScoreState.cpp">
-      <Filter>Game States</Filter>
-</ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h">
@@ -284,25 +282,14 @@
     <ClInclude Include="source\States\CSave_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="source\Managers\CXBOXManager.h">
+      <Filter>Game Management\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="source\States\CCredit_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<ClInclude Include="source\StringHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-	<ClInclude Include="resource1.h" />
-</ItemGroup>
-=======
-<<<<<<< HEAD
-    <ClInclude Include="source\States\CHighScoreState.h">
-      <Filter>Game States\Headers</Filter>
-    </ClInclude>
-=======
     <ClInclude Include="resource1.h" />
->>>>>>> 4e45943143485c05667334165e4018f0e8157bc2
   </ItemGroup>
->>>>>>> 5602d4d7116e5b695b8afdaec4a7e1489cf5c68d
   <ItemGroup>
     <Filter Include="Game Management">
       <UniqueIdentifier>{a10bde4a-cef1-4c46-8ddf-5cb0ef234bbb}</UniqueIdentifier>

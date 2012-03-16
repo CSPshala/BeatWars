@@ -122,58 +122,103 @@ void CGameplay_State::Enter(void)
 
 bool CGameplay_State::Input(void)
 {
-	
-
-	if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		SetPreviouslyPlaying(true);
-		CLevelManager::GetInstance()->LeaveLevel();
-		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-	}
-	
-	// Stopping regular play input when tutorial note is thrown
-	// (because we are in a tutorial and it's waiting for player to read something
-	if(!GetIsTutorial())
-	{
-		CLevelManager::GetInstance()->HandleLevelInput();
-
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
+		if (!GetIsTutorial())
 		{
-			SetPreviouslyPlaying(true);
-			CLevelManager::GetInstance()->LeaveLevel();
-			CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-		}
-	
-	}
-	else
-	{
-		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
-		{
-			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+			CLevelManager::GetInstance()->HandleLevelInput();
+
+			if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 			{
-				SetIsTutorial(false);
-
-				++m_nTutorialTextIndex;
-
-				// Unpausing song
-				BeatManager->Pause();
+				SetPreviouslyPlaying(true);
+				CLevelManager::GetInstance()->LeaveLevel();
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 			}
-			else
+
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) && CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)) 
+			{
+				SetPreviouslyPlaying(true);
+				CLevelManager::GetInstance()->LeaveLevel();			
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+			}
+		}
+		else
+		{
+			if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
+			{
+				CLevelManager::GetInstance()->HandleLevelInput();
+
+				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				{
+					SetIsTutorial(false);
+
+					++m_nTutorialTextIndex;
+
+					// Unpausing song
+					BeatManager->Pause();
+				}
+				else
+				{
+					if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+					{
+						SetIsTutorial(false);
+						CLevelManager::GetInstance()->SkipLevel();
+					}
+				}
+
+			}
+		}
+	}
+
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
+	{
+
+		// Stopping regular play input when tutorial note is thrown
+		// (because we are in a tutorial and it's waiting for player to read something
+		if(!GetIsTutorial())
+		{
+			CLevelManager::GetInstance()->HandleLevelInput();
+
+			if( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START ) 
+			{
+				SetPreviouslyPlaying(true);
+				CLevelManager::GetInstance()->LeaveLevel();			
+				CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+			}
+
+		}
+		else
+		{
+			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				{
+					SetIsTutorial(false);
+
+					++m_nTutorialTextIndex;
+
+					// Unpausing song
+					BeatManager->Pause();
+				}
+				else
+				{
+					SetIsTutorial(false);
+					CLevelManager::GetInstance()->SkipLevel();
+				}
+			}
+
+			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
 			{
 				SetIsTutorial(false);
 				CLevelManager::GetInstance()->SkipLevel();
 			}
 		}
-
-		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 0))
-		{
-			SetIsTutorial(false);
-			CLevelManager::GetInstance()->SkipLevel();
-		}
 	}
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
 		CGame::GetInstance()->GoBack();
+
+
 
 
 	CLevelManager::GetInstance()->HandleLevelInput();

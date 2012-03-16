@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////
 
 #include "CArcadeMode_State.h"
+#include "CLevelSelect_State.h"
 
 CArcadeMode_State::CArcadeMode_State()
 {
@@ -34,69 +35,138 @@ void CArcadeMode_State::Enter(void)
 
 bool CArcadeMode_State::Input(void)
 {
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(6, 1))
-		return false;
-
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) )
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		m_nMenuSelection -= 1;
-		if (m_nMenuSelection == -1)
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(6, 1))
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) )
 		{
-			m_nMenuSelection = DARTH_VADER;
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
+			{
+				m_nMenuSelection = DARTH_VADER;
+			}
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_W) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+		{
+			m_nCharacterSelection -=1;
+			if (m_nCharacterSelection== -1)
+			{
+				m_nCharacterSelection = DARTH_VADER;
+			}
+		}
+
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) )
+		{
+			m_nMenuSelection += 1;
+			if (m_nMenuSelection == NUM_CHARACTERS)
+			{
+				m_nMenuSelection = 0;
+			}
+		}
+
+
+		if (  CSGD_DirectInput::GetInstance()->KeyPressed(DIK_S) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1))
+		{
+			m_nCharacterSelection +=1;
+			if (m_nCharacterSelection == NUM_CHARACTERS)
+			{
+				m_nCharacterSelection = 0;
+			}
+		}
+
+		if (m_nMenuSelection == 0 )
+		{
+			CGame::GetInstance()->SetCharacterSelection(true);
+		}
+		if (m_nMenuSelection == 1 )
+		{
+			CGame::GetInstance()->SetCharacterSelection(false);
+		}
+
+		if (m_nCharacterSelection == 0 )
+		{
+			CGame::GetInstance()->SetCharacterSelection2(true);
+		}
+		if (m_nCharacterSelection == 1 )
+		{
+			CGame::GetInstance()->SetCharacterSelection2(false);
+		}
+
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
+		{
+			CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_W) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		m_nCharacterSelection -=1;
-		if (m_nCharacterSelection== -1)
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+
+		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) )
 		{
-			m_nCharacterSelection = DARTH_VADER;
+			m_nMenuSelection -= 1;
+			if (m_nMenuSelection == -1)
+			{
+				m_nMenuSelection = DARTH_VADER;
+			}
+		}
+
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+		{
+			m_nCharacterSelection -=1;
+			if (m_nCharacterSelection== -1)
+			{
+				m_nCharacterSelection = DARTH_VADER;
+			}
+		}
+
+		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) )
+		{
+			m_nMenuSelection += 1;
+			if (m_nMenuSelection == NUM_CHARACTERS)
+			{
+				m_nMenuSelection = 0;
+			}
+		}
+
+
+		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1))
+		{
+			m_nCharacterSelection +=1;
+			if (m_nCharacterSelection == NUM_CHARACTERS)
+			{
+				m_nCharacterSelection = 0;
+			}
+		}
+
+		if (m_nMenuSelection == 0 )
+		{
+			CGame::GetInstance()->SetCharacterSelection(true);
+		}
+		if (m_nMenuSelection == 1 )
+		{
+			CGame::GetInstance()->SetCharacterSelection(false);
+		}
+
+		if (m_nCharacterSelection == 0 )
+		{
+			CGame::GetInstance()->SetCharacterSelection2(true);
+		}
+		if (m_nCharacterSelection == 1 )
+		{
+			CGame::GetInstance()->SetCharacterSelection2(false);
+		}
+
+		if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
 		}
 	}
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) )
-	{
-		m_nMenuSelection += 1;
-		if (m_nMenuSelection == NUM_CHARACTERS)
-		{
-			m_nMenuSelection = 0;
-		}
-	}
-
-	
-	if (  CSGD_DirectInput::GetInstance()->KeyPressed(DIK_S) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1))
-	{
-		m_nCharacterSelection +=1;
-		if (m_nCharacterSelection == NUM_CHARACTERS)
-		{
-			m_nCharacterSelection = 0;
-		}
-	}
-
-	if (m_nMenuSelection == 0 )
-	{
-		CGame::GetInstance()->SetCharacterSelection(true);
-	}
-	if (m_nMenuSelection == 1 )
-	{
-		CGame::GetInstance()->SetCharacterSelection(false);
-	}
-
-	if (m_nCharacterSelection == 0 )
-	{
-		CGame::GetInstance()->SetCharacterSelection2(true);
-	}
-	if (m_nCharacterSelection == 1 )
-	{
-		CGame::GetInstance()->SetCharacterSelection2(false);
-	}
-
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
-	{
-		CMenu_State::GetInstance()->LoadGameplayStateAssets();
-	}
 
 	return true;
 }

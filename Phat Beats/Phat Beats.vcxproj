@@ -98,6 +98,7 @@
     <ClCompile Include="source\Managers\CMessages.cpp" />
     <ClCompile Include="source\Managers\CMessageSystem.cpp" />
     <ClCompile Include="source\Managers\CObjectManager.cpp" />
+    <ClCompile Include="source\Managers\CXBOXManager.cpp" />
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="source\CGame.h" />
     <ClInclude Include="source\CParticle.h" />
     <ClInclude Include="source\CPlayer.h" />
+    <ClInclude Include="source\Managers\CXBOXManager.h" />
     <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />

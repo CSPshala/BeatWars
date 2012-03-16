@@ -1,11 +1,6 @@
 Cantina Remix	[cantina.beat, cantina, luke.jpg]
-
 Duel of the Fates	[DueloftheFates.beat, dualofthefates, test.png]
-
-
 Dark Side Dub	[darksidedub.beat, DarkSideDub, VaderZombie.jpg]
-
-
 Avicii Test	[noteeventtest.beat, Avicii, test.png]
 South Park Test	[southpark.beat, southpark, southpark.png]
 Archer Test	[archer.beat, archer, archer.jpg]
