@@ -23,6 +23,7 @@
 #include "Managers\CFXManager.h"
 #include "Managers\CAnimationManager.h"
 #include "States\COptionsState.h"
+#include "States\CBitmapFont.h"
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -90,6 +91,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	m_nCurrAnim = 0;
 	m_bAnimationsEmpty = false;
+
+	m_fStreakTextTimer = 0.0f;
 }
 CPlayer::~CPlayer()
 {		
@@ -115,6 +118,10 @@ void CPlayer::Input()
 }
 void CPlayer::Update(float fElapsedTime)
 {
+	// Timer for streak text
+	if((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0)
+		m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
+
 	// flushing last hit key
 	cHitKey = 'g';
 
@@ -190,13 +197,7 @@ void CPlayer::Render()
 	//D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
 	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
-	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));
-
-
-	if (m_IbwriteShit == true)
-	{
-		CSGD_Direct3D::GetInstance()->DrawText("This is a test of the Ai hit",200,24,255,0,0);
-	}
+	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));	
 }
 RECT CPlayer::GetCollisionRect()
 {
