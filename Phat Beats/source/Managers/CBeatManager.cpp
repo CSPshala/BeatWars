@@ -45,8 +45,8 @@ CBeatManager::CBeatManager()
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
 	SetComboThreshold(COMBODAMAGETHRESHOLD);
-	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
-	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/SGD_hurt.wav");
+	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_High.mp3");
+	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Damage.mp3");
 	SetFXSound(m_nSFX);
 	SetSoundFX(m_nDamageSFX);
 }
@@ -871,6 +871,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										// Upping Player1's Current combo for damage
 										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
 										SetNumberNotesHit(GetNumberNotesHit() + 1);
+										
 									}						
 									aPlayer->SetMostRecentKeyPress('g');
 								}
@@ -914,9 +915,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 				//}
 			}
-				
-	}
-
+}
 
 
 	if(aPlayer->GetType() == OBJ_AI)
@@ -952,12 +951,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 					aPlayer->SetCurrentStreak(0);
 		}
 	}
-			
-		
-
-	
 }
-
 CBeatManager* CBeatManager::GetInstance()
 {
 	// Lazy instantiation
@@ -1034,7 +1028,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
 			playerToDmg->SetCurrAnimation("Low Block");
 			damageDealer->SetCurrAnimation("Low Hit");
-			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 		}
 	}
 	else
