@@ -49,6 +49,7 @@ bool CLevelSelect_State::Input(void) {
 					CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
 				--Selected;
 				CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
+				CGame::GetInstance()->PlayNavMenuSound();
 			}
 		}
 		else if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0)) {
@@ -57,6 +58,7 @@ bool CLevelSelect_State::Input(void) {
 					CSGD_FModManager::GetInstance()->StopSound(GetLevelData()[Selected]->nSoundSample);
 				++Selected;
 				CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[Selected]->nSoundSample);
+				CGame::GetInstance()->PlayNavMenuSound();
 			}
 		}
 
@@ -111,6 +113,7 @@ bool CLevelSelect_State::Input(void) {
 				CBeatManager::GetInstance()->Stop();
 				CBeatManager::GetInstance()->UnloadSongs();
 
+				CGame::GetInstance()->PlayAccMenuSound();
 				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 			}
 		}
