@@ -234,6 +234,8 @@ void CArcadeMode_State::Render(void)
 		CSGD_TextureManager::GetInstance()->Draw(m_nTitleID, 510, 200, 1.0f, 1.0f, &rVader);
 	}
 
+	//CBitmapFont::GetInstance()->PrintText("Press Start to add player 2", 300, 600, D3D)
+
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
 	CSGD_Direct3D::GetInstance()->SpriteEnd();

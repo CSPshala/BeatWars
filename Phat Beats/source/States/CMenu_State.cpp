@@ -38,7 +38,7 @@ void CMenu_State::Enter(void)
 {	
 	// KEEPS LOADING, NEVER RELEASING
 	m_nMenuSelection = 0;
-	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.png");
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
@@ -204,15 +204,13 @@ void CMenu_State::Update(void)
 
 void CMenu_State::Render(void)
 {
-	RECT rBody = {0, 286, CGame::GetInstance()->GetScreenWidth(), 635};
+	RECT rBody = {0, 289, CGame::GetInstance()->GetScreenWidth(), 635};
 	RECT rTitle = {0,0,540,349};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
-	
-	CBitmapFont::GetInstance()->SetScale(4.5f);
 	CSGD_TextureManager::GetInstance()->Draw(m_nTile,128,1,1.0f,1.0f,&rTitle);
 
-	int topSelection = 345;
-	int spacing = 30;
+	int topSelection = 370;
+	int spacing = 23;
 	switch(m_nMenuSelection)
 	{
 	case MAINMENU_NEWGAME:
@@ -272,7 +270,7 @@ void CMenu_State::Render(void)
 		break;
 	}
 	
-	CBitmapFont::GetInstance()->SetScale(1.5f);
+	CBitmapFont::GetInstance()->SetScale(1.2f);
 
 	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\narcade mode\nhow to play\nhigh scores\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
@@ -315,20 +313,20 @@ void CMenu_State::LoadGameplayStateAssets()
 
 	// Loading up BeatManager specific stuff
 
-	//CLU->QueueLoadCommand("tutorial.beat","",Song);
-	CLU->QueueLoadCommand("darksidedub.beat","",Song);
+	CLU->QueueLoadCommand("tutorial.beat","",Song);
 	CLU->QueueLoadCommand("cantina.beat","",Song);
-	//CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
-	//CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
-	//CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
+	CLU->QueueLoadCommand("darksidedub.beat","",Song);
+	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
+	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
+	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
-	//CLevelManager::GetInstance()->QueueSong("jeditheme");
+	CLevelManager::GetInstance()->QueueSong("jeditheme");
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
 	CLevelManager::GetInstance()->QueueSong("cantina");
-	//CLevelManager::GetInstance()->QueueSong("dualofthefates");
-	//CLevelManager::GetInstance()->QueueSong("ImperialMarch");
-	//CLevelManager::GetInstance()->QueueSong("Avicii");
-	//CLevelManager::GetInstance()->QueueSong("OldRepublic");
+	CLevelManager::GetInstance()->QueueSong("dualofthefates");
+	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
+	CLevelManager::GetInstance()->QueueSong("Avicii");
+	CLevelManager::GetInstance()->QueueSong("OldRepublic");
 
 
 	GAME->ChangeState(CLU_State::GetInstance());
