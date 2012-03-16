@@ -196,10 +196,11 @@ bool CLevelSelect_State::Input(void) {
 				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 
 
+			}
+
 		}
 
 	}
-
 #pragma endregion
 
 
