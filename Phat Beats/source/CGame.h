@@ -22,7 +22,9 @@
 #include "Managers/CEventSystem.h"
 #include "Managers/CMessageSystem.h"
 #include "Managers/CObjectManager.h"
+#include "Managers/CXBOXManager.h"
 #include <string>
+#include <queue>
 using std::string;
 class CBitmapFont;
 
@@ -38,6 +40,7 @@ private:
 	CMessageSystem*			m_pMS;
 	CObjectManager*			m_pOM;
 	CSGD_FModManager*		m_pFM;
+	CXBOXController*		PlayerControl;
 
 	// Game state Pointer
 	IGameState* m_pCurState;
@@ -45,6 +48,7 @@ private:
 	// Asset IDs:
 	//int						m_nImageID;
 	//int						m_nSoundID;
+	std::queue<IGameState*> m_qStateHistory;
 
 
 	// Volume 
@@ -103,6 +107,7 @@ public:
 	float GetPanVolume() const			{ return m_nMusicPan; }
 	bool GetCharacterSelection() {return Player1selection;}
 	bool GetCharacterSelection2() {return Player2selection;}
+	CXBOXController*	GetPlayerControl()	{return PlayerControl;}
 	
 	// Mutators
 	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
@@ -110,7 +115,7 @@ public:
 	void SetPanVolume(float val)		{ m_nMusicPan = val; }
 	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
 	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
-
+	void GoBack(void);
 };
 
 

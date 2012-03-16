@@ -17,6 +17,7 @@ using std::string;
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "../../source/StringHelper.h"
 
 
 // Forward Declarations
@@ -53,13 +54,19 @@ private:
 	vector<int> m_vPlaylist;
 	int nBgID;
 	char Selected;
+
+	bool vsMode;
+
+	FILE* LevelFile;
+
 public:
 	void Enter(void); // Enters the Game State
 	bool Input(void); // Input
 	void Update(void); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State
-
+	bool GetVsMode() {return vsMode;}
+	void SetVsMode(bool vMode) {vMode = vMode;}
 	static CLevelSelect_State* GetInstance();	
 	vector<LevelData*>& GetLevelData() {return m_vLevelData;}
 

@@ -98,6 +98,7 @@
     <ClCompile Include="source\Managers\CMessages.cpp" />
     <ClCompile Include="source\Managers\CMessageSystem.cpp" />
     <ClCompile Include="source\Managers\CObjectManager.cpp" />
+    <ClCompile Include="source\Managers\CXBOXManager.cpp" />
     <ClCompile Include="source\Managers\CXml_Manager.cpp" />
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\SGD Wrappers\CSGD_Direct3D.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="source\States\CCharacterSelect_State.cpp" />
     <ClCompile Include="source\States\CCredit_State.cpp" />
     <ClCompile Include="source\States\CGameplay_State.cpp" />
+    <ClCompile Include="source\States\CHighScoreState.cpp" />
     <ClCompile Include="source\States\CLevelSelect_State.cpp" />
     <ClCompile Include="source\States\CLoad_State.cpp" />
     <ClCompile Include="source\States\CLU_State.cpp" />
@@ -117,6 +119,7 @@
     <ClCompile Include="source\States\COptionsState.cpp" />
     <ClCompile Include="source\States\CPause_State.cpp" />
     <ClCompile Include="source\States\CSave_State.cpp" />
+    <ClCompile Include="source\StringHelper.cpp" />
     <ClCompile Include="source\Timer.cpp" />
     <ClCompile Include="source\WinMain.cpp" />
     <ClCompile Include="source\XML\tinystr.cpp" />
@@ -138,6 +141,7 @@
     <ClInclude Include="source\CGame.h" />
     <ClInclude Include="source\CParticle.h" />
     <ClInclude Include="source\CPlayer.h" />
+    <ClInclude Include="source\Managers\CXBOXManager.h" />
     <ClInclude Include="source\Random.h" />
     <ClInclude Include="source\CSong.h" />
     <ClInclude Include="source\IBaseInterface.h" />
@@ -164,6 +168,7 @@
     <ClInclude Include="source\States\CCharacterSelect_State.h" />
     <ClInclude Include="source\States\CCredit_State.h" />
     <ClInclude Include="source\States\CGameplay_State.h" />
+    <ClInclude Include="source\States\CHighScoreState.h" />
     <ClInclude Include="source\States\CLevelSelect_State.h" />
     <ClInclude Include="source\States\CLoad_State.h" />
     <ClInclude Include="source\States\CLU_State.h" />
@@ -172,6 +177,7 @@
     <ClInclude Include="source\States\CPause_State.h" />
     <ClInclude Include="source\States\CSave_State.h" />
     <ClInclude Include="source\States\IGameState.h" />
+    <ClInclude Include="source\StringHelper.h" />
     <ClInclude Include="source\Timer.h" />
     <ClInclude Include="source\XML\tinystr.h" />
     <ClInclude Include="source\XML\tinyxml.h" />

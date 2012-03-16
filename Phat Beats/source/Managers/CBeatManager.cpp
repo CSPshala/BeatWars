@@ -22,7 +22,6 @@
 #include "CFXManager.h"
 #include "../../CLevelManager.h"
 #include <fstream>
-#include "../Random.h"
 using std::ifstream;
 using std::ios_base;
 
@@ -46,8 +45,8 @@ CBeatManager::CBeatManager()
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
 	SetComboThreshold(COMBODAMAGETHRESHOLD);
-	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/light_saber.wav");
-	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/SGD_hurt.wav");
+	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_High.mp3");
+	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Damage.mp3");
 	SetFXSound(m_nSFX);
 	SetSoundFX(m_nDamageSFX);
 }
@@ -854,13 +853,27 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
 										CFXManager::GetInstance()->QueueParticle("P1_HIT");
 
+										if (aPlayer->GetCurrentStreak() >= 25)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
+										}
+										else if (aPlayer->GetCurrentStreak() >= 100)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+										}
+										else if (aPlayer->GetCurrentStreak() >= 200)
+										{
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+										}
+										else
+											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+
 										// Upping Player1's Current combo for damage
 										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
 										SetNumberNotesHit(GetNumberNotesHit() + 1);
-
-										aPlayer->SetMostRecentKeyPress('g');
+										
 									}						
-
+									aPlayer->SetMostRecentKeyPress('g');
 								}
 								break;
 
@@ -902,9 +915,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 				//}
 			}
-				
-	}
-
+}
 
 
 	if(aPlayer->GetType() == OBJ_AI)
@@ -940,12 +951,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 					aPlayer->SetCurrentStreak(0);
 		}
 	}
-			
-		
-
-	
 }
-
 CBeatManager* CBeatManager::GetInstance()
 {
 	// Lazy instantiation
@@ -1011,40 +1017,18 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
-
-			int rand = (int)Random::Next(0,100);
-
-			if( rand < 51 )
-			{
-				playerToDmg->SetCurrAnimation("High Block");
-				damageDealer->SetCurrAnimation("High Hit");
-			}
-			else
-			{
-				playerToDmg->SetCurrAnimation("Low Block");
-				damageDealer->SetCurrAnimation("Low Hit");
-			}
+			playerToDmg->SetCurrAnimation("High Block");
+			damageDealer->SetCurrAnimation("High Hit");
 
 			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			//damageDealer->SetCurrAnimation("High Hit");
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
-			
-			int rand = (int)Random::Next(0,100);
-
-			if( rand < 51 )
-			{
-				playerToDmg->SetCurrAnimation("High Block");
-				damageDealer->SetCurrAnimation("High Hit");
-			}
-			else
-			{
-				playerToDmg->SetCurrAnimation("Low Block");
-				damageDealer->SetCurrAnimation("Low Hit");
-			}
-
-			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			playerToDmg->SetCurrAnimation("Low Block");
+			damageDealer->SetCurrAnimation("Low Hit");
+			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 		}
 	}
 	else
@@ -1052,39 +1036,16 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
-			
-			int rand = (int)Random::Next(0,100);
-
-			if( rand < 51 )
-			{
-				playerToDmg->SetCurrAnimation("High Block");
-				damageDealer->SetCurrAnimation("High Hit");
-			}
-			else
-			{
-				playerToDmg->SetCurrAnimation("Low Block");
-				damageDealer->SetCurrAnimation("Low Hit");
-			}
-
+			playerToDmg->SetCurrAnimation("High Block");
+			damageDealer->SetCurrAnimation("High Hit");
 			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
+			//damageDealer->SetCurrAnimation("Low Hit");
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
-			
-			int rand = (int)Random::Next(0,100);
-
-			if( rand < 51 )
-			{
-				playerToDmg->SetCurrAnimation("High Block");
-				damageDealer->SetCurrAnimation("High Hit");
-			}
-			else
-			{
-				playerToDmg->SetCurrAnimation("Low Block");
-				damageDealer->SetCurrAnimation("Low Hit");
-			}
-
+			playerToDmg->SetCurrAnimation("Low Block");
+			damageDealer->SetCurrAnimation("Low Hit");
 			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
 		}
 	}
