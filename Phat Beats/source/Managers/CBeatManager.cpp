@@ -1028,7 +1028,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
 			playerToDmg->SetCurrAnimation("Low Block");
 			damageDealer->SetCurrAnimation("Low Hit");
-			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
 		}
 	}
 	else
@@ -1046,7 +1046,7 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
 			playerToDmg->SetCurrAnimation("Low Block");
 			damageDealer->SetCurrAnimation("Low Hit");
-			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
 		}
 	}
 }
