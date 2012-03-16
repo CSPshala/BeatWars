@@ -81,6 +81,9 @@ private:
 	int m_nWindowHeight;
 	int m_nWindowWidth;
 
+	int m_nNavSound;
+	int m_nConfirmSound;
+
 	// For Game timing:
 	Timer cTimer;
 
@@ -118,6 +121,9 @@ public:
 	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
 	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
 	void GoBack(void);
+
+	void PlayNavMenuSound(void);
+	void PlayAccMenuSound(void);
 };
 
 

@@ -83,6 +83,7 @@ bool COptionsState::Input(void)
 				m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
 			}
 
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		// If you're at the bottom and press down, cycle the cursor back to the top selection
@@ -95,6 +96,7 @@ bool COptionsState::Input(void)
 				m_nMenuSelection = OPTIONSMENU_SFXVOL;
 			}
 
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 		// input for the left key to control volume
 		if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 1) )
@@ -266,6 +268,7 @@ bool COptionsState::Input(void)
 
 		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case OPTIONSMENU_GAME:
@@ -298,6 +301,7 @@ bool COptionsState::Input(void)
 				m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
 			}
 
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		// If you're at the bottom and press down, cycle the cursor back to the top selection
@@ -310,6 +314,7 @@ bool COptionsState::Input(void)
 				m_nMenuSelection = OPTIONSMENU_SFXVOL;
 			}
 
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 		// input for the left key to control volume
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 1) )

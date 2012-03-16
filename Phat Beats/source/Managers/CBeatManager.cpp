@@ -907,8 +907,6 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 								SetP2CurrentCombo(0);
 
 							aPlayer->SetCurrentStreak(0);
-
-							
 						}
 
 						//break; // leaving the loop

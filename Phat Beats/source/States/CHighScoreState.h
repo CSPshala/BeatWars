@@ -25,6 +25,7 @@ private:
 	int selectedSpot;
 	int m_nImageFontID;
 	string buffers;
+	int m_nStingIndex;
 	
 public:
 
@@ -39,5 +40,5 @@ public:
 	void SaveXMLFile(const char * fileToSave);
 	int CheckTopTen(void);
 	void Placing(void);
-	char * GetTodaysDate(void);
+	/*char * GetTodaysDate(void);*/
 };

@@ -50,6 +50,8 @@ bool CArcadeMode_State::Input(void)
 			{
 				m_nMenuSelection = DARTH_VADER;
 			}
+
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_W) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
@@ -59,6 +61,9 @@ bool CArcadeMode_State::Input(void)
 			{
 				m_nCharacterSelection = DARTH_VADER;
 			}
+
+			CGame::GetInstance()->PlayNavMenuSound();
+
 		}
 
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) )
@@ -68,6 +73,9 @@ bool CArcadeMode_State::Input(void)
 			{
 				m_nMenuSelection = 0;
 			}
+
+			CGame::GetInstance()->PlayNavMenuSound();
+
 		}
 
 
@@ -78,6 +86,9 @@ bool CArcadeMode_State::Input(void)
 			{
 				m_nCharacterSelection = 0;
 			}
+
+			CGame::GetInstance()->PlayNavMenuSound();
+
 		}
 
 		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1))
@@ -106,6 +117,7 @@ bool CArcadeMode_State::Input(void)
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
 		{
 			CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
+			CGame::GetInstance()->PlayAccMenuSound();
 		}
 	}
 
