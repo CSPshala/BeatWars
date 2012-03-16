@@ -32,7 +32,6 @@ void CLevelSelect_State::Enter(void) {
 
 	if(GetLevelData().size() > 0)
 		CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
-
 }
 
 bool CLevelSelect_State::Input(void) {
@@ -196,7 +195,6 @@ bool CLevelSelect_State::Input(void) {
 				CBeatManager::GetInstance()->UnloadSongs();
 				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 
-			}
 
 		}
 
