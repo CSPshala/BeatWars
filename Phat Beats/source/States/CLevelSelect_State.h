@@ -54,9 +54,7 @@ private:
 	vector<int> m_vPlaylist;
 	int nBgID;
 	char Selected;
-
 	bool vsMode;
-
 	FILE* LevelFile;
 
 public:

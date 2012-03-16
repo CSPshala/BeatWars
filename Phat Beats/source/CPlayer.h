@@ -113,7 +113,7 @@ private:
 		int m_nHP; // Current HP
 		int m_nMaxHP; // Maximum HP
 		int m_nBeatsHitTotal; // Total Beats hit in song
-		int m_nCurrentStreak; // Current Beat hit streak
+		int m_nCurrentStreak; // Current Beat hit streak		
 		int m_nCurrentScore; // Current Level score (if we implement it)
 		int m_nTotalScore; // Current playthrough score (ditto)
 		BeatDifficulty m_eDifficulty; // Player's set difficulty (enum from CBeat.h)
@@ -139,6 +139,9 @@ private:
 
 		// Player hit key
 		char cHitKey;
+
+		// Timer for displaying streak to screen
+		float m_fStreakTextTimer;
 
 		// Asset IDs
 			// Images
