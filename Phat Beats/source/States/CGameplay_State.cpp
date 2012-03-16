@@ -40,6 +40,9 @@ CGameplay_State::CGameplay_State()
 	m_nTutorialTextIndex = 0;
 	// Setting tut box
 	m_nTutorialBoxID = -1;
+	// Tutorial text timer
+	m_fTutorialBoxTimer = 0.0f;
+
 }
 
 CGameplay_State::~CGameplay_State()
@@ -149,24 +152,31 @@ bool CGameplay_State::Input(void)
 	{
 		if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(1, 0))
 		{
-			if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
-			{
-				SetIsTutorial(false);
 
-				++m_nTutorialTextIndex;
-
-				// Unpausing song
-				BeatManager->Pause();
-			}
-			else
+			if(m_fTutorialBoxTimer >= 1.5f)
 			{
-				SetIsTutorial(false);
-				CLevelManager::GetInstance()->SkipLevel();
+				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				{
+					SetIsTutorial(false);
+
+					++m_nTutorialTextIndex;
+
+					// Unpausing song
+					BeatManager->Pause();
+				}
+				else
+				{
+					SetIsTutorial(false);
+					CLevelManager::GetInstance()->SkipLevel();
+				}
+
+				m_fTutorialBoxTimer = 0.0f;
 			}
 		}
 
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 0))
 		{
+			m_fTutorialBoxTimer = 0.0f;
 			SetIsTutorial(false);
 			CLevelManager::GetInstance()->SkipLevel();
 		}
@@ -189,6 +199,8 @@ void CGameplay_State::Update(void)
 	{
 		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	}
+	else
+		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
 
 	if (m_bStartTransition)
 	{
