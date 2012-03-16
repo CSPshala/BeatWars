@@ -1037,7 +1037,6 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
-<<<<<<< HEAD
 			
 			int rand = (int)Random::Next(0,100);
 
@@ -1053,11 +1052,6 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			}
 
 			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
-=======
-			playerToDmg->SetCurrAnimation("Low Block");
-			damageDealer->SetCurrAnimation("Low Hit");
-			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
->>>>>>> 2366821b57e49ebee8a553670c7942dfe9c98c6d
 		}
 	}
 	else
@@ -1097,8 +1091,8 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 				playerToDmg->SetCurrAnimation("Low Block");
 				damageDealer->SetCurrAnimation("Low Hit");
 			}
-
-			CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+			
+			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
 		}
 	}
 }
