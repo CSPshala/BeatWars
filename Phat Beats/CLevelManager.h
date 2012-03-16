@@ -37,6 +37,7 @@ class CLevelManager
 	float					m_fGameTransitionAlpha;
 	float					m_SongTransitionAlpha;
 	bool					m_bStartTransition;
+	bool					m_bCheck;
 
 	// Easy Access
 	CBeatManager*			BeatMan;

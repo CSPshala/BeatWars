@@ -133,11 +133,11 @@
     <ClCompile Include="CLevelManager.cpp">
       <Filter>Game Management\Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Managers\CXBOXManager.cpp">
+      <Filter>Game Management\Source</Filter>
+    </ClCompile>
     <ClCompile Include="source\States\CCredit_State.cpp">
       <Filter>Game States\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\StringHelper.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -282,16 +282,13 @@
     <ClInclude Include="source\States\CSave_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="source\Managers\CXBOXManager.h">
+      <Filter>Game Management\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="source\States\CCredit_State.h">
       <Filter>Game States\Headers</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="source\StringHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-=======
     <ClInclude Include="resource1.h" />
->>>>>>> 01385a7b212179d4c97c701a8af2e234922bdd7e
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Management">

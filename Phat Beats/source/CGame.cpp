@@ -10,6 +10,7 @@
 #include <ctime>
 #include "States/CBitmapFont.h"
 #include "Managers/CFXManager.h"
+#include "Managers\CBeatManager.h"
 #include <iostream>
 using std::cout;
 
@@ -23,6 +24,7 @@ CGame::CGame()
 	m_pMS	= NULL;
 	m_pOM	= NULL;
 	m_pFM	= NULL;
+	PlayerControl = new CXBOXController(1);
 
 	SetCharacterSelection(true);
 	SetCharacterSelection2(false);
@@ -30,7 +32,7 @@ CGame::CGame()
 
 CGame::~CGame()
 {
-
+	delete PlayerControl;
 }
 
 CGame* CGame::GetInstance()
@@ -162,6 +164,7 @@ void CGame::Render()
 void CGame::Shutdown()
 {
 	CFXManager::GetInstance()->UnloadAllFX();
+	CBeatManager::GetInstance()->UnloadSongs();
 	if (m_pOM)
 	{
 		m_pOM->RemoveAllObjects();
