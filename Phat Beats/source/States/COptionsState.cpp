@@ -65,218 +65,441 @@ void COptionsState::Enter(void)
 }
 bool COptionsState::Input(void)
 {
-	// If you're at the top and press up, cycle the cursor to the bottom selection
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP))
-	{
-		m_nMenuSelection -= 1;
 
-		if( m_nMenuSelection < OPTIONSMENU_SFXVOL )
+#pragma region KEYBOARD
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
+		CGame::GetInstance()->GoBack();
+
+	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
+	{
+		// If you're at the top and press up, cycle the cursor to the bottom selection
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 		{
-			m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
+			m_nMenuSelection -= 1;
+
+			if( m_nMenuSelection < OPTIONSMENU_SFXVOL )
+			{
+				m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
+			}
+
 		}
 
-	}
-
-	// If you're at the bottom and press down, cycle the cursor back to the top selection
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN) )
-	{
-		m_nMenuSelection += 1;
-
-		if( m_nMenuSelection >= NUM_OPTIONSMENU_OPTIONS)
+		// If you're at the bottom and press down, cycle the cursor back to the top selection
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 		{
-			m_nMenuSelection = OPTIONSMENU_SFXVOL;
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection >= NUM_OPTIONSMENU_OPTIONS)
+			{
+				m_nMenuSelection = OPTIONSMENU_SFXVOL;
+			}
+
 		}
-
-	}
-	// input for the left key to control volume
-	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_LEFT) )
-	{
-		switch (m_nMenuSelection)
+		// input for the left key to control volume
+		if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 1) )
 		{
-		case OPTIONSMENU_SFXVOL:
-			m_nFXVolume -= 0.001f;
-			SetFXVol(m_nFXVolume);
-			if( m_nFXVolume <= 0.0f )
+			switch (m_nMenuSelection)
 			{
-				m_nFXVolume = 0.0f;
-			}
-
-			CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
-			break;
-		case OPTIONSMENU_MUSICVOL:			
-			m_nMusicVolume -= 0.001f;
-			SetMusicVol(m_nMusicVolume);
-			if( m_nMusicVolume <= 0.0f )
-			{
-				m_nMusicVolume = 0.0f;
-			}
-			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
-
-			break;
-		case OPTIONSMENU_PAN:
-			m_nMusicPan -= 0.002f;
-			if( m_nMusicPan <= -1.0f )
-			{
-				m_nMusicPan = -1.0f;
-			}
-			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
-			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
-			break;
-		
-		}		
-	}
-
-	
-	// input for the ai level and difficulty level
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_LEFT))
-	{
-		switch (m_nMenuSelection)
-		{
-		case OPTIONSMENU_WINDOWED:
-			{
-				//CGame::GetInstance()->ChangeWindowMode();
-			}
-			break;
-
-		case OPTIONSMENU_DIFFICULTY:
-			{
-				SetDifficulty(BeatDifficulty((int)GetDifficulty() - 1));
-
-				if(GetDifficulty() < EASY)
-					SetDifficulty(HARD);
-			}
-			break;
-		case OPTIONSMENU_AILEVEL:
-			{
-				SetAILevel(((int)GetAILevel() + 1));
-
-				if(GetAILevel() > AI_INSANE)
-					SetAILevel(AI_EASY);
-			}
-			break;
-		}
-
-	}
-
-
-	// Play the a sample sound when the user releases Left while changing the volume of the sound effects
-	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIR_LEFT) )
-	{
-		switch (m_nMenuSelection)
-		{
-		case OPTIONSMENU_SFXVOL:
-			if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
-			{
-				CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
-			}							
-			break;	
-		}
-	}
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_P) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
-	{
-		CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
-	}
-
-	// right key input for volume
-	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_RIGHT) )
-	{
-		switch (m_nMenuSelection)
-		{
-		case OPTIONSMENU_SFXVOL:
-			{			
-				m_nFXVolume += 0.001f;
+			case OPTIONSMENU_SFXVOL:
+				m_nFXVolume -= 0.001f;
 				SetFXVol(m_nFXVolume);
-				if( m_nFXVolume >= 1.0f )
+				if( m_nFXVolume <= 0.0f )
 				{
-					m_nFXVolume = 1.0f;
+					m_nFXVolume = 0.0f;
 				}
-				CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);			
-			}
-			break;
-		case OPTIONSMENU_MUSICVOL:
 
-			m_nMusicVolume += 0.001f;
-			SetMusicVol(m_nMusicVolume);
-			if( m_nMusicVolume >= 1.0f )
-			{
-				m_nMusicVolume = 1.0f;
-			}
-			CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);			
-			break;
-		case OPTIONSMENU_PAN:
-			m_nMusicPan += 0.002f;
-			if( m_nMusicPan >= 1.0f )
-			{
-				m_nMusicPan = 1.0f;
-			}
-			CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
-			CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
-			break;
-		}
-	}
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIR_RIGHT) )
-	{
-		switch (m_nMenuSelection)
-		{
-		
-		case OPTIONSMENU_WINDOWED:
-			{
-				//CGame::GetInstance()->ChangeWindowMode();
-			}
-			break;
-
-		case OPTIONSMENU_DIFFICULTY:
-			{
-			SetDifficulty(BeatDifficulty((int)GetDifficulty() + 1));
-
-			if(GetDifficulty() > HARD)
-				SetDifficulty(EASY);
-			}
-			break;
-		case OPTIONSMENU_AILEVEL:
-			{
-				SetAILevel(((int)GetAILevel() + 1));
-
-				if(GetAILevel() > AI_INSANE)
-					SetAILevel(AI_EASY);
-			}
-			break;
-		}
-	}
-
-
-	// Play the a sample sound when the user releases Right while changing the volume of the sound effects
-	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickButtonReleased(DIR_RIGHT) )
-	{
-		switch (m_nMenuSelection)
-		{
-		case OPTIONSMENU_SFXVOL:
-			if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
-			{
-				CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
-			}				
-			break;	
-		}
-	}
-
-	if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
-	{
-		switch( m_nMenuSelection )
-		{
-		case OPTIONSMENU_GAME:
-			{
-				if (CPause_State::GetInstance()->GetPauseState() == true)
+				CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+				break;
+			case OPTIONSMENU_MUSICVOL:			
+				m_nMusicVolume -= 0.001f;
+				SetMusicVol(m_nMusicVolume);
+				if( m_nMusicVolume <= 0.0f )
 				{
-					CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+					m_nMusicVolume = 0.0f;
 				}
-				else
-					CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
-				
+				CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+
+				break;
+			case OPTIONSMENU_PAN:
+				m_nMusicPan -= 0.002f;
+				if( m_nMusicPan <= -1.0f )
+				{
+					m_nMusicPan = -1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+				CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+				break;
+
+			}		
+		}
+
+
+		// input for the ai level and difficulty level
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 1))
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_WINDOWED:
+				{
+					//CGame::GetInstance()->ChangeWindowMode();
+				}
+				break;
+
+			case OPTIONSMENU_DIFFICULTY:
+				{
+					SetDifficulty(BeatDifficulty((int)GetDifficulty() - 1));
+
+					if(GetDifficulty() < EASY)
+						SetDifficulty(HARD);
+				}
+				break;
+			case OPTIONSMENU_AILEVEL:
+				{
+					SetAILevel(((int)GetAILevel() + 1));
+
+					if(GetAILevel() > AI_INSANE)
+						SetAILevel(AI_EASY);
+				}
+				break;
 			}
-			break;		
+
+		}
+
+
+		// Play the a sample sound when the user releases Left while changing the volume of the sound effects
+		if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0  )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+				}							
+				break;	
+			}
+		}
+
+		// right key input for volume
+		if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 1) )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				{			
+					m_nFXVolume += 0.001f;
+					SetFXVol(m_nFXVolume);
+					if( m_nFXVolume >= 1.0f )
+					{
+						m_nFXVolume = 1.0f;
+					}
+					CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);			
+				}
+				break;
+			case OPTIONSMENU_MUSICVOL:
+
+				m_nMusicVolume += 0.001f;
+				SetMusicVol(m_nMusicVolume);
+				if( m_nMusicVolume >= 1.0f )
+				{
+					m_nMusicVolume = 1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);			
+				break;
+			case OPTIONSMENU_PAN:
+				m_nMusicPan += 0.002f;
+				if( m_nMusicPan >= 1.0f )
+				{
+					m_nMusicPan = 1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+				CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+				break;
+			}
+		}
+
+		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(DIR_RIGHT) )
+		{
+			switch (m_nMenuSelection)
+			{
+
+			case OPTIONSMENU_WINDOWED:
+				{
+					//CGame::GetInstance()->ChangeWindowMode();
+				}
+				break;
+
+			case OPTIONSMENU_DIFFICULTY:
+				{
+					SetDifficulty(BeatDifficulty((int)GetDifficulty() + 1));
+
+					if(GetDifficulty() > HARD)
+						SetDifficulty(EASY);
+				}
+				break;
+			case OPTIONSMENU_AILEVEL:
+				{
+					SetAILevel(((int)GetAILevel() + 1));
+
+					if(GetAILevel() > AI_INSANE)
+						SetAILevel(AI_EASY);
+				}
+				break;
+			}
+		}
+
+
+		// Play the a sample sound when the user releases Right while changing the volume of the sound effects
+		if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT) || CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0  )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+				}				
+				break;	
+			}
+		}
+
+		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0))
+		{
+			switch( m_nMenuSelection )
+			{
+			case OPTIONSMENU_GAME:
+				{
+					if (CPause_State::GetInstance()->GetPauseState() == true)
+					{
+						CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+					}
+					else
+						CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+
+				}
+				break;		
+			}
 		}
 	}
+
+#pragma endregion
+
+#pragma region XBOX
+	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
+	{
+
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
+		{
+			m_nMenuSelection -= 1;
+
+			if( m_nMenuSelection < OPTIONSMENU_SFXVOL )
+			{
+				m_nMenuSelection = NUM_OPTIONSMENU_OPTIONS - 1;
+			}
+
+		}
+
+		// If you're at the bottom and press down, cycle the cursor back to the top selection
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
+		{
+			m_nMenuSelection += 1;
+
+			if( m_nMenuSelection >= NUM_OPTIONSMENU_OPTIONS)
+			{
+				m_nMenuSelection = OPTIONSMENU_SFXVOL;
+			}
+
+		}
+		// input for the left key to control volume
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 1) )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				m_nFXVolume -= 0.001f;
+				SetFXVol(m_nFXVolume);
+				if( m_nFXVolume <= 0.0f )
+				{
+					m_nFXVolume = 0.0f;
+				}
+
+				CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);
+				break;
+			case OPTIONSMENU_MUSICVOL:			
+				m_nMusicVolume -= 0.001f;
+				SetMusicVol(m_nMusicVolume);
+				if( m_nMusicVolume <= 0.0f )
+				{
+					m_nMusicVolume = 0.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);
+
+				break;
+			case OPTIONSMENU_PAN:
+				m_nMusicPan -= 0.002f;
+				if( m_nMusicPan <= -1.0f )
+				{
+					m_nMusicPan = -1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+				CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+				break;
+
+			}		
+		}
+
+
+		// input for the ai level and difficulty level
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 1))
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_WINDOWED:
+				{
+					//CGame::GetInstance()->ChangeWindowMode();
+				}
+				break;
+
+			case OPTIONSMENU_DIFFICULTY:
+				{
+					SetDifficulty(BeatDifficulty((int)GetDifficulty() - 1));
+
+					if(GetDifficulty() < EASY)
+						SetDifficulty(HARD);
+				}
+				break;
+			case OPTIONSMENU_AILEVEL:
+				{
+					SetAILevel(((int)GetAILevel() + 1));
+
+					if(GetAILevel() > AI_INSANE)
+						SetAILevel(AI_EASY);
+				}
+				break;
+			}
+
+		}
+
+
+		// Play the a sample sound when the user releases Left while changing the volume of the sound effects
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0 )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+				}							
+				break;	
+			}
+		}
+
+		// right key input for volume
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 1) )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				{			
+					m_nFXVolume += 0.001f;
+					SetFXVol(m_nFXVolume);
+					if( m_nFXVolume >= 1.0f )
+					{
+						m_nFXVolume = 1.0f;
+					}
+					CSGD_FModManager::GetInstance()->SetVolume(m_nSFX, m_nFXVolume);			
+				}
+				break;
+			case OPTIONSMENU_MUSICVOL:
+
+				m_nMusicVolume += 0.001f;
+				SetMusicVol(m_nMusicVolume);
+				if( m_nMusicVolume >= 1.0f )
+				{
+					m_nMusicVolume = 1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetVolume(m_nBGM, m_nMusicVolume);			
+				break;
+			case OPTIONSMENU_PAN:
+				m_nMusicPan += 0.002f;
+				if( m_nMusicPan >= 1.0f )
+				{
+					m_nMusicPan = 1.0f;
+				}
+				CSGD_FModManager::GetInstance()->SetPan(m_nBGM, m_nMusicPan);
+				CSGD_FModManager::GetInstance()->SetPan(m_nSFX, m_nMusicPan);
+				break;
+			}
+		}
+
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_RIGHT))
+		{
+			switch (m_nMenuSelection)
+			{
+
+			case OPTIONSMENU_WINDOWED:
+				{
+					//CGame::GetInstance()->ChangeWindowMode();
+				}
+				break;
+
+			case OPTIONSMENU_DIFFICULTY:
+				{
+					SetDifficulty(BeatDifficulty((int)GetDifficulty() + 1));
+
+					if(GetDifficulty() > HARD)
+						SetDifficulty(EASY);
+				}
+				break;
+			case OPTIONSMENU_AILEVEL:
+				{
+					SetAILevel(((int)GetAILevel() + 1));
+
+					if(GetAILevel() > AI_INSANE)
+						SetAILevel(AI_EASY);
+				}
+				break;
+			}
+		}
+
+
+		// Play the a sample sound when the user releases Right while changing the volume of the sound effects
+		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0 )
+		{
+			switch (m_nMenuSelection)
+			{
+			case OPTIONSMENU_SFXVOL:
+				if(!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSFX))
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSFX);
+				}				
+				break;	
+			}
+		}
+
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			switch( m_nMenuSelection )
+			{
+			case OPTIONSMENU_GAME:
+				{
+					if (CPause_State::GetInstance()->GetPauseState() == true)
+					{
+						CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
+					}
+					else
+						CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+
+				}
+				break;		
+			}
+		}
+	}
+
+
+#pragma endregion
 
 	return true;
 }
@@ -290,14 +513,14 @@ void COptionsState::Render(void)
 	char buffer[255];
 	//rendering the background image
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
-	
+
 	// rect for options title
 	RECT gOptions = {0,0,1000,120};
 	CSGD_TextureManager::GetInstance()->Draw(m_nOptionsID,15,40,0.4f,0.9f,&gOptions);
 	// rect for game image 
 	RECT gImage = {0,350,290,550};
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
-	
+
 	// setting the scale for the bitmap font
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	// the rect that will hold the title
@@ -313,7 +536,7 @@ void COptionsState::Render(void)
 		CBitmapFont::GetInstance()->PrintStrokedTextInRect(
 		"SFx volume\n\nMusic volume\n\nMusic Pan\n\nai level\n\nDifficulty\n\nWindowed Mode\n\nBack",
 		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0),  D3DCOLOR_XRGB(225, 225, 225));
-	
+
 	// Printing the FX volume of the game
 	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));	
 	CBitmapFont::GetInstance()->PrintText(buffer, 475, 265, D3DCOLOR_XRGB(225, 225, 225));
@@ -345,7 +568,7 @@ void COptionsState::Render(void)
 	}
 	// print out the level for the Ai	
 	CBitmapFont::GetInstance()->PrintText(buffer, 475, 385, D3DCOLOR_XRGB(225, 225, 225));
-	
+
 	// setting the song level for the game
 	switch(GetDifficulty())
 	{
@@ -363,7 +586,7 @@ void COptionsState::Render(void)
 	}
 	// printing the song difficulty level
 	CBitmapFont::GetInstance()->PrintText(buffer, 475, 425, D3DCOLOR_XRGB(225, 225, 225));
-	
+
 #pragma region cursorcontrol
 	//draw the cursor at the current selection
 	switch(m_nMenuSelection)
@@ -415,7 +638,7 @@ void COptionsState::Render(void)
 		}
 		break;
 	}
-	
+
 #pragma endregion 
 
 }
