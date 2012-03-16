@@ -273,11 +273,9 @@ void CMenu_State::Render(void)
 	}
 	
 	CBitmapFont::GetInstance()->SetScale(1.5f);
-<<<<<<< HEAD
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\nvs Mode\narcade mode\nhow to play\nhigh scores\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
-=======
+
 	CBitmapFont::GetInstance()->PrintStrokedTextInRect("new game\nload\noptions\ncredits\narcade mode\nhow to play\nhigh scores\nexit", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
->>>>>>> master
+
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 }
 

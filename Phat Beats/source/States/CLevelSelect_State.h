@@ -54,11 +54,11 @@ private:
 	vector<int> m_vPlaylist;
 	int nBgID;
 	char Selected;
-<<<<<<< HEAD
+
 	bool vsMode;
-=======
+
 	FILE* LevelFile;
->>>>>>> master
+
 public:
 	void Enter(void); // Enters the Game State
 	bool Input(void); // Input
