@@ -25,14 +25,18 @@ CGame::CGame()
 	m_pOM	= NULL;
 	m_pFM	= NULL;
 	PlayerControl = new CXBOXController(1);
+	Player2Control = new CXBOXController(2);
 
 	SetCharacterSelection(true);
 	SetCharacterSelection2(false);
+
+	
 }
 
 CGame::~CGame()
 {
 	delete PlayerControl;
+	delete Player2Control;
 }
 
 CGame* CGame::GetInstance()
@@ -90,7 +94,8 @@ void CGame::Init(HWND hWnd, HINSTANCE hInstance, int nScreenWidth,
 	m_nMusicVolume = 1.0f;
 	m_nMusicPan = 0.5f;
 	
-	
+	m_nConfirmSound = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/GUI_Accept.mp3");
+	m_nNavSound = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/GUI_Move.mp3");
 }
 
 bool CGame::Main()
@@ -222,4 +227,13 @@ void CGame::GoBack(void)
 		ChangeState(m_qStateHistory.front());
 		m_qStateHistory.pop();
 	}
+}
+
+void CGame::PlayNavMenuSound(void)
+{
+	CSGD_FModManager::GetInstance()->PlaySound(m_nNavSound);
+}
+void CGame::PlayAccMenuSound(void)
+{
+	CSGD_FModManager::GetInstance()->PlaySound(m_nConfirmSound);
 }
