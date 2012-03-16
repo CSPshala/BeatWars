@@ -1010,6 +1010,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 }
 
+
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
 	// Player is in attack mode
