@@ -25,6 +25,7 @@ CGame::CGame()
 	m_pOM	= NULL;
 	m_pFM	= NULL;
 	PlayerControl = new CXBOXController(1);
+	Player2Control = new CXBOXController(2);
 
 	SetCharacterSelection(true);
 	SetCharacterSelection2(false);
@@ -33,6 +34,8 @@ CGame::CGame()
 CGame::~CGame()
 {
 	delete PlayerControl;
+
+	delete Player2Control;
 }
 
 CGame* CGame::GetInstance()

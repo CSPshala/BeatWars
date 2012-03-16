@@ -78,6 +78,8 @@ private:
 	vector<string> m_vTutorialText;
 	// ID for tutorial box background
 	int m_nTutorialBoxID;
+	// Tutorial text box timer (so player dosen't accidentally skip a text box)
+	float m_fTutorialBoxTimer;
 	
 
 	//*************PRIVATE UTILITY FUNCTIONS****************//
