@@ -91,7 +91,7 @@ bool CArcadeMode_State::Input(void)
 
 		}
 
-		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1))
+		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_SPACE))
 		{
 			CLevelSelect_State::GetInstance()->SetVsMode(true);
 		}
@@ -216,6 +216,15 @@ void CArcadeMode_State::Render(void)
 
 	CBitmapFont::GetInstance()->SetScale(2.0f);
 	CBitmapFont::GetInstance()->PrintStrokedTextInRect("Arcade Mode", &rBody, ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 0));
+	CBitmapFont::GetInstance()->SetScale(1.5f);
+	CBitmapFont::GetInstance()->PrintText("Player 1", 20, 50, D3DCOLOR_XRGB(255, 255, 255));
+	if (CLevelSelect_State::GetInstance()->GetVsMode() == true)
+	{
+		CBitmapFont::GetInstance()->PrintText("Player 2", 625, 50, D3DCOLOR_XRGB(255, 255, 255));
+	}
+	else
+		CBitmapFont::GetInstance()->PrintText("Ai", 700, 50, D3DCOLOR_XRGB(255, 255, 255));
+
 	if (m_nMenuSelection == 0)
 	{
 		CBitmapFont::GetInstance()->SetScale(1.0f);
@@ -246,7 +255,9 @@ void CArcadeMode_State::Render(void)
 		CSGD_TextureManager::GetInstance()->Draw(m_nTitleID, 510, 200, 1.0f, 1.0f, &rVader);
 	}
 
-	//CBitmapFont::GetInstance()->PrintText("Press Start to add player 2", 300, 600, D3D)
+	CBitmapFont::GetInstance()->SetScale(1.0f);
+
+	CBitmapFont::GetInstance()->PrintText("Press Start to add player 2", 300, 500, D3DCOLOR_XRGB(255, 255, 255));
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
