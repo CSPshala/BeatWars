@@ -161,8 +161,8 @@ void CEmitter::Render()
 {
 	std::vector<CParticle*>::iterator i;
 
-	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_SRCBLEND, GetSourceBlend());
-	CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_DESTBLEND, GetDestinationBlend());
+	//CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_SRCBLEND, GetSourceBlend());
+	//CSGD_Direct3D::GetInstance()->GetDirect3DDevice()->SetRenderState(D3DRS_DESTBLEND, GetDestinationBlend());
 
 	for(i = m_ListAliveParticles.begin(); i != m_ListAliveParticles.end(); ++i)
 		(*i)->Render(m_vTextureList);

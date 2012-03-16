@@ -13,6 +13,7 @@
 #include "source/States/COptionsState.h"
 #include "source/States/CLevelSelect_State.h"
 #include "source/StringHelper.h"
+#include "source/Random.h"
 #include <fstream>
 
 #include <sstream>
@@ -186,6 +187,23 @@ const void CLevelManager::EnterLevel(void) {
 	CSGD_FModManager::GetInstance()->SetVolume(BeatMan->GetCurrentlyPlayingSong()->GetSongID()
 	,COptionsState::GetInstance()->GetMusicVol());
 	*/
+
+	int x = Random::Next(0,2);
+
+	if( x == 0 )
+	{
+		m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg1.png");
+	}
+	else if( x == 1 )
+	{
+		m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg2.png");
+	}
+	else
+	{
+		m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg3.png");
+	}
+
+
 	m_bCheck = true;
 	SetState(Playing);
 }
@@ -267,6 +285,25 @@ const void CLevelManager::HandlePausingInput(void) {
 
 		GetPlayer(PlayerOne)->SetCurrentScore(0);
 		GetPlayer(PlayerTwo)->SetCurrentScore(0);
+
+		TexMan->UnloadTexture(m_nBackgroundID);
+		
+		int x = Random::Next(0,2);
+
+		if( x == 0 )
+		{
+			m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg1.png");
+		}
+		else if( x == 1 )
+		{
+			m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg2.png");
+		}
+		else
+		{
+			m_nBackgroundID = TexMan->LoadTexture("resource/graphics/bg3.png");
+		}
+
+
 	}
 }
 const void CLevelManager::Update(const float fElapsedTime){
@@ -327,11 +364,6 @@ const void CLevelManager::UpdatePlayingState(const float fElapsedTime) {
 		}
 		
 	}
-	
-
-	
-		
-	
 	
 	if( GetPlayer(PlayerOne)->GetCurrentHP() != p1PrevHP )
 	{
@@ -426,6 +458,8 @@ const void CLevelManager::Render(void){
 	}
 }
 const void CLevelManager::RenderPlayingState(void) {
+
+	TexMan->DrawF(m_nBackgroundID,0,0);
 	// Draw HUD
 	TexMan->DrawF(m_nHudID, 70.0f, 75.0f, 1.0f, 1.0f, &rectLeftPowerup);
 	TexMan->DrawF(m_nHudID, 572.0f + m_nRightPowerOffset, 75.0f, 1.0f, 1.0f, &rectRightPowerup);
@@ -508,7 +542,8 @@ const void CLevelManager::RenderPausingState(void) {
 }
 const void CLevelManager::Exit(void) {
 
-	//TexMan->UnloadTexture(m_nBackgroundID);
+	if( m_nBackgroundID > -1 )
+		TexMan->UnloadTexture(m_nBackgroundID);
 
 	queue<string>::size_type i = 0;
 	for(; i < m_vSongs.size(); ++i)
