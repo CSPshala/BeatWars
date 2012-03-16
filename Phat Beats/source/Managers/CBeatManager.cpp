@@ -22,6 +22,7 @@
 #include "CFXManager.h"
 #include "../../CLevelManager.h"
 #include <fstream>
+#include "../Random.h"
 using std::ifstream;
 using std::ios_base;
 
@@ -1009,6 +1010,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 }
 
+
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
 	// Player is in attack mode
@@ -1017,17 +1019,39 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 8); // Attacking player is in attack and so is defender = full damage
-			playerToDmg->SetCurrAnimation("High Block");
-			damageDealer->SetCurrAnimation("High Hit");
+
+			int rand = (int)Random::Next(0,100);
+
+			if( rand < 51 )
+			{
+				playerToDmg->SetCurrAnimation("High Block");
+				damageDealer->SetCurrAnimation("High Hit");
+			}
+			else
+			{
+				playerToDmg->SetCurrAnimation("Low Block");
+				damageDealer->SetCurrAnimation("Low Hit");
+			}
 
 			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
-			//damageDealer->SetCurrAnimation("High Hit");
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Attacking player is in defense mode so defender = half damage
-			playerToDmg->SetCurrAnimation("Low Block");
-			damageDealer->SetCurrAnimation("Low Hit");
+			
+			int rand = (int)Random::Next(0,100);
+
+			if( rand < 51 )
+			{
+				playerToDmg->SetCurrAnimation("High Block");
+				damageDealer->SetCurrAnimation("High Hit");
+			}
+			else
+			{
+				playerToDmg->SetCurrAnimation("Low Block");
+				damageDealer->SetCurrAnimation("Low Hit");
+			}
+
 			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
 		}
 	}
@@ -1036,17 +1060,40 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 		if(damageDealer->GetAttackMode())
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 4); // Atking player is in attack and defender is in defence = half damage
-			playerToDmg->SetCurrAnimation("High Block");
-			damageDealer->SetCurrAnimation("High Hit");
+			
+			int rand = (int)Random::Next(0,100);
+
+			if( rand < 51 )
+			{
+				playerToDmg->SetCurrAnimation("High Block");
+				damageDealer->SetCurrAnimation("High Hit");
+			}
+			else
+			{
+				playerToDmg->SetCurrAnimation("Low Block");
+				damageDealer->SetCurrAnimation("Low Hit");
+			}
+
 			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
-			//damageDealer->SetCurrAnimation("Low Hit");
 		}
 		else
 		{
 			playerToDmg->SetCurrentHP(playerToDmg->GetCurrentHP() - 2); // Atking player is in defensive mode and so is defender = quarter damage
-			playerToDmg->SetCurrAnimation("Low Block");
-			damageDealer->SetCurrAnimation("Low Hit");
-			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			
+			int rand = (int)Random::Next(0,100);
+
+			if( rand < 51 )
+			{
+				playerToDmg->SetCurrAnimation("High Block");
+				damageDealer->SetCurrAnimation("High Hit");
+			}
+			else
+			{
+				playerToDmg->SetCurrAnimation("Low Block");
+				damageDealer->SetCurrAnimation("Low Hit");
+			}
+			
+			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
 		}
 	}
 }
