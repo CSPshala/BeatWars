@@ -853,10 +853,7 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
 										aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
 										CFXManager::GetInstance()->QueueParticle("P1_HIT");
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 										if (aPlayer->GetCurrentStreak() >= 25)
 										{
 											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
@@ -875,16 +872,9 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 										// Upping Player1's Current combo for damage
 										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
 										SetNumberNotesHit(GetNumberNotesHit() + 1);
-<<<<<<< HEAD
 										
 									}						
 									aPlayer->SetMostRecentKeyPress('g');
-
-
-=======
-									}						
-									aPlayer->SetMostRecentKeyPress('g');
->>>>>>> master
 								}
 								break;
 

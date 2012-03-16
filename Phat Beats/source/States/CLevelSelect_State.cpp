@@ -30,13 +30,11 @@ void CLevelSelect_State::Enter(void) {
 	Selected = 0;
 	nBgID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 
-<<<<<<< HEAD
-	CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
-	vsMode =  false;
-=======
 	if(GetLevelData().size() > 0)
 		CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);
->>>>>>> master
+
+	vsMode =  false;
+
 }
 
 bool CLevelSelect_State::Input(void) {
@@ -195,19 +193,14 @@ bool CLevelSelect_State::Input(void) {
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
-<<<<<<< HEAD
-			CBeatManager::GetInstance()->Stop();
-			CBeatManager::GetInstance()->UnloadSongs();
-			SetVsMode(true);
-			CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
-			
-=======
+
 				CBeatManager::GetInstance()->Stop();
 				CBeatManager::GetInstance()->UnloadSongs();
-
+				SetVsMode(true);
 				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
+
 			}
->>>>>>> master
+
 		}
 
 	}
