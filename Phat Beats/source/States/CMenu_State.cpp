@@ -56,7 +56,7 @@ bool CMenu_State::Input(void)
 			{
 				m_nMenuSelection = MAINMENU_EXIT;
 			}
-
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
@@ -67,10 +67,12 @@ bool CMenu_State::Input(void)
 			{
 				m_nMenuSelection = 0;
 			}
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 1) )
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case MAINMENU_NEWGAME:
