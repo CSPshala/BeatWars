@@ -53,13 +53,8 @@ private:
 	vector<LevelData*> m_vLevelData;
 	vector<int> m_vPlaylist;
 	int nBgID;
-<<<<<<< HEAD
 	char Selected;
 	bool vsMode;
-=======
-	char Selected;
-	bool vsMode;
->>>>>>> RalphConcepcion
 	FILE* LevelFile;
 
 public:
