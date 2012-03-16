@@ -31,6 +31,7 @@ CLevelManager::CLevelManager(void) {
 
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
+
 	if (CLevelSelect_State::GetInstance()->GetVsMode() == true)
 	{
 		PlayerList().push_back(new CPlayer(OBJ_PLAYER2));
