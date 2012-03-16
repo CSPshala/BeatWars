@@ -41,6 +41,7 @@ private:
 	CObjectManager*			m_pOM;
 	CSGD_FModManager*		m_pFM;
 	CXBOXController*		PlayerControl;
+	CXBOXController*		Player2Control;
 
 	// Game state Pointer
 	IGameState* m_pCurState;
@@ -108,6 +109,7 @@ public:
 	bool GetCharacterSelection() {return Player1selection;}
 	bool GetCharacterSelection2() {return Player2selection;}
 	CXBOXController*	GetPlayerControl()	{return PlayerControl;}
+	CXBOXController*	GetPlayer2Control() {return Player2Control;}
 	
 	// Mutators
 	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }

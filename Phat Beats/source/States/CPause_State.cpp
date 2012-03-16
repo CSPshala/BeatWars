@@ -129,12 +129,12 @@ bool CPause_State::Input(void)
 			if (m_nMenuSelection == -1)
 			{
 				m_nMenuSelection = NUM_PAUSEMENU_OPTIONS - 1;
-
 			}
 		}
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 		{
 			m_nMenuSelection += 1;
+
 
 			if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
 			{
