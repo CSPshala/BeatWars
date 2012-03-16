@@ -83,6 +83,13 @@ void CBitmapFont::PrintText(string textToPrint, int nPosX, int nPosY, DWORD dwCo
 				nPosX = nOriginalX;
 				continue;
 			}
+			/*
+		if (ch == '\t')
+					{
+						nPosX = 10;
+						continue;
+					}
+				*/
 		
 			// hold the ASCII value of the current letter
 			int id = (int)(ch);

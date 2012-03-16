@@ -58,6 +58,7 @@ bool CPause_State::Input(void)
 
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 		{
+			CGame::GetInstance()->PlayNavMenuSound();
 			m_nMenuSelection -= 1;
 			if (m_nMenuSelection == -1)
 			{
@@ -67,6 +68,7 @@ bool CPause_State::Input(void)
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 		{
+			CGame::GetInstance()->PlayNavMenuSound();
 			m_nMenuSelection += 1;
 
 			if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
@@ -78,6 +80,7 @@ bool CPause_State::Input(void)
 
 		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) )
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case PAUSEMENU_EXIT:
@@ -125,17 +128,18 @@ bool CPause_State::Input(void)
 
 		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 		{
+			CGame::GetInstance()->PlayNavMenuSound();
 			m_nMenuSelection -= 1;
 			if (m_nMenuSelection == -1)
 			{
 				m_nMenuSelection = NUM_PAUSEMENU_OPTIONS - 1;
-
 			}
 		}
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1) )
 		{
 			m_nMenuSelection += 1;
 
+			CGame::GetInstance()->PlayNavMenuSound();
 			if( m_nMenuSelection == NUM_PAUSEMENU_OPTIONS)
 			{
 				m_nMenuSelection = PAUSEMENU_EXIT;
@@ -145,6 +149,7 @@ bool CPause_State::Input(void)
 
 		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case PAUSEMENU_EXIT:

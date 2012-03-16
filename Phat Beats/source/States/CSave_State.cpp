@@ -67,6 +67,7 @@ bool CSave_State::Input(void)
 
 		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_UP, 1))
 		{
+			CGame::GetInstance()->PlayNavMenuSound();
 			m_nMenuSelection -= 1;
 			if (m_nMenuSelection == -1)
 			{
@@ -76,6 +77,7 @@ bool CSave_State::Input(void)
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 		{
+			CGame::GetInstance()->PlayNavMenuSound();
 			m_nMenuSelection += 1;
 
 			if( m_nMenuSelection == NUM_SAVEMENU_OPTIONS )
@@ -87,6 +89,7 @@ bool CSave_State::Input(void)
 
 		if( CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0) )
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case SAVEMENU_SLOTONE:
@@ -139,6 +142,8 @@ bool CSave_State::Input(void)
 				m_nMenuSelection = NUM_SAVEMENU_OPTIONS - 1;
 
 			}
+
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 		{
@@ -149,10 +154,12 @@ bool CSave_State::Input(void)
 				m_nMenuSelection = 0;
 			}
 
+			CGame::GetInstance()->PlayNavMenuSound();
 		}
 
 		if( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
+			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
 			case SAVEMENU_SLOTONE:

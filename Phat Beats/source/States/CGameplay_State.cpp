@@ -40,6 +40,9 @@ CGameplay_State::CGameplay_State()
 	m_nTutorialTextIndex = 0;
 	// Setting tut box
 	m_nTutorialBoxID = -1;
+	// Tutorial text timer
+	m_fTutorialBoxTimer = 0.0f;
+
 }
 
 CGameplay_State::~CGameplay_State()
@@ -146,27 +149,41 @@ bool CGameplay_State::Input(void)
 		{
 			if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 			{
-				CLevelManager::GetInstance()->HandleLevelInput();
-
-				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				// Timing skipping of text boxes so user dosen't accidentally skip
+				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					SetIsTutorial(false);
-
-					++m_nTutorialTextIndex;
-
-					// Unpausing song
-					BeatManager->Pause();
-				}
-				else
-				{
-					if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
 					{
+						// There's more text to show so unpause and wait for next tutorialpause event
+						SetIsTutorial(false);
+
+						++m_nTutorialTextIndex;
+
+						// Unpausing song
+						BeatManager->Pause();
+					}
+					else
+					{
+						// There's no more tutorial text to show so we're gonna skip to next level
 						SetIsTutorial(false);
 						CLevelManager::GetInstance()->SkipLevel();
 					}
-				}
 
+					// Resetting timer
+					m_fTutorialBoxTimer = 0.0f;
+				}				
 			}
+
+			// Skip tutorial at any time when a text box is present
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+			{
+				// Resetting timer
+				m_fTutorialBoxTimer = 0.0f;
+				SetIsTutorial(false);
+				CLevelManager::GetInstance()->SkipLevel();
+			}
+
+			
 		}
 	}
 
@@ -191,24 +208,36 @@ bool CGameplay_State::Input(void)
 		{
 			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
 			{
-				if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+				// Timing skipping of text boxes so user dosen't accidentally skip
+				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					SetIsTutorial(false);
+					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+					{
+						// There's more text to show so unpause and wait for next tutorialpause event
+						SetIsTutorial(false);
 
-					++m_nTutorialTextIndex;
+						++m_nTutorialTextIndex;
 
-					// Unpausing song
-					BeatManager->Pause();
-				}
-				else
-				{
-					SetIsTutorial(false);
-					CLevelManager::GetInstance()->SkipLevel();
+						// Unpausing song
+						BeatManager->Pause();
+					}
+					else
+					{
+						// There's no more tutorial text to show so we're gonna skip to next level
+						SetIsTutorial(false);
+						CLevelManager::GetInstance()->SkipLevel();
+					}
+
+					// Resetting timer
+					m_fTutorialBoxTimer = 0.0f;
 				}
 			}
 
+			// Skip tutorial at any time when a text box is present
 			if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
 			{
+				// Resetting timer
+				m_fTutorialBoxTimer = 0.0f;
 				SetIsTutorial(false);
 				CLevelManager::GetInstance()->SkipLevel();
 			}
@@ -234,6 +263,8 @@ void CGameplay_State::Update(void)
 	{
 		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	}
+	else
+		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
 
 	if (m_bStartTransition)
 	{

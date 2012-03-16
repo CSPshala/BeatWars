@@ -54,9 +54,7 @@ private:
 	vector<int> m_vPlaylist;
 	int nBgID;
 	char Selected;
-
 	bool vsMode;
-
 	FILE* LevelFile;
 
 public:
@@ -66,7 +64,7 @@ public:
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State
 	bool GetVsMode() {return vsMode;}
-	void SetVsMode(bool vMode) {vMode = vMode;}
+	void SetVsMode(bool vMode) {vsMode = vMode;}
 	static CLevelSelect_State* GetInstance();	
 	vector<LevelData*>& GetLevelData() {return m_vLevelData;}
 

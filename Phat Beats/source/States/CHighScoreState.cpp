@@ -16,11 +16,13 @@ CHighScoreState* CHighScoreState::GetInstance( void )
 void CHighScoreState::Enter( void )
 {
 	int selectedSpot = 0;
+	m_nStingIndex = 0;
 	//aPlayer->SetTotalScore(1000);
 
-	//CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(9000);
+	CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(3535);
 
 	LoadXMLFile("resource/HighScores.xml");
+	Placing();
 	buffers = "";
 	HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
 	
@@ -46,23 +48,37 @@ bool CHighScoreState::Input( void )
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 	}
 
-
-	if (CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx())
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT))
 	{
-		char currentKey = CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
-		buffers += currentKey;
-		HighScores[selectedSpot].strInitials.clear();
-		if(HighScores[selectedSpot].strInitials.length() < 3 && currentKey != 0)
-		{
-
-			HighScores[selectedSpot].strInitials = buffers;
-		}
-
+		m_nStingIndex--;
 	}
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT))
+	{
+		m_nStingIndex++;
+	}
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
+	{
+		HighScores[selectedSpot].strInitials[m_nStingIndex] += 1;
+		
+	}
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
+	{
+		HighScores[selectedSpot].strInitials[m_nStingIndex] -= 1;
+		
+	}
+	/*
+	if (CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx())
+		{
+			char currentKey = CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
+			buffers += currentKey;
+			HighScores[selectedSpot].strInitials.clear();
+			if(HighScores[selectedSpot].strInitials.length() < 3 && currentKey != 0)
+			{
 	
+				HighScores[selectedSpot].strInitials = buffers;
+			}
 	
-
-
+		}*/
 	return true;
 }
 
@@ -73,19 +89,21 @@ void CHighScoreState::Update(void)
 
 void CHighScoreState::Render(void)
 {
-	RECT rBody = {25, 0, CGame::GetInstance()->GetScreenWidth(), 20};
+	RECT rBody = {0, 20, CGame::GetInstance()->GetScreenWidth(), 25};
 	RECT rMenu = {25, 50, CGame::GetInstance()->GetScreenWidth(), 635};
-	CBitmapFont::GetInstance()->SetScale(1.0f);
-	CBitmapFont::GetInstance()->PrintStrokedTextInRect("High Scores",&rBody,ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0),D3DCOLOR_XRGB(255,255,255));
+	CBitmapFont::GetInstance()->SetScale(1.5f);
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect("high scores",&rBody,ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0),D3DCOLOR_XRGB(255,255,255));
 
+	CBitmapFont::GetInstance()->SetScale(1.0f);
 	for(int i = 0; i < 10; ++i)
-	{
-		char buffer[128];
-		buffers = buffer;
-		sprintf_s(buffer,"%i %s \t%i \t%s", i+1, HighScores[i].strInitials.c_str(), HighScores[i].nScores, HighScores[i].strDates.c_str());
-		buffers = buffer;
-		CBitmapFont::GetInstance()->PrintText(buffers,0,i,D3DCOLOR_XRGB(255,255,255));
-	}
+		{
+			char buffer[128];
+			buffers = buffer;
+			sprintf_s(buffer,"%i  %s  %i  %s", i+1, HighScores[i].strInitials.c_str(), HighScores[i].nScores, HighScores[i].strDates.c_str());
+			buffers = buffer;
+			CBitmapFont::GetInstance()->PrintText(buffers,125,100+(35*i),D3DCOLOR_XRGB(255,255,255));
+		}
+	
 }
 
 void CHighScoreState::Exit(void)
@@ -113,11 +131,11 @@ void CHighScoreState::LoadXMLFile( const char * fileToLoad )
 		if(pHighScores != NULL)
 		{
 			int score = 0;
-			string date = pHighScores->Attribute("date");
+			/*string date = pHighScores->Attribute("date");*/
 			const char * szInitials = pHighScores->GetText();
 			pHighScores->QueryIntAttribute("score", &score);
 			HighScores[nCount].strInitials = szInitials;
-			HighScores[nCount].strDates = date;
+			/*HighScores[nCount].strDates = date;*/
 			HighScores[nCount].nScores = score;
 		}
 		pHighScores = pHighScores->NextSiblingElement("HighScore");
@@ -142,7 +160,7 @@ void CHighScoreState::SaveXMLFile( const char * fileToSave )
 		TiXmlElement * pHighScore = new TiXmlElement("HighScore");
 
 		pHighScore->SetAttribute("score", HighScores[i].nScores);
-		pHighScore->SetAttribute("date", HighScores[i].strDates.c_str());
+		/*pHighScore->SetAttribute("date", HighScores[i].strDates.c_str());*/
 		TiXmlText * pText = new TiXmlText(HighScores[i].strInitials.c_str());
 		pHighScore->LinkEndChild(pText);
 
@@ -173,15 +191,16 @@ void CHighScoreState::Placing( void )
 		for(int i = 0; i < selectedSpot; ++i)
 			tempscores[i] = HighScores[i];
 
-		for(int i = selectedSpot; i > 0; --i)
+		for(int i = selectedSpot-1; i > 0; --i)
 			HighScores[i-1] = tempscores[i];
 
 		HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
-		HighScores[selectedSpot].strInitials = "";
-		HighScores[selectedSpot].strDates = GetTodaysDate();
+		HighScores[selectedSpot].strInitials = "aaa";
+		/*HighScores[selectedSpot].strDates = GetTodaysDate();*/
 	}
 }
 
+/*
 char * CHighScoreState::GetTodaysDate( void )
 {
 	SYSTEMTIME time;
@@ -189,4 +208,5 @@ char * CHighScoreState::GetTodaysDate( void )
 	char datebuffer[128] = {0};
 	sprintf_s(datebuffer, _countof(datebuffer), "%02d/%02d/%02d",  time.wMonth, time.wDay, time.wYear);
 	return datebuffer;
-}
+}*/
+
