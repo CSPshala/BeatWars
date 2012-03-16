@@ -31,6 +31,9 @@ void CArcadeMode_State::Enter(void)
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/sprites_luke_001.png");
 	m_nTitleID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/sprites_vader_001.png");
+
+	CLevelSelect_State::GetInstance()->SetVsMode(false);
+
 }
 
 bool CArcadeMode_State::Input(void)
@@ -77,6 +80,11 @@ bool CArcadeMode_State::Input(void)
 			}
 		}
 
+		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1))
+		{
+			CLevelSelect_State::GetInstance()->SetVsMode(true);
+		}
+
 		if (m_nMenuSelection == 0 )
 		{
 			CGame::GetInstance()->SetCharacterSelection(true);
@@ -115,15 +123,6 @@ bool CArcadeMode_State::Input(void)
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
-		{
-			m_nCharacterSelection -=1;
-			if (m_nCharacterSelection== -1)
-			{
-				m_nCharacterSelection = DARTH_VADER;
-			}
-		}
-
 		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN) )
 		{
 			m_nMenuSelection += 1;
@@ -133,13 +132,25 @@ bool CArcadeMode_State::Input(void)
 			}
 		}
 
-
-		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1))
+		if (CLevelSelect_State::GetInstance()->GetVsMode() == true)
 		{
-			m_nCharacterSelection +=1;
-			if (m_nCharacterSelection == NUM_CHARACTERS)
+			if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP, 1))
 			{
-				m_nCharacterSelection = 0;
+				m_nCharacterSelection -=1;
+				if (m_nCharacterSelection== -1)
+				{
+					m_nCharacterSelection = DARTH_VADER;
+				}
+			}
+
+
+			if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 1))
+			{
+				m_nCharacterSelection +=1;
+				if (m_nCharacterSelection == NUM_CHARACTERS)
+				{
+					m_nCharacterSelection = 0;
+				}
 			}
 		}
 
@@ -160,6 +171,9 @@ bool CArcadeMode_State::Input(void)
 		{
 			CGame::GetInstance()->SetCharacterSelection2(false);
 		}
+
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
+			CLevelSelect_State::GetInstance()->SetVsMode(true);
 
 		if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
@@ -219,6 +233,8 @@ void CArcadeMode_State::Render(void)
 
 		CSGD_TextureManager::GetInstance()->Draw(m_nTitleID, 510, 200, 1.0f, 1.0f, &rVader);
 	}
+
+	//CBitmapFont::GetInstance()->PrintText("Press Start to add player 2", 300, 600, D3D)
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	
