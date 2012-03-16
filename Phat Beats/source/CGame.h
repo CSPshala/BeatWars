@@ -41,6 +41,7 @@ private:
 	CObjectManager*			m_pOM;
 	CSGD_FModManager*		m_pFM;
 	CXBOXController*		PlayerControl;
+	CXBOXController*		Player2Control;
 
 	// Game state Pointer
 	IGameState* m_pCurState;
@@ -80,6 +81,9 @@ private:
 	int m_nWindowHeight;
 	int m_nWindowWidth;
 
+	int m_nNavSound;
+	int m_nConfirmSound;
+
 	// For Game timing:
 	Timer cTimer;
 
@@ -108,6 +112,7 @@ public:
 	bool GetCharacterSelection() {return Player1selection;}
 	bool GetCharacterSelection2() {return Player2selection;}
 	CXBOXController*	GetPlayerControl()	{return PlayerControl;}
+	CXBOXController*	GetPlayer2Control() {return Player2Control;}
 	
 	// Mutators
 	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
@@ -116,6 +121,9 @@ public:
 	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
 	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
 	void GoBack(void);
+
+	void PlayNavMenuSound(void);
+	void PlayAccMenuSound(void);
 };
 
 
