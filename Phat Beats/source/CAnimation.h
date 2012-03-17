@@ -36,6 +36,7 @@ class CAnimation
 		int GetImageID();
 		string GetName() {return m_szName;}
 		bool GetPlayedAlready() {return m_PlayedAlready; }
+		int GetCurrentFrame(){ return m_nCurrFrame; }
 
 		
 		void Play();

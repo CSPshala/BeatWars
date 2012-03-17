@@ -1,6 +1,9 @@
 #include "CCredit_State.h"
 #include "CMenu_State.h"
+#include "../SGD Wrappers/CSGD_FModManager.h"
 #include <DxErr.h>
+#include "CHighScoreState.h"
+
 #pragma comment(lib, "dxerr.lib")
 
 #define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -32,6 +35,7 @@ void CCredit_State::Enter( void )
 {
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/Star_Wars_-_Main_Title_Theme.mp3",FMOD_LOOP_NORMAL);
 
 	//m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/jeditheme.mp3");
 
@@ -76,7 +80,14 @@ bool CCredit_State::Input( void )
 
 void CCredit_State::Update()
 {
-
+	
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
+		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSoundID);
+	m_nSwitchState++;
+	if (m_nSwitchState == 160000)
+	{
+		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+	}
 }
 
 
@@ -168,6 +179,10 @@ void CCredit_State::Exit( void )
 	{
 		m_vNames[i].clear();
 	}
+
+	
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nSoundID);
+
 }
 
 LPDIRECT3DTEXTURE9 CCredit_State::LoadTexture(const char* szFilename, DWORD dwColorkey)

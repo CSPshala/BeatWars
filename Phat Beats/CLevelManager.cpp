@@ -17,7 +17,7 @@
 #include <fstream>
 
 #include <sstream>
-#define MAX_TAKEDOWNS 2
+#define MAX_TAKEDOWNS 3
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access
@@ -28,6 +28,9 @@ CLevelManager::CLevelManager(void) {
 	InMan	= CSGD_DirectInput::GetInstance();
 	FmMan	= CSGD_FModManager::GetInstance();
 	TexMan	= CSGD_TextureManager::GetInstance();
+
+	m_nTakeDownsLuke = -1;
+	m_nTakeDownsVader = -1;
 
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
@@ -50,24 +53,28 @@ CLevelManager::CLevelManager(void) {
 		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
 		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
 		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLuke.xml","sprites_luke_004.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLuke.xml","sprites_luke_005.png"));
 
 	}
 
 	if (CGame::GetInstance()->GetCharacterSelection() == false)
 	{
 
-		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVader.xml","sprites_vader_001.png"));
-		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVader.xml","sprites_vader_002.png"));
-		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVader.xml","sprites_vader_003.png"));
-		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
-		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleVaderFlip.xml","sprites_vader_007.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockVaderFlip.xml","sprites_vader_008.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockVaderFlip.xml","sprites_vader_009.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVaderFlip.xml","sprites_vader_010.png"));
+		GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVaderFlip.xml","sprites_vader_011.png"));
 	}
 
 	if (CGame::GetInstance()->GetCharacterSelection2() == true)
 	{
-		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLuke.xml","sprites_luke_001.png"));
-		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLuke.xml","sprites_luke_002.png"));
-		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLuke.xml","sprites_luke_003.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("IdleLukeFlip.xml","sprites_luke_007.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighBlockLukeFlip.xml","sprites_luke_008.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowBlockLukeFlip.xml","sprites_luke_009.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLukeFlip.xml","sprites_luke_010.png"));
+		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLukeFlip.xml","sprites_luke_011.png"));
 	}
 
 	if (CGame::GetInstance()->GetCharacterSelection2() == false)
@@ -79,14 +86,15 @@ CLevelManager::CLevelManager(void) {
 		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitVader.xml","sprites_vader_004.png"));
 		GetPlayer(PlayerTwo)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitVader.xml","sprites_vader_005.png"));
 	}
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("HighHitLuke.xml","sprites_luke_004.png"));
-	GetPlayer(PlayerOne)->SetSingleAnimation(AnMan.LoadSingleAnimation("LowHitLuke.xml","sprites_luke_005.png"));
 	//Player 2 Animations
 
 
 	// Set Up Assets
 	m_nBgID		= TexMan->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID	= TexMan->LoadTexture("resource/graphics/bag_HUD.png");
+	m_nTakeDownsLuke = TexMan->LoadTexture("resource/graphics/RepNote.png");
+	m_nTakeDownsVader = TexMan->LoadTexture("resource/graphics/ImpNote.png");
+	m_nTutorialID = TexMan->LoadTexture("resource/graphics/bag_HUD2.png");
 
 	// Set Up RECTS
 	RECT rLeftHandle = {20, 10, 67, 27};
@@ -127,13 +135,11 @@ CLevelManager::~CLevelManager(void) {
 
 	PlayerList().clear();
 }
-
 // Singleton Accessor
 CLevelManager* CLevelManager::GetInstance(void){
 	static CLevelManager Instance;
 	return &Instance;
 }
-
 // Methods
 const void CLevelManager::QueueSong(const string szSong){
 	m_vSongs.push(szSong);
@@ -182,6 +188,7 @@ const void CLevelManager::EnterLevel(void) {
 	m_nRightPowerOffset = 0;
 	p2PrevPowerup = -1;
 	p1PrevPowerup = -1;
+	
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 	/*
@@ -286,6 +293,11 @@ const void CLevelManager::HandlePausingInput(void) {
 
 		GetPlayer(PlayerOne)->SetCurrentScore(0);
 		GetPlayer(PlayerTwo)->SetCurrentScore(0);
+		GetPlayer(PlayerOne)->SetTakeDown(0);
+		GetPlayer(PlayerTwo)->SetTakeDown(0);
+		GetPlayer(PlayerOne)->SetCurrentHP(100);
+		GetPlayer(PlayerTwo)->SetCurrentHP(100);
+		
 
 		TexMan->UnloadTexture(m_nBackgroundID);
 		
@@ -474,6 +486,19 @@ const void CLevelManager::RenderPlayingState(void) {
 	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
+	switch (GetPlayer(PlayerTwo)->GetCurrentTakeDown())
+	{
+	case 1:
+		TexMan->Draw(m_nTakeDownsVader,529.0f,92.0f,0.2f,0.2f);
+		break;
+	case 2:
+		TexMan->Draw(m_nTakeDownsVader,549.0f,92.0f,0.2f,0.2f);
+		break;
+	case 3:
+		TexMan->Draw(m_nTakeDownsVader,589.0f,92.0f,0.2f,0.2f);
+		break;
+	}
+
 	// Draw Particles
 	FxMan->Render();
 
@@ -484,13 +509,27 @@ const void CLevelManager::RenderPlayingState(void) {
 	static char szHpBuffer[8];
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 
+	// Drawing key/arcade diagram in easy / tutorial mode
+	if(CGameplay_State::GetInstance()->GetKeysImg() || COptionsState::GetInstance()->GetDifficulty() == EASY)
+	{
+		// Drawing section
+		RECT tRect;
+		tRect.left = 0;
+		tRect.top = 395;
+		tRect.right = tRect.left + 410;
+		tRect.bottom = tRect.top + 140;
+
+		TexMan->DrawF(m_nTutorialID,250,510,0.6f,0.6f,&tRect);
+	}
+
+	// Old HP output before life bars worked
 	//// Player 1
-	_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
-	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	//_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
+	//CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	//
 	//// Player 2
-	_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
-	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	//_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
+	//CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
 	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()))
 	{
@@ -500,8 +539,6 @@ const void CLevelManager::RenderPlayingState(void) {
 	{
 		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));		
 	}
-
-
 }
 const void CLevelManager::RenderPausingState(void) {
 	static RECT rectLayout = {0, 0, 800, 600};

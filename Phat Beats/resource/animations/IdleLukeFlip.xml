@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_luke_007.png" Name="Idle">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="306" Width="178" AnchorX="15" AnchorY="291" FrameX="83" FrameY="6" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="304" Width="190" AnchorX="24" AnchorY="289" FrameX="260" FrameY="8" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="308" Width="186" AnchorX="22" AnchorY="292" FrameX="449" FrameY="5" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="302" Width="187" AnchorX="21" AnchorY="287" FrameX="638" FrameY="10" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="303" Width="189" AnchorX="23" AnchorY="287" FrameX="824" FrameY="10" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="300" Width="192" AnchorX="26" AnchorY="288" FrameX="72" FrameY="323" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="304" Width="189" AnchorX="24" AnchorY="290" FrameX="264" FrameY="321" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="301" Width="180" AnchorX="15" AnchorY="287" FrameX="461" FrameY="324" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="303" Width="189" AnchorX="25" AnchorY="289" FrameX="639" FrameY="323" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="307" Width="192" AnchorX="25" AnchorY="287" FrameX="826" FrameY="324" Duration="0.1" />
+  </Animation>
+</Animations>

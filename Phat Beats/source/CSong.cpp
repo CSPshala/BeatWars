@@ -253,12 +253,21 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 					for(; y != m_vHittableBeats.end(); ++y)
 					{
 						if((*y) == (*i))
+						{
+							// Player 1 never hit the note. Kill his streak
+							if(!(*y)->GetPlayer1Hit())
+								CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetCurrentStreak(0);
+
+							// Player 2 never hit the note. Kill his streak
+							if(!(*y)->GetPlayer2Hit())
+								CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentStreak(0);
+
 							y = m_vHittableBeats.erase(y);
+						}
 
 						if(y == m_vHittableBeats.end())
 							break;
 					}
-
 					
 					ES->SendEvent("notepassed",NULL);
 
@@ -295,7 +304,7 @@ void CSong::CreateAIHits()
 {
 	for (int i = 0; i < m_vBeats.size(); ++i)
 	{
-		if (CAiManager::GetInsatance()->RandomDifficult(AI_INSANE) == true)
+		if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 		{
 			m_vBeats[i].SetPlayer2Hit(true);			
 		}

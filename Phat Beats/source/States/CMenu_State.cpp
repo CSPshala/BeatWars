@@ -19,6 +19,7 @@
 #include "../JCMacros.h"
 #include "CCredit_State.h"
 #include "CHighScoreState.h"
+#include "../SGD Wrappers/CSGD_FModManager.h"
 CMenu_State::CMenu_State()
 {
 	// Asset IDs
@@ -42,6 +43,7 @@ void CMenu_State::Enter(void)
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/lightsaberCursor2.png");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nTile = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	m_nBackSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/Star_Wars_-_Main_Title_Theme.mp3",FMOD_LOOP_NORMAL);
 }
 
 bool CMenu_State::Input(void)
@@ -108,6 +110,11 @@ bool CMenu_State::Input(void)
 			case MAINMENU_ARCADE:
 				{
 					CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
+				}
+				break;
+			case MAINMENU_TUTORIAL:
+				{
+					loadTutorial();
 				}
 				break;
 
@@ -179,11 +186,17 @@ bool CMenu_State::Input(void)
 						CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 					}
 					break;
+
 				case MAINMENU_ARCADE:
 					{
 						CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
 					}
 					break;
+			case MAINMENU_TUTORIAL:
+				{
+					loadTutorial();
+				}
+				break;
 
 
 				case MAINMENU_EXIT:
@@ -201,7 +214,8 @@ bool CMenu_State::Input(void)
 
 void CMenu_State::Update(void)
 {
-
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nBackSoundID))
+		CSGD_FModManager::GetInstance()->PlaySoundA(m_nBackSoundID);
 }
 
 void CMenu_State::Render(void)
@@ -281,6 +295,7 @@ void CMenu_State::Render(void)
 
 void CMenu_State::Exit(void)
 {
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nBackSoundID);
 }
 
 CMenu_State* CMenu_State::GetInstance()
@@ -320,6 +335,7 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->QueueLoadCommand("darksidedub.beat","",Song);
 	CLU->QueueLoadCommand("DueloftheFates.beat","",Song);
 	CLU->QueueLoadCommand("ImperialMarch.beat","",Song);
+	CLU->QueueLoadCommand("oldrepublic.beat", "", Song);	
 	CLU->QueueLoadCommand("noteeventtest.beat", "", Song);	
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
@@ -327,8 +343,8 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLevelManager::GetInstance()->QueueSong("DarkSideDub");
 	CLevelManager::GetInstance()->QueueSong("dualofthefates");
 	CLevelManager::GetInstance()->QueueSong("ImperialMarch");
+	CLevelManager::GetInstance()->QueueSong("oldrepublic");
 	CLevelManager::GetInstance()->QueueSong("Avicii");
-	CLevelManager::GetInstance()->QueueSong("OldRepublic");
 
 
 	GAME->ChangeState(CLU_State::GetInstance());
@@ -359,7 +375,7 @@ void CMenu_State::loadTutorial()
 
 	// Loading up BeatManager specific stuff
 
-	CLU->QueueLoadCommand("tutorial.xml","",Song);
+	CLU->QueueLoadCommand("tutorial.beat","",Song);
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
 

@@ -957,9 +957,9 @@ namespace Animation_Tool
                                 dHeight = frame.DrawHeight;
 
                                 //Event
-                                B = Z.Attribute("Event");
-                                frame.TriggerEvent = Convert.ToString(B.Value);
-                                textBox1.Text = frame.TriggerEvent;
+                                //B = Z.Attribute("Event");
+                                //frame.TriggerEvent = Convert.ToString(B.Value);
+                                //textBox1.Text = frame.TriggerEvent;
 
                                 //CollisionHeigh
                                 B = Z.Attribute("CollisionHeight");

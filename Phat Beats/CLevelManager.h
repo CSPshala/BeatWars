@@ -56,6 +56,9 @@ class CLevelManager
 	int m_nTitleID;
 	int m_nHudID;
 	int m_nBackgroundID;
+	int m_nTakeDownsLuke;
+	int m_nTakeDownsVader;
+	int m_nTutorialID;
 
 	// Offset for Hud
 	int m_nRightOffset;
