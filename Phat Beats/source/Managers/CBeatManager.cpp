@@ -46,16 +46,23 @@ CBeatManager::CBeatManager()
 	fuckyou = false;
 	SetCurrentlyPlayingSong("none");
 	SetComboThreshold(COMBODAMAGETHRESHOLD);
-	m_nSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_High.mp3");
-	m_nDamageSFX = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Damage.mp3");
-	SetFXSound(m_nSFX);
-	SetSoundFX(m_nDamageSFX);
+	m_nSaberHigh = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_High.mp3");
+	m_nDamageVader = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Damage.mp3");
+	m_nDeathLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Death.mp3");
+	m_nDeathVader = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Death01.mp3");
+	m_nDamageLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Damage02.mp3");
+	m_nSaberLow = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_low.mp3");
+	m_nSaberIdle = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Idle.mp3", FMOD_LOOP_NORMAL);
+	SetFXSound(m_nSaberHigh);
+	SetSoundFX(m_nDamageVader);
 }
 
 CBeatManager::~CBeatManager()
 {
 	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
 	ES->UnregisterClient("notepassed",this);
+
+
 }
 
 ////////////////////////////////////////
@@ -753,6 +760,7 @@ void CBeatManager::Update()
 {
 	// Checking combo
 	EvaluatePlayerCombos();
+
 }
 
 void CBeatManager::Render()
@@ -1011,6 +1019,12 @@ void CBeatManager::EvaluatePlayerCombos()
 
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
+	if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
+	{
+		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberIdle);
+	}
+
+
 	// Player is in attack mode
 	if(playerToDmg->GetAttackMode())
 	{
@@ -1024,14 +1038,20 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			{
 				playerToDmg->SetCurrAnimation("High Block");
 				damageDealer->SetCurrAnimation("High Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberHigh);
 			}
 			else
 			{
 				playerToDmg->SetCurrAnimation("Low Block");
 				damageDealer->SetCurrAnimation("Low Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberLow);
 			}
-
-			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			if (playerToDmg == CLevelManager::GetInstance()->GetPlayer(PlayerOne))
+			{
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageLuke);
+			}
+			else
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageVader);
 		}
 		else
 		{
@@ -1043,14 +1063,22 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			{
 				playerToDmg->SetCurrAnimation("High Block");
 				damageDealer->SetCurrAnimation("High Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberHigh);
 			}
 			else
 			{
 				playerToDmg->SetCurrAnimation("Low Block");
 				damageDealer->SetCurrAnimation("Low Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberLow);
 			}
 
-			CSGD_FModManager::GetInstance()->PlaySound(m_nDamageSFX);
+			if (playerToDmg == CLevelManager::GetInstance()->GetPlayer(PlayerOne))
+			{
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageLuke);
+			}
+			else
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageVader);
+			
 		}
 	}
 	else
@@ -1065,14 +1093,23 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			{
 				playerToDmg->SetCurrAnimation("High Block");
 				damageDealer->SetCurrAnimation("High Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberHigh);
+
 			}
 			else
 			{
 				playerToDmg->SetCurrAnimation("Low Block");
 				damageDealer->SetCurrAnimation("Low Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberLow);
+
 			}
 
-			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
+			if (playerToDmg == CLevelManager::GetInstance()->GetPlayer(PlayerOne))
+			{
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageLuke);
+			}
+			else
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageVader);
 		}
 		else
 		{
@@ -1084,14 +1121,23 @@ void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDeale
 			{
 				playerToDmg->SetCurrAnimation("High Block");
 				damageDealer->SetCurrAnimation("High Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberHigh);
+
 			}
 			else
 			{
 				playerToDmg->SetCurrAnimation("Low Block");
 				damageDealer->SetCurrAnimation("Low Hit");
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberLow);
+
 			}
 			
-			CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageSFX);
+			if (playerToDmg == CLevelManager::GetInstance()->GetPlayer(PlayerOne))
+			{
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageLuke);
+			}
+			else
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nDamageVader);
 		}
 	}
 }

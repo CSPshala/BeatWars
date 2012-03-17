@@ -1,6 +1,9 @@
 #include "CCredit_State.h"
 #include "CMenu_State.h"
+#include "../SGD Wrappers/CSGD_FModManager.h"
 #include <DxErr.h>
+#include "CHighScoreState.h"
+
 #pragma comment(lib, "dxerr.lib")
 
 #define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -32,6 +35,7 @@ void CCredit_State::Enter( void )
 {
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
+	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/Star_Wars_-_Main_Title_Theme.mp3",FMOD_LOOP_NORMAL);
 
 	//m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/jeditheme.mp3");
 
@@ -76,7 +80,14 @@ bool CCredit_State::Input( void )
 
 void CCredit_State::Update()
 {
-
+	
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
+		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSoundID);
+	m_nSwitchState++;
+	if (m_nSwitchState == 160000)
+	{
+		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+	}
 }
 
 
@@ -164,10 +175,14 @@ void CCredit_State::Exit( void )
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBackgroundID);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLogo);
 
-	for (int i = 0; i < m_vNames.size(); ++i)
+	for (unsigned int i = 0; i < m_vNames.size(); ++i)
 	{
 		m_vNames[i].clear();
 	}
+
+	
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nSoundID);
+
 }
 
 LPDIRECT3DTEXTURE9 CCredit_State::LoadTexture(const char* szFilename, DWORD dwColorkey)
@@ -185,7 +200,7 @@ LPDIRECT3DTEXTURE9 CCredit_State::LoadTexture(const char* szFilename, DWORD dwCo
 	{
 		// Failed.
 		char szBuffer[256] = {0};
-		sprintf(szBuffer, "Failed to Create Texture - %s", szFilename); 
+		sprintf_s(szBuffer,256, "Failed to Create Texture - %s", szFilename); 
 		MessageBox(0, szBuffer, "TextureManager Error", MB_OK);
 		return NULL;
 	};

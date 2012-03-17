@@ -24,6 +24,8 @@
 #include "Managers\CAnimationManager.h"
 #include "States\COptionsState.h"
 #include "States\CBitmapFont.h"
+#include <sstream>
+using std::stringstream;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -118,12 +120,8 @@ void CPlayer::Input()
 }
 void CPlayer::Update(float fElapsedTime)
 {
-	// Timer for streak text (firing it off here so blergaderg)
-	if((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0)
-		m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
-
 	// Now we're updating timer if it's anything over 0
-	if(m_fStreakTextTimer > 0.0f)
+	if((m_fStreakTextTimer > 0.0f) || ((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0 && m_fStreakTextTimer == 0.0f))
 		m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
 	
 	// Stopping timer
@@ -194,19 +192,16 @@ void CPlayer::Render()
 		// Also scaling by the timer
 		RECT tRect;
 		tRect.left = LONG(GetPosX() - 100);
-		tRect.top = LONG(GetPosY() + 200);
-		tRect.right = LONG(tRect.left + (400.0f * m_fStreakTextTimer));
+		tRect.top = LONG(GetPosY());
+		tRect.right = LONG(tRect.left + 100);
 		tRect.bottom = LONG(tRect.top + (400.0f * m_fStreakTextTimer));
 
 		// Turning the streak value into an ASCII char to print
-		//char derp[2];
-		//_itoa_s(GetCurrentStreak(),derp,2,10);
-		
-		//string theStreak;// = derp;
-		//theStreak = " Streak";
+		stringstream stream;
+		stream << GetCurrentStreak() << " Streak";		
 
-		//// Printing it5
-		//CBitmapFont::GetInstance()->PrintStrokedTextInRect(theStreak,&tRect,0,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+		// Printing it
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect(stream.str(),&tRect,1,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	}
 
 
@@ -214,12 +209,12 @@ void CPlayer::Render()
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(275,530,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(595,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(595,530,1.0);
 
 	}
 
@@ -313,22 +308,17 @@ void CPlayer::P1InputHandling()
 				// Setting particle effect on hilt to show mode
 				if(GetAttackMode())
 				{
-					SetAttackMode(!GetAttackMode()); // Toggling attack/defense
-					SetAttackModeTimer(0);
-					// Setting particle effect on hilt to show mode
-					if(GetAttackMode())
-					{
-						CFXManager::GetInstance()->DequeueParticle("P1GUARD");
-						CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-					}
-					else
-					{
-						CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-						CFXManager::GetInstance()->QueueParticle("P1GUARD");
-					}
-
-					SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
+					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
 				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P1GUARD");
+				}
+
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+				
 			}
 		}
 	}
@@ -460,25 +450,21 @@ void CPlayer::P2InputHandling()
 			{
 				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
+				
 				// Setting particle effect on hilt to show mode
 				if(GetAttackMode())
 				{
-					SetAttackMode(!GetAttackMode()); // Toggling attack/defense
-					SetAttackModeTimer(0);
-					// Setting particle effect on hilt to show mode
-					if(GetAttackMode())
-					{
-						CFXManager::GetInstance()->DequeueParticle("P2GUARD");
-						CFXManager::GetInstance()->QueueParticle("P2ATTACK");
-					}
-					else
-					{
-						CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
-						CFXManager::GetInstance()->QueueParticle("P2GUARD");
-					}
-
-					SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+					CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+					CFXManager::GetInstance()->QueueParticle("P2ATTACK");
 				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P2GUARD");
+				}
+
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+				
 			}
 		}
 	}

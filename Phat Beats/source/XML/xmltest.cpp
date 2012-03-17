@@ -558,8 +558,12 @@ int main()
 			char verifyBuf[256];
 			int okay = 1;
 
-			FILE* saved  = fopen( "utf8testout.xml", "r" );
-			FILE* verify = fopen( "utf8testverify.xml", "r" );
+			FILE* saved;
+			fopen_s(&saved, "utf8testout.xml", "r" );
+
+			FILE* verify;
+			fopen_s(&verify, "utf8testverify.xml", "r" );
+
 			if ( saved && verify )
 			{
 				while ( fgets( verifyBuf, 256, verify ) )
@@ -825,7 +829,7 @@ int main()
 	for( int i=0; i<FUZZ_ITERATION; ++i ) 
 	{
 		char* demoCopy = new char[ len+1 ];
-		strcpy( demoCopy, demoStart );
+		strcpy_s( demoCopy,len+1, demoStart );
 
 		demoCopy[ i%len ] = (char)((i+1)*3);
 		demoCopy[ (i*7)%len ] = '>';
@@ -918,13 +922,14 @@ int main()
 
 		XmlTest( "Entity transformation: read. ", expected, context, true );
 
-		FILE* textfile = fopen( "textfile.txt", "w" );
+		FILE* textfile;
+		fopen_s(&textfile, "textfile.txt", "w" );
 		if ( textfile )
 		{
 			psg->Print( textfile, 0 );
 			fclose( textfile );
 		}
-		textfile = fopen( "textfile.txt", "r" );
+		fopen_s(&textfile, "textfile.txt", "r" );
 		assert( textfile );
 		if ( textfile )
 		{
@@ -940,7 +945,8 @@ int main()
 	}
 
     {
-		FILE* textfile = fopen( "test5.xml", "w" );
+		FILE* textfile;
+		fopen_s(&textfile, "test5.xml", "w" );
 		if ( textfile )
 		{
             fputs("<?xml version='1.0'?><a.elem xmi.version='2.0'/>", textfile);
@@ -953,7 +959,8 @@ int main()
     }
 
 	{
-		FILE* textfile = fopen( "test6.xml", "w" );
+		FILE* textfile;
+		fopen_s(&textfile, "test6.xml", "w" );
 		if ( textfile )
 		{
             fputs("<element><Name>1.1 Start easy ignore fin thickness&#xA;</Name></element>", textfile );
