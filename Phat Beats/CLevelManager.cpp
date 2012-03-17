@@ -17,7 +17,7 @@
 #include <fstream>
 
 #include <sstream>
-#define MAX_TAKEDOWNS 2
+#define MAX_TAKEDOWNS 3
 // Constructor/Destructor
 CLevelManager::CLevelManager(void) {
 	// Set Up Easy Access
@@ -28,6 +28,9 @@ CLevelManager::CLevelManager(void) {
 	InMan	= CSGD_DirectInput::GetInstance();
 	FmMan	= CSGD_FModManager::GetInstance();
 	TexMan	= CSGD_TextureManager::GetInstance();
+
+	m_nTakeDownsLuke = -1;
+	m_nTakeDownsVader = -1;
 
 	// Set Up Players
 	PlayerList().push_back(new CPlayer(OBJ_PLAYER1));
@@ -87,7 +90,8 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Assets
 	m_nBgID		= TexMan->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID	= TexMan->LoadTexture("resource/graphics/bag_HUD.png");
-
+	m_nTakeDownsLuke = TexMan->LoadTexture("resource/graphics/RepNote.png");
+	m_nTakeDownsVader = TexMan->LoadTexture("resource/graphics/ImpNote.png");
 	// Set Up RECTS
 	RECT rLeftHandle = {20, 10, 67, 27};
 	RECT rRightHandle = {445, 12, 492, 23};
@@ -182,6 +186,7 @@ const void CLevelManager::EnterLevel(void) {
 	m_nRightPowerOffset = 0;
 	p2PrevPowerup = -1;
 	p1PrevPowerup = -1;
+	
 	BeatMan->Play(m_vSongs.front());
 	BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
 	/*
@@ -286,6 +291,11 @@ const void CLevelManager::HandlePausingInput(void) {
 
 		GetPlayer(PlayerOne)->SetCurrentScore(0);
 		GetPlayer(PlayerTwo)->SetCurrentScore(0);
+		GetPlayer(PlayerOne)->SetTakeDown(0);
+		GetPlayer(PlayerTwo)->SetTakeDown(0);
+		GetPlayer(PlayerOne)->SetCurrentHP(100);
+		GetPlayer(PlayerTwo)->SetCurrentHP(100);
+		
 
 		TexMan->UnloadTexture(m_nBackgroundID);
 		
@@ -473,6 +483,19 @@ const void CLevelManager::RenderPlayingState(void) {
 
 	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
+
+	switch (GetPlayer(PlayerTwo)->GetCurrentTakeDown())
+	{
+	case 1:
+		TexMan->Draw(m_nTakeDownsVader,529.0f,92.0f,0.2f,0.2f);
+		break;
+	case 2:
+		TexMan->Draw(m_nTakeDownsVader,549.0f,92.0f,0.2f,0.2f);
+		break;
+	case 3:
+		TexMan->Draw(m_nTakeDownsVader,589.0f,92.0f,0.2f,0.2f);
+		break;
+	}
 
 	// Draw Particles
 	FxMan->Render();

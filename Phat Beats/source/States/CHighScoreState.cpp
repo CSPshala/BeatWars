@@ -6,6 +6,8 @@
 #include "../Managers/CBeatManager.h"
 #include "../Globals.h"
 #include "../../CLevelManager.h"
+#include "../SGD Wrappers/CSGD_TextureManager.h"
+
 CHighScoreState* CHighScoreState::GetInstance( void )
 {
 	static CHighScoreState instance;
@@ -17,15 +19,16 @@ void CHighScoreState::Enter( void )
 {
 	int selectedSpot = 0;
 	m_nStingIndex = 0;
+	m_nBackgroundID = -1;
 	//aPlayer->SetTotalScore(1000);
 
-	CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(3535);
+	/*CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(3535);*/
 
 	LoadXMLFile("resource/HighScores.xml");
 	Placing();
 	buffers = "";
 	HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
-	
+	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 }
 
 bool CHighScoreState::Input( void )
@@ -51,34 +54,28 @@ bool CHighScoreState::Input( void )
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT))
 	{
 		m_nStingIndex--;
+		if (m_nStingIndex == 0)
+		{
+			m_nStingIndex = 2;
+		}
 	}
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT))
 	{
 		m_nStingIndex++;
+		if (m_nStingIndex == 2)
+		{
+			m_nStingIndex = 0;
+		}
 	}
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
 	{
-		HighScores[selectedSpot].strInitials[m_nStingIndex] += 1;
-		
+		HighScores[selectedSpot].strInitials[m_nStingIndex] += 1;				
 	}
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
 	{
-		HighScores[selectedSpot].strInitials[m_nStingIndex] -= 1;
-		
+		HighScores[selectedSpot].strInitials[m_nStingIndex] -= 1;		
 	}
-	/*
-	if (CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx())
-		{
-			char currentKey = CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
-			buffers += currentKey;
-			HighScores[selectedSpot].strInitials.clear();
-			if(HighScores[selectedSpot].strInitials.length() < 3 && currentKey != 0)
-			{
-	
-				HighScores[selectedSpot].strInitials = buffers;
-			}
-	
-		}*/
+
 	return true;
 }
 
@@ -91,6 +88,7 @@ void CHighScoreState::Render(void)
 {
 	RECT rBody = {0, 20, CGame::GetInstance()->GetScreenWidth(), 25};
 	RECT rMenu = {25, 50, CGame::GetInstance()->GetScreenWidth(), 635};
+	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
 	CBitmapFont::GetInstance()->SetScale(1.5f);
 	CBitmapFont::GetInstance()->PrintStrokedTextInRect("high scores",&rBody,ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0),D3DCOLOR_XRGB(255,255,255));
 
@@ -101,7 +99,7 @@ void CHighScoreState::Render(void)
 			buffers = buffer;
 			sprintf_s(buffer,"%i  %s  %i  %s", i+1, HighScores[i].strInitials.c_str(), HighScores[i].nScores, HighScores[i].strDates.c_str());
 			buffers = buffer;
-			CBitmapFont::GetInstance()->PrintText(buffers,125,100+(35*i),D3DCOLOR_XRGB(255,255,255));
+			CBitmapFont::GetInstance()->PrintText(buffers,225,100+(35*i),D3DCOLOR_XRGB(255,255,255));
 		}
 	
 }
@@ -131,11 +129,11 @@ void CHighScoreState::LoadXMLFile( const char * fileToLoad )
 		if(pHighScores != NULL)
 		{
 			int score = 0;
-			/*string date = pHighScores->Attribute("date");*/
+			
 			const char * szInitials = pHighScores->GetText();
 			pHighScores->QueryIntAttribute("score", &score);
 			HighScores[nCount].strInitials = szInitials;
-			/*HighScores[nCount].strDates = date;*/
+			
 			HighScores[nCount].nScores = score;
 		}
 		pHighScores = pHighScores->NextSiblingElement("HighScore");
@@ -160,7 +158,7 @@ void CHighScoreState::SaveXMLFile( const char * fileToSave )
 		TiXmlElement * pHighScore = new TiXmlElement("HighScore");
 
 		pHighScore->SetAttribute("score", HighScores[i].nScores);
-		/*pHighScore->SetAttribute("date", HighScores[i].strDates.c_str());*/
+		
 		TiXmlText * pText = new TiXmlText(HighScores[i].strInitials.c_str());
 		pHighScore->LinkEndChild(pText);
 
@@ -196,7 +194,7 @@ void CHighScoreState::Placing( void )
 
 		HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
 		HighScores[selectedSpot].strInitials = "aaa";
-		/*HighScores[selectedSpot].strDates = GetTodaysDate();*/
+		
 	}
 }
 
