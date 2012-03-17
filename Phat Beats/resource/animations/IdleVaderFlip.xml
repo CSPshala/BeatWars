@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_vader_007.png" Name="Idle">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="270" Width="288" AnchorX="57" AnchorY="248" FrameX="730" FrameY="6" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="264" Width="290" AnchorX="62" AnchorY="247" FrameX="436" FrameY="7" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="265" Width="300" AnchorX="68" AnchorY="247" FrameX="141" FrameY="7" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="258" Width="289" AnchorX="61" AnchorY="243" FrameX="726" FrameY="285" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="256" Width="289" AnchorX="60" AnchorY="241" FrameX="433" FrameY="287" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="257" Width="303" AnchorX="69" AnchorY="242" FrameX="130" FrameY="286" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="262" Width="296" AnchorX="67" AnchorY="245" FrameX="720" FrameY="557" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="264" Width="305" AnchorX="70" AnchorY="248" FrameX="423" FrameY="554" Duration="0.1"/>
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="264" Width="301" AnchorX="67" AnchorY="247" FrameX="129" FrameY="555" Duration="0.1"/>
+  </Animation>
+</Animations>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_luke_008.png" Name="High Block">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="311" Width="188" AnchorX="85" AnchorY="285" FrameX="826" FrameY="21" Duration="0.2" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="310" Width="217" AnchorX="81" AnchorY="287" FrameX="608" FrameY="22" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="324" Width="271" AnchorX="250" AnchorY="306" FrameX="336" FrameY="7" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="324" Width="268" AnchorX="247" AnchorY="304" FrameX="69" FrameY="9" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="332" Width="275" AnchorX="256" AnchorY="314" FrameX="741" FrameY="340" Duration="0.5" />
+  </Animation>
+</Animations>
