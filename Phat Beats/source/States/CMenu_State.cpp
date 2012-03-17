@@ -179,6 +179,7 @@ bool CMenu_State::Input(void)
 						CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 					}
 					break;
+
 				case MAINMENU_ARCADE:
 					{
 						CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());

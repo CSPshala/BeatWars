@@ -87,6 +87,8 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Assets
 	m_nBgID		= TexMan->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID	= TexMan->LoadTexture("resource/graphics/bag_HUD.png");
+	m_nLukeLife = TexMan->LoadTexture("resource/graphics/Luke_Life.png");
+	m_nVaderlife = TexMan->LoadTexture("resource/graphics/Vader_Life.png");
 
 	// Set Up RECTS
 	RECT rLeftHandle = {20, 10, 67, 27};
@@ -474,6 +476,8 @@ const void CLevelManager::RenderPlayingState(void) {
 	TexMan->DrawF(m_nHudID, 59.0f, 65.0f, 1.0f, 1.0f, &rectLeftPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 	TexMan->DrawF(m_nHudID, 529.0f, 65.0f, 1.0f, 1.0f, &rectRightPowerBar,0,0,0,D3DCOLOR_ARGB(255,255,255,255));
 
+	TexMan->Draw(m_nLukeLife, 69, 65, 1.0f, 1.0f);
+
 	// Draw Particles
 	FxMan->Render();
 
@@ -500,8 +504,6 @@ const void CLevelManager::RenderPlayingState(void) {
 	{
 		CGameplay_State::GetInstance()->DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_fGameTransitionAlpha, 0, 0, 0));		
 	}
-
-
 }
 const void CLevelManager::RenderPausingState(void) {
 	static RECT rectLayout = {0, 0, 800, 600};

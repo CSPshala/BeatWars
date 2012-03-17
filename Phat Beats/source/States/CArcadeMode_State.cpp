@@ -75,7 +75,6 @@ bool CArcadeMode_State::Input(void)
 			}
 
 			CGame::GetInstance()->PlayNavMenuSound();
-
 		}
 
 
@@ -88,7 +87,6 @@ bool CArcadeMode_State::Input(void)
 			}
 
 			CGame::GetInstance()->PlayNavMenuSound();
-
 		}
 
 		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_SPACE))
