@@ -26,6 +26,7 @@ private:
 	int m_nImageFontID;
 	string buffers;
 	int m_nStingIndex;
+	int m_nBackgroundID;
 	
 public:
 

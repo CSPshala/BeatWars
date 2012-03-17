@@ -93,7 +93,13 @@ bool CArcadeMode_State::Input(void)
 
 		if (CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6, 1) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_SPACE))
 		{
-			CLevelSelect_State::GetInstance()->SetVsMode(true);
+			if (!CLevelSelect_State::GetInstance()->GetVsMode())
+			{
+				CLevelSelect_State::GetInstance()->SetVsMode(true);
+			}
+			else
+				CLevelSelect_State::GetInstance()->SetVsMode(false);
+			
 		}
 
 		if (m_nMenuSelection == 0 )
