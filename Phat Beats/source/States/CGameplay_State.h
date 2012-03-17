@@ -49,7 +49,9 @@ public:
 	void DrawARGB(string filename, DWORD argbColor);
 
 	// Public Accessors
+	bool		GetIsTutorial() {return m_bTutorial;}
 	void		SetIsTutorial(bool bSet) {m_bTutorial = bSet;}
+	bool		GetKeysImg() {return m_bKeysImg;}
 
 private:
 	// Proper singleton
@@ -72,6 +74,8 @@ private:
 
 	// Tutorial specific bool (used for pausing and displaying text)
 	bool m_bTutorial;
+	// Bool for tutorial keys image
+	bool m_bKeysImg;
 	// Tutorial string counter
 	int m_nTutorialTextIndex;
 	// Vector containing tutorial strings
@@ -86,10 +90,10 @@ private:
 	void DrawTutorialText();
 
 	//*************PRIVATE ACCESSORS************************//
-	bool		GetIsTutorial() {return m_bTutorial;}
+
 
 	//*************PRIVATE MUTATORS*************************//
-	
+	void		SetKeysImg(bool bKeys) {m_bKeysImg = bKeys;}
 
 
 	

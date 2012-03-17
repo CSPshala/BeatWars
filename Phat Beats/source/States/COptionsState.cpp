@@ -12,8 +12,24 @@
 #include "CSave_State.h"
 
 COptionsState::COptionsState( void )
-{
+{	
+	CLoad_State::GetInstance()->loadGameSetting();
+	SetDifficulty(CLoad_State::GetInstance()->GetPlayerDiff());
+	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
 
+	// assign values to the local variables
+	m_nMenuSelection = 0;
+	m_nSFX = -1;
+	m_nBackgroundID = -1;
+	m_nGameImageID = -1;
+	m_nOptionsID = -1;
+	//setting the game volume
+	SetFXVol(CGame::GetInstance()->GetSFXVolume());
+	SetMusicVol(CGame::GetInstance()->GetMusicVolume());
+	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
+
+	m_nMusicVolume = CLoad_State::GetInstance()->GetMusicVolume();
+	m_nFXVolume = CLoad_State::GetInstance()->GetFXVolume();
 }
 COptionsState::~COptionsState(void)
 {
@@ -27,25 +43,6 @@ COptionsState* COptionsState::GetInstance( void )
 }
 void COptionsState::Enter(void)
 {
-
-	CLoad_State::GetInstance()->loadGameSetting();
-	SetDifficulty(CLoad_State::GetInstance()->GetPlayerDiff());
-	SetAILevel(CLoad_State::GetInstance()->GetAILevel());
-
-	// assign values to the local variables
-	m_nMenuSelection = 0;
-	m_nSFX = -1;
-	m_nBackgroundID = -1;
-	m_nGameImageID = -1;
-	m_nOptionsID = -1;
-	//setting the game volume
-	CGame::GetInstance()->GetSFXVolume();
-	CGame::GetInstance()->GetMusicVolume();
-	m_nMusicPan = CGame::GetInstance()->GetPanVolume();
-
-	m_nMusicVolume = CLoad_State::GetInstance()->GetMusicVolume();
-	m_nFXVolume = CLoad_State::GetInstance()->GetFXVolume();
-
 	//setting the images in the texture manager
 	m_nCursorID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/graphics/lightsaberCursor2.png" );	
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
@@ -647,7 +644,6 @@ void COptionsState::Render(void)
 #pragma endregion 
 
 }
-
 void COptionsState::Exit(void)
 {
 	CSave_State::GetInstance()->saveConfig();

@@ -87,6 +87,7 @@ CLevelManager::CLevelManager(void) {
 	// Set Up Assets
 	m_nBgID		= TexMan->LoadTexture("resource/graphics/star_wars___battle_1182.jpg");
 	m_nHudID	= TexMan->LoadTexture("resource/graphics/bag_HUD.png");
+	m_nTutorialID = TexMan->LoadTexture("resource/graphics/bag_HUD2.png");
 
 	// Set Up RECTS
 	RECT rLeftHandle = {20, 10, 67, 27};
@@ -127,13 +128,11 @@ CLevelManager::~CLevelManager(void) {
 
 	PlayerList().clear();
 }
-
 // Singleton Accessor
 CLevelManager* CLevelManager::GetInstance(void){
 	static CLevelManager Instance;
 	return &Instance;
 }
-
 // Methods
 const void CLevelManager::QueueSong(const string szSong){
 	m_vSongs.push(szSong);
@@ -484,13 +483,27 @@ const void CLevelManager::RenderPlayingState(void) {
 	static char szHpBuffer[8];
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 
+	// Drawing key/arcade diagram in easy / tutorial mode
+	if(CGameplay_State::GetInstance()->GetKeysImg() || COptionsState::GetInstance()->GetDifficulty() == EASY)
+	{
+		// Drawing section
+		RECT tRect;
+		tRect.left = 0;
+		tRect.top = 395;
+		tRect.right = tRect.left + 410;
+		tRect.bottom = tRect.top + 140;
+
+		TexMan->DrawF(m_nTutorialID,250,510,0.6f,0.6f,&tRect);
+	}
+
+	// Old HP output before life bars worked
 	//// Player 1
-	_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
-	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	//_itoa_s(GetPlayer(PlayerOne)->GetCurrentHP(), szHpBuffer, 10);
+	//CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 256, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 	//
 	//// Player 2
-	_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
-	CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	//_itoa_s(GetPlayer(PlayerTwo)->GetCurrentHP(), szHpBuffer, 10);
+	//CBitmapFont::GetInstance()->PrintStrokedText(szHpBuffer, 10, 300, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
 	if(!FmMan->IsSoundPlaying(BeatMan->GetCurrentlyPlayingSong()->GetSongID()))
 	{
