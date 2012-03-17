@@ -175,7 +175,7 @@ void CCredit_State::Exit( void )
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBackgroundID);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLogo);
 
-	for (int i = 0; i < m_vNames.size(); ++i)
+	for (unsigned int i = 0; i < m_vNames.size(); ++i)
 	{
 		m_vNames[i].clear();
 	}
@@ -200,7 +200,7 @@ LPDIRECT3DTEXTURE9 CCredit_State::LoadTexture(const char* szFilename, DWORD dwCo
 	{
 		// Failed.
 		char szBuffer[256] = {0};
-		sprintf(szBuffer, "Failed to Create Texture - %s", szFilename); 
+		sprintf_s(szBuffer,256, "Failed to Create Texture - %s", szFilename); 
 		MessageBox(0, szBuffer, "TextureManager Error", MB_OK);
 		return NULL;
 	};

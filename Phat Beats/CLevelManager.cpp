@@ -489,13 +489,13 @@ const void CLevelManager::RenderPlayingState(void) {
 	switch (GetPlayer(PlayerTwo)->GetCurrentTakeDown())
 	{
 	case 1:
-		TexMan->Draw(m_nTakeDownsVader,529.0f,92.0f,0.2f,0.2f);
+		TexMan->DrawF(m_nTakeDownsVader,529.0f,92.0f,0.2f,0.2f);
 		break;
 	case 2:
-		TexMan->Draw(m_nTakeDownsVader,549.0f,92.0f,0.2f,0.2f);
+		TexMan->DrawF(m_nTakeDownsVader,549.0f,92.0f,0.2f,0.2f);
 		break;
 	case 3:
-		TexMan->Draw(m_nTakeDownsVader,589.0f,92.0f,0.2f,0.2f);
+		TexMan->DrawF(m_nTakeDownsVader,589.0f,92.0f,0.2f,0.2f);
 		break;
 	}
 
