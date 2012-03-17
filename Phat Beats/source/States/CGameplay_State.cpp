@@ -152,7 +152,7 @@ bool CGameplay_State::Input(void)
 				// Timing skipping of text boxes so user dosen't accidentally skip
 				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
 						// There's more text to show so unpause and wait for next tutorialpause event
 						SetIsTutorial(false);
@@ -215,7 +215,7 @@ bool CGameplay_State::Input(void)
 				// Timing skipping of text boxes so user dosen't accidentally skip
 				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
 						// There's more text to show so unpause and wait for next tutorialpause event
 						SetIsTutorial(false);
