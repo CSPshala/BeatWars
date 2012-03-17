@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_vader_008.png" Name="High Block">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="284" Width="292" AnchorX="58" AnchorY="268" FrameX="729" FrameY="59" Duration="0.2" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="293" AnchorX="61" AnchorY="322" FrameX="425" FrameY="5" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="337" Width="316" AnchorX="103" AnchorY="320" FrameX="113" FrameY="7" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="331" Width="264" AnchorX="68" AnchorY="318" FrameX="757" FrameY="357" Duration="0.1" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="339" Width="265" AnchorX="75" AnchorY="325" FrameX="492" FrameY="350" Duration="0.5" />
+  </Animation>
+</Animations>

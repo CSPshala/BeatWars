@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Animations>
+  <Animation IsLooping="0" File="C:\Users\Ralph\Desktop\SGP\BeatWars\Phat Beats\resource\graphics\sprites_vader_011.png" Name="Low Hit">
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="341" Width="171" AnchorX="113" AnchorY="332" FrameX="846" FrameY="8" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="348" Width="213" AnchorX="139" AnchorY="338" FrameX="634" FrameY="2" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="349" Width="209" AnchorX="138" AnchorY="339" FrameX="424" FrameY="2" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="349" Width="207" AnchorX="133" AnchorY="338" FrameX="218" FrameY="2" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="304" Width="276" AnchorX="250" AnchorY="291" FrameX="743" FrameY="365" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="280" Width="391" AnchorX="159" AnchorY="265" FrameX="351" FrameY="388" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="347" Width="342" AnchorX="180" AnchorY="266" FrameX="7" FrameY="387" Duration="0.15" />
+    <Frames CollisionFrameY="0" CollisionFrameX="0" CollisionWidth="0" CollisionHeight="0" Height="330" Width="209" AnchorX="113" AnchorY="252" FrameX="809" FrameY="674" Duration="0.2" />
+  </Animation>
+</Animations>
