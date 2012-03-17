@@ -305,7 +305,7 @@ void CMenu_State::LoadGameplayStateAssets()
 	CLU->SetNewState(CGameplay_State::GetInstance());
 
 	// Setting GameplayState to tutorial mode
-	CGameplay_State::GetInstance()->SetIsTutorial(true);
+	CGameplay_State::GetInstance()->SetIsTutorial(false);
 
 	// Loading Effects
 	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
