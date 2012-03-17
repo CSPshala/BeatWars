@@ -302,7 +302,7 @@ void CSong::HandleEvent(CEvent* pEvent)
 
 void CSong::CreateAIHits()
 {
-	for (int i = 0; i < m_vBeats.size(); ++i)
+	for (unsigned int i = 0; i < m_vBeats.size(); ++i)
 	{
 		if (CAiManager::GetInsatance()->RandomDifficult(COptionsState::GetInstance()->GetAILevel()) == true)
 		{
