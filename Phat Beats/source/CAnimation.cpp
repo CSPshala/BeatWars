@@ -117,7 +117,7 @@ void CAnimation::Render(int posX, int posY, float fScale)
 		DrawRect.top = m_vecFrames[m_nCurrFrame]->GetDrawY();
 		DrawRect.right = m_vecFrames[m_nCurrFrame]->GetDrawX() + m_vecFrames[m_nCurrFrame]->GetWidth();
 		DrawRect.bottom = m_vecFrames[m_nCurrFrame]->GetDrawY() + m_vecFrames[m_nCurrFrame]->GetHeight();
-
+		
 		CSGD_TextureManager::GetInstance()->Draw(GetImageID(),posX -( m_vecFrames[m_nCurrFrame]->GetAnchorX() ), posY - ( m_vecFrames[m_nCurrFrame]->GetAnchorY() ), fScale,1.0, &DrawRect );
 	}
 }
