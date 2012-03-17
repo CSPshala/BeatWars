@@ -49,6 +49,8 @@ private:
 	IDirect3DVertexDeclaration9 *cubedecl;
 	IDirect3DIndexBuffer9* IndexBuffer;
 
+	int m_nSwitchState;
+
 public:
 	static CCredit_State* GetInstance();
 	void Enter(void); // Enters the Game State
@@ -56,5 +58,6 @@ public:
 	void Update(); // Update
 	void Render(void); // Draw
 	void Exit(void); // Leaves the Game State	
+
 };
 #endif

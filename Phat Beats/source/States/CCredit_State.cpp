@@ -1,6 +1,8 @@
 #include "CCredit_State.h"
 #include "CMenu_State.h"
 #include <DxErr.h>
+#include "CHighScoreState.h"
+
 #pragma comment(lib, "dxerr.lib")
 
 #define CUSTOMFVF (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1)
@@ -76,7 +78,11 @@ bool CCredit_State::Input( void )
 
 void CCredit_State::Update()
 {
-
+	m_nSwitchState++;
+	if (m_nSwitchState == 160000)
+	{
+		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+	}
 }
 
 
