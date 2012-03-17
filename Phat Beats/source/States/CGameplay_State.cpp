@@ -19,7 +19,6 @@
 #include "../../CLevelManager.h"
 #include "CLU_State.h"
 
-
 CGameplay_State::CGameplay_State()
 {
 	m_bMenu_Font = NULL;
@@ -43,13 +42,13 @@ CGameplay_State::CGameplay_State()
 	// Tutorial text timer
 	m_fTutorialBoxTimer = 0.0f;
 
+	// Calling OptionsState get instance once so we can read in volumes and stuff - JC
+	COptionsState::GetInstance();
 }
-
 CGameplay_State::~CGameplay_State()
 {
 
 }
-
 void CGameplay_State::Enter(void)
 {
 	BeatManager = CBeatManager::GetInstance();
@@ -93,12 +92,12 @@ void CGameplay_State::Enter(void)
 		{
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit ESC when any info box is showing\nto skip tutorial.");
-			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key with the beat to hit it.");
-			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key with the beat to hit it.");
-			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key with the beat to hit it.");
-			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key with the beat to hit it.");
-			m_vTutorialText.push_back("Next things are about to get hard.\nPress an arrow key (or numpad key)\nto aim at a note.\nHit the right key to hit it.");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit esc when any info box is showing\nto skip tutorial.");
+			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key or Button 1\nwith the beat to hit it.");
+			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key or Button 2\nwith the beat to hit it.");
+			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key or Button 4\nwith the beat to hit it.");
+			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key or Button 5\nwith the beat to hit it.");
+			m_vTutorialText.push_back("Next things are about to get hard.\nPress an arrow key or move the Joystick\nto aim at a note.\nPress the correct button to hit it.");
 			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
 			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
 			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
@@ -109,7 +108,9 @@ void CGameplay_State::Enter(void)
 			m_vTutorialText.push_back("Now, practice by hitting notes\nbeat your opponent up by hitting notes.\nDon't worry your opponent is easy for now.");
 			m_vTutorialText.push_back("Great job.\nNow lets head to your first song.");
 			
-			m_nTutorialBoxID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/tutorialbox.png");			
+			m_nTutorialBoxID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/tutorialbox.png");	
+
+			m_bKeysImg = true;
 		}
 
 		m_nTutorialTextIndex = 0;
@@ -122,7 +123,6 @@ void CGameplay_State::Enter(void)
 	if(GetIsTutorial())
 		BeatManager->Pause();
 }
-
 bool CGameplay_State::Input(void)
 {
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
@@ -152,7 +152,7 @@ bool CGameplay_State::Input(void)
 				// Timing skipping of text boxes so user dosen't accidentally skip
 				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
 						// There's more text to show so unpause and wait for next tutorialpause event
 						SetIsTutorial(false);
@@ -165,7 +165,10 @@ bool CGameplay_State::Input(void)
 					else
 					{
 						// There's no more tutorial text to show so we're gonna skip to next level
+						// Resetting timer
+						m_fTutorialBoxTimer = 0.0f;
 						SetIsTutorial(false);
+						SetKeysImg(false);
 						CLevelManager::GetInstance()->SkipLevel();
 					}
 
@@ -180,6 +183,7 @@ bool CGameplay_State::Input(void)
 				// Resetting timer
 				m_fTutorialBoxTimer = 0.0f;
 				SetIsTutorial(false);
+				SetKeysImg(false);
 				CLevelManager::GetInstance()->SkipLevel();
 			}
 
@@ -211,7 +215,7 @@ bool CGameplay_State::Input(void)
 				// Timing skipping of text boxes so user dosen't accidentally skip
 				if(m_fTutorialBoxTimer >= 1.5f)
 				{
-					if(m_nTutorialTextIndex < m_vTutorialText.size() - 1)
+					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
 						// There's more text to show so unpause and wait for next tutorialpause event
 						SetIsTutorial(false);
@@ -254,7 +258,6 @@ bool CGameplay_State::Input(void)
 
 	return true;
 }
-
 void CGameplay_State::Update(void)
 {
 
@@ -284,14 +287,12 @@ void CGameplay_State::Render(void)
 	// Only draws tutorial text if we're in tutorial
 	DrawTutorialText();
 
-
 		if (m_bStartTransition)
 		{
 			DrawARGB("blackscreen.png", D3DCOLOR_ARGB((int)m_SongTransitionAlpha, 0, 0, 0));
 
 		}
 }
-
 void CGameplay_State::Exit(void)
 {
 	if (!GetPreviouslyPlaying())
@@ -315,14 +316,12 @@ void CGameplay_State::Exit(void)
 		CEventSystem::GetInstance()->UnregisterClient("tutorialpause",this);
 	}
 }
-
 CGameplay_State* CGameplay_State::GetInstance()
 {
 	// Lazy instantiation
 	static CGameplay_State instance; // Static allows passing back of address
 	return &instance;	
 }
-
 void CGameplay_State::HandleEvent( CEvent* pEvent )
 {
 	if(pEvent->GetEventID() == "tutorialpause")
@@ -331,19 +330,16 @@ void CGameplay_State::HandleEvent( CEvent* pEvent )
 		BeatManager->Pause();
 	}
 }
-
 void CGameplay_State::MessageProc( CBaseMessage* pMsg )
 {
 	
 }
-
 void CGameplay_State::DrawARGB(string filename, DWORD argbColor)
 {
 	int ImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/blackscreen.png");
 
 	CSGD_TextureManager::GetInstance()->Draw(ImageID, 0, 0, 1.0f, 1.0f, 0, 800, 600, 0, argbColor);
 }
-
 void CGameplay_State::DrawTutorialText()
 {
 	if(GetIsTutorial())

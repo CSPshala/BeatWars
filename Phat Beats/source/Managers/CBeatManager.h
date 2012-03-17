@@ -57,15 +57,15 @@ public:
 		bool				IsPaused() {return m_bPause;}
 		CSong* GetCurrentlyPlayingSong() {return m_vSongs[m_nCurrentlyPlayingSongIndex];}
 		string GetFileName() {return m_szFileName;}
-		int GetFXSound() {return m_nDamageSFX;}
-		int GetSoundFX() {return m_nSFX;}
+		int GetFXSound() {return m_nDeathLuke;}
+		int GetSoundFX() {return m_nDeathVader;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
 		void HandleEvent(CEvent* pEvent);
 		void SetFileName(string szFileName) {m_szFileName = szFileName;}
-		void SetFXSound(int nDamageSFX){m_nDamageSFX = nDamageSFX;}
-		void SetSoundFX(int nSFX){m_nSFX = nSFX;}
+		void SetFXSound(int nDamageSFX){m_nDeathVader = nDamageSFX;}
+		void SetSoundFX(int nSFX){m_nDeathLuke = nSFX;}
 	/********** Singleton Pointer *************/
 			
 		
@@ -92,8 +92,13 @@ private:
 		vector<int> m_nvImageID;
 		int m_nNumHit;
 		bool m_bPause;
-		int m_nSFX;
-		int m_nDamageSFX;
+		int m_nSaberIdle;
+		int m_nSaberLow;
+		int m_nSaberHigh;
+		int m_nDamageVader;
+		int m_nDamageLuke;
+		int m_nDeathVader;
+		int m_nDeathLuke;
 		// Used for setting song
 		string szCurrentlyPlayingSong;
 		// Index into vector of songs to play song

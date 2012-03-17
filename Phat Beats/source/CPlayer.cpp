@@ -24,6 +24,8 @@
 #include "Managers\CAnimationManager.h"
 #include "States\COptionsState.h"
 #include "States\CBitmapFont.h"
+#include <sstream>
+using std::stringstream;
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -118,9 +120,13 @@ void CPlayer::Input()
 }
 void CPlayer::Update(float fElapsedTime)
 {
-	// Timer for streak text
-	if((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0)
+	// Now we're updating timer if it's anything over 0
+	if((m_fStreakTextTimer > 0.0f) || ((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0 && m_fStreakTextTimer == 0.0f))
 		m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
+	
+	// Stopping timer
+	if(m_fStreakTextTimer > 1.0f)
+		m_fStreakTextTimer = 0.0f;
 
 	// flushing last hit key
 	cHitKey = 'g';
@@ -180,17 +186,35 @@ void CPlayer::Update(float fElapsedTime)
 }
 void CPlayer::Render()
 {
+	if(m_fStreakTextTimer > 0.0f)
+	{
+		// Explicitly setting rect bounds for ease of reading
+		// Also scaling by the timer
+		RECT tRect;
+		tRect.left = LONG(GetPosX() - 100);
+		tRect.top = LONG(GetPosY());
+		tRect.right = LONG(tRect.left + 100);
+		tRect.bottom = LONG(tRect.top + (400.0f * m_fStreakTextTimer));
+
+		// Turning the streak value into an ASCII char to print
+		stringstream stream;
+		stream << GetCurrentStreak() << " Streak";		
+
+		// Printing it
+		CBitmapFont::GetInstance()->PrintStrokedTextInRect(stream.str(),&tRect,1,D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
+	}
+
 
 	//Render Animations
 	if( m_nType == OBJ_PLAYER1 )
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(275,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(275,530,1.0);
 	}
 	else
 	{
 		if( m_vecAnimations.size() > 0 )
-			m_vecAnimations[m_nCurrAnim]->Render(595,500,1.0);
+			m_vecAnimations[m_nCurrAnim]->Render(595,530,1.0);
 
 	}
 
@@ -278,12 +302,8 @@ void CPlayer::P1InputHandling()
 		if(DI->KeyPressed(DIK_SPACE) || DI->JoystickButtonPressed(2, 0))
 		{
 			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
-			SetAttackMode(true); // Toggling attack/defense
-			SetAttackModeTimer(0);
-			// Setting particle effect on hilt to show mode
-			if(GetAttackMode())
 			{
-				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
 				// Setting particle effect on hilt to show mode
 				if(GetAttackMode())
@@ -298,6 +318,7 @@ void CPlayer::P1InputHandling()
 				}
 
 				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+				
 			}
 		}
 	}
@@ -326,7 +347,7 @@ void CPlayer::P1InputHandling()
 		{
 			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
 			{
-				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
 				// Setting particle effect on hilt to show mode
 				if(GetAttackMode())
@@ -425,18 +446,25 @@ void CPlayer::P2InputHandling()
 		// Checking for Stance change
 		if(DI->KeyDown(DIK_SPACE) || DI->JoystickButtonPressed(2, 1))
 		{
-			SetAttackMode(true); // Toggling attack/defense
-			SetAttackModeTimer(0);
+			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
+			{
+				SetAttackMode(true); // Toggling attack/defense
+				SetAttackModeTimer(0);
+				
+				// Setting particle effect on hilt to show mode
+				if(GetAttackMode())
+				{
+					CFXManager::GetInstance()->DequeueParticle("P2GUARD");
+					CFXManager::GetInstance()->QueueParticle("P2ATTACK");
+				}
+				else
+				{
+					CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
+					CFXManager::GetInstance()->QueueParticle("P2GUARD");
+				}
 
-			if(GetAttackMode())
-			{
-				CFXManager::GetInstance()->DequeueParticle("P2GUARD");
-				CFXManager::GetInstance()->QueueParticle("P2ATTACK");
-			}
-			else
-			{
-				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
-				CFXManager::GetInstance()->QueueParticle("P2GUARD");
+				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
+				
 			}
 		}
 	}
@@ -465,7 +493,7 @@ void CPlayer::P2InputHandling()
 		{
 			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
 			{
-				SetAttackMode(!GetAttackMode()); // Toggling attack/defense
+				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
 				// Setting particle effect on hilt to show mode
 				if(GetAttackMode())

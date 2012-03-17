@@ -112,6 +112,11 @@ bool CMenu_State::Input(void)
 					CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
 				}
 				break;
+			case MAINMENU_TUTORIAL:
+				{
+					loadTutorial();
+				}
+				break;
 
 
 			case MAINMENU_EXIT:
@@ -181,11 +186,17 @@ bool CMenu_State::Input(void)
 						CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 					}
 					break;
+
 				case MAINMENU_ARCADE:
 					{
 						CGame::GetInstance()->ChangeState(CArcadeMode_State::GetInstance());
 					}
 					break;
+			case MAINMENU_TUTORIAL:
+				{
+					loadTutorial();
+				}
+				break;
 
 
 				case MAINMENU_EXIT:
@@ -364,7 +375,7 @@ void CMenu_State::loadTutorial()
 
 	// Loading up BeatManager specific stuff
 
-	CLU->QueueLoadCommand("tutorial.xml","",Song);
+	CLU->QueueLoadCommand("tutorial.beat","",Song);
 
 	CLevelManager::GetInstance()->QueueSong("jeditheme");
 
