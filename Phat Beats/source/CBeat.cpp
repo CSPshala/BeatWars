@@ -35,6 +35,8 @@ CBeat::CBeat() : CBase()
 	m_bCollision = false;
 	m_bPlayer1Hit = false;
 	m_bPlayer2Hit = false;
+	m_bPlayer1Miss = false;
+	m_bPlayer2Miss = false;
 
 }
 
@@ -64,6 +66,8 @@ CBeat& CBeat::operator=(const CBeat& theBeat)
 	m_bCollision = theBeat.m_bCollision;
 	m_bPlayer1Hit = theBeat.m_bPlayer1Hit;
 	m_bPlayer2Hit = theBeat.m_bPlayer2Hit;	
+	m_bPlayer1Miss = theBeat.m_bPlayer1Miss;
+	m_bPlayer2Miss = theBeat.m_bPlayer2Miss;
 
 	return *this;
 }
@@ -79,6 +83,8 @@ void CBeat::ResetBeat()
 	SetHasCollided(false);
 	SetPlayer1Hit(false);
 	SetPlayer2Hit(false);
+	SetPlayer1Miss(false);
+	SetPlayer2Miss(false);
 }
 
 void CBeat::Update(float fElapsedTime)
@@ -105,11 +111,12 @@ void CBeat::Render()
 		if(GetPosY() >= 0.0f && GetPosY() <= (float)CGame::GetInstance()->GetScreenHeight())
 		{
 			// Drawing player1 notes if not already hit
-			if(!GetPlayer1Hit())
+			if((!GetPlayer1Hit() && !GetPlayer1Miss()) || !GetHasCollided())
 				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() - 16,GetPosY() - 16,0.5f,0.5f);
 			// Drawing player2 notes if not already hit. And if hasn't collided (for AI)
-			if(!GetPlayer2Hit() || !GetHasCollided())
-				CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400 -16,GetPosY() - 16,0.5f,0.5f);
+			if((!GetPlayer2Hit() && !GetPlayer2Miss()) || !GetHasCollided())
+					CSGD_TextureManager::GetInstance()->DrawF(GetImageID(),GetPosX() + 400 -16,GetPosY() - 16,0.5f,0.5f);
+			
 		}
 
 	// Drawing when player hits note
