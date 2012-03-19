@@ -259,6 +259,8 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 							CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetCurrentStreak(0);
 							// Moving to next hittable note
 							CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->NextPlayer1HittableBeat();
+
+							FMODMAN->PlaySound(BEATMAN->GetFailFX());
 						}
 
 					// Player 2 never hit the note. Kill his streak
@@ -268,7 +270,13 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 							CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentStreak(0);
 							// Next hittable note
 							CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->NextPlayer2HittableBeat();
+
+							if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetType() == OBJ_PLAYER2)
+								FMODMAN->PlaySound(BEATMAN->GetFailFX());
 						}
+
+					// Telling everyone a note's passed by (for damage purposes)
+					ES->SendEvent("notepassed",NULL);
 					
 					// Update takes care of cleaning up inactive notes
 					(*i)->SetIsActive(false);						

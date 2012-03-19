@@ -55,6 +55,8 @@ CBeatManager::CBeatManager()
 	m_nDamageLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Damage02.mp3");
 	m_nSaberLow = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_low.mp3");
 	m_nSaberIdle = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Idle.mp3", FMOD_LOOP_NORMAL);
+	m_nFail = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/buzz.mp3");
+	m_nSuccess = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/whip.mp3");
 	SetFXSound(m_nSaberHigh);
 	SetSoundFX(m_nDamageVader);
 
@@ -868,7 +870,9 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 			// Upping Player1's Current combo for damage
 			SetP1CurrentCombo(GetP1CurrentCombo() + 1);
-			SetNumberNotesHit(GetNumberNotesHit() + 1);				
+			SetNumberNotesHit(GetNumberNotesHit() + 1);	
+
+			//FMODMAN->PlaySound(m_nSuccess);
 		}
 		else
 		{
@@ -876,6 +880,8 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 			SetP1CurrentCombo(0);
 			aPlayer->SetCurrentStreak(0);	
 			theBeat->SetPlayer1Miss(true);
+
+			FMODMAN->PlaySound(GetFailFX());
 		}					
 
 		// Resetting key press						
@@ -932,7 +938,9 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 			// Upping Player1's Current combo for damage
 			SetP2CurrentCombo(GetP2CurrentCombo() + 1);
-			SetNumberNotesHit(GetNumberNotesHit() + 1);				
+			SetNumberNotesHit(GetNumberNotesHit() + 1);	
+
+			//FMODMAN->PlaySound(m_nSuccess);
 		}
 		else
 		{
@@ -940,6 +948,8 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 			SetP2CurrentCombo(0);
 			aPlayer->SetCurrentStreak(0);	
 			theBeat->SetPlayer2Miss(true);
+
+			FMODMAN->PlaySound(GetFailFX());
 		}					
 
 		// Resetting key press						
