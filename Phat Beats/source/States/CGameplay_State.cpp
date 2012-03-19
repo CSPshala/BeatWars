@@ -75,7 +75,7 @@ void CGameplay_State::Enter(void)
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
 
-		CFXManager::GetInstance()->MoveEffectTo("P1_GUARD",D3DXVECTOR2(400.0f, 300.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P1GUARD",D3DXVECTOR2(0.0f, 12.0f));
 		CFXManager::GetInstance()->MoveEffectTo("P1_PBAR",D3DXVECTOR2(32.0f, 62.0f));
 		CFXManager::GetInstance()->MoveEffectTo("P2_PBAR",D3DXVECTOR2(600.0f, 62.0f));
 

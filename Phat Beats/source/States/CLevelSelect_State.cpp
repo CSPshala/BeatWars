@@ -28,7 +28,7 @@ CLevelSelect_State::~CLevelSelect_State() {
 void CLevelSelect_State::Enter(void) {	
 	LoadLevels();
 	Selected = 0;
-	nBgID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.png");
+	nBgID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/bg_songSelection.png");
 
 	if(GetLevelData().size() > 0)
 		CSGD_FModManager::GetInstance()->PlaySound(GetLevelData()[0]->nSoundSample);

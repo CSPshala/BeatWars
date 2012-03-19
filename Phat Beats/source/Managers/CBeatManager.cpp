@@ -1040,7 +1040,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 	else if(CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCurrentPowerup() < 140 && P1Power == true)
 	{
-		CFXManager::GetInstance()->DequeueParticle("P1_BAR");
+		CFXManager::GetInstance()->DequeueParticle("P1_PBAR");
 		P1Power = false;
 	}
 
@@ -1051,7 +1051,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 	else if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() < 140 && P2Power == true)
 	{
-		CFXManager::GetInstance()->DequeueParticle("P2_BAR");
+		CFXManager::GetInstance()->DequeueParticle("P2_PBAR");
 		P2Power = false;
 	}
 }
