@@ -56,7 +56,7 @@ CBeatManager::CBeatManager()
 	m_nSaberLow = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_low.mp3");
 	m_nSaberIdle = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Idle.mp3", FMOD_LOOP_NORMAL);
 	m_nFail = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/buzz.mp3");
-	m_nSuccess = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/whip.mp3");
+	//m_nSuccess = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/whip.mp3");
 	SetFXSound(m_nSaberHigh);
 	SetSoundFX(m_nDamageVader);
 
@@ -1057,10 +1057,10 @@ void CBeatManager::EvaluatePlayerCombos()
 }
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
+	/*if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
 	{
 		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberIdle);
-	}
+	}*/
 
 
 	// Player is in attack mode
