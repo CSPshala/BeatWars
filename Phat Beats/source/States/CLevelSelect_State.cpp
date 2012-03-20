@@ -129,12 +129,12 @@ bool CLevelSelect_State::Input(void) {
 				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[0]]->szSongName);
 
 				CFXManager::GetInstance()->UnloadAllFX();
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
@@ -213,12 +213,12 @@ bool CLevelSelect_State::Input(void) {
 				}
 
 				CFXManager::GetInstance()->UnloadAllFX();
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
@@ -242,12 +242,12 @@ bool CLevelSelect_State::Input(void) {
 				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[0]]->szSongName);
 
 				CFXManager::GetInstance()->UnloadAllFX();
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
 
