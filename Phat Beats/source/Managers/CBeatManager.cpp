@@ -847,6 +847,24 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 			&& aPlayer->GetMostRecentKeyPress() == theBeat->GetKeyToPress()
 			&& theBeat->GetHasCollided())
 		{			
+			// Score modifier based on how accurate a hit was (comes out around 180ish)
+			int nModifier = abs(int(theBeat->GetTimeOfBeat() - GetCurrentlyPlayingSong()->GetCurrentSongTime()));
+			
+			// Minusing 180 makes it more profitable (scorewise) to be near 0 (a perfect hit)
+			// ABS makes a negative into a positive so, at 0 you'll get 180 points / 2 (4 times)
+			nModifier -= 180;
+			nModifier = abs(nModifier);
+			nModifier = nModifier >> 4;
+
+			
+
+			// Stuff for console debug output
+			/*stringstream derp;
+			derp << nModifier << '\n';
+			unsigned long heyo;
+			HANDLE lol = GetStdHandle(STD_OUTPUT_HANDLE);			
+			WriteConsole(lol,derp.str().c_str(),derp.str().size(),&heyo,NULL);*/
+
 			theBeat->SetPlayer1Hit(true);
 			// Player hit the note, handling all relevant info.
 			aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
@@ -855,15 +873,15 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 			if (aPlayer->GetCurrentStreak() >= 25)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier); 
 			}
 			else if (aPlayer->GetCurrentStreak() >= 100)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
 			}
 			else if (aPlayer->GetCurrentStreak() >= 200)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
 			}
 			else
 				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
@@ -915,6 +933,16 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 			&& aPlayer->GetMostRecentKeyPress() == theBeat->GetKeyToPress()
 			&& theBeat->GetHasCollided())
 		{			
+			// Score modifier based on how accurate a hit was (comes out around 180ish)
+			int nModifier = abs(int(theBeat->GetTimeOfBeat() - GetCurrentlyPlayingSong()->GetCurrentSongTime()));
+			
+			// Minusing 180 makes it more profitable (scorewise) to be near 0 (a perfect hit)
+			// ABS makes a negative into a positive so, at 0 you'll get 180 points / 2 (4 times)
+			nModifier -= 180;
+			nModifier = abs(nModifier);
+			nModifier = nModifier >> 4;
+
+
 			theBeat->SetPlayer2Hit(true);
 			// Player hit the note, handling all relevant info.
 			aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
@@ -923,15 +951,15 @@ void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 
 			if (aPlayer->GetCurrentStreak() >= 25)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier); 
 			}
 			else if (aPlayer->GetCurrentStreak() >= 100)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
 			}
 			else if (aPlayer->GetCurrentStreak() >= 200)
 			{
-				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
 			}
 			else
 				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);

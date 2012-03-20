@@ -55,7 +55,7 @@ public:
 		//list<CBeat*>& GetHittableBeatList() {return m_vHittableBeats;}
 		string			GetSongName() {return m_szName;}
 		string			GetCurrentFileName() {return m_szFileName;}
-		unsigned int				GetCurrentSongTime() {return m_nCurrentSongTime;}
+		unsigned int	GetCurrentSongTime() {return m_nCurrentSongTime;}
 		int				GetSongDuration() {return m_nSongDuration;}
 		int				GetSongID()	{return m_nSoundID;}
 		int				GetBackgroundID() {return m_nImageID;}

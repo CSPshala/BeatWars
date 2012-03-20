@@ -18,6 +18,7 @@
 #include "CSave_State.h"
 #include "../../CLevelManager.h"
 #include "CLU_State.h"
+#include "../Managers/CBeatManager.h"
 
 CGameplay_State::CGameplay_State()
 {
@@ -127,9 +128,10 @@ bool CGameplay_State::Input(void)
 {
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
+
 		if (!GetIsTutorial())
 		{
-			CLevelManager::GetInstance()->HandleLevelInput();
+			//CLevelManager::GetInstance()->HandleLevelInput();
 
 			if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 			{
@@ -147,10 +149,12 @@ bool CGameplay_State::Input(void)
 		}
 		else
 		{
+			//CLevelManager::GetInstance()->HandleLevelInput();
+
 			if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 			{
 				// Timing skipping of text boxes so user dosen't accidentally skip
-				if(m_fTutorialBoxTimer >= 1.5f)
+				if(m_fTutorialBoxTimer >= 0.5f)
 				{
 					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
@@ -267,7 +271,13 @@ void CGameplay_State::Update(void)
 		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	}
 	else
+	{
 		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
+
+		// Updating players so they bounce and stuff (looks better)
+		CLevelManager::GetInstance()->GetPlayer(PlayerOne)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+		CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+	}
 
 	if (m_bStartTransition)
 	{

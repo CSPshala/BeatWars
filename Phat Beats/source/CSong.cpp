@@ -122,6 +122,9 @@ void CSong::Update(float fElapsedTime)
 					{
 						m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);	
 						m_vActiveBeats.back()->SetIsActive(true);	
+
+						// Sending event when its showing up on screen now instead.
+						CEventSystem::GetInstance()->SendEvent(m_vActiveBeats.back()->GetEvent(),m_vActiveBeats.back());						
 					}
 				}
 

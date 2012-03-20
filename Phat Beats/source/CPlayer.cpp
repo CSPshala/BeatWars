@@ -258,8 +258,8 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 			if(IntersectRect(&rTemp,&GetCollisionRect(),&beatCollisionRect))
 			{
 				// Sending note event (only once)
-				if(!(pBeat->GetHasCollided()))
-					CEventSystem::GetInstance()->SendEvent(pBeat->GetEvent(),pBeat);		
+				/*if(!(pBeat->GetHasCollided()))
+					CEventSystem::GetInstance()->SendEvent(pBeat->GetEvent(),pBeat);*/		
 
 				pBeat->SetHasCollided(true);
 				return true;
