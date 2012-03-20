@@ -82,8 +82,17 @@ void CObjectManager::RemoveAllObjects()
 
 void CObjectManager::AddObject(IBaseInterface* pObject)
 {
-	m_vObjectList.push_back(pObject);
-	pObject->AddRef();
+	if(pObject->GetType() < 0 || pObject->GetType() > 2)
+	{
+		m_vObjectList.push_back(pObject);
+		pObject->AddRef();
+	}
+	else
+	{
+		std::vector<IBaseInterface*>::iterator it = m_vObjectList.begin();
+		m_vObjectList.insert(it, pObject);
+		pObject->AddRef();
+	}
 }
 
 void CObjectManager::RemoveObject(IBaseInterface* pObject)
