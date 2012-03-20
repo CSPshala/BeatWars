@@ -24,6 +24,7 @@
 #include "Managers\CAnimationManager.h"
 #include "States\COptionsState.h"
 #include "States\CBitmapFont.h"
+#include "Managers\CEventSystem.h"
 #include <sstream>
 using std::stringstream;
 ////////////////////////////////////////
@@ -256,6 +257,10 @@ bool CPlayer::CheckCollision(IBaseInterface* pBase)
 
 			if(IntersectRect(&rTemp,&GetCollisionRect(),&beatCollisionRect))
 			{
+				// Sending note event (only once)
+				/*if(!(pBeat->GetHasCollided()))
+					CEventSystem::GetInstance()->SendEvent(pBeat->GetEvent(),pBeat);*/		
+
 				pBeat->SetHasCollided(true);
 				return true;
 			}
@@ -419,7 +424,7 @@ void CPlayer::P1InputHandling()
 
 	}
 
-	DI->ClearInput();
+	//DI->ClearInput();
 }
 void CPlayer::P2InputHandling()
 {

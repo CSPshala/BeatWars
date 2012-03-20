@@ -23,6 +23,8 @@
 #include "../../CLevelManager.h"
 #include <fstream>
 #include "../Random.h"
+#include <sstream>
+using std::stringstream;
 using std::ifstream;
 using std::ios_base;
 
@@ -53,8 +55,12 @@ CBeatManager::CBeatManager()
 	m_nDamageLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Damage02.mp3");
 	m_nSaberLow = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_low.mp3");
 	m_nSaberIdle = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Idle.mp3", FMOD_LOOP_NORMAL);
+	m_nFail = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/buzz.mp3");
+	//m_nSuccess = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/whip.mp3");
 	SetFXSound(m_nSaberHigh);
 	SetSoundFX(m_nDamageVader);
+
+	//AllocConsole();	
 }
 
 CBeatManager::~CBeatManager()
@@ -761,6 +767,7 @@ void CBeatManager::Update()
 	// Checking combo
 	EvaluatePlayerCombos();
 
+	
 }
 
 void CBeatManager::Render()
@@ -818,145 +825,206 @@ void CBeatManager::SetCurrentlyPlayingSong(string szSongName)
 
 void CBeatManager::CheckPlayerInput(CPlayer* aPlayer)
 {
-	if(aPlayer->GetMostRecentKeyPress() != 'g' && GetCurrentlyPlayingSong()->GetHittableBeatList().size() > 0)
+	
+	// Splitting input between player types
+	if(aPlayer->GetType() == OBJ_PLAYER1)
 	{
-			if(aPlayer->GetMostRecentKeyPress() == 'q')
+		// Leaving if next hittable note is NULL or no key was pressed, or no notes are touching yet
+		if(GetCurrentlyPlayingSong()->GetPlayer1HittableBeat() == NULL || aPlayer->GetMostRecentKeyPress() == 'g'
+			|| !(GetCurrentlyPlayingSong()->GetPlayer1HittableBeat()->GetHasCollided()))
+		{
+			char key = aPlayer->GetMostRecentKeyPress();
+			// Resetting key press
+			aPlayer->SetMostRecentKeyPress('g');
+			return;
+		}
+		
+		
+		CBeat* theBeat = GetCurrentlyPlayingSong()->GetPlayer1HittableBeat();
+
+		// Player is aiming in right direction, correct key has been pressed, and the note IS colliding with player
+		if(aPlayer->GetAimingDirection() == theBeat->GetDirection()
+			&& aPlayer->GetMostRecentKeyPress() == theBeat->GetKeyToPress()
+			&& theBeat->GetHasCollided())
+		{			
+			// Score modifier based on how accurate a hit was (comes out around 180ish)
+			int nModifier = abs(int(theBeat->GetTimeOfBeat() - GetCurrentlyPlayingSong()->GetCurrentSongTime()));
+			
+			// Minusing 180 makes it more profitable (scorewise) to be near 0 (a perfect hit)
+			// ABS makes a negative into a positive so, at 0 you'll get 180 points / 2 (4 times)
+			nModifier -= 180;
+			nModifier = abs(nModifier);
+			nModifier = nModifier >> 4;
+
+			
+
+			// Stuff for console debug output
+			/*stringstream derp;
+			derp << nModifier << '\n';
+			unsigned long heyo;
+			HANDLE lol = GetStdHandle(STD_OUTPUT_HANDLE);			
+			WriteConsole(lol,derp.str().c_str(),derp.str().size(),&heyo,NULL);*/
+
+			theBeat->SetPlayer1Hit(true);
+			// Player hit the note, handling all relevant info.
+			aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+			aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+			CFXManager::GetInstance()->QueueParticle("P1_HIT");
+
+			if (aPlayer->GetCurrentStreak() >= 25)
 			{
-				if( aPlayer->GetCurrentHP() != aPlayer->GetMaxHP() )
-				{
-					aPlayer->SetCurrentHP( aPlayer->GetCurrentHP() + 10);
-
-					if( aPlayer->GetCurrentHP() > aPlayer->GetMaxHP() )
-						aPlayer->SetCurrentHP(aPlayer->GetMaxHP());
-
-					aPlayer->SetCurrentPowerup(0);
-				}
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier); 
+			}
+			else if (aPlayer->GetCurrentStreak() >= 100)
+			{
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
+			}
+			else if (aPlayer->GetCurrentStreak() >= 200)
+			{
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
 			}
 			else
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+
+			// Upping Player1's Current combo for damage
+			SetP1CurrentCombo(GetP1CurrentCombo() + 1);
+			SetNumberNotesHit(GetNumberNotesHit() + 1);	
+
+			//FMODMAN->PlaySound(m_nSuccess);
+		}
+		else
+		{
+			// Player pressed wrong key or wasn't aiming right so they missed
+			SetP1CurrentCombo(0);
+			aPlayer->SetCurrentStreak(0);	
+			theBeat->SetPlayer1Miss(true);
+
+			FMODMAN->PlaySound(GetFailFX());
+		}					
+
+		// Resetting key press						
+		aPlayer->SetMostRecentKeyPress('g');
+
+		// Advancing Note to next hittable
+		GetCurrentlyPlayingSong()->NextPlayer1HittableBeat();		
+
+		// ABANDON FUNCTION!!!!! *JETPACK*
+		return;
+	}
+	
+	
+	if(aPlayer->GetType() == OBJ_PLAYER2)
+	{
+		// Leaving if next hittable note is NULL or no key was pressed, or no notes are touching yet
+		if(GetCurrentlyPlayingSong()->GetPlayer2HittableBeat() == NULL || aPlayer->GetMostRecentKeyPress() == 'g'
+			|| !(GetCurrentlyPlayingSong()->GetPlayer2HittableBeat()->GetHasCollided()))
+		{
+			char key = aPlayer->GetMostRecentKeyPress();
+			// Resetting key press
+			aPlayer->SetMostRecentKeyPress('g');
+			return;
+		}
+		
+		
+		CBeat* theBeat = GetCurrentlyPlayingSong()->GetPlayer2HittableBeat();
+
+		// Player is aiming in right direction, correct key has been pressed, and the note IS colliding with player
+		if(aPlayer->GetAimingDirection() == theBeat->GetDirection()
+			&& aPlayer->GetMostRecentKeyPress() == theBeat->GetKeyToPress()
+			&& theBeat->GetHasCollided())
+		{			
+			// Score modifier based on how accurate a hit was (comes out around 180ish)
+			int nModifier = abs(int(theBeat->GetTimeOfBeat() - GetCurrentlyPlayingSong()->GetCurrentSongTime()));
+			
+			// Minusing 180 makes it more profitable (scorewise) to be near 0 (a perfect hit)
+			// ABS makes a negative into a positive so, at 0 you'll get 180 points / 2 (4 times)
+			nModifier -= 180;
+			nModifier = abs(nModifier);
+			nModifier = nModifier >> 4;
+
+
+			theBeat->SetPlayer2Hit(true);
+			// Player hit the note, handling all relevant info.
+			aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+			aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+			CFXManager::GetInstance()->QueueParticle("P1_HIT");
+
+			if (aPlayer->GetCurrentStreak() >= 25)
 			{
-				// Hittable list iterator
-				list<CBeat*>::iterator iter = GetCurrentlyPlayingSong()->GetHittableBeatList().begin();
-
-				//for(; iter != GetCurrentlyPlayingSong()->GetHittableBeatList().end(); ++iter)
-				//{					
-
-					// Only checking the first note that hasn't been hit by that player
-					if((aPlayer->GetType() == OBJ_PLAYER1 && !(*iter)->GetPlayer1Hit()) ||
-						(aPlayer->GetType() == OBJ_PLAYER2 && !(*iter)->GetPlayer2Hit()))
-					{
-
-						// Here we're looking at the current hittable beat, checking if the player is aiming at it,
-						// and if they hit the correct key or not
-						if(aPlayer->GetAimingDirection() == (*iter)->GetDirection()
-							&& aPlayer->GetMostRecentKeyPress() == (*iter)->GetKeyToPress())
-						{			
-							switch(aPlayer->GetType())
-							{
-							case OBJ_PLAYER1:
-								{					
-									if(!(*iter)->GetPlayer1Hit())
-									{
-										(*iter)->SetPlayer1Hit(true);
-										// Player hit the note, handling all relevant info.
-										aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-										aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
-										CFXManager::GetInstance()->QueueParticle("P1_HIT");
-
-										if (aPlayer->GetCurrentStreak() >= 25)
-										{
-											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5)); 
-										}
-										else if (aPlayer->GetCurrentStreak() >= 100)
-										{
-											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
-										}
-										else if (aPlayer->GetCurrentStreak() >= 200)
-										{
-											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5));
-										}
-										else
-											aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
-
-										// Upping Player1's Current combo for damage
-										SetP1CurrentCombo(GetP1CurrentCombo() + 1);
-										SetNumberNotesHit(GetNumberNotesHit() + 1);
-										
-									}						
-									aPlayer->SetMostRecentKeyPress('g');
-								}
-								break;
-
-							case OBJ_PLAYER2:
-								{
-									if(!(*iter)->GetPlayer2Hit())
-									{
-										(*iter)->SetPlayer2Hit(true);
-										// Player hit the note, handling all relevant info.
-										aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-										aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-										CFXManager::GetInstance()->QueueParticle("P2_HIT");
-
-										// Upping Player2's Current combo for damage
-										SetP2CurrentCombo(GetP2CurrentCombo() + 1);
-										SetNumberNotesHit(GetNumberNotesHit() + 1);
-
-										aPlayer->SetMostRecentKeyPress('g');
-									}
-
-								}
-								break;					
-							}							
-						}
-						else
-						{
-							if(aPlayer->GetType() == OBJ_PLAYER1)
-								SetP1CurrentCombo(0);
-							else if(aPlayer->GetType() == OBJ_PLAYER2 )
-								SetP2CurrentCombo(0);
-
-							aPlayer->SetCurrentStreak(0);
-						}
-
-						//break; // leaving the loop
-					}
-
-				//}
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier); 
 			}
-}
+			else if (aPlayer->GetCurrentStreak() >= 100)
+			{
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
+			}
+			else if (aPlayer->GetCurrentStreak() >= 200)
+			{
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + (aPlayer->GetCurrentStreak()/5) + nModifier);
+			}
+			else
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);
+
+			// Upping Player1's Current combo for damage
+			SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+			SetNumberNotesHit(GetNumberNotesHit() + 1);	
+
+			//FMODMAN->PlaySound(m_nSuccess);
+		}
+		else
+		{
+			// Player pressed wrong key or wasn't aiming right so they missed
+			SetP2CurrentCombo(0);
+			aPlayer->SetCurrentStreak(0);	
+			theBeat->SetPlayer2Miss(true);
+
+			FMODMAN->PlaySound(GetFailFX());
+		}					
+
+		// Resetting key press						
+		aPlayer->SetMostRecentKeyPress('g');
+
+		// Advancing Note to next hittable
+		GetCurrentlyPlayingSong()->NextPlayer2HittableBeat();		
+
+		// ABANDON FUNCTION!!!!! *JETPACK*
+		return;
+	}
+
 
 
 	if(aPlayer->GetType() == OBJ_AI)
 	{
-		// Hittable list iterator
-		list<CBeat*>::iterator iter = GetCurrentlyPlayingSong()->GetHittableBeatList().begin();
-
-		for(; iter != GetCurrentlyPlayingSong()->GetHittableBeatList().end(); ++iter)
-		{  
-			bool found = false;
-
-			// Checking AI beat list to make sure we haven't hit it before
-			for(unsigned int x = 0; x < aPlayer->GetAIBeats().size(); ++x)
-			{
-				if((aPlayer->GetAIBeats())[x] == (*iter))
-					found = true;
-			}
-
-			if(!found)
-				if((*iter)->GetPlayer2Hit())
-				{				 
-					// AI hit the note, handling all relevant info.
-					aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
-					aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
-					CFXManager::GetInstance()->QueueParticle("P2_HIT");
-
-					// Upping Player2's Current combo for damage
-					SetP2CurrentCombo(GetP2CurrentCombo() + 1);
-
-					(aPlayer->GetAIBeats()).push_back(*iter);
-				}			
-				else
-					aPlayer->SetCurrentStreak(0);
+		// Peacin' out if it's empty or isn't even colliding
+		if(GetCurrentlyPlayingSong()->GetPlayer2HittableBeat() == NULL 
+			|| !(GetCurrentlyPlayingSong()->GetPlayer2HittableBeat()->GetHasCollided()))
+		{			
+			return;
 		}
+
+
+		CBeat* theBeat = GetCurrentlyPlayingSong()->GetPlayer2HittableBeat();
+		
+		if(theBeat->GetHasCollided())
+			if(theBeat->GetPlayer2Hit())
+			{				 
+				// AI hit the note, handling all relevant info.
+				aPlayer->SetCurrentStreak(aPlayer->GetCurrentStreak() + 1);
+				aPlayer->SetCurrentScore(aPlayer->GetCurrentScore() + 1);	
+				CFXManager::GetInstance()->QueueParticle("P2_HIT");
+
+				// Upping Player2's Current combo for damage
+				SetP2CurrentCombo(GetP2CurrentCombo() + 1);
+				SetNumberNotesHit(GetNumberNotesHit() + 1);		
+
+				// Moving to next beat if AI hit it, if not collision will handle it
+				GetCurrentlyPlayingSong()->NextPlayer2HittableBeat();
+			}			
+			else
+			{
+				aPlayer->SetCurrentStreak(0);	
+				SetP2CurrentCombo(0);
+			}
+		
 	}
 }
 CBeatManager* CBeatManager::GetInstance()
@@ -1000,7 +1068,7 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 	else if(CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCurrentPowerup() < 140 && P1Power == true)
 	{
-		CFXManager::GetInstance()->DequeueParticle("P1_BAR");
+		CFXManager::GetInstance()->DequeueParticle("P1_PBAR");
 		P1Power = false;
 	}
 
@@ -1011,18 +1079,16 @@ void CBeatManager::EvaluatePlayerCombos()
 	}
 	else if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCurrentPowerup() < 140 && P2Power == true)
 	{
-		CFXManager::GetInstance()->DequeueParticle("P2_BAR");
+		CFXManager::GetInstance()->DequeueParticle("P2_PBAR");
 		P2Power = false;
 	}
 }
-
-
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
+	/*if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
 	{
 		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberIdle);
-	}
+	}*/
 
 
 	// Player is in attack mode

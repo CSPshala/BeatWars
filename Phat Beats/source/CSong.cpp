@@ -49,6 +49,12 @@ CSong::CSong()
 	SetSongID(-1);
 	SetBackgroundID(-1);
 
+	// Player beat pointers
+	m_pPlayer1HittableBeat = NULL;
+	m_pPlayer2HittableBeat = NULL;
+	m_nPlayer1NextBeat = 0;
+	m_nPlayer2NextBeat = 0;
+
 	CEventSystem::GetInstance()->RegisterClient("notecollision",this);
 	CEventSystem::GetInstance()->RegisterClient("combostart",this);
 	CEventSystem::GetInstance()->RegisterClient("comboend",this);
@@ -90,6 +96,12 @@ void CSong::Update(float fElapsedTime)
 {
 	if(IsCurrentlyPlayingSong())
 	{
+		if(GetPlayer1HittableBeat() == NULL || GetPlayer2HittableBeat() == NULL)
+		{
+			NextPlayer1HittableBeat();
+			NextPlayer2HittableBeat();
+		}
+		
 	
 			// Checking upcomming beat and adding it to active vector when it's within tolerance
 		if((unsigned int)GetCurrentBeatIndex() < m_vBeats.size())
@@ -110,6 +122,9 @@ void CSong::Update(float fElapsedTime)
 					{
 						m_vActiveBeats.push_back(&m_vBeats[GetCurrentBeatIndex()]);	
 						m_vActiveBeats.back()->SetIsActive(true);	
+
+						// Sending event when its showing up on screen now instead.
+						CEventSystem::GetInstance()->SendEvent(m_vActiveBeats.back()->GetEvent(),m_vActiveBeats.back());						
 					}
 				}
 
@@ -185,7 +200,12 @@ void CSong::ResetSong()
 	SetCurrentBeatIndex(0);
 	SetNextBeatIndex(1);
 
-	m_vHittableBeats.clear();
+//	m_vHittableBeats.clear();
+
+	m_pPlayer1HittableBeat = NULL;
+	m_pPlayer2HittableBeat = NULL;
+	m_nPlayer1NextBeat = 0;
+	m_nPlayer2NextBeat = 0;
 	
 	m_vActiveBeats.clear();
 
@@ -223,21 +243,7 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 		{
 			/// GROOOOOOOOOOOOOOOOOOOOOOOOSSSSSS
 				if(pPlayer->CheckCollision(*i))
-				{
-					bool found = false;
-
-					list<CBeat*>::iterator y = m_vHittableBeats.begin();
-					for(; y != m_vHittableBeats.end(); ++y)
-						if((*y) == (*i))
-							found = true;
-
-					if(!found)
-					{
-						m_vHittableBeats.push_back(*i);						
-						// Sending note event (only once)
-						CEventSystem::GetInstance()->SendEvent((*i)->GetEvent(),&(*i));
-					}					
-										
+				{						
 
 					if( numHit > 5 )					
 					{
@@ -249,35 +255,34 @@ bool CSong::CheckCollision(IBaseInterface* pBase)
 				// so this means it's past the point where player can hit
 				else if((*i)->GetHasCollided() == true)
 				{
-					list<CBeat*>::iterator y = m_vHittableBeats.begin();
-					for(; y != m_vHittableBeats.end(); ++y)
-					{
-						if((*y) == (*i))
+					// Player one never hit their note
+					if((*i) == CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetPlayer1HittableBeat())
+						if(!(*i)->GetPlayer1Hit())
 						{
-							// Player 1 never hit the note. Kill his streak
-							if(!(*y)->GetPlayer1Hit())
-								CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetCurrentStreak(0);
+							CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetCurrentStreak(0);
+							// Moving to next hittable note
+							CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->NextPlayer1HittableBeat();
 
-							// Player 2 never hit the note. Kill his streak
-							if(!(*y)->GetPlayer2Hit())
-								CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentStreak(0);
-
-							y = m_vHittableBeats.erase(y);
+							FMODMAN->PlaySound(BEATMAN->GetFailFX());
 						}
 
-						if(y == m_vHittableBeats.end())
-							break;
-					}
-					
+					// Player 2 never hit the note. Kill his streak
+					if((*i) == CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->GetPlayer2HittableBeat())
+						if(!(*i)->GetPlayer2Hit())
+						{							
+							CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->SetCurrentStreak(0);
+							// Next hittable note
+							CBeatManager::GetInstance()->GetCurrentlyPlayingSong()->NextPlayer2HittableBeat();
+
+							if(CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetType() == OBJ_PLAYER2)
+								FMODMAN->PlaySound(BEATMAN->GetFailFX());
+						}
+
+					// Telling everyone a note's passed by (for damage purposes)
 					ES->SendEvent("notepassed",NULL);
-
-					(*i)->SetIsActive(false);	
-
-					// Also removing from active beats (CAUSE ITS NOT ACTIVE HUR HUR)
-					i = m_vActiveBeats.erase(i);
-
-					if(i == m_vActiveBeats.end())
-						break;
+					
+					// Update takes care of cleaning up inactive notes
+					(*i)->SetIsActive(false);						
 				}
 		}
 		
@@ -323,7 +328,67 @@ void CSong::CreateAIHits()
 ////////////////////////////////////////
 //	    PUBLIC ACCESSORS / MUTATORS
 ////////////////////////////////////////
+void	CSong::NextPlayer1HittableBeat() 
+{
+	if(GetPlayer1HittableBeat() != NULL)
+	{
+		if((unsigned int)GetPlayer1NextBeatIndex() < m_vBeats.size())
+		{
+			// Moving to next Beat
+			m_pPlayer1HittableBeat = &m_vBeats[GetPlayer1NextBeatIndex()];
+			SetPlayer1NextBeatIndex(GetPlayer1NextBeatIndex() + 1);
+			return;
+		}
+		else
+		{
+			// Song's done resetting to beginning
+			m_pPlayer1HittableBeat = NULL;
+			SetPlayer1NextBeatIndex(0);
+			return;
+		}
+	}
+	else
+	{
+		// Setting first and second beat
+		if(m_vBeats.size() > 1)
+		{
+			m_pPlayer1HittableBeat = &m_vBeats[0];
+			SetPlayer1NextBeatIndex(1);
+			return;
+		}		
+	}	
+}
 
+void	CSong::NextPlayer2HittableBeat()
+{
+	if(GetPlayer2HittableBeat() != NULL)
+	{
+		if((unsigned int)GetPlayer2NextBeatIndex() < m_vBeats.size())
+		{
+			// Moving to next Beat
+			m_pPlayer2HittableBeat = &m_vBeats[GetPlayer2NextBeatIndex()];
+			SetPlayer2NextBeatIndex(GetPlayer2NextBeatIndex() + 1);
+			return;
+		}
+		else
+		{
+			// Song's done resetting to beginning
+			m_pPlayer2HittableBeat = NULL;
+			SetPlayer2NextBeatIndex(0);
+			return;
+		}
+	}
+	else
+	{
+		// Setting first and second beat
+		if(m_vBeats.size() > 1)
+		{
+			m_pPlayer2HittableBeat = &m_vBeats[0];
+			SetPlayer2NextBeatIndex(1);
+			return;
+		}		
+	}	
+}		
 ////////////////////////////////////////
 //	    PRIVATE ACCESSORS / MUTATORS
 ////////////////////////////////////////

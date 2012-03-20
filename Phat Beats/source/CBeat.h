@@ -51,6 +51,8 @@ public:
 		bool			GetHasCollided() {return m_bCollision;}
 		bool			GetPlayer1Hit() {return m_bPlayer1Hit;}
 		bool			GetPlayer2Hit() {return m_bPlayer2Hit;}
+		bool			GetPlayer1Miss() {return m_bPlayer1Miss;}
+		bool			GetPlayer2Miss() {return m_bPlayer2Miss;}
 	/********** Public Mutators  ************/	
 		void	SetTimeOfBeat(int fTime) {m_nTimeofBeat = fTime;}
 		void	SetDifficulty(BeatDifficulty nDifficulty) {m_nDifficulty = nDifficulty;}
@@ -60,6 +62,8 @@ public:
 		void	SetHasCollided(bool collide) {m_bCollision = collide;}
 		void	SetPlayer1Hit(bool hit) {m_bPlayer1Hit = hit;}
 		void    SetPlayer2Hit(bool hit) {m_bPlayer2Hit = hit;}
+		void	SetPlayer1Miss(bool miss) {m_bPlayer1Miss = miss;}
+		void	SetPlayer2Miss(bool miss) {m_bPlayer2Miss = miss;}
 
 private:	
 
@@ -74,6 +78,8 @@ private:
 		bool	m_bCollision;
 		bool    m_bPlayer1Hit;
 		bool    m_bPlayer2Hit;
+		bool	m_bPlayer1Miss;
+		bool	m_bPlayer2Miss;
 		
 
 		// For saving original position for reset call

@@ -155,10 +155,10 @@ bool COptionsState::Input(void)
 				break;
 			case OPTIONSMENU_AILEVEL:
 				{
-					SetAILevel(((int)GetAILevel() + 1));
+					SetAILevel(((int)GetAILevel() - 1));
 
-					if(GetAILevel() > AI_INSANE)
-						SetAILevel(AI_EASY);
+					if(GetAILevel() < AI_EASY)
+						SetAILevel(AI_INSANE);
 				}
 				break;
 			}
@@ -275,10 +275,27 @@ bool COptionsState::Input(void)
 						CGame::GetInstance()->ChangeState(CPause_State::GetInstance());
 					}
 					else
-						CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+						CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );	
 
 				}
-				break;		
+				break;	
+
+			case OPTIONSMENU_WINDOWED:
+				{
+					if(CGame::GetInstance()->GetIsWindowed())
+					{
+						CGame::GetInstance()->SetIsWindowed(false);
+						CSGD_Direct3D::GetInstance()->ChangeDisplayParam(CGame::GetInstance()->GetScreenWidth(),
+															CGame::GetInstance()->GetScreenHeight(),CGame::GetInstance()->GetIsWindowed());	
+					}
+					else
+					{
+						CGame::GetInstance()->SetIsWindowed(true);
+						CSGD_Direct3D::GetInstance()->ChangeDisplayParam(CGame::GetInstance()->GetScreenWidth(),
+															CGame::GetInstance()->GetScreenHeight(),CGame::GetInstance()->GetIsWindowed());	
+					}
+				}
+				break;
 			}
 		}
 	}
@@ -495,7 +512,24 @@ bool COptionsState::Input(void)
 						CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
 
 				}
-				break;		
+				break;	
+
+			case OPTIONSMENU_WINDOWED:
+			{
+				if(CGame::GetInstance()->GetIsWindowed())
+				{
+					CGame::GetInstance()->SetIsWindowed(false);
+					CSGD_Direct3D::GetInstance()->ChangeDisplayParam(CGame::GetInstance()->GetScreenWidth(),
+														CGame::GetInstance()->GetScreenHeight(),CGame::GetInstance()->GetIsWindowed());	
+				}
+				else
+				{
+					CGame::GetInstance()->SetIsWindowed(true);
+					CSGD_Direct3D::GetInstance()->ChangeDisplayParam(CGame::GetInstance()->GetScreenWidth(),
+														CGame::GetInstance()->GetScreenHeight(),CGame::GetInstance()->GetIsWindowed());	
+				}
+			}
+			break;
 			}
 		}
 	}
@@ -528,16 +562,24 @@ void COptionsState::Render(void)
 	// the rect that will hold the title
 	RECT rMenuOptions = { 260, 310, CGame::GetInstance()->GetScreenWidth(), 485};
 	// printing the menu
-	if (CPause_State::GetInstance()->GetPauseState() == true)
-	{
-		CBitmapFont::GetInstance()->PrintStrokedTextInRect(
-			"SFx volume\n\nMusic volume\n\nMusic Pan\n\nai level\n\nDifficulty\n\nWindowed Mode\n\ngo back to pause",
-			&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0),  D3DCOLOR_XRGB(225, 225, 225));
-	}
+
+	// Dynamically making the menu text
+	string szMenuText;
+	szMenuText = "SFx volume\n\nMusic volume\n\nMusic Pan\n\nai level\n\nDifficulty\n\n";
+	
+	if(!CGame::GetInstance()->GetIsWindowed())
+		szMenuText += "Windowed Mode\n";
 	else
-		CBitmapFont::GetInstance()->PrintStrokedTextInRect(
-		"SFx volume\n\nMusic volume\n\nMusic Pan\n\nai level\n\nDifficulty\n\nWindowed Mode\n\nBack",
-		&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0),  D3DCOLOR_XRGB(225, 225, 225));
+		szMenuText += "Fullscreen Mode\n";
+
+	if (CPause_State::GetInstance()->GetPauseState() == true)
+		szMenuText += "\ngo back to pause";
+	else
+		szMenuText += "\nBack";
+	
+	// Printing menu text
+	CBitmapFont::GetInstance()->PrintStrokedTextInRect(szMenuText,&rMenuOptions, ALIGN_LEFT, D3DCOLOR_XRGB(0, 0, 0),  D3DCOLOR_XRGB(225, 225, 225));
+	
 
 	// Printing the FX volume of the game
 	sprintf_s( buffer, "%d", int( m_nFXVolume * 100));	

@@ -94,6 +94,7 @@ bool CPause_State::Input(void)
 					CGameplay_State::GetInstance()->Exit();
 					CLevelManager::GetInstance()->EmptySongQueue();
 					CGame::GetInstance()->ChangeState( CMenu_State::GetInstance() );
+					m_IsbGameState = false;
 				}
 				break;
 			case PAUSEMENU_LOAD:

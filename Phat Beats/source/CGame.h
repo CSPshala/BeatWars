@@ -103,6 +103,8 @@ public:
 	void ChangeState(IGameState* pNewState);
 	int GetScreenHeight(void) {return m_nWindowHeight;}
 	int GetScreenWidth(void) {return m_nWindowWidth;}
+	bool GetIsWindowed() {return m_bWindowed;}
+	void SetIsWindowed(bool window) {m_bWindowed = window;}
 
 	// Accessors
 	Timer& GetTimer() {return cTimer;}

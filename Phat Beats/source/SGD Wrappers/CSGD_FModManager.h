@@ -21,11 +21,11 @@ using std::list;
 
 
 //	Do NOT ALTER PATH!
-#if _DEBUG
-	#pragma comment( lib, "./FModSDK/lib/fmodexL_vc.lib" ) 
-#else
+//#if _DEBUG
+//	#pragma comment( lib, "./FModSDK/lib/fmodexL_vc.lib" ) 
+//#else
 	#pragma comment( lib, "./FModSDK/lib/fmodex_vc.lib" ) 
-#endif
+//#endif
 
 //	Flag for Loading a Sound and Having it loop.
 #define SGD_FMOD_LOOPING	FMOD_LOOP_NORMAL | FMOD_DEFAULT
