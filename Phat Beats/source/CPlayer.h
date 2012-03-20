@@ -142,6 +142,8 @@ private:
 
 		// Timer for displaying streak to screen
 		float m_fStreakTextTimer;
+		int m_nStreakOld; // Stops %5 from rendering same streak multiple times
+		bool m_bStreakOldTimer;
 
 		// Asset IDs
 			// Images

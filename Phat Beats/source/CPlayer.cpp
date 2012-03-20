@@ -96,6 +96,8 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 	m_bAnimationsEmpty = false;
 
 	m_fStreakTextTimer = 0.0f;
+	m_bStreakOldTimer = true;
+	m_nStreakOld = 0;
 }
 CPlayer::~CPlayer()
 {		
@@ -121,13 +123,24 @@ void CPlayer::Input()
 }
 void CPlayer::Update(float fElapsedTime)
 {
-	// Now we're updating timer if it's anything over 0
-	if((m_fStreakTextTimer > 0.0f) || ((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0 && m_fStreakTextTimer == 0.0f))
-		m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
+	// Storing old streak
+	if(m_bStreakOldTimer == false)
+	{
+		if(!((GetCurrentStreak() % 5) == 0))
+			m_bStreakOldTimer= true;
+	}
 	
+
+	// Now we're updating timer if it's anything over 0
+	if((m_fStreakTextTimer > 0.0f) || ((GetCurrentStreak() % 5) == 0 && GetCurrentStreak() != 0 && m_fStreakTextTimer == 0.0f && m_bStreakOldTimer == true))
+			m_fStreakTextTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();		
+		
 	// Stopping timer
 	if(m_fStreakTextTimer > 1.0f)
+	{
 		m_fStreakTextTimer = 0.0f;
+		m_bStreakOldTimer = false;
+	}
 
 	// flushing last hit key
 	cHitKey = 'g';

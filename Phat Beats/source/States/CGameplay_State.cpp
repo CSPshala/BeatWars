@@ -93,7 +93,7 @@ void CGameplay_State::Enter(void)
 		{
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
-			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit esc when any info box is showing\nto skip tutorial.");
+			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit esc (or white button) when \nany info box is showing\nto skip tutorial.");
 			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key or Button 1\nwith the beat to hit it.");
 			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key or Button 2\nwith the beat to hit it.");
 			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key or Button 4\nwith the beat to hit it.");
@@ -272,11 +272,7 @@ void CGameplay_State::Update(void)
 	}
 	else
 	{
-		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
-
-		// Updating players so they bounce and stuff (looks better)
-		CLevelManager::GetInstance()->GetPlayer(PlayerOne)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
-		CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();		
 	}
 
 	if (m_bStartTransition)
