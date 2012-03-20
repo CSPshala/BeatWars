@@ -77,6 +77,9 @@ bool CCredit_State::Input( void )
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
 		CGame::GetInstance()->GoBack();
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+
 	return true;
 }
 

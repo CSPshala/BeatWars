@@ -127,8 +127,15 @@ bool CArcadeMode_State::Input(void)
 
 	if (CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
-		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK && CGame::GetInstance()->GetButtonPressed() == false)
+		{
+			CGame::GetInstance()->SetButtonPressed(true);
 			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
+		else if ( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_BACK && CGame::GetInstance()->GetButtonPressed() == true )
+		{
+			CGame::GetInstance()->SetButtonPressed(false);
+		}
 
 		if (CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_UP) )
 		{
@@ -188,12 +195,24 @@ bool CArcadeMode_State::Input(void)
 			CGame::GetInstance()->SetCharacterSelection2(false);
 		}
 
-		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START)
-			CLevelSelect_State::GetInstance()->SetVsMode(true);
-
-		if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START && CGame::GetInstance()->GetButtonPressed() == false)
 		{
+			CGame::GetInstance()->SetButtonPressed(true);
+			CLevelSelect_State::GetInstance()->SetVsMode(true);
+		}
+		else if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_START && CGame::GetInstance()->GetButtonPressed() == true)
+		{
+			CGame::GetInstance()->SetButtonPressed(false);
+		}
+
+		if (CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == false)
+		{
+			CGame::GetInstance()->SetButtonPressed(true);
 			CGame::GetInstance()->ChangeState(CLevelSelect_State::GetInstance());
+		}
+		else if ( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == true )
+		{
+			CGame::GetInstance()->SetButtonPressed(false);
 		}
 	}
 

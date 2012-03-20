@@ -52,9 +52,8 @@ CBeatManager::CBeatManager()
 	m_nDamageVader = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Damage.mp3");
 	m_nDeathLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Death.mp3");
 	m_nDeathVader = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Vader_Death01.mp3");
-	m_nDamageLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Damage02.mp3");
+	m_nDamageLuke = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Luke_Damage01.mp3");
 	m_nSaberLow = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Contact_low.mp3");
-	m_nSaberIdle = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/Saber_Idle.mp3", FMOD_LOOP_NORMAL);
 	m_nFail = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/buzz.mp3");
 	//m_nSuccess = CSGD_FModManager::GetInstance()->LoadSound("resource/sound/whip.mp3");
 	SetFXSound(m_nSaberHigh);
@@ -67,8 +66,6 @@ CBeatManager::~CBeatManager()
 {
 	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
 	ES->UnregisterClient("notepassed",this);
-
-
 }
 
 ////////////////////////////////////////
@@ -1085,12 +1082,6 @@ void CBeatManager::EvaluatePlayerCombos()
 }
 void CBeatManager::DealDamageToPlayer(CPlayer* playerToDmg, CPlayer* damageDealer)
 {
-	/*if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSaberIdle))
-	{
-		CSGD_FModManager::GetInstance()->PlaySoundA(m_nSaberIdle);
-	}*/
-
-
 	// Player is in attack mode
 	if(playerToDmg->GetAttackMode())
 	{

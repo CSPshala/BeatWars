@@ -331,7 +331,7 @@ bool COptionsState::Input(void)
 			CGame::GetInstance()->PlayNavMenuSound();
 		}
 		// input for the left key to control volume
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_LEFT, 1) )
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -370,7 +370,7 @@ bool COptionsState::Input(void)
 
 
 		// input for the ai level and difficulty level
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_LEFT, 1))
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX < -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -402,7 +402,7 @@ bool COptionsState::Input(void)
 
 
 		// Play the a sample sound when the user releases Left while changing the volume of the sound effects
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0 )
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX == XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -416,7 +416,7 @@ bool COptionsState::Input(void)
 		}
 
 		// right key input for volume
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 0) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirDown(DIR_RIGHT, 1) )
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -453,7 +453,7 @@ bool COptionsState::Input(void)
 			}
 		}
 
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_RIGHT))
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -485,7 +485,7 @@ bool COptionsState::Input(void)
 
 
 		// Play the a sample sound when the user releases Right while changing the volume of the sound effects
-		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickXAmount(0) == 0 )
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.sThumbLX == XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
 		{
 			switch (m_nMenuSelection)
 			{
@@ -498,8 +498,10 @@ bool COptionsState::Input(void)
 			}
 		}
 
-		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == false)
 		{
+			CGame::GetInstance()->SetButtonPressed(true);
+
 			switch( m_nMenuSelection )
 			{
 			case OPTIONSMENU_GAME:
@@ -531,6 +533,10 @@ bool COptionsState::Input(void)
 			}
 			break;
 			}
+		}
+		else if ( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == true )
+		{
+			CGame::GetInstance()->SetButtonPressed(false);
 		}
 	}
 

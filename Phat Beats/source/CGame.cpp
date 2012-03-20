@@ -30,6 +30,7 @@ CGame::CGame()
 	SetCharacterSelection(true);
 	SetCharacterSelection2(false);
 
+	SetButtonPressed(false);
 	
 }
 

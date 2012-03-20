@@ -148,8 +148,9 @@ bool CPause_State::Input(void)
 
 		}
 
-		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		if(CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == false)
 		{
+			CGame::GetInstance()->SetButtonPressed(true);
 			CGame::GetInstance()->PlayAccMenuSound();
 			switch( m_nMenuSelection )
 			{
@@ -184,6 +185,10 @@ bool CPause_State::Input(void)
 				}
 				break;
 			}
+		}
+		else if ( CGame::GetInstance()->GetPlayerControl()->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A && CGame::GetInstance()->GetButtonPressed() == true )
+		{
+			CGame::GetInstance()->SetButtonPressed(false);
 		}
 	}
 
