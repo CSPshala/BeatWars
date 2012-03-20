@@ -12,6 +12,4 @@ archer
 
 ImperialMarch
 
-Avicii
-
 oldrepublic

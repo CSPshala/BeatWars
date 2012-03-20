@@ -116,6 +116,35 @@ bool CLevelSelect_State::Input(void) {
 				CGame::GetInstance()->PlayAccMenuSound();
 				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
 			}
+
+			else if(GetPlaylist().size() == 0)
+			{
+				GetPlaylist().push_back((int)Selected);
+
+				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+				CLevelManager::GetInstance()->EmptySongQueue();
+				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+
+				CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[0]]->szFile, "", Song);
+				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[0]]->szSongName);
+
+				CFXManager::GetInstance()->UnloadAllFX();
+				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
+
+				CBeatManager::GetInstance()->Stop();
+				CBeatManager::GetInstance()->UnloadSongs();
+
+				CGame::GetInstance()->PlayAccMenuSound();
+				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
+
+			}
 		}
 
 	}
@@ -201,6 +230,35 @@ bool CLevelSelect_State::Input(void) {
 
 			}
 
+			else if(GetPlaylist().size() == 0)
+			{
+				GetPlaylist().push_back((int)Selected);
+
+				CLU_State::GetInstance()->SetNewState(CGameplay_State::GetInstance());
+				CLevelManager::GetInstance()->EmptySongQueue();
+				CGameplay_State::GetInstance()->SetPreviouslyPlaying(false);
+
+				CLU_State::GetInstance()->QueueLoadCommand(GetLevelData()[GetPlaylist()[0]]->szFile, "", Song);
+				CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[0]]->szSongName);
+
+				CFXManager::GetInstance()->UnloadAllFX();
+				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P1ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P1GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GameBG.xml","P2ATTACK",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("GuardBG.xml","P2GUARD",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P1_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("Hit.xml","P2_HIT",Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
+				CLU_State::GetInstance()->QueueLoadCommand("resource/P2PBAR.xml", "P2_PBAR", Effect);
+
+				CBeatManager::GetInstance()->Stop();
+				CBeatManager::GetInstance()->UnloadSongs();
+
+				CGame::GetInstance()->PlayAccMenuSound();
+				CGame::GetInstance()->ChangeState(CLU_State::GetInstance());
+
+			}
+
 		}
 
 	}
@@ -232,8 +290,13 @@ void CLevelSelect_State::Render(void) {
 	}
 	else {
 		CBitmapFont::GetInstance()->SetScale(1.5f);
-		CSGD_TextureManager::GetInstance()->Draw(GetLevelData()[Selected]->szImage, 400 - (CSGD_TextureManager::GetInstance()->GetTextureWidth(GetLevelData()[Selected]->szImage) >> 1),
-			300 - (CSGD_TextureManager::GetInstance()->GetTextureHeight(GetLevelData()[Selected]->szImage) >> 1));
+
+		// Old draw function
+		/*CSGD_TextureManager::GetInstance()->Draw(GetLevelData()[Selected]->szImage, 400 - (CSGD_TextureManager::GetInstance()->GetTextureWidth(GetLevelData()[Selected]->szImage) >> 1),
+			300 - (CSGD_TextureManager::GetInstance()->GetTextureHeight(GetLevelData()[Selected]->szImage) >> 1));*/
+
+		// New draw function draws at absolute position because pics should be a certain size
+		CSGD_TextureManager::GetInstance()->Draw(GetLevelData()[Selected]->szImage,196,75);
 
 		// Top
 		if(Selected - 1 >= 0)
