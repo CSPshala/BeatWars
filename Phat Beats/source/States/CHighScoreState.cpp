@@ -20,15 +20,13 @@ void CHighScoreState::Enter( void )
 	int selectedSpot = 0;
 	m_nStingIndex = 0;
 	m_nBackgroundID = -1;
-	//aPlayer->SetTotalScore(1000);
-
-	/*CLevelManager::GetInstance()->GetPlayer(PlayerOne)->SetTotalScore(3535);*/
-
+	
 	LoadXMLFile("resource/HighScores.xml");
 	Placing();
 	buffers = "";
 	HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
+	ableToChange = false;
 }
 
 bool CHighScoreState::Input( void )
@@ -39,42 +37,52 @@ bool CHighScoreState::Input( void )
 		
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_BACKSPACE))
-	{
-		HighScores[selectedSpot].strInitials.pop_back();
-		return true;
-	}
-
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
 	{
 		SaveXMLFile("resource/HighScores.xml");
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
 	}
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT))
-	{
-		m_nStingIndex--;
-		if (m_nStingIndex == 0)
+if (GetChange() == true)
+{
+	
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT))
 		{
-			m_nStingIndex = 2;
+			m_nStingIndex--;
+			if (m_nStingIndex <= 0)
+			{
+				m_nStingIndex = 2;
+			}
+			
 		}
-	}
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT))
-	{
-		m_nStingIndex++;
-		if (m_nStingIndex == 2)
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RIGHT))
 		{
-			m_nStingIndex = 0;
+			m_nStingIndex++;
+			if (m_nStingIndex == 3)
+			{
+				m_nStingIndex = 0;
+				
+			}
 		}
-	}
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
-	{
-		HighScores[selectedSpot].strInitials[m_nStingIndex] += 1;				
-	}
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
-	{
-		HighScores[selectedSpot].strInitials[m_nStingIndex] -= 1;		
-	}
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
+		{
+			HighScores[selectedSpot].strInitials[m_nStingIndex] += 1;
+			if (HighScores[selectedSpot].strInitials[m_nStingIndex] == 122)
+			{
+				HighScores[selectedSpot].strInitials[m_nStingIndex] = 97;
+			}
+		}
+		if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
+		{
+			HighScores[selectedSpot].strInitials[m_nStingIndex] -= 1;	
+			
+			if (HighScores[selectedSpot].strInitials[m_nStingIndex] == 97)
+					{
+						HighScores[selectedSpot].strInitials[m_nStingIndex] = 122;
+					}
+			
+		}
+}
 
 	return true;
 }
@@ -101,13 +109,14 @@ void CHighScoreState::Render(void)
 		buffers = buffer;
 		CBitmapFont::GetInstance()->PrintText(buffers,225,100+(35*i),D3DCOLOR_XRGB(255,255,255));
 	}
+
 	
 	CBitmapFont::GetInstance()->PrintText("press esc. to go back", 25, 10, D3DCOLOR_XRGB(255,255,255));
 }
 
 void CHighScoreState::Exit(void)
 {
-	
+	SetChange(false);
 }
 
 void CHighScoreState::LoadXMLFile( const char * fileToLoad )

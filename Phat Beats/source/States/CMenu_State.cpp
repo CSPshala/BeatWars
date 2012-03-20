@@ -87,6 +87,7 @@ bool CMenu_State::Input(void)
 
 			case MAINMENU_HIGHSCORE:
 				{
+					CHighScoreState::GetInstance()->SetChange(false);
 					CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
 				}
 				break;
