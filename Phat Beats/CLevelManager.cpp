@@ -251,8 +251,10 @@ const void CLevelManager::HandleLevelInput(void) {
 	}
 
 	if(InMan->KeyPressed(DIK_R)) {
+		/*
 		BeatMan->Reset();
-		SetState(Playing);
+				SetState(Playing);*/
+		Rest();
 	}
 }
 const void CLevelManager::HandlePlayingInput(void) {
@@ -605,4 +607,19 @@ const void CLevelManager::Exit(void) {
 	queue<string>::size_type i = 0;
 	for(; i < m_vSongs.size(); ++i)
 		m_vSongs.pop();
+}
+
+void CLevelManager::Rest()
+{
+	BeatMan->Reset();
+
+	GetPlayer(PlayerOne)->SetCurrentScore(0);
+	GetPlayer(PlayerTwo)->SetCurrentScore(0);
+	GetPlayer(PlayerOne)->SetTakeDown(0);
+	GetPlayer(PlayerTwo)->SetTakeDown(0);
+	GetPlayer(PlayerOne)->SetCurrentHP(100);
+	GetPlayer(PlayerTwo)->SetCurrentHP(100);
+
+	SetState(Playing);
+	Render();
 }
