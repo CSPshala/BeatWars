@@ -163,7 +163,7 @@ const void CLevelManager::EnterLevel(void) {
 	GetPlayer(PlayerOne)->SetCurrentHP(GetPlayer(PlayerOne)->GetMaxHP());
 	ObjMan->AddObject(GetPlayer(PlayerTwo));
 	GetPlayer(PlayerTwo)->SetCurrentHP(GetPlayer(PlayerTwo)->GetMaxHP());
-	GetPlayer(PlayerOne)->SetCurrentPowerup(0);
+	GetPlayer(PlayerOne)->SetCurrentPowerup(140);
 	GetPlayer(PlayerTwo)->SetCurrentPowerup(0);
 	
 	p2PrevHP = 101;
@@ -251,8 +251,10 @@ const void CLevelManager::HandleLevelInput(void) {
 	}
 
 	if(InMan->KeyPressed(DIK_R)) {
+		/*
 		BeatMan->Reset();
-		SetState(Playing);
+				SetState(Playing);*/
+		Rest();
 	}
 }
 const void CLevelManager::HandlePlayingInput(void) {
@@ -489,13 +491,32 @@ const void CLevelManager::RenderPlayingState(void) {
 	switch (GetPlayer(PlayerTwo)->GetCurrentTakeDown())
 	{
 	case 1:
-		TexMan->DrawF(m_nTakeDownsVader,529.0f,92.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,529.0f,105.0f,0.2f,0.2f);
 		break;
 	case 2:
-		TexMan->DrawF(m_nTakeDownsVader,549.0f,92.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,529.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,589.0f,105.0f,0.2f,0.2f);
 		break;
 	case 3:
-		TexMan->DrawF(m_nTakeDownsVader,589.0f,92.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,529.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,589.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsVader,649.0f,105.0f,0.2f,0.2f);
+		break;
+	}
+
+	switch (GetPlayer(PlayerOne)->GetCurrentTakeDown())
+	{
+	case 1:
+		TexMan->Draw(m_nTakeDownsLuke,190.0f,105.0f,0.2f,0.2f);
+		break;
+	case 2:
+		TexMan->Draw(m_nTakeDownsLuke,190.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsLuke,130.0f,105.0f,0.2f,0.2f);
+		break;
+	case 3:
+		TexMan->Draw(m_nTakeDownsLuke,190.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsLuke,130.0f,105.0f,0.2f,0.2f);
+		TexMan->Draw(m_nTakeDownsLuke,70.0f,105.0f,0.2f,0.2f);
 		break;
 	}
 
@@ -586,4 +607,19 @@ const void CLevelManager::Exit(void) {
 	queue<string>::size_type i = 0;
 	for(; i < m_vSongs.size(); ++i)
 		m_vSongs.pop();
+}
+
+void CLevelManager::Rest()
+{
+	BeatMan->Reset();
+
+	GetPlayer(PlayerOne)->SetCurrentScore(0);
+	GetPlayer(PlayerTwo)->SetCurrentScore(0);
+	GetPlayer(PlayerOne)->SetTakeDown(0);
+	GetPlayer(PlayerTwo)->SetTakeDown(0);
+	GetPlayer(PlayerOne)->SetCurrentHP(100);
+	GetPlayer(PlayerTwo)->SetCurrentHP(100);
+
+	SetState(Playing);
+	Render();
 }

@@ -114,6 +114,9 @@ public:
 
 	// Accessors
 	queue<string>* GetQueueString() {return &m_vSongs;}
+
+	void Rest();
+
 };
 
 #endif

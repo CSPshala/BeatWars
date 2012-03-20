@@ -18,6 +18,7 @@
 #include "CSave_State.h"
 #include "../../CLevelManager.h"
 #include "CLU_State.h"
+#include "../Managers/CBeatManager.h"
 
 CGameplay_State::CGameplay_State()
 {
@@ -75,7 +76,7 @@ void CGameplay_State::Enter(void)
 		CFXManager::GetInstance()->MoveEffectTo("P1_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetCollisionRect().top));
 		CFXManager::GetInstance()->MoveEffectTo("P2_HIT", D3DXVECTOR2((float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().left, (float)CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->GetCollisionRect().top));
 
-		CFXManager::GetInstance()->MoveEffectTo("P1_GUARD",D3DXVECTOR2(400.0f, 300.0f));
+		CFXManager::GetInstance()->MoveEffectTo("P1GUARD",D3DXVECTOR2(0.0f, 12.0f));
 		CFXManager::GetInstance()->MoveEffectTo("P1_PBAR",D3DXVECTOR2(32.0f, 62.0f));
 		CFXManager::GetInstance()->MoveEffectTo("P2_PBAR",D3DXVECTOR2(600.0f, 62.0f));
 
@@ -127,9 +128,10 @@ bool CGameplay_State::Input(void)
 {
 	if (!CGame::GetInstance()->GetPlayerControl()->IsConnected())
 	{
+
 		if (!GetIsTutorial())
 		{
-			CLevelManager::GetInstance()->HandleLevelInput();
+			//CLevelManager::GetInstance()->HandleLevelInput();
 
 			if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 			{
@@ -147,10 +149,12 @@ bool CGameplay_State::Input(void)
 		}
 		else
 		{
+			//CLevelManager::GetInstance()->HandleLevelInput();
+
 			if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(0, 0))
 			{
 				// Timing skipping of text boxes so user dosen't accidentally skip
-				if(m_fTutorialBoxTimer >= 1.5f)
+				if(m_fTutorialBoxTimer >= 0.5f)
 				{
 					if(m_nTutorialTextIndex < (int)(m_vTutorialText.size() - 1))
 					{
@@ -267,7 +271,13 @@ void CGameplay_State::Update(void)
 		CLevelManager::GetInstance()->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
 	}
 	else
+	{
 		m_fTutorialBoxTimer += CGame::GetInstance()->GetTimer().GetDeltaTime();
+
+		// Updating players so they bounce and stuff (looks better)
+		CLevelManager::GetInstance()->GetPlayer(PlayerOne)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+		CLevelManager::GetInstance()->GetPlayer(PlayerTwo)->Update(CGame::GetInstance()->GetTimer().GetDeltaTime());
+	}
 
 	if (m_bStartTransition)
 	{

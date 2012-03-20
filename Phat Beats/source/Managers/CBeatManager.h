@@ -59,6 +59,7 @@ public:
 		string GetFileName() {return m_szFileName;}
 		int GetFXSound() {return m_nDeathLuke;}
 		int GetSoundFX() {return m_nDeathVader;}
+		int GetFailFX() {return m_nFail;}
 	/********** Public Mutators  ************/	
 		void SetNumberNotesHit(int nNumber) {m_nNumHit = nNumber;}
 		void SetCurrentlyPlayingSong(string szSongName);
@@ -99,6 +100,8 @@ private:
 		int m_nDamageLuke;
 		int m_nDeathVader;
 		int m_nDeathLuke;
+		int m_nFail;
+		int m_nSuccess;
 		// Used for setting song
 		string szCurrentlyPlayingSong;
 		// Index into vector of songs to play song
