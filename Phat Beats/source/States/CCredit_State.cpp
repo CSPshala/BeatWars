@@ -33,9 +33,6 @@ CCredit_State::~CCredit_State()
 
 void CCredit_State::Enter( void )
 {
-	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
-		CSGD_FModManager::GetInstance()->PlaySound(m_nSoundID);
-
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/Star_Wars_-_Main_Title_Theme.mp3",FMOD_LOOP_NORMAL);
@@ -69,6 +66,10 @@ void CCredit_State::Enter( void )
      quadbuff->Lock(0, 0, (void**)&pVoid, 0);
      memcpy(pVoid, t_vert, sizeof(t_vert));
      quadbuff->Unlock();
+
+
+	 if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
+		CSGD_FModManager::GetInstance()->PlaySound(m_nSoundID);
 }
 
 
