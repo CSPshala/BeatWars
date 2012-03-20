@@ -27,6 +27,7 @@ private:
 	string buffers;
 	int m_nStingIndex;
 	int m_nBackgroundID;
+	bool ableToChange;
 	
 public:
 
@@ -41,5 +42,8 @@ public:
 	void SaveXMLFile(const char * fileToSave);
 	int CheckTopTen(void);
 	void Placing(void);
+
+	bool GetChange() {return ableToChange;}
+	void SetChange(bool ableChange) { ableToChange = ableChange;}
 	/*char * GetTodaysDate(void);*/
 };
