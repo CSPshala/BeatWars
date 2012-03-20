@@ -571,7 +571,7 @@ void CPlayer::P2InputHandling()
 		}
 	}
 
-	DI->ClearInput();
+	//DI->ClearInput();
 }
 void CPlayer::AIHandling()
 {

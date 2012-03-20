@@ -20,6 +20,7 @@
 #include "Managers\CAiManager.h"
 #include "..\CLevelManager.h"
 
+
 ////////////////////////////////////////
 //				MISC
 ////////////////////////////////////////
@@ -330,63 +331,47 @@ void CSong::CreateAIHits()
 ////////////////////////////////////////
 void	CSong::NextPlayer1HittableBeat() 
 {
-	if(GetPlayer1HittableBeat() != NULL)
+	if((unsigned int)GetPlayer1NextBeatIndex() < m_vBeats.size())
 	{
-		if((unsigned int)GetPlayer1NextBeatIndex() < m_vBeats.size())
-		{
-			// Moving to next Beat
-			m_pPlayer1HittableBeat = &m_vBeats[GetPlayer1NextBeatIndex()];
-			SetPlayer1NextBeatIndex(GetPlayer1NextBeatIndex() + 1);
-			return;
-		}
-		else
-		{
-			// Song's done resetting to beginning
-			m_pPlayer1HittableBeat = NULL;
-			SetPlayer1NextBeatIndex(0);
-			return;
-		}
+		unsigned int index = (unsigned int)GetPlayer1NextBeatIndex(); 
+
+		for(;index < m_vBeats.size(); ++index)
+			if(m_vBeats[index].GetDifficulty() <= COptionsState::GetInstance()->GetDifficulty())
+				break;				
+
+		SetPlayer1NextBeatIndex(index + 1);
+		m_pPlayer1HittableBeat = &m_vBeats[index];
+		return;
 	}
 	else
 	{
-		// Setting first and second beat
-		if(m_vBeats.size() > 1)
-		{
-			m_pPlayer1HittableBeat = &m_vBeats[0];
-			SetPlayer1NextBeatIndex(1);
-			return;
-		}		
+		// Song's done resetting to beginning
+		m_pPlayer1HittableBeat = NULL;
+		SetPlayer1NextBeatIndex(0);
+		return;
 	}	
 }
 
 void	CSong::NextPlayer2HittableBeat()
 {
-	if(GetPlayer2HittableBeat() != NULL)
+	if((unsigned int)GetPlayer2NextBeatIndex() < m_vBeats.size())
 	{
-		if((unsigned int)GetPlayer2NextBeatIndex() < m_vBeats.size())
-		{
-			// Moving to next Beat
-			m_pPlayer2HittableBeat = &m_vBeats[GetPlayer2NextBeatIndex()];
-			SetPlayer2NextBeatIndex(GetPlayer2NextBeatIndex() + 1);
-			return;
-		}
-		else
-		{
-			// Song's done resetting to beginning
-			m_pPlayer2HittableBeat = NULL;
-			SetPlayer2NextBeatIndex(0);
-			return;
-		}
+		unsigned int index = (unsigned int)GetPlayer2NextBeatIndex(); 
+
+		for(;index < m_vBeats.size(); ++index)
+			if(m_vBeats[index].GetDifficulty() <= COptionsState::GetInstance()->GetDifficulty())
+				break;				
+
+		SetPlayer2NextBeatIndex(index + 1);
+		m_pPlayer2HittableBeat = &m_vBeats[index];
+		return;
 	}
 	else
 	{
-		// Setting first and second beat
-		if(m_vBeats.size() > 1)
-		{
-			m_pPlayer2HittableBeat = &m_vBeats[0];
-			SetPlayer2NextBeatIndex(1);
-			return;
-		}		
+		// Song's done resetting to beginning
+		m_pPlayer2HittableBeat = NULL;
+		SetPlayer2NextBeatIndex(0);
+		return;
 	}	
 }		
 ////////////////////////////////////////
