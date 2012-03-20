@@ -96,7 +96,12 @@ bool CLoad_State::Input(void)
 					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 				}
 				break;
-
+			case BACK:
+				{
+					m_nLoadFlag = false;		
+					CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+				}
+				break;
 			}
 		}
 
@@ -154,7 +159,12 @@ bool CLoad_State::Input(void)
 					CGame::GetInstance()->ChangeState(CGameplay_State::GetInstance());
 				}
 				break;
-
+			case BACK:
+				{
+					m_nLoadFlag = false;		
+					CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+				}
+				break;
 			}
 		}
 	}
@@ -183,7 +193,7 @@ void CLoad_State::Render(void)
 	RECT gImage = {0,350,290,550};
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
-	CBitmapFont::GetInstance()->PrintText("Back", 100, 500, D3DCOLOR_XRGB(255, 255, 255));
+	CBitmapFont::GetInstance()->PrintText("Back", 350, 448, D3DCOLOR_XRGB(255, 255, 255));
 
 	CSGD_TextureManager::GetInstance()->Draw(m_nTitleID, 10, 500, 1.0f, 1.0f);
 	
@@ -265,7 +275,12 @@ void CLoad_State::Render(void)
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* LOADMENU_SLOTTHREE), -1.0f);
 		}
 		break;
-
+	case BACK:
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 15, 285 + (BACK * 55) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, 785, 285  + (55* BACK), -1.0f);
+		}
+		break;
 	}	
 	
 }
