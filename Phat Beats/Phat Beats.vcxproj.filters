@@ -139,6 +139,10 @@
     <ClCompile Include="source\States\CCredit_State.cpp">
       <Filter>Game States\Source</Filter>
     </ClCompile>
+    <ClCompile Include="source\StringHelper.cpp" />
+    <ClCompile Include="source\States\CHighScoreState.cpp">
+      <Filter>Game States\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\SGD Wrappers\CSGD_Direct3D.h">
@@ -289,6 +293,10 @@
       <Filter>Game States\Headers</Filter>
     </ClInclude>
     <ClInclude Include="resource1.h" />
+    <ClInclude Include="source\StringHelper.h" />
+    <ClInclude Include="source\States\CHighScoreState.h">
+      <Filter>Game States\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Game Management">
