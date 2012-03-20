@@ -276,10 +276,10 @@ void CLevelSelect_State::Exit(void) {
 		GetLevelData()[i] = nullptr;
 	}
 
+	m_vPlaylist.clear();
+
 	GetLevelData().clear();
 	CSGD_TextureManager::GetInstance()->UnloadTexture(nBgID);
-
-
 }
 
 CLevelSelect_State* CLevelSelect_State::GetInstance() {

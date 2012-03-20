@@ -86,22 +86,23 @@ void CHighScoreState::Update(void)
 
 void CHighScoreState::Render(void)
 {
-	RECT rBody = {0, 20, CGame::GetInstance()->GetScreenWidth(), 25};
-	RECT rMenu = {25, 50, CGame::GetInstance()->GetScreenWidth(), 635};
+	RECT rBody = {25, 40, CGame::GetInstance()->GetScreenWidth(), 25};
+	RECT rMenu = {25, 70, CGame::GetInstance()->GetScreenWidth(), 635};
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID,0,0, 0.78125f, 0.5859375f);
 	CBitmapFont::GetInstance()->SetScale(1.5f);
 	CBitmapFont::GetInstance()->PrintStrokedTextInRect("high scores",&rBody,ALIGN_CENTER, D3DCOLOR_XRGB(0, 0, 0),D3DCOLOR_XRGB(255,255,255));
 
 	CBitmapFont::GetInstance()->SetScale(1.0f);
 	for(int i = 0; i < 10; ++i)
-		{
-			char buffer[128];
-			buffers = buffer;
-			sprintf_s(buffer,"%i  %s  %i  %s", i+1, HighScores[i].strInitials.c_str(), HighScores[i].nScores, HighScores[i].strDates.c_str());
-			buffers = buffer;
-			CBitmapFont::GetInstance()->PrintText(buffers,225,100+(35*i),D3DCOLOR_XRGB(255,255,255));
-		}
+	{
+		char buffer[128];
+		buffers = buffer;
+		sprintf_s(buffer,"%i  %s  %i  %s", i+1, HighScores[i].strInitials.c_str(), HighScores[i].nScores, HighScores[i].strDates.c_str());
+		buffers = buffer;
+		CBitmapFont::GetInstance()->PrintText(buffers,225,100+(35*i),D3DCOLOR_XRGB(255,255,255));
+	}
 	
+	CBitmapFont::GetInstance()->PrintText("press esc. to go back", 25, 10, D3DCOLOR_XRGB(255,255,255));
 }
 
 void CHighScoreState::Exit(void)
