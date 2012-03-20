@@ -58,6 +58,7 @@ private:
 	float m_nMusicPan;
 	bool Player1selection;
 	bool Player2selection;
+	bool ButtonPressed;
 
 	// Proper Singleton
 	// Trilogy of Evil:
@@ -113,6 +114,7 @@ public:
 	bool GetCharacterSelection2() {return Player2selection;}
 	CXBOXController*	GetPlayerControl()	{return PlayerControl;}
 	CXBOXController*	GetPlayer2Control() {return Player2Control;}
+	bool				GetButtonPressed() {return ButtonPressed;}
 	
 	// Mutators
 	void SetMusicVolume(float val)		{ m_nMusicVolume = val; }
@@ -120,6 +122,7 @@ public:
 	void SetPanVolume(float val)		{ m_nMusicPan = val; }
 	void SetCharacterSelection(bool selection) {Player1selection = selection;} 
 	void SetCharacterSelection2(bool selection) {Player2selection = selection;}
+	void SetButtonPressed(bool setpressed) {ButtonPressed = setpressed;}
 	void GoBack(void);
 
 	void PlayNavMenuSound(void);

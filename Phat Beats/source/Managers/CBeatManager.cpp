@@ -60,8 +60,6 @@ CBeatManager::~CBeatManager()
 {
 	CEventSystem::GetInstance()->UnregisterClient("test.event",this);
 	ES->UnregisterClient("notepassed",this);
-
-
 }
 
 ////////////////////////////////////////
