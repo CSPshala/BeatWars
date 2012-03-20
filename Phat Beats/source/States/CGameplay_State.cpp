@@ -182,7 +182,7 @@ bool CGameplay_State::Input(void)
 			}
 
 			// Skip tutorial at any time when a text box is present
-			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
 			{
 				// Resetting timer
 				m_fTutorialBoxTimer = 0.0f;
