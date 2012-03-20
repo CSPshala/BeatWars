@@ -86,8 +86,6 @@ bool CCredit_State::Input( void )
 
 void CCredit_State::Update()
 {
-	
-	
 	//m_nSwitchState++;
 	//if (m_nSwitchState == 160000)
 	//{
