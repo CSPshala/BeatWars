@@ -222,6 +222,8 @@ void CSave_State::Render(void)
 	RECT gImage = {0,350,290,550};
 	CSGD_TextureManager::GetInstance()->Draw(m_nGameImageID,450,15,1.0f,1.0f,&gImage);
 
+	CBitmapFont::GetInstance()->PrintText("press esc. to go back", 10, 10, D3DCOLOR_XRGB(225, 225, 225));
+
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();	// Draw everything now that is queued up
 	RECT gSaveImage = {0,0,225,125};
 	if (GetImageSave() == true && m_nMenuSelection == SAVEMENU_SLOTONE)
