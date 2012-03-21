@@ -1,3 +1,4 @@
+binary suns	[binarysuns.beat, BinarySuns, song_binary.png]
 cantina remix	[cantina.beat, cantina, song_cantina.png]
 
 duel of the fates	[DueloftheFates.beat, dualofthefates, song_duel.png]
