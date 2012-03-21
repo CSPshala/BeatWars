@@ -92,8 +92,15 @@ void CCredit_State::Update()
 	m_nSwitchState++;
 	if (m_nSwitchState == 160000)
 	{
-		CHighScoreState::GetInstance()->SetChange(true);
-		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+		if (CHighScoreState::GetInstance()->GetChange() == false)
+		{
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
+		if (CHighScoreState::GetInstance()->GetChange() == true)
+		{
+			CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+		}
+		
 	}
 }
 

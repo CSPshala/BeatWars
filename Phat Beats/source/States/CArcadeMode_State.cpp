@@ -28,6 +28,7 @@ CArcadeMode_State::~CArcadeMode_State()
 
 void CArcadeMode_State::Enter(void)
 {	
+	SetMode(true);
 	m_nMenuSelection = 0;
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/sprites_luke_001.png");
 	m_nTitleID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/sprites_vader_001.png");

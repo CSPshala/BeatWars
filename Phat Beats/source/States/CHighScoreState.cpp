@@ -26,7 +26,7 @@ void CHighScoreState::Enter( void )
 	buffers = "";
 	HighScores[selectedSpot].nScores = CLevelManager::GetInstance()->GetPlayer(PlayerOne)->GetTotalScore();
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
-	ableToChange = false;
+	
 }
 
 bool CHighScoreState::Input( void )

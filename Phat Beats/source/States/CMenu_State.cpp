@@ -105,6 +105,7 @@ bool CMenu_State::Input(void)
 				break;		
 			case MAINMENU_CREDITS:
 				{
+					CHighScoreState::GetInstance()->SetChange(false);
 					CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 				}
 				break;
