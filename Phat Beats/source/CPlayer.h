@@ -68,7 +68,7 @@ public:
 	float				GetCurrentRotation() {return m_fRotation;}
 	BeatDirection		GetAimingDirection() {return m_eAimingDirection;}
 	vector<CBeat*>&		GetAIBeats() {return m_vAIBeats;}
-	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
+//	queue<TBeatHit>&	GetPlayerHitQueue() {return m_qKeyPresses;}
 	char				GetMostRecentKeyPress();
 	int					GetAILevel() {return m_nAILevel;}
 	bool				GetAttackMode() {return m_bAttackMode;}
@@ -135,7 +135,7 @@ private:
 		vector<CBeat*> m_vAIBeats;
 		
 		// Player hit vector
-		queue<TBeatHit> m_qKeyPresses;
+		//queue<TBeatHit> m_qKeyPresses;
 
 		// Player hit key
 		char cHitKey;

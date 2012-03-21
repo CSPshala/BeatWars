@@ -308,11 +308,7 @@ void CGameplay_State::Exit(void)
 
 		CBeatManager::GetInstance()->Stop();
 		CBeatManager::GetInstance()->UnloadSongs();
-
-		CFXManager::GetInstance()->UnloadFX("P1ATTACK");
-		CFXManager::GetInstance()->UnloadFX("P1GUARD");
-		CFXManager::GetInstance()->UnloadFX("P2ATTACK");
-		CFXManager::GetInstance()->UnloadFX("P2GUARD");
+				
 		CFXManager::GetInstance()->UnloadFX("P1_HIT");
 		CFXManager::GetInstance()->UnloadFX("P2_HIT");
 		CFXManager::GetInstance()->UnloadFX("P1_PBAR");

@@ -100,11 +100,7 @@ bool CLevelSelect_State::Input(void) {
 					CLevelManager::GetInstance()->QueueSong(GetLevelData()[GetPlaylist()[i]]->szSongName);
 				}
 
-				CFXManager::GetInstance()->UnloadAllFX();
-				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
-				CLU_State::GetInstance()->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+				CFXManager::GetInstance()->UnloadAllFX();				
 				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 				CLU_State::GetInstance()->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);

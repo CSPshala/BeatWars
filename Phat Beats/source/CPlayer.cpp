@@ -63,29 +63,28 @@ CPlayer::CPlayer(ObjType eType) : CBase()
 
 	// Setting player hit key to random letter
 	cHitKey = 'g';
+
+	m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/attackDefenseIndicator.png");
 	
 	switch(m_nType)
 	{
 	case OBJ_PLAYER1:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p1cone.png"));
 		SetPosX(200.0f - 64.0f);  // Offsetting to get the base of the cone right on point
-		SetPosY(300.0f - 128.0f);
-		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxJedi.png");
+		SetPosY(300.0f - 128.0f);		
 		Player1 = new CXBOXController(1);
 		break;
 
 	case OBJ_PLAYER2:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
 		SetPosX(600.0f - 64.0f); // Ditto
-		SetPosY(300.0f - 128.0f);
-		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxSith.png");
+		SetPosY(300.0f - 128.0f);		
 		Player2 = new CXBOXController(2);
 		break;
 	case OBJ_AI:
 		SetBeatConeID(TEXTUREMAN->LoadTexture("resource/graphics/p2cone.png"));
 		SetPosX(600.0f - 64.0f); // Ditto
-		SetPosY(300.0f - 128.0f);
-		m_nHitBoxImage = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/HitBoxSith.png");
+		SetPosY(300.0f - 128.0f);		
 		break;
 	}
 
@@ -181,19 +180,6 @@ void CPlayer::Update(float fElapsedTime)
 		{
 			SetAttackMode(false);		// Taking us outta attack mode and resetting timer
 			SetAttackModeTimer(0.0f);
-
-
-			// Changing particle effect on hilt back to defense blue
-			if(GetType() == OBJ_PLAYER1)
-			{
-				CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-				CFXManager::GetInstance()->QueueParticle("P1GUARD");
-			}
-			else
-			{
-				CFXManager::GetInstance()->DequeueParticle("P2ATTACK");
-				CFXManager::GetInstance()->QueueParticle("P2GUARD");
-			}
 		}
 	}
 
@@ -234,7 +220,69 @@ void CPlayer::Render()
 
 	//D3D->DrawRect(GetCollisionRect(),100,100,100);
 	// Rendering cone
-	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top);
+
+	// Switching to get rect for drawing red or blue hitbox and also if attk / defense mode
+	// Rect for drawing the hitbox (where on the image we're taking it from)
+	// specific to attackDefenseIndicator.png
+	RECT playerRect;
+
+	switch(GetType())
+	{
+	case OBJ_PLAYER1:
+			if(!GetAttackMode())
+			{				
+				playerRect.left = 210;
+				playerRect.top = 128;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+			else
+			{
+				playerRect.left = 174;
+				playerRect.top = 128;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+		break;
+
+	case OBJ_PLAYER2:
+		if(!GetAttackMode())
+			{				
+				playerRect.left = 210;
+				playerRect.top = 40;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+			else
+			{
+				playerRect.left = 174;
+				playerRect.top = 40;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+		break;
+
+	case OBJ_AI:
+		if(!GetAttackMode())
+			{				
+				playerRect.left = 210;
+				playerRect.top = 40;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+			else
+			{
+				playerRect.left = 174;
+				playerRect.top = 40;
+				playerRect.right = playerRect.left + 32;
+				playerRect.bottom = playerRect.top + 32;
+			}
+		break;
+	}
+
+	
+
+	TEXTUREMAN->Draw(m_nHitBoxImage, GetCollisionRect().left, GetCollisionRect().top,1.0f,1.0f,&playerRect);
 	TEXTUREMAN->DrawF(GetBeatConeID(),GetPosX(),GetPosY(),1.0f,1.0f,NULL,65.0f,127.0f,D3DXToRadian(GetCurrentRotation()),D3DCOLOR_ARGB(255,255,255,255));	
 }
 RECT CPlayer::GetCollisionRect()
@@ -323,18 +371,7 @@ void CPlayer::P1InputHandling()
 			{
 				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
-				// Setting particle effect on hilt to show mode
-				if(GetAttackMode())
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
-					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-				}
-				else
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-					CFXManager::GetInstance()->QueueParticle("P1GUARD");
-				}
-
+				
 				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
 				
 			}
@@ -366,19 +403,7 @@ void CPlayer::P1InputHandling()
 			if(GetCurrentPowerup() >= GetMaxPowerup()) // Player now switches stances on full power bar (in lieu of specials for now)
 			{
 				SetAttackMode(true); // Toggling attack/defense
-				SetAttackModeTimer(0);
-				// Setting particle effect on hilt to show mode
-				if(GetAttackMode())
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
-					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-				}
-				else
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-					CFXManager::GetInstance()->QueueParticle("P1GUARD");
-				}
-
+				SetAttackModeTimer(0);				
 				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
 			}
 		}
@@ -514,17 +539,7 @@ void CPlayer::P2InputHandling()
 				SetAttackMode(true); // Toggling attack/defense
 				SetAttackModeTimer(0);
 				// Setting particle effect on hilt to show mode
-				if(GetAttackMode())
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1GUARD");
-					CFXManager::GetInstance()->QueueParticle("P1ATTACK");
-				}
-				else
-				{
-					CFXManager::GetInstance()->DequeueParticle("P1ATTACK");
-					CFXManager::GetInstance()->QueueParticle("P1GUARD");
-				}
-
+				
 				SetCurrentPowerup(0); // Setting Power back to 0 (since we activated)
 			}
 		}
