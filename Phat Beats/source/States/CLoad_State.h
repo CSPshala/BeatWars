@@ -25,7 +25,7 @@ using namespace std;
 
 // Forward Declarations
 class CBitmapFont;
-enum {LOADMENU_SLOTONE, LOADMENU_SLOTTWO, LOADMENU_SLOTTHREE, NUM_LOADMENU_OPTIONS};
+enum {LOADMENU_SLOTONE, LOADMENU_SLOTTWO, LOADMENU_SLOTTHREE, BACK, NUM_LOADMENU_OPTIONS};
 class CLoad_State : public IGameState
 {
 public:

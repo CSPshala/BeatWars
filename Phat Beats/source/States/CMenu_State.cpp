@@ -87,6 +87,7 @@ bool CMenu_State::Input(void)
 
 			case MAINMENU_HIGHSCORE:
 				{
+					CHighScoreState::GetInstance()->SetChange(false);
 					CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
 				}
 				break;
@@ -104,6 +105,7 @@ bool CMenu_State::Input(void)
 				break;		
 			case MAINMENU_CREDITS:
 				{
+					CHighScoreState::GetInstance()->SetChange(false);
 					CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());
 				}
 				break;
@@ -325,10 +327,6 @@ void CMenu_State::LoadGameplayStateAssets()
 	CGameplay_State::GetInstance()->SetIsTutorial(true);
 
 	// Loading Effects
-	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
-	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
-	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
-	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
 	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
 	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);
@@ -369,11 +367,7 @@ void CMenu_State::loadTutorial()
 	// Setting GameplayState to tutorial mode
 	CGameplay_State::GetInstance()->SetIsTutorial(true);
 
-	// Loading Effects
-	CLU->QueueLoadCommand("resource/GameBG.xml","P1ATTACK",Effect);
-	CLU->QueueLoadCommand("resource/GuardBG.xml","P1GUARD",Effect);
-	CLU->QueueLoadCommand("resource/GameBG.xml","P2ATTACK",Effect);
-	CLU->QueueLoadCommand("resource/GuardBG.xml","P2GUARD",Effect);
+	// Loading Effects	
 	CLU->QueueLoadCommand("resource/Hit.xml","P1_HIT",Effect);
 	CLU->QueueLoadCommand("resource/Hit.xml","P2_HIT",Effect);
 	CLU->QueueLoadCommand("resource/P1PBAR.xml", "P1_PBAR", Effect);

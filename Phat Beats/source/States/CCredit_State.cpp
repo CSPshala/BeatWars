@@ -33,8 +33,7 @@ CCredit_State::~CCredit_State()
 
 void CCredit_State::Enter( void )
 {
-	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
-		CSGD_FModManager::GetInstance()->PlaySound(m_nSoundID);
+	
 
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
@@ -69,6 +68,10 @@ void CCredit_State::Enter( void )
      quadbuff->Lock(0, 0, (void**)&pVoid, 0);
      memcpy(pVoid, t_vert, sizeof(t_vert));
      quadbuff->Unlock();
+
+
+	 if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundID))
+		CSGD_FModManager::GetInstance()->PlaySound(m_nSoundID);
 }
 
 
@@ -86,11 +89,19 @@ bool CCredit_State::Input( void )
 
 void CCredit_State::Update()
 {
-	//m_nSwitchState++;
-	//if (m_nSwitchState == 160000)
-	//{
-	//	CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
-	//}
+	m_nSwitchState++;
+	if (m_nSwitchState == 160000)
+	{
+		if (CHighScoreState::GetInstance()->GetChange() == false)
+		{
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
+		if (CHighScoreState::GetInstance()->GetChange() == true)
+		{
+			CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+		}
+		
+	}
 }
 
 

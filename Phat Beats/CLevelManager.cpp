@@ -14,6 +14,8 @@
 #include "source/States/CLevelSelect_State.h"
 #include "source/StringHelper.h"
 #include "source/Random.h"
+#include "source/States/CHighScoreState.h"
+#include "source/States/CCredit_State.h"
 #include <fstream>
 
 #include <sstream>
@@ -338,6 +340,10 @@ const void CLevelManager::Update(const float fElapsedTime){
 		Exit();
 		LeaveLevel();
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		/*
+		CHighScoreState::GetInstance()->SetChange(true);
+				CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());*/
+		
 		break;
 	}
 }
