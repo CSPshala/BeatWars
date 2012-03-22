@@ -2167,188 +2167,188 @@ namespace BeatMaker
 
         private void WKeyPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                WKeyPictureBox.BackColor = Color.Crimson;
-                MouseAddBeat.KeyPress = 'w';
-                MouseAddBeat.Image = szWKeyImage;
-                MouseAddBeat.Completion = BEATIS.KEY;
-                MouseAddBeat.TextureIndex = KeyW;               
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    WKeyPictureBox.BackColor = Color.Crimson;
+            //    MouseAddBeat.KeyPress = 'w';
+            //    MouseAddBeat.Image = szWKeyImage;
+            //    MouseAddBeat.Completion = BEATIS.KEY;
+            //    MouseAddBeat.TextureIndex = KeyW;               
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
 
         }
 
         private void AKeyPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                AKeyPictureBox.BackColor = Color.Crimson;
-                MouseAddBeat.KeyPress = 'a';
-                MouseAddBeat.Image = szAKeyImage;
-                MouseAddBeat.Completion = BEATIS.KEY;
-                MouseAddBeat.TextureIndex = KeyA;               
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
+            //    AKeyPictureBox.BackColor = Color.Crimson;
+            //    MouseAddBeat.KeyPress = 'a';
+            //    MouseAddBeat.Image = szAKeyImage;
+            //    MouseAddBeat.Completion = BEATIS.KEY;
+            //    MouseAddBeat.TextureIndex = KeyA;               
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
                 
-            }
+            //}
         }
 
         private void SKeyPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                SKeyPictureBox.BackColor = Color.Crimson;
-                MouseAddBeat.KeyPress = 's';
-                MouseAddBeat.Image = szSKeyImage;
-                MouseAddBeat.Completion = BEATIS.KEY;
-                MouseAddBeat.TextureIndex = KeyS;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    SKeyPictureBox.BackColor = Color.Crimson;
+            //    MouseAddBeat.KeyPress = 's';
+            //    MouseAddBeat.Image = szSKeyImage;
+            //    MouseAddBeat.Completion = BEATIS.KEY;
+            //    MouseAddBeat.TextureIndex = KeyS;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void DKeyPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                DKeyPictureBox.BackColor = Color.Crimson;
-                MouseAddBeat.KeyPress = 'd';
-                MouseAddBeat.Image = szDKeyImage;
-                MouseAddBeat.Completion = BEATIS.KEY;
-                MouseAddBeat.TextureIndex = KeyD;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    DKeyPictureBox.BackColor = Color.Crimson;
+            //    MouseAddBeat.KeyPress = 'd';
+            //    MouseAddBeat.Image = szDKeyImage;
+            //    MouseAddBeat.Completion = BEATIS.KEY;
+            //    MouseAddBeat.TextureIndex = KeyD;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void UpLeftPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                UpLeftPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "leftup";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowUpLeft;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    UpLeftPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "leftup";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowUpLeft;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void LeftPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                LeftPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "left";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowLeft;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    LeftPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "left";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowLeft;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void DownLeftPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                DownLeftPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "leftdown";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowDownLeft;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    DownLeftPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "leftdown";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowDownLeft;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void DownPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                DownPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "down";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowDown;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    DownPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "down";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowDown;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void UpPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                UpPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "up";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowUp;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    UpPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "up";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowUp;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void UpRightPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                UpRightPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "rightup";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowUpRight;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    UpRightPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "rightup";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowUpRight;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void RightPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                RightPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "right";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowRight;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    RightPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "right";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowRight;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void DownRightPictureBox_Click(object sender, EventArgs e)
         {
-            if (fmodChannel != null)
-            {
-                ResetButtonBackgrounds();
+            //if (fmodChannel != null)
+            //{
+            //    ResetButtonBackgrounds();
 
-                DownRightPictureBox.BackColor = Color.CornflowerBlue;
-                MouseAddBeat.Direction = "rightdown";
-                MouseAddBeat.Completion = BEATIS.ARROW;
-                MouseAddBeat.ArrowTextureIndex = ArrowDownRight;
-                MouseAddBeat.Width = 32;
-                MouseAddBeat.Height = 32;
-            }
+            //    DownRightPictureBox.BackColor = Color.CornflowerBlue;
+            //    MouseAddBeat.Direction = "rightdown";
+            //    MouseAddBeat.Completion = BEATIS.ARROW;
+            //    MouseAddBeat.ArrowTextureIndex = ArrowDownRight;
+            //    MouseAddBeat.Width = 32;
+            //    MouseAddBeat.Height = 32;
+            //}
         }
 
         private void ClearSelectionButton_Click(object sender, EventArgs e)
