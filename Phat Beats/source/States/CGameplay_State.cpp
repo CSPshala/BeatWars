@@ -314,9 +314,14 @@ void CGameplay_State::Exit(void)
 		CFXManager::GetInstance()->UnloadFX("P1_PBAR");
 		CFXManager::GetInstance()->UnloadFX("P2_PBAR");
 
+		m_nTutorialTextIndex = 0;
+
+		if(m_vTutorialText.size() > 0)
+			m_vTutorialText.clear();
+
 		// Cleaning up tutorial event
 		CEventSystem::GetInstance()->UnregisterClient("tutorialpause",this);
-	}
+	}	
 }
 CGameplay_State* CGameplay_State::GetInstance()
 {
