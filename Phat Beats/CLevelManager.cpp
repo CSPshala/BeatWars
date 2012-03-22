@@ -262,7 +262,7 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN) || InMan->JoystickGetLStickDirPressed(0, 0)) 
+	if(InMan->KeyPressed(DIK_RETURN) || InMan->JoystickButtonPressed(0, 0)) 
 	{
 		// Add Song to unlock list
 		if(BeatMan->GetCurrentlyPlayingSong()->GetSongName() != "jeditheme")
@@ -285,6 +285,8 @@ const void CLevelManager::HandlePausingInput(void) {
 		{
 			BeatMan->Play(m_vSongs.front());
 			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+			CSGD_FModManager::GetInstance()->SetVolume( BeatMan->GetCurrentlyPlayingSong()->GetSongID(), COptionsState::GetInstance()->GetMusicVol());
+
 		}
 
 	

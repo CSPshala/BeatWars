@@ -62,6 +62,8 @@ bool CLoad_State::Input(void)
 			{
 				m_nMenuSelection = NUM_LOADMENU_OPTIONS - 1;
 			}
+			CGame::GetInstance()->PlayNavMenuSound();
+
 		}
 		if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 		{
@@ -71,6 +73,8 @@ bool CLoad_State::Input(void)
 			{
 				m_nMenuSelection = 0;
 			}
+			CGame::GetInstance()->PlayNavMenuSound();
+
 
 		}
 
@@ -120,6 +124,8 @@ bool CLoad_State::Input(void)
 				m_nMenuSelection = NUM_LOADMENU_OPTIONS - 1;
 
 			}
+			CGame::GetInstance()->PlayNavMenuSound();
+
 		}
 		if(CSGD_DirectInput::GetInstance()->JoystickGetLStickDirPressed(DIR_DOWN, 0) || CSGD_DirectInput::GetInstance()->JoystickGetRStickDirPressed(DIR_DOWN, 1) )
 		{
@@ -129,6 +135,8 @@ bool CLoad_State::Input(void)
 			{
 				m_nMenuSelection = 0;
 			}
+			CGame::GetInstance()->PlayNavMenuSound();
+
 
 		}
 

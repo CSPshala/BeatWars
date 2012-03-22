@@ -279,7 +279,7 @@ RECT layout = {0, 0, 800, 600};
 RECT layoutTop = {32, 0, 800, 96};
 RECT layoutMiddle = {0, 220, 800, 316};
 RECT layoutBottom = {0, 490, 768, 600};
-RECT layoutInfo = {0, 0, 800, 32};
+RECT layoutInfo = {0, 0, 800, 64};
 RECT layoutPlaylist = {10, 250, 150, 580};
 
 void CLevelSelect_State::Render(void) {
@@ -310,7 +310,7 @@ void CLevelSelect_State::Render(void) {
 			CBitmapFont::GetInstance()->PrintStrokedTextInRect(GetLevelData()[Selected+1]->szMenuName, &layoutBottom, 4, D3DCOLOR_XRGB(0, 0, 0), D3DCOLOR_XRGB(255, 255, 255));
 
 		CBitmapFont::GetInstance()->SetScale(0.75f);
-		CBitmapFont::GetInstance()->PrintInRect("press p to add song to playlist and r to remove\npress escape to go back to the main menu or return to play", &layoutInfo, 2, D3DCOLOR_XRGB(230, 230, 55));
+		CBitmapFont::GetInstance()->PrintInRect("press p, a, or black button 0 to add song to playlist\nr, b, or black button 2 to remove\npress escape, back, or white button to go back to the main menu\nreturn, start, left red button to play", &layoutInfo, 2, D3DCOLOR_XRGB(230, 230, 55));
 
 		static std::stringstream ss;
 
