@@ -14,6 +14,8 @@
 #include "source/States/CLevelSelect_State.h"
 #include "source/StringHelper.h"
 #include "source/Random.h"
+#include "source/States/CHighScoreState.h"
+#include "source/States/CCredit_State.h"
 #include <fstream>
 
 #include <sstream>
@@ -262,7 +264,7 @@ const void CLevelManager::HandlePlayingInput(void) {
 	BeatMan->CheckPlayerInput(GetPlayer(PlayerTwo));
 }
 const void CLevelManager::HandlePausingInput(void) {
-	if(InMan->KeyPressed(DIK_RETURN) || InMan->JoystickGetLStickDirPressed(0, 0)) 
+	if(InMan->KeyPressed(DIK_RETURN) || InMan->JoystickButtonPressed(0, 0)) 
 	{
 		// Add Song to unlock list
 		if(BeatMan->GetCurrentlyPlayingSong()->GetSongName() != "jeditheme")
@@ -285,6 +287,8 @@ const void CLevelManager::HandlePausingInput(void) {
 		{
 			BeatMan->Play(m_vSongs.front());
 			BeatMan->GetCurrentlyPlayingSong()->CreateAIHits(); // Resolving AI hits before level even starts
+			CSGD_FModManager::GetInstance()->SetVolume( BeatMan->GetCurrentlyPlayingSong()->GetSongID(), COptionsState::GetInstance()->GetMusicVol());
+
 		}
 
 	
@@ -336,6 +340,10 @@ const void CLevelManager::Update(const float fElapsedTime){
 		Exit();
 		LeaveLevel();
 		CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		/*
+		CHighScoreState::GetInstance()->SetChange(true);
+				CGame::GetInstance()->ChangeState(CCredit_State::GetInstance());*/
+		
 		break;
 	}
 }

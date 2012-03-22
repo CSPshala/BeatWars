@@ -33,6 +33,8 @@ CCredit_State::~CCredit_State()
 
 void CCredit_State::Enter( void )
 {
+	
+
 	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/MainMenuBG.jpg");
 	m_nLogo = CSGD_TextureManager::GetInstance()->LoadTexture("resource/graphics/logo_beatWars_1024.png");
 	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sound/Star_Wars_-_Main_Title_Theme.mp3",FMOD_LOOP_NORMAL);
@@ -90,8 +92,15 @@ void CCredit_State::Update()
 	m_nSwitchState++;
 	if (m_nSwitchState == 160000)
 	{
-		CHighScoreState::GetInstance()->SetChange(true);
-		CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+		if (CHighScoreState::GetInstance()->GetChange() == false)
+		{
+			CGame::GetInstance()->ChangeState(CMenu_State::GetInstance());
+		}
+		if (CHighScoreState::GetInstance()->GetChange() == true)
+		{
+			CGame::GetInstance()->ChangeState(CHighScoreState::GetInstance());
+		}
+		
 	}
 }
 

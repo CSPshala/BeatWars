@@ -39,6 +39,9 @@ public:
 
 	static CArcadeMode_State* GetInstance();	
 
+	bool GetMode() {return bIsArcadeMode;}
+	void SetMode(bool ArcadeMode) {bIsArcadeMode = ArcadeMode;}
+
 private:
 	// Proper singleton
 	CArcadeMode_State(const CArcadeMode_State&);
@@ -65,6 +68,7 @@ private:
 	int m_nBackSoundID;
 	int m_nCursorSoundID;
 	
+	bool bIsArcadeMode;
 };
 
 #endif

@@ -658,6 +658,7 @@ void COptionsState::Render(void)
 	case OPTIONSMENU_PAN:
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 15, 265 + (OPTIONSMENU_PAN * 40) );
+			CSGD_TextureManager::GetInstance()->Draw(m_nCursorID, 825, 265 + (40 *OPTIONSMENU_PAN), -1.0f);
 		}
 		break;
 	case OPTIONSMENU_AILEVEL:

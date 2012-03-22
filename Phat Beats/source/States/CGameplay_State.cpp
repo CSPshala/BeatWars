@@ -94,16 +94,16 @@ void CGameplay_State::Enter(void)
 			// This is so gross, if I get time I'll clean this up - JC
 			// If we're in tutorial, setting tutorial strings for player output
 			m_vTutorialText.push_back("Welcome to BeatWars\nDon't worry if you miss a note, this is practice.\nHit esc (or white button) when \nany info box is showing\nto skip tutorial.");
-			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key or Button 1\nwith the beat to hit it.");
+			m_vTutorialText.push_back("This is a note\nRed notes are imperial notes.\nPress the A key or Button 1\nwhen it touches the circle in the middle\nof your cone to hit it.");
 			m_vTutorialText.push_back("Got it?  Now try another note.\nBlue notes are Republic Notes.\nPress the D key or Button 2\nwith the beat to hit it.");
 			m_vTutorialText.push_back("Now a Mandelorian note. (That is the skull.)\nPress the W key or Button 4\nwith the beat to hit it.");
-			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the D key or Button 5\nwith the beat to hit it.");
+			m_vTutorialText.push_back("Now a Sun note, they're yellow.\nPress the s key or Button 5\nwith the beat to hit it.");
 			m_vTutorialText.push_back("Next things are about to get hard.\nPress an arrow key or move the Joystick\nto aim at a note.\nPress the correct button to hit it.");
-			m_vTutorialText.push_back("Remember!  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
+			m_vTutorialText.push_back("Remember  If you do not aim at a note,\neven if you hit the right key,\nyou will miss.");
 			m_vTutorialText.push_back("Next up is health.  Try to hit these notes.");
 			m_vTutorialText.push_back("Your opponent's health just went down.\nHit more notes than your opponent and you\nwill kill them.  This is how you win.");			
-			m_vTutorialText.push_back("See that blue glow on your lightsaber\nat the top?\nThat means you are in defense mode.\nYou take less damage in this mode.");
-			m_vTutorialText.push_back("Press spacebar to change to attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
+			m_vTutorialText.push_back("See how the lightsaber in your\ncone circle has no blade?\nThat means you are in defense mode.\nYou take less damage in this mode.");
+			m_vTutorialText.push_back("When your green powerbar is full\nyou can press spacebar to switch\nto attack mode.\nYou will do more damage in this mode but\nwill take more damage as well.");
 			m_vTutorialText.push_back("Watch out there are also diagonal directions.\nPress two arrow keys or numpad\nto aim at them.");
 			m_vTutorialText.push_back("Try to empty your opponent's life bar\nas much as possible. Whoever has the most\ntakedowns at the end of the song wins.");
 			m_vTutorialText.push_back("Now, practice by hitting notes\nbeat your opponent up by hitting notes.\nDon't worry your opponent is easy for now.");
@@ -182,7 +182,7 @@ bool CGameplay_State::Input(void)
 			}
 
 			// Skip tutorial at any time when a text box is present
-			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(6))
+			if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || CSGD_DirectInput::GetInstance()->JoystickButtonPressed(6))
 			{
 				// Resetting timer
 				m_fTutorialBoxTimer = 0.0f;
