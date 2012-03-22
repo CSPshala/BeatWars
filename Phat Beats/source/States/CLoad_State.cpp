@@ -30,6 +30,8 @@ CLoad_State::CLoad_State()
 	m_nGameImageID = -1;
 	m_nLoadImageID = -1;
 	m_nLoadID = -1;
+	m_fMusicVolume = 50;
+	m_fFxVolume = 50;
 }
 
 CLoad_State::~CLoad_State()
